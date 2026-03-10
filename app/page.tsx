@@ -1,20 +1,26 @@
 export default function Home() {
   return (
-    <main className="text-gray-900">
+    <main>
 
       {/* HERO */}
-      <section className="bg-white border-b border-gray-100">
+      <section style={{ backgroundColor: "var(--aso-blue-light)" }}>
         <div className="max-w-6xl mx-auto px-6 py-28 md:py-36">
 
-          <p className="text-sm font-medium tracking-widest uppercase mb-6" style={{ color: "var(--aso-blue)" }}>
+          <p
+            className="text-xs font-semibold tracking-widest uppercase mb-6"
+            style={{ color: "var(--aso-navy)" }}
+          >
             Production Operations
           </p>
 
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6 max-w-3xl" style={{ color: "var(--aso-text)" }}>
+          <h1
+            className="text-5xl md:text-6xl font-bold leading-tight mb-6 max-w-3xl"
+            style={{ color: "var(--aso-navy)" }}
+          >
             Operations infrastructure for live events.
           </h1>
 
-          <p className="text-xl text-gray-500 mb-10 max-w-2xl leading-relaxed">
+          <p className="text-xl mb-10 max-w-2xl leading-relaxed" style={{ color: "var(--aso-navy)", opacity: 0.75 }}>
             AnchorStage handles production planning, technical direction, and crew
             coordination — from initial intake through final invoice.
           </p>
@@ -29,7 +35,8 @@ export default function Home() {
             </a>
             <a
               href="/services"
-              className="inline-block border border-gray-300 text-gray-700 px-7 py-3.5 rounded-lg text-base font-medium transition hover:border-gray-500 hover:text-gray-900"
+              className="inline-block px-7 py-3.5 rounded-lg text-base font-medium transition hover:bg-white/60"
+              style={{ border: "1.5px solid var(--aso-navy)", color: "var(--aso-navy)", opacity: 0.8 }}
             >
               View Services
             </a>
@@ -38,47 +45,100 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVICES PREVIEW */}
-      <section className="py-20" style={{ backgroundColor: "var(--aso-blue-light)" }}>
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-10">
+      {/* SERVICE CARDS */}
+      <section className="py-24" style={{ backgroundColor: "var(--aso-bg)" }}>
+        <div className="max-w-6xl mx-auto px-6">
 
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Production Planning</h3>
-            <p className="text-gray-600">
-              Structured planning and logistics for professional live events.
-            </p>
+          <h2
+            className="text-2xl font-semibold mb-12"
+            style={{ color: "var(--aso-navy)" }}
+          >
+            What we do
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-6">
+
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+              <div
+                className="w-10 h-10 rounded-lg mb-6 flex items-center justify-center text-white text-lg font-bold"
+                style={{ backgroundColor: "var(--aso-blue)" }}
+              >
+                P
+              </div>
+              <h3
+                className="text-lg font-semibold mb-3"
+                style={{ color: "var(--aso-navy)" }}
+              >
+                Production Planning
+              </h3>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Structured planning and logistics for professional live events.
+                Timelines, vendor coordination, and technical riders handled systematically.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+              <div
+                className="w-10 h-10 rounded-lg mb-6 flex items-center justify-center text-white text-lg font-bold"
+                style={{ backgroundColor: "var(--aso-blue)" }}
+              >
+                T
+              </div>
+              <h3
+                className="text-lg font-semibold mb-3"
+                style={{ color: "var(--aso-navy)" }}
+              >
+                Technical Direction
+              </h3>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Coordination of audio, video, lighting, and staging teams.
+                Single point of accountability for technical execution.
+              </p>
+            </div>
+
+            <div className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+              <div
+                className="w-10 h-10 rounded-lg mb-6 flex items-center justify-center text-white text-lg font-bold"
+                style={{ backgroundColor: "var(--aso-blue)" }}
+              >
+                E
+              </div>
+              <h3
+                className="text-lg font-semibold mb-3"
+                style={{ color: "var(--aso-navy)" }}
+              >
+                Execution Support
+              </h3>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                On-site operational support to keep events on schedule.
+                Active crew direction and problem resolution during live execution.
+              </p>
+            </div>
+
           </div>
-
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Technical Direction</h3>
-            <p className="text-gray-600">
-              Coordination of audio, video, lighting and staging teams.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Execution Support</h3>
-            <p className="text-gray-600">
-              On-site operational support to ensure events run smoothly.
-            </p>
-          </div>
-
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="max-w-6xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-3xl font-semibold mb-6">
-          Start your event request
-        </h2>
-
-        <a
-          href="https://intake.anchorstageops.com"
-          className="inline-block text-white px-6 py-3 rounded-lg transition hover:opacity-90"
-          style={{ backgroundColor: "var(--aso-orange)" }}
-        >
-          Begin Intake
-        </a>
+      {/* BOTTOM CTA */}
+      <section
+        className="py-20 text-center"
+        style={{ backgroundColor: "var(--aso-navy)" }}
+      >
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-2xl font-semibold text-white mb-3">
+            Start your event request
+          </h2>
+          <p className="text-sm mb-8" style={{ color: "var(--aso-blue-light)" }}>
+            Submit event details through our intake system.
+          </p>
+          <a
+            href="https://intake.anchorstageops.com"
+            className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
+            style={{ backgroundColor: "var(--aso-orange)" }}
+          >
+            Begin Intake
+          </a>
+        </div>
       </section>
 
     </main>
