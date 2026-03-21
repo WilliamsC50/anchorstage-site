@@ -21,7 +21,7 @@ export default function Services() {
       {/* PAGE IMAGE */}
       <section className="relative h-56 md:h-72 bg-gray-900">
         <Image
-          src="/images/proof-8.jpg"
+          src="/images/card-full.jpg"
           alt="Live event production"
           fill
           className="object-cover"
@@ -103,6 +103,44 @@ export default function Services() {
               </p>
             </div>
 
+          </div>
+
+        </div>
+      </section>
+
+      {/* EVENT TYPES */}
+      <section className="bg-white py-20">
+        <div className="max-w-6xl mx-auto px-6">
+
+          <h2
+            className="text-2xl font-semibold mb-3"
+            style={{ color: "var(--aso-navy)" }}
+          >
+            Common events we support
+          </h2>
+          <p className="text-sm text-gray-500 max-w-xl mb-10 leading-relaxed">
+            If you&apos;re not sure whether we&apos;re the right fit, here&apos;s a quick look at the kinds of events we handle regularly.
+          </p>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {[
+              "Bars & venue shows",
+              "Outdoor concerts",
+              "Community events",
+              "Festivals",
+              "Private parties",
+              "Small weddings",
+              "Branded & promotional events",
+              "Corporate gatherings",
+            ].map((type) => (
+              <div
+                key={type}
+                className="rounded-lg px-4 py-3 text-sm font-medium border border-gray-100"
+                style={{ backgroundColor: "var(--aso-bg)", color: "var(--aso-navy)" }}
+              >
+                {type}
+              </div>
+            ))}
           </div>
 
         </div>
