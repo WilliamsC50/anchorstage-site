@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <main>
@@ -5,14 +7,20 @@ export default function Home() {
       {/* HERO */}
       <section
         className="relative min-h-[80vh] flex items-center bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/hero-live-performance.jpg')" }}
+        style={{ backgroundImage: "url('/images/hero-stage.jpg')" }}
       >
-        {/* DARK OVERLAY */}
-        <div className="absolute inset-0 bg-black/65" />
+        {/* GRADIENT OVERLAY */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.42) 100%)",
+          }}
+        />
 
         {/* CONTENT */}
         <div className="relative z-10 w-full">
-          <div className="max-w-6xl mx-auto px-6 py-24 text-center">
+          <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 text-center">
 
             <p className="text-xs font-semibold tracking-widest uppercase mb-5 text-white/60">
               Live Event Production
@@ -22,7 +30,7 @@ export default function Home() {
               We handle the stage.<br className="hidden md:block" /> You handle everything else.
             </h1>
 
-            <p className="text-lg md:text-xl text-white/75 mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
               Professional sound, lighting, and production for live events —
               from full outdoor stages to compact venue setups.
             </p>
@@ -47,6 +55,25 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PROOF STRIP */}
+      <section className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-300">
+        {[
+          { src: "/images/proof-1.jpg", alt: "Live event production" },
+          { src: "/images/proof-2.jpg", alt: "Stage and lighting setup" },
+          { src: "/images/proof-3.jpg", alt: "Concert production" },
+        ].map(({ src, alt }) => (
+          <div key={src} className="relative aspect-video bg-gray-900">
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              className="object-cover"
+              sizes="(min-width: 640px) 33vw, 100vw"
+            />
+          </div>
+        ))}
+      </section>
+
       {/* WHAT WE HANDLE */}
       <section className="bg-white py-20">
         <div className="max-w-6xl mx-auto px-6">
@@ -67,49 +94,71 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-6">
 
             <div
-              className="rounded-xl p-8 border border-gray-100"
+              className="rounded-xl overflow-hidden border border-gray-100"
               style={{ backgroundColor: "var(--aso-bg)" }}
             >
-              <h3
-                className="text-base font-semibold mb-3"
-                style={{ color: "var(--aso-navy)" }}
-              >
-                Full Production
-              </h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-5">
-                Stage builds, outdoor concerts, festivals, and corporate events.
-                We bring the crew, the gear, and the direction to make large-scale
-                shows run cleanly.
-              </p>
-              <ul className="text-sm text-gray-400 space-y-1.5">
-                <li>— Festival &amp; outdoor stages</li>
-                <li>— Concert production</li>
-                <li>— Corporate &amp; branded events</li>
-                <li>— Technical direction &amp; crew management</li>
-              </ul>
+              <div className="relative aspect-video bg-gray-900">
+                <Image
+                  src="/images/card-full.jpg"
+                  alt="Full outdoor stage production"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                />
+              </div>
+              <div className="p-8">
+                <h3
+                  className="text-base font-semibold mb-3"
+                  style={{ color: "var(--aso-navy)" }}
+                >
+                  Full Production
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed mb-5">
+                  Stage builds, outdoor concerts, festivals, and corporate events.
+                  We bring the crew, the gear, and the direction to make large-scale
+                  shows run cleanly.
+                </p>
+                <ul className="text-sm text-gray-400 space-y-1.5">
+                  <li>— Festival &amp; outdoor stages</li>
+                  <li>— Concert production</li>
+                  <li>— Corporate &amp; branded events</li>
+                  <li>— Technical direction &amp; crew management</li>
+                </ul>
+              </div>
             </div>
 
             <div
-              className="rounded-xl p-8 border border-gray-100"
+              className="rounded-xl overflow-hidden border border-gray-100"
               style={{ backgroundColor: "var(--aso-bg)" }}
             >
-              <h3
-                className="text-base font-semibold mb-3"
-                style={{ color: "var(--aso-navy)" }}
-              >
-                Compact &amp; Venue Events
-              </h3>
-              <p className="text-sm text-gray-500 leading-relaxed mb-5">
-                Bar shows, private events, live music nights, and smaller
-                gatherings. The same professional approach, scaled to what
-                you actually need.
-              </p>
-              <ul className="text-sm text-gray-400 space-y-1.5">
-                <li>— Bar &amp; venue live music</li>
-                <li>— Private parties &amp; celebrations</li>
-                <li>— Backyard &amp; compact setups</li>
-                <li>— Small weddings &amp; receptions</li>
-              </ul>
+              <div className="relative aspect-video bg-gray-900">
+                <Image
+                  src="/images/card-compact.jpg"
+                  alt="Compact venue live music event"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                />
+              </div>
+              <div className="p-8">
+                <h3
+                  className="text-base font-semibold mb-3"
+                  style={{ color: "var(--aso-navy)" }}
+                >
+                  Compact &amp; Venue Events
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed mb-5">
+                  Bar shows, private events, live music nights, and smaller
+                  gatherings. The same professional approach, scaled to what
+                  you actually need.
+                </p>
+                <ul className="text-sm text-gray-400 space-y-1.5">
+                  <li>— Bar &amp; venue live music</li>
+                  <li>— Private parties &amp; celebrations</li>
+                  <li>— Backyard &amp; compact setups</li>
+                  <li>— Small weddings &amp; receptions</li>
+                </ul>
+              </div>
             </div>
 
           </div>
@@ -118,7 +167,7 @@ export default function Home() {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="py-20" style={{ backgroundColor: "var(--aso-bg)" }}>
+      <section className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
 
           <h2
@@ -190,11 +239,10 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-6">
 
-            <div className="rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div
-                className="w-1.5 h-8 rounded-full mb-6"
-                style={{ backgroundColor: "var(--aso-blue)" }}
-              />
+            <div
+              className="rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
+              style={{ borderLeftColor: "var(--aso-blue)" }}
+            >
               <h3
                 className="text-base font-semibold mb-3"
                 style={{ color: "var(--aso-navy)" }}
@@ -207,11 +255,10 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div
-                className="w-1.5 h-8 rounded-full mb-6"
-                style={{ backgroundColor: "var(--aso-blue)" }}
-              />
+            <div
+              className="rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
+              style={{ borderLeftColor: "var(--aso-blue)" }}
+            >
               <h3
                 className="text-base font-semibold mb-3"
                 style={{ color: "var(--aso-navy)" }}
@@ -225,11 +272,10 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="rounded-xl p-8 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-              <div
-                className="w-1.5 h-8 rounded-full mb-6"
-                style={{ backgroundColor: "var(--aso-blue)" }}
-              />
+            <div
+              className="rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
+              style={{ borderLeftColor: "var(--aso-blue)" }}
+            >
               <h3
                 className="text-base font-semibold mb-3"
                 style={{ color: "var(--aso-navy)" }}
@@ -283,7 +329,7 @@ export default function Home() {
 
           <p
             className="text-xs"
-            style={{ color: "var(--aso-blue-light)", opacity: 0.45 }}
+            style={{ color: "var(--aso-blue-light)", opacity: 0.70 }}
           >
             Or reach us directly at contact@anchorstageops.com
           </p>
