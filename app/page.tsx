@@ -14,7 +14,7 @@ export default function Home() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.42) 100%)",
+              "linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.52) 100%)",
           }}
         />
 
@@ -22,13 +22,13 @@ export default function Home() {
         <div className="relative z-10 w-full">
           <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 text-center">
 
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center mb-10">
               <Image
                 src="/logos/aso-logo-white.svg"
                 alt="AnchorStage Operations"
-                width={260}
-                height={229}
-                className="w-[130px] md:w-[180px] lg:w-[260px] h-auto object-contain opacity-90"
+                width={220}
+                height={194}
+                className="w-[110px] md:w-[150px] lg:w-[220px] h-auto object-contain opacity-90"
               />
             </div>
 
