@@ -8,7 +8,7 @@ export default function Footer() {
         <div>
           <p className="font-semibold text-white">AnchorStage Operations</p>
           <p className="text-sm mt-1" style={{ color: "var(--aso-blue-light)", opacity: 0.8 }}>
-            From Intake to Invoice.
+            Stage to strike.
           </p>
         </div>
 
@@ -17,16 +17,6 @@ export default function Footer() {
           <Link href="/photos" className="opacity-70 hover:opacity-100 transition">Photos</Link>
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition">Contact</Link>
         </nav>
-
-        <div>
-          <a
-            href="https://intake.anchorstageops.com"
-            className="inline-block text-white text-sm font-medium px-5 py-2.5 rounded-lg transition hover:opacity-90"
-            style={{ backgroundColor: "var(--aso-orange)" }}
-          >
-            Start an Event
-          </a>
-        </div>
 
       </div>
 

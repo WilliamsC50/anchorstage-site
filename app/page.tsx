@@ -237,7 +237,7 @@ export default function Home() {
             What we bring to every event
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
             <div
               className="rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
@@ -247,11 +247,12 @@ export default function Home() {
                 className="text-base font-semibold mb-3"
                 style={{ color: "var(--aso-navy)" }}
               >
-                Sound &amp; Audio
+                Audio Services
               </h3>
               <p className="text-sm text-gray-500 leading-relaxed">
-                Professional PA systems, monitors, and live mixing — sized to your
-                room or stage and dialed in before anyone walks through the door.
+                We mix and operate live sound on your production regardless of
+                what gear is already on site. If you have a PA and need someone
+                to run it, we can do that too.
               </p>
             </div>
 
@@ -263,12 +264,29 @@ export default function Home() {
                 className="text-base font-semibold mb-3"
                 style={{ color: "var(--aso-navy)" }}
               >
-                Lighting &amp; Stage
+                Stage / PA
               </h3>
               <p className="text-sm text-gray-500 leading-relaxed">
-                Stage wash, moving fixtures, and event-appropriate lighting design.
-                We handle setup, programming, and operation so you can focus on
-                the event.
+                Scalable PA support for live music and events. From small venue
+                setups to outdoor stages, we size the system to the room and
+                get it sounding right before doors open.
+              </p>
+            </div>
+
+            <div
+              className="rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
+              style={{ borderLeftColor: "var(--aso-blue)" }}
+            >
+              <h3
+                className="text-base font-semibold mb-3"
+                style={{ color: "var(--aso-navy)" }}
+              >
+                Lighting / Rigging
+              </h3>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Wash and work lighting for stages and events. Clean, practical
+                light that reads well on stage and supports the show without
+                overcomplicating the rig.
               </p>
             </div>
 
@@ -283,14 +301,26 @@ export default function Home() {
                 Direction &amp; Execution
               </h3>
               <p className="text-sm text-gray-500 leading-relaxed">
-                One person who knows the plan and keeps things moving. Load-in,
-                soundcheck, show, strike — covered start to finish.
+                One person who owns show flow and keeps everything moving.
+                Load-in, soundcheck, show, strike — we stay on it start to
+                finish so nothing falls through.
               </p>
             </div>
 
           </div>
 
         </div>
+      </section>
+
+      {/* LOWER PROOF */}
+      <section className="relative h-64 md:h-80 bg-gray-900">
+        <Image
+          src="/images/proof-8.jpg"
+          alt="AnchorStage crew on site at a live event"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
       </section>
 
       {/* BOTTOM CTA */}
