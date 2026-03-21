@@ -4,10 +4,15 @@ export default function Contact() {
 
       {/* PAGE HEADER */}
       <section className="max-w-6xl mx-auto px-6 py-20">
-        <h1 className="text-4xl font-bold mb-4">Contact</h1>
-        <p className="text-lg text-gray-600 max-w-2xl">
-          The best way to start a conversation is through our event intake system.
-          Submit your event details and we&apos;ll follow up directly.
+        <h1
+          className="text-4xl font-bold mb-4"
+          style={{ color: "var(--aso-navy)" }}
+        >
+          Contact
+        </h1>
+        <p className="text-lg text-gray-500 max-w-2xl">
+          The best way to get started is through the intake form — it takes a few
+          minutes and gives us what we need to follow up with a clear plan.
         </p>
       </section>
 
@@ -15,34 +20,95 @@ export default function Contact() {
       <section className="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-2 gap-16">
 
         <div>
-          <h2 className="text-xl font-semibold mb-4">Start with Intake</h2>
-          <p className="text-gray-600 mb-6">
-            Our intake system collects the details we need to scope your event and
-            get you a response quickly. It covers event type, dates, location,
-            technical requirements, and budget range.
+          <h2
+            className="text-xl font-semibold mb-4"
+            style={{ color: "var(--aso-navy)" }}
+          >
+            Start with the intake form
+          </h2>
+          <p className="text-sm text-gray-500 leading-relaxed mb-6">
+            Tell us about your event — date, location, type, and any technical
+            needs. We&apos;ll review it and follow up directly with a plan.
           </p>
           <a
             href="https://intake.anchorstageops.com"
-            className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition"
+            className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
+            style={{ backgroundColor: "var(--aso-orange)" }}
           >
-            Begin Intake
+            Start Your Event
           </a>
         </div>
 
         <div>
-          <h2 className="text-xl font-semibold mb-4">Direct Contact</h2>
-          <div className="space-y-3 text-gray-600">
+          <h2
+            className="text-xl font-semibold mb-4"
+            style={{ color: "var(--aso-navy)" }}
+          >
+            Direct contact
+          </h2>
+          <div className="space-y-4 text-sm text-gray-500 leading-relaxed">
             <p>
-              <span className="font-medium text-gray-900">Email</span><br />
+              <span className="font-medium" style={{ color: "var(--aso-navy)" }}>
+                Email
+              </span>
+              <br />
               contact@anchorstageops.com
             </p>
-            <p className="text-sm text-gray-400">
-              We respond to all inquiries through our operations system.
-              Submitting intake ensures your request is logged and tracked.
+            <p>
+              We check email regularly and respond directly. Submitting the
+              intake form helps us get back to you faster with the right details.
             </p>
           </div>
         </div>
 
+      </section>
+
+      {/* SCALING / LARGER PRODUCTION */}
+      <section className="bg-gray-50 py-20">
+        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16">
+
+          <div>
+            <h2
+              className="text-xl font-semibold mb-4"
+              style={{ color: "var(--aso-navy)" }}
+            >
+              Need a larger setup?
+            </h2>
+            <p className="text-sm text-gray-500 leading-relaxed mb-4">
+              AnchorStage handles compact and mid-size events directly — sound,
+              lighting, stage, and direction. For shows that need additional scale
+              or expanded production capacity, we work with Central Florida AV
+              Solutions (CFAV), a trusted local production partner.
+            </p>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Submit through the intake form and we&apos;ll coordinate the right
+              setup from there — or reach out to CFAV directly if you already
+              know you need a larger rig.
+            </p>
+          </div>
+
+          <div className="flex flex-col justify-center">
+            <p
+              className="text-sm font-semibold mb-1"
+              style={{ color: "var(--aso-navy)" }}
+            >
+              Central Florida AV Solutions
+            </p>
+            <p className="text-sm text-gray-500 mb-5">
+              Full-scale production support for larger shows and events.
+            </p>
+            <a
+              href="https://cfav.solutions"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border text-sm font-medium px-6 py-3 rounded-lg transition hover:bg-gray-100 self-start"
+              style={{ borderColor: "var(--aso-blue)", color: "var(--aso-blue)" }}
+            >
+              Visit cfav.solutions
+            </a>
+          </div>
+
+        </div>
       </section>
 
     </main>
