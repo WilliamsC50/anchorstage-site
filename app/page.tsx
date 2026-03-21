@@ -312,17 +312,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* LOWER PROOF */}
-      <section className="relative h-64 md:h-80 bg-gray-900">
-        <Image
-          src="/images/proof-8.jpg"
-          alt="AnchorStage crew on site at a live event"
-          fill
-          className="object-cover"
-          sizes="100vw"
-        />
-      </section>
-
       {/* BOTTOM CTA */}
       <section
         className="py-20"
@@ -364,6 +353,42 @@ export default function Home() {
             Or reach us directly at contact@anchorstageops.com
           </p>
 
+        </div>
+      </section>
+
+      {/* CREDIBILITY STRIP */}
+      <section className="bg-gray-50 py-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+
+            <div>
+              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
+                Veteran-Owned &amp; Operated
+              </p>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Founded and run by a veteran with years of hands-on live event experience.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
+                Central Florida Based
+              </p>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Local crew, local knowledge. Available for events throughout the region.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
+                Built on Real Event Work
+              </p>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                From bar shows to outdoor stages — every event handled with the same professional approach.
+              </p>
+            </div>
+
+          </div>
         </div>
       </section>
 
