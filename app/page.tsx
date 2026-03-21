@@ -99,40 +99,6 @@ export default function Home() {
             >
               <div className="relative aspect-video bg-gray-900">
                 <Image
-                  src="/images/card-full.jpg"
-                  alt="Full outdoor stage production"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                />
-              </div>
-              <div className="p-8">
-                <h3
-                  className="text-base font-semibold mb-3"
-                  style={{ color: "var(--aso-navy)" }}
-                >
-                  Full Production
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed mb-5">
-                  Stage builds, outdoor concerts, festivals, and corporate events.
-                  We bring the crew, the gear, and the direction to make large-scale
-                  shows run cleanly.
-                </p>
-                <ul className="text-sm text-gray-400 space-y-1.5">
-                  <li>— Festival &amp; outdoor stages</li>
-                  <li>— Concert production</li>
-                  <li>— Corporate &amp; branded events</li>
-                  <li>— Technical direction &amp; crew management</li>
-                </ul>
-              </div>
-            </div>
-
-            <div
-              className="rounded-xl overflow-hidden border border-gray-100"
-              style={{ backgroundColor: "var(--aso-bg)" }}
-            >
-              <div className="relative aspect-video bg-gray-900">
-                <Image
                   src="/images/card-compact.jpg"
                   alt="Compact venue live music event"
                   fill
@@ -157,6 +123,40 @@ export default function Home() {
                   <li>— Private parties &amp; celebrations</li>
                   <li>— Backyard &amp; compact setups</li>
                   <li>— Small weddings &amp; receptions</li>
+                </ul>
+              </div>
+            </div>
+
+            <div
+              className="rounded-xl overflow-hidden border border-gray-100"
+              style={{ backgroundColor: "var(--aso-bg)" }}
+            >
+              <div className="relative aspect-video bg-gray-900">
+                <Image
+                  src="/images/card-full.jpg"
+                  alt="Full outdoor stage production"
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                />
+              </div>
+              <div className="p-8">
+                <h3
+                  className="text-base font-semibold mb-3"
+                  style={{ color: "var(--aso-navy)" }}
+                >
+                  Full Production
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed mb-5">
+                  Stage builds, outdoor concerts, festivals, and corporate events.
+                  We bring the crew, the gear, and the direction to make large-scale
+                  shows run cleanly.
+                </p>
+                <ul className="text-sm text-gray-400 space-y-1.5">
+                  <li>— Festival &amp; outdoor stages</li>
+                  <li>— Concert production</li>
+                  <li>— Corporate &amp; branded events</li>
+                  <li>— Technical direction &amp; crew management</li>
                 </ul>
               </div>
             </div>
