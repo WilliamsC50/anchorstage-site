@@ -22,6 +22,16 @@ export default function Home() {
         <div className="relative z-10 w-full">
           <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 text-center">
 
+            <div className="flex justify-center mb-6">
+              <Image
+                src="/anchorstage-logo.png"
+                alt="AnchorStage Operations"
+                width={96}
+                height={96}
+                className="w-9 h-9 md:w-12 md:h-12 object-contain opacity-90"
+              />
+            </div>
+
             <p className="text-xs font-semibold tracking-widest uppercase mb-5 text-white/60">
               Live Event Production
             </p>
