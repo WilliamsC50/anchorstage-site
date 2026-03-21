@@ -12,11 +12,11 @@ export default function Nav() {
         {/* LOGO + WORDMARK */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
           <Image
-            src="/anchorstage-logo.png"
-            alt="AnchorStage Operations"
-            width={38}
-            height={38}
-            className="object-contain"
+            src="/logos/aso-picture-logo.svg"
+            alt="AnchorStage Operations mark"
+            width={40}
+            height={40}
+            className="h-8 w-auto md:h-10 object-contain"
           />
           <span
             className="text-base font-semibold tracking-tight hidden sm:block"
