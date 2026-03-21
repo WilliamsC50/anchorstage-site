@@ -22,13 +22,13 @@ export default function Home() {
         <div className="relative z-10 w-full">
           <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 text-center">
 
-            <div className="flex justify-center mb-6">
+            <div className="flex justify-center mb-8">
               <Image
-                src="/anchorstage-logo.png"
+                src="/logos/aso-logo-white.svg"
                 alt="AnchorStage Operations"
-                width={96}
-                height={96}
-                className="w-9 h-9 md:w-12 md:h-12 object-contain opacity-90"
+                width={260}
+                height={229}
+                className="w-[130px] md:w-[180px] lg:w-[260px] h-auto object-contain opacity-90"
               />
             </div>
 
