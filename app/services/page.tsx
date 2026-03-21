@@ -21,7 +21,7 @@ export default function Services() {
       {/* PAGE IMAGE */}
       <section className="relative h-56 md:h-72 bg-gray-900">
         <Image
-          src="/images/hero-live-performance.jpg"
+          src="/images/proof-8.jpg"
           alt="Live event production"
           fill
           className="object-cover"
