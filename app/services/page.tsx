@@ -1,67 +1,108 @@
+import Image from "next/image";
+
 export default function Services() {
   return (
     <main className="bg-white text-gray-900">
 
       {/* PAGE HEADER */}
       <section className="max-w-6xl mx-auto px-6 py-20">
-        <h1 className="text-4xl font-bold mb-4">Services</h1>
-        <p className="text-lg text-gray-600 max-w-2xl">
-          AnchorStage provides structured production operations for live events.
-          From planning through execution, we handle the operational work so your
-          event runs on schedule and on spec.
+        <h1
+          className="text-4xl font-bold mb-4"
+          style={{ color: "var(--aso-navy)" }}
+        >
+          Services
+        </h1>
+        <p className="text-lg text-gray-500 max-w-2xl">
+          Professional sound, lighting, and production direction for live events —
+          from compact venue shows to full outdoor stages.
         </p>
+      </section>
+
+      {/* PAGE IMAGE */}
+      <section className="relative h-56 md:h-72 bg-gray-900">
+        <Image
+          src="/images/hero-live-performance.jpg"
+          alt="Live event production"
+          fill
+          className="object-cover"
+          sizes="100vw"
+        />
       </section>
 
       {/* SERVICE AREAS */}
       <section className="bg-gray-50 py-20">
-        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-10">
+        <div className="max-w-6xl mx-auto px-6">
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Production Planning</h2>
-            <p className="text-gray-600">
-              Structured event intake, logistics planning, and timeline development
-              for corporate events, concerts, and touring productions.
-            </p>
-          </div>
+          <div className="grid md:grid-cols-2 gap-8">
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Technical Direction</h2>
-            <p className="text-gray-600">
-              Coordination and oversight of audio, video, lighting, and staging
-              vendors. Single point of accountability for technical execution.
-            </p>
-          </div>
+            <div
+              className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
+              style={{ borderLeftColor: "var(--aso-blue)" }}
+            >
+              <h2
+                className="text-lg font-semibold mb-3"
+                style={{ color: "var(--aso-navy)" }}
+              >
+                Audio Services
+              </h2>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                We can step into your event and run live sound regardless of what
+                gear is already on site. If you have a PA and just need an operator,
+                we can fill that role. If you need us to bring a system, we do that too.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Crew Coordination</h2>
-            <p className="text-gray-600">
-              Scheduling, communication, and management of production crew across
-              departments. Labor coordination from load-in through strike.
-            </p>
-          </div>
+            <div
+              className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
+              style={{ borderLeftColor: "var(--aso-blue)" }}
+            >
+              <h2
+                className="text-lg font-semibold mb-3"
+                style={{ color: "var(--aso-navy)" }}
+              >
+                Stage / PA
+              </h2>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                PA support scaled to your event — from small indoor venues to outdoor
+                stages. We size the system to the room, handle setup, and make sure
+                it&apos;s dialed before the first act.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">On-Site Operations</h2>
-            <p className="text-gray-600">
-              Day-of operational support to keep events on schedule. Active
-              problem-solving and crew direction during live execution.
-            </p>
-          </div>
+            <div
+              className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
+              style={{ borderLeftColor: "var(--aso-blue)" }}
+            >
+              <h2
+                className="text-lg font-semibold mb-3"
+                style={{ color: "var(--aso-navy)" }}
+              >
+                Lighting / Rigging
+              </h2>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                Wash and work lighting for stages and events. We keep it practical —
+                clean light that reads well on stage and supports the show without
+                overcomplicating the rig.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">AV &amp; Staging Coordination</h2>
-            <p className="text-gray-600">
-              Vendor procurement, specification review, and site coordination for
-              audio, video, lighting, and staging systems.
-            </p>
-          </div>
+            <div
+              className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
+              style={{ borderLeftColor: "var(--aso-blue)" }}
+            >
+              <h2
+                className="text-lg font-semibold mb-3"
+                style={{ color: "var(--aso-navy)" }}
+              >
+                Direction &amp; Execution
+              </h2>
+              <p className="text-sm text-gray-500 leading-relaxed">
+                One person who owns the show flow and keeps everything on track.
+                We coordinate load-in, run soundcheck, manage the show, and stay
+                through strike — so you&apos;re not the one chasing details.
+              </p>
+            </div>
 
-          <div>
-            <h2 className="text-xl font-semibold mb-2">Operations Platform</h2>
-            <p className="text-gray-600">
-              The AnchorStage system handles event intake, task tracking, crew
-              scheduling, and production logistics in one structured workflow.
-            </p>
           </div>
 
         </div>
@@ -69,16 +110,21 @@ export default function Services() {
 
       {/* CTA */}
       <section className="max-w-6xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-2xl font-semibold mb-4">Ready to get started?</h2>
-        <p className="text-gray-600 mb-8">
-          Submit your event details through our intake system and we&apos;ll follow up
-          to discuss your production needs.
+        <h2
+          className="text-2xl font-semibold mb-3"
+          style={{ color: "var(--aso-navy)" }}
+        >
+          Ready to get started?
+        </h2>
+        <p className="text-sm text-gray-500 mb-8 max-w-sm mx-auto">
+          Submit your event details and we&apos;ll follow up with a clear plan.
         </p>
         <a
           href="https://intake.anchorstageops.com"
-          className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition"
+          className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
+          style={{ backgroundColor: "var(--aso-orange)" }}
         >
-          Begin Intake
+          Start Your Event
         </a>
       </section>
 
