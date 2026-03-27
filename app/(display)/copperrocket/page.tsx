@@ -34,13 +34,13 @@ export default function CopperRocketPage() {
     >
       {/* ── Glass overlay panel ─────────────────────────────────────────────── */}
       <div
-        className="absolute overflow-hidden rounded-2xl border border-white/10 backdrop-blur-sm"
+        className="absolute overflow-hidden rounded-lg border border-white/[0.15]"
         style={{
           top: PANEL.top,
           left: PANEL.left,
           width: PANEL.width,
           bottom: PANEL.bottom,
-          backgroundColor: "rgba(0, 0, 0, 0.60)",
+          backgroundColor: "rgba(5, 15, 28, 0.82)",
         }}
       >
         {/* SignupDisplay owns everything inside the panel including scrollable area */}
