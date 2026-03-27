@@ -26,8 +26,8 @@ const PANEL = {
 // Replace with a DB-driven value when the admin page is ready.
 const NOTICE = {
   eyebrow: "Tonight",
-  headline: "Signups open at 7:00 PM",
-  body: "See the host to join the list.",
+  headline: "Signups open at 7:00 PM sharp",
+  body: "See host to join the list.",
 } as const;
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -56,7 +56,7 @@ export default function CopperRocketPage() {
       </div>
 
       {/* ── Right: display composition ─────────────────────────────────────────
-           Four zones: notice (top) → mic + event label (mid) → branding (bottom)
+           Three zones: notice (top) → event identity (mid) → branding (bottom)
            NOTICE const above is the only thing to swap when admin wiring is ready.
       ──────────────────────────────────────────────────────────────────────── */}
       <div
@@ -64,103 +64,139 @@ export default function CopperRocketPage() {
         style={{ top: "8%", bottom: "6%", left: "50%", right: "4%" }}
       >
 
-        {/* 1. Notice area — left-aligned, reads like a bulletin */}
+        {/* 1. Notice panel */}
         <div
-          className="flex flex-col gap-3"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.18)", paddingTop: "1.25rem" }}
+          className="relative flex flex-col gap-4"
+          style={{
+            border: "1px solid rgba(255,255,255,0.14)",
+            borderRadius: 10,
+            backgroundColor: "rgba(255,255,255,0.04)",
+            padding: "1.5rem 1.5rem 1.75rem",
+          }}
         >
+          {/* LIVE NOTICE pill — top-right of container */}
+          <span
+            className="absolute uppercase font-semibold text-white"
+            style={{
+              top: -11,
+              right: 12,
+              fontSize: 9,
+              letterSpacing: "0.3em",
+              padding: "3px 10px",
+              borderRadius: 20,
+              border: "1px solid rgba(255,255,255,0.20)",
+              backgroundColor: "rgba(5, 15, 28, 1)",
+              opacity: 0.65,
+            }}
+          >
+            Live Notice
+          </span>
+
           <p
-            className="font-semibold uppercase text-white"
-            style={{ fontSize: 10, letterSpacing: "0.45em", opacity: 0.45, color: "var(--aso-orange)" }}
+            className="font-semibold uppercase"
+            style={{ fontSize: 12, letterSpacing: "0.45em", color: "var(--aso-orange)", opacity: 0.80 }}
           >
             {NOTICE.eyebrow}
           </p>
           <p
             className="font-bold text-white"
-            style={{ fontSize: "clamp(1.1rem, 1.7vw, 1.6rem)", letterSpacing: "0.01em", opacity: 0.72, lineHeight: 1.25 }}
+            style={{ fontSize: "clamp(1.5rem, 2.3vw, 2.2rem)", letterSpacing: "0.01em", opacity: 0.80, lineHeight: 1.2 }}
           >
             {NOTICE.headline}
           </p>
           <p
             className="text-white"
-            style={{ fontSize: "clamp(0.8rem, 1.1vw, 1rem)", letterSpacing: "0.03em", opacity: 0.35 }}
+            style={{ fontSize: "clamp(0.95rem, 1.35vw, 1.2rem)", letterSpacing: "0.03em", opacity: 0.40 }}
           >
             {NOTICE.body}
           </p>
         </div>
 
-        {/* 2. Event identity — mic icon + label, centered */}
-        <div className="flex flex-col items-center gap-5">
-          <div style={{ opacity: 0.16 }}>
-            <svg
-              viewBox="0 0 60 140"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{ width: 88, height: "auto", display: "block" }}
-              aria-hidden="true"
-            >
-              <rect x="10" y="0" width="40" height="72" rx="20" fill="white" />
-              <line x1="14" y1="22" x2="46" y2="22" stroke="#0F2F4F" strokeWidth="2.5" strokeLinecap="round" />
-              <line x1="12" y1="36" x2="48" y2="36" stroke="#0F2F4F" strokeWidth="2.5" strokeLinecap="round" />
-              <line x1="14" y1="50" x2="46" y2="50" stroke="#0F2F4F" strokeWidth="2.5" strokeLinecap="round" />
-              <rect x="27" y="72" width="6" height="44" fill="white" />
-              <rect x="8" y="116" width="44" height="5" rx="2.5" fill="white" />
-              <rect x="27" y="120" width="6" height="16" rx="3" fill="white" />
-            </svg>
-          </div>
-          <div className="flex flex-col items-center gap-1 text-center">
-            <p
-              className="font-bold uppercase text-white"
-              style={{ fontSize: "clamp(1rem, 1.6vw, 1.5rem)", letterSpacing: "0.35em", opacity: 0.25 }}
-            >
-              Open Mic Night
-            </p>
-            <p
-              className="font-medium uppercase text-white"
-              style={{ fontSize: "clamp(0.65rem, 0.9vw, 0.85rem)", letterSpacing: "0.5em", opacity: 0.14 }}
-            >
-              Copper Rocket
-            </p>
-          </div>
+        {/* 2. Event identity — text only, centered */}
+        <div className="flex flex-col items-center gap-1 text-center">
+          <p
+            className="font-bold uppercase text-white"
+            style={{ fontSize: "clamp(1rem, 1.6vw, 1.5rem)", letterSpacing: "0.35em", opacity: 0.22 }}
+          >
+            Open Mic Night
+          </p>
+          <p
+            className="font-medium uppercase text-white"
+            style={{ fontSize: "clamp(0.65rem, 0.9vw, 0.85rem)", letterSpacing: "0.5em", opacity: 0.13 }}
+          >
+            Copper Rocket
+          </p>
         </div>
 
-        {/* 3. Branding footer — sponsor + ASO, centered */}
-        <div className="flex flex-col items-center gap-4">
+        {/* 3. Branding footer — matched two-card sponsor strip */}
+        <div className="flex flex-col items-center gap-3">
           <p
             className="uppercase text-white"
             style={{ fontSize: 10, letterSpacing: "0.35em", opacity: 0.22 }}
           >
             Brought to you by
           </p>
-          {/* CFAV placeholder — swap with <Image> when logo is available */}
-          <div
-            style={{
-              width: 100,
-              height: 34,
-              border: "1px solid rgba(255,255,255,0.14)",
-              borderRadius: 4,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <span
-              className="uppercase text-white"
-              style={{ fontSize: 9, letterSpacing: "0.3em", opacity: 0.20 }}
+
+          {/* Shared glass card style: 240×120, transparent + orange border */}
+          <div className="flex flex-row items-center gap-5">
+
+            {/* CFAV card */}
+            <div
+              style={{
+                width: 240,
+                height: 120,
+                borderRadius: 10,
+                backgroundColor: "rgba(255,255,255,0.06)",
+                backdropFilter: "blur(10px)",
+                border: "1.5px solid rgba(255,122,26,0.45)",
+                filter: "drop-shadow(0px 10px 18px rgba(0,0,0,0.40))",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 6,
+              }}
             >
-              CFAV
-            </span>
+              <span
+                className="uppercase font-bold text-white"
+                style={{ fontSize: 28, letterSpacing: "0.2em" }}
+              >
+                CFAV
+              </span>
+              <span
+                className="uppercase text-white"
+                style={{ fontSize: 9, letterSpacing: "0.3em", opacity: 0.45 }}
+              >
+                Logo Pending
+              </span>
+            </div>
+
+            {/* ASO card */}
+            <div
+              style={{
+                width: 240,
+                height: 120,
+                borderRadius: 10,
+                backgroundColor: "rgba(255,255,255,0.06)",
+                backdropFilter: "blur(10px)",
+                border: "1.5px solid rgba(255,122,26,0.45)",
+                filter: "drop-shadow(0px 10px 18px rgba(0,0,0,0.40))",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "14px 20px",
+              }}
+            >
+              <Image
+                src="/logos/aso-logo-white.png"
+                alt="AnchorStage Operations"
+                width={200}
+                height={92}
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+              />
+            </div>
+
           </div>
-          <Image
-            src="/logos/aso-logo-white.png"
-            alt="AnchorStage Operations"
-            width={220}
-            height={80}
-            style={{
-              opacity: 0.8,
-              filter: "drop-shadow(0px 6px 18px rgba(0,0,0,0.35))",
-              objectFit: "contain",
-            }}
-          />
         </div>
 
       </div>

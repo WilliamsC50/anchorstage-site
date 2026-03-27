@@ -177,14 +177,14 @@ export default function SignupDisplay() {
       {/* NOW PLAYING ─────────────────────────────────────────────────────── */}
       <section>
         <p
-          className="text-xs font-semibold tracking-widest uppercase mb-4"
-          style={{ color: "var(--aso-orange)" }}
+          className="font-semibold uppercase mb-1"
+          style={{ fontSize: "3.75rem", letterSpacing: "0.06em", color: "var(--aso-orange)", opacity: 0.82 }}
         >
           Now Playing
         </p>
         {nowPlaying ? (
           <div>
-            <p className="text-6xl font-black text-white leading-tight tracking-tight">
+            <p className="font-black text-white leading-tight tracking-tight" style={{ fontSize: "5rem" }}>
               {nowPlaying.display_name}
             </p>
             {nowPlaying.song_title && (
@@ -203,7 +203,7 @@ export default function SignupDisplay() {
       {/* UP NEXT ─────────────────────────────────────────────────────────── */}
       <section>
         <p
-          className="text-xs font-semibold tracking-widest uppercase mb-5"
+          className="text-base font-bold tracking-widest uppercase mb-3"
           style={{ color: "var(--aso-blue-light)" }}
         >
           Up Next
