@@ -35,10 +35,15 @@ const NOTICE = {
 export default function CopperRocketPage() {
   return (
     <div
-      className="fixed inset-0 overflow-hidden bg-cover bg-center bg-no-repeat"
+      className="fixed inset-0 overflow-hidden"
       style={{
-        backgroundImage: GRAPHIC_URL ? `url(${GRAPHIC_URL})` : undefined,
         backgroundColor: "#0F2F4F",
+        backgroundImage: GRAPHIC_URL
+          ? `linear-gradient(to right, rgba(5,10,20,0.9) 0%, rgba(10,20,30,0.75) 50%, rgba(10,20,30,0.65) 100%), url('${GRAPHIC_URL}')`
+          : `linear-gradient(to right, rgba(5,10,20,0.92) 0%, rgba(10,20,30,0.82) 45%, rgba(10,20,30,0.72) 100%), url('/logos/CROM_BG.png')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       {/* ── Left: live list panel ────────────────────────────────────────────── */}
@@ -60,7 +65,7 @@ export default function CopperRocketPage() {
            NOTICE const above is the only thing to swap when admin wiring is ready.
       ──────────────────────────────────────────────────────────────────────── */}
       <div
-        className="absolute flex flex-col justify-between select-none pointer-events-none"
+        className="absolute flex flex-col justify-start gap-10 select-none pointer-events-none"
         style={{ top: "8%", bottom: "6%", left: "50%", right: "4%" }}
       >
 
@@ -71,7 +76,7 @@ export default function CopperRocketPage() {
             border: "1px solid rgba(255,255,255,0.14)",
             borderRadius: 10,
             backgroundColor: "rgba(255,255,255,0.04)",
-            padding: "1.5rem 1.5rem 1.75rem",
+            padding: "1.75rem 2rem 2rem",
           }}
         >
           {/* LIVE NOTICE pill — top-right of container */}
@@ -116,13 +121,13 @@ export default function CopperRocketPage() {
         <div className="flex flex-col items-center gap-1 text-center">
           <p
             className="font-bold uppercase text-white"
-            style={{ fontSize: "clamp(1rem, 1.6vw, 1.5rem)", letterSpacing: "0.35em", opacity: 0.22 }}
+            style={{ fontSize: "clamp(1.25rem, 2vw, 1.9rem)", letterSpacing: "0.22em", opacity: 0.36 }}
           >
             Open Mic Night
           </p>
           <p
             className="font-medium uppercase text-white"
-            style={{ fontSize: "clamp(0.65rem, 0.9vw, 0.85rem)", letterSpacing: "0.5em", opacity: 0.13 }}
+            style={{ fontSize: "clamp(0.75rem, 1.1vw, 1rem)", letterSpacing: "0.4em", opacity: 0.18 }}
           >
             Copper Rocket
           </p>
