@@ -15,10 +15,10 @@ const GRAPHIC_URL = "";
 // Percentage-based panel insets.
 // Adjust these to align with the graphic's reserved display window.
 const PANEL = {
-  top: "18%",
-  left: "28%",
-  right: "28%",
-  bottom: "10%",
+  top: "13%",
+  left: "7%",
+  width: "34%",
+  bottom: "11%",
 } as const;
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -38,7 +38,7 @@ export default function CopperRocketPage() {
         style={{
           top: PANEL.top,
           left: PANEL.left,
-          right: PANEL.right,
+          width: PANEL.width,
           bottom: PANEL.bottom,
           backgroundColor: "rgba(0, 0, 0, 0.60)",
         }}
