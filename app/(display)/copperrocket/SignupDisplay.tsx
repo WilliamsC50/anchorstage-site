@@ -172,7 +172,7 @@ export default function SignupDisplay() {
 
   // ── Active session with live data ──────────────────────────────────────────
   return (
-    <div className="h-full overflow-y-auto scrollbar-hide px-10 py-8 flex flex-col gap-8">
+    <div className="h-full overflow-y-auto scrollbar-hide px-12 py-10 flex flex-col gap-10">
 
       {/* NOW PLAYING ─────────────────────────────────────────────────────── */}
       <section>
@@ -184,7 +184,7 @@ export default function SignupDisplay() {
         </p>
         {nowPlaying ? (
           <div>
-            <p className="text-5xl font-bold text-white leading-tight tracking-tight">
+            <p className="text-6xl font-black text-white leading-tight tracking-tight">
               {nowPlaying.display_name}
             </p>
             {nowPlaying.song_title && (

@@ -15,10 +15,10 @@ const GRAPHIC_URL = "";
 // Percentage-based panel insets.
 // Adjust these to align with the graphic's reserved display window.
 const PANEL = {
-  top: "13%",
-  left: "7%",
-  width: "34%",
-  bottom: "11%",
+  top: "10%",
+  left: "4%",
+  width: "38%",
+  bottom: "10%",
 } as const;
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
