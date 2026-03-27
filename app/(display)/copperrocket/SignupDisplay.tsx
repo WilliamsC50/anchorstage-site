@@ -13,7 +13,7 @@ type OpenMicSession = {
   status: string;
 };
 
-type SignupStatus = "queued" | "on_stage" | "done" | "skipped";
+type SignupStatus = "QUEUED" | "ON_STAGE" | "DONE" | "skipped";
 
 type OpenMicSignup = {
   signup_id: string;
@@ -28,7 +28,7 @@ type OpenMicSignup = {
 
 // Statuses that mean a session is live tonight.
 // Adjust once the actual DB values are confirmed.
-const ACTIVE_SESSION_STATUSES = ["active", "open", "live"];
+const ACTIVE_SESSION_STATUSES = ["ACTIVE"];
 
 // Polling interval. Used as a continuous fallback even when realtime is active.
 const POLL_INTERVAL_MS = 30_000;
@@ -64,7 +64,7 @@ async function fetchData(): Promise<{
     .from("open_mic_signup")
     .select("signup_id, session_id, display_name, sort_order, status, song_title")
     .eq("session_id", session.session_id)
-    .in("status", ["queued", "on_stage", "done"])
+    .in("status", ["QUEUED", "ON_STAGE", "DONE"])
     .order("sort_order", { ascending: true });
 
   if (signupsError) {
@@ -142,9 +142,9 @@ export default function SignupDisplay() {
 
   // ── Derive display sections ────────────────────────────────────────────────
   // signups arrive ordered by sort_order from the query.
-  const nowPlaying = signups.find((s) => s.status === "on_stage") ?? null;
-  const upNext = signups.filter((s) => s.status === "queued");
-  const completed = signups.filter((s) => s.status === "done");
+  const nowPlaying = signups.find((s) => s.status === "ON_STAGE") ?? null;
+  const upNext = signups.filter((s) => s.status === "QUEUED");
+  const completed = signups.filter((s) => s.status === "DONE");
 
   // Slot numbers for Up Next: if someone is on stage they hold slot 1.
   const upNextStartSlot = nowPlaying ? 2 : 1;
