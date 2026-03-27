@@ -40,7 +40,7 @@ export default function CopperRocketPage() {
         backgroundColor: "#0F2F4F",
         backgroundImage: GRAPHIC_URL
           ? `linear-gradient(to right, rgba(5,10,20,0.9) 0%, rgba(10,20,30,0.75) 50%, rgba(10,20,30,0.65) 100%), url('${GRAPHIC_URL}')`
-          : `linear-gradient(to right, rgba(5,10,20,0.92) 0%, rgba(10,20,30,0.82) 45%, rgba(10,20,30,0.72) 100%), url('/logos/CROM_BG.png')`,
+          : `linear-gradient(to right, rgba(5,10,20,0.85) 0%, rgba(10,20,30,0.70) 45%, rgba(10,20,30,0.58) 100%), url('/logos/CROM_BG.png')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -48,13 +48,14 @@ export default function CopperRocketPage() {
     >
       {/* ── Left: live list panel ────────────────────────────────────────────── */}
       <div
-        className="absolute overflow-hidden rounded-lg border border-white/[0.15]"
+        className="absolute overflow-hidden rounded-lg"
         style={{
           top: PANEL.top,
           left: PANEL.left,
           width: PANEL.width,
           bottom: PANEL.bottom,
           backgroundColor: "rgba(5, 15, 28, 0.82)",
+          border: "1.5px solid rgba(255,122,26,0.45)",
         }}
       >
         <SignupDisplay />
@@ -65,15 +66,15 @@ export default function CopperRocketPage() {
            NOTICE const above is the only thing to swap when admin wiring is ready.
       ──────────────────────────────────────────────────────────────────────── */}
       <div
-        className="absolute flex flex-col justify-start gap-10 select-none pointer-events-none"
-        style={{ top: "8%", bottom: "6%", left: "50%", right: "4%" }}
+        className="absolute flex flex-col justify-between select-none pointer-events-none"
+        style={{ top: "10%", bottom: "10%", left: "46%", right: "4%" }}
       >
 
         {/* 1. Notice panel */}
         <div
           className="relative flex flex-col gap-4"
           style={{
-            border: "1px solid rgba(255,255,255,0.14)",
+            border: "1.5px solid rgba(255,122,26,0.45)",
             borderRadius: 10,
             backgroundColor: "rgba(255,255,255,0.04)",
             padding: "1.75rem 2rem 2rem",
@@ -142,14 +143,14 @@ export default function CopperRocketPage() {
             Brought to you by
           </p>
 
-          {/* Shared glass card style: 240×120, transparent + orange border */}
+          {/* Shared glass card style: 160×160 square, transparent + orange border */}
           <div className="flex flex-row items-center gap-5">
 
             {/* CFAV card */}
             <div
               style={{
-                width: 240,
-                height: 120,
+                width: 160,
+                height: 160,
                 borderRadius: 10,
                 backgroundColor: "rgba(255,255,255,0.06)",
                 backdropFilter: "blur(10px)",
@@ -164,7 +165,7 @@ export default function CopperRocketPage() {
             >
               <span
                 className="uppercase font-bold text-white"
-                style={{ fontSize: 28, letterSpacing: "0.2em" }}
+                style={{ fontSize: 24, letterSpacing: "0.2em" }}
               >
                 CFAV
               </span>
@@ -179,8 +180,8 @@ export default function CopperRocketPage() {
             {/* ASO card */}
             <div
               style={{
-                width: 240,
-                height: 120,
+                width: 160,
+                height: 160,
                 borderRadius: 10,
                 backgroundColor: "rgba(255,255,255,0.06)",
                 backdropFilter: "blur(10px)",
@@ -189,14 +190,14 @@ export default function CopperRocketPage() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                padding: "14px 20px",
+                padding: "16px",
               }}
             >
               <Image
                 src="/logos/aso-logo-white.png"
                 alt="AnchorStage Operations"
-                width={200}
-                height={92}
+                width={128}
+                height={128}
                 style={{ objectFit: "contain", width: "100%", height: "100%" }}
               />
             </div>
