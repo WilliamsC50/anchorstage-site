@@ -16,8 +16,8 @@ const ACTIVE_SESSION_STATUSES = ["ACTIVE"];
 const POLL_INTERVAL_MS = 30_000;
 
 const DEFAULTS = {
-  headline: "Signups open at 7:00 PM sharp",
-  body: "See host to join the list.",
+  headline: "Sign ups start at 7:00 PM",
+  body: 'See host at the "Tech Table" for more details.',
 } as const;
 
 // ─── Data fetch ───────────────────────────────────────────────────────────────
@@ -94,7 +94,7 @@ export default function NoticePanel() {
     >
       {/* LIVE NOTICE pill — top-right of container */}
       <span
-        className="absolute uppercase font-semibold text-white"
+        className="absolute uppercase font-semibold"
         style={{
           top: -11,
           right: 12,
@@ -102,9 +102,9 @@ export default function NoticePanel() {
           letterSpacing: "0.3em",
           padding: "3px 10px",
           borderRadius: 20,
-          border: "1px solid rgba(255,255,255,0.20)",
-          backgroundColor: "rgba(5, 15, 28, 1)",
-          opacity: 0.65,
+          border: "1.5px solid #cc0000",
+          backgroundColor: "#000000",
+          color: "#cc0000",
         }}
       >
         Live Notice

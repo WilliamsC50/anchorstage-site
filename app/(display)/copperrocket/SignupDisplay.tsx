@@ -255,24 +255,6 @@ export default function SignupDisplay() {
         )}
       </section>
 
-      {/* COMPLETED — only rendered when at least one signup is done ──────── */}
-      {completed.length > 0 && (
-        <>
-          <div className="border-t border-white/10" />
-          <section>
-            <p className="text-xs font-semibold tracking-widest uppercase mb-4 text-white/30">
-              Completed
-            </p>
-            <ul className="flex flex-col gap-2">
-              {completed.map((signup) => (
-                <li key={signup.signup_id} className="text-base text-white/30">
-                  {signup.display_name}
-                </li>
-              ))}
-            </ul>
-          </section>
-        </>
-      )}
 
     </div>
   );
