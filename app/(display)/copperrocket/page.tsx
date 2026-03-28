@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import SignupDisplay from "./SignupDisplay";
+import NoticePanel from "./NoticePanel";
 
 export const metadata: Metadata = {
   title: "Copper Rocket Open Mic — AnchorStage",
@@ -20,14 +21,6 @@ const PANEL = {
   left: "4%",
   width: "38%",
   bottom: "10%",
-} as const;
-
-// Static notice shown on the right side of the display.
-// Replace with a DB-driven value when the admin page is ready.
-const NOTICE = {
-  eyebrow: "Tonight",
-  headline: "Signups open at 7:00 PM sharp",
-  body: "See host to join the list.",
 } as const;
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -70,53 +63,8 @@ export default function CopperRocketPage() {
         style={{ top: "10%", bottom: "10%", left: "46%", right: "4%" }}
       >
 
-        {/* 1. Notice panel */}
-        <div
-          className="relative flex flex-col gap-4"
-          style={{
-            border: "1.5px solid rgba(255,122,26,0.45)",
-            borderRadius: 10,
-            backgroundColor: "rgba(255,255,255,0.04)",
-            padding: "1.75rem 2rem 2rem",
-          }}
-        >
-          {/* LIVE NOTICE pill — top-right of container */}
-          <span
-            className="absolute uppercase font-semibold text-white"
-            style={{
-              top: -11,
-              right: 12,
-              fontSize: 9,
-              letterSpacing: "0.3em",
-              padding: "3px 10px",
-              borderRadius: 20,
-              border: "1px solid rgba(255,255,255,0.20)",
-              backgroundColor: "rgba(5, 15, 28, 1)",
-              opacity: 0.65,
-            }}
-          >
-            Live Notice
-          </span>
-
-          <p
-            className="font-semibold uppercase"
-            style={{ fontSize: 12, letterSpacing: "0.45em", color: "var(--aso-orange)", opacity: 0.80 }}
-          >
-            {NOTICE.eyebrow}
-          </p>
-          <p
-            className="font-bold text-white"
-            style={{ fontSize: "clamp(1.5rem, 2.3vw, 2.2rem)", letterSpacing: "0.01em", opacity: 0.80, lineHeight: 1.2 }}
-          >
-            {NOTICE.headline}
-          </p>
-          <p
-            className="text-white"
-            style={{ fontSize: "clamp(0.95rem, 1.35vw, 1.2rem)", letterSpacing: "0.03em", opacity: 0.40 }}
-          >
-            {NOTICE.body}
-          </p>
-        </div>
+        {/* 1. Notice panel — driven by session.display_notice / display_subnotice */}
+        <NoticePanel />
 
         {/* 2. Event identity — text only, centered */}
         <div className="flex flex-col items-center gap-1 text-center">
