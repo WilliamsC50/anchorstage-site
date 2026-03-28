@@ -42,6 +42,7 @@ export default function NoticePanel() {
   const [session, setSession] = useState<NoticeSession | null>(null);
 
   useEffect(() => {
+    const db = getSupabaseClient();
     let mounted = true;
 
     async function load() {
@@ -52,9 +53,27 @@ export default function NoticePanel() {
     load();
     const poll = setInterval(load, POLL_INTERVAL_MS);
 
+    // Realtime: re-fetch whenever any Copper Rocket session row changes.
+    // Catches display_notice / display_subnotice edits and status transitions
+    // (e.g. ACTIVE → DRAFT) without waiting for the next poll cycle.
+    const channel = db
+      .channel("cr_session_notice")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "open_mic_session",
+          filter: "venue_slug=eq.copperrocket",
+        },
+        () => load()
+      )
+      .subscribe();
+
     return () => {
       mounted = false;
       clearInterval(poll);
+      db.removeChannel(channel);
     };
   }, []);
 

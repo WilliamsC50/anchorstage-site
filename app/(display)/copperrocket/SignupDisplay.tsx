@@ -133,10 +133,29 @@ export default function SignupDisplay() {
     // If realtime is working, polls are redundant but harmless on a low-traffic page.
     const poll = setInterval(load, POLL_INTERVAL_MS);
 
+    // Session-level realtime channel (static — watches the whole venue).
+    // Catches status transitions (ACTIVE ↔ DRAFT), session selection changes,
+    // and any other session row edits without waiting for the next poll cycle.
+    // The signup channel (above) is still scoped per session_id; this complements it.
+    const sessionChannel = db
+      .channel("cr_session_display")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "open_mic_session",
+          filter: "venue_slug=eq.copperrocket",
+        },
+        () => load()
+      )
+      .subscribe();
+
     return () => {
       mounted = false;
       clearInterval(poll);
       if (channel) db.removeChannel(channel);
+      db.removeChannel(sessionChannel);
     };
   }, []);
 
