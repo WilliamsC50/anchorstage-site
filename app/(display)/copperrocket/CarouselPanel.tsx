@@ -9,6 +9,21 @@ type CarouselSession = {
   display_carousel_enabled: boolean | null;
 };
 
+type CarouselItem = {
+  item_id: string;
+  title: string | null;
+  body: string | null;
+  image_url: string | null;
+  sort_order: number;
+};
+
+type Slide = {
+  label?: string;
+  heading?: string;
+  body?: string;
+  imageUrl?: string;
+};
+
 // ─── Configuration ────────────────────────────────────────────────────────────
 
 const ACTIVE_SESSION_STATUSES = ["ACTIVE"];
@@ -16,7 +31,7 @@ const POLL_INTERVAL_MS = 30_000;
 const SLIDE_INTERVAL_MS = 7_000;
 const FADE_DURATION_MS = 350;
 
-const SLIDES = [
+const PLACEHOLDER_SLIDES: Slide[] = [
   {
     label: "Bar Specials",
     heading: "Tonight's Bar Specials",
@@ -37,9 +52,9 @@ const SLIDES = [
     heading: "Open Mic Gallery",
     body: "Photos from past open mic nights — follow us to see yours.",
   },
-] as const;
+];
 
-// ─── Data fetch ───────────────────────────────────────────────────────────────
+// ─── Data fetchers ────────────────────────────────────────────────────────────
 
 async function fetchCarouselEnabled(): Promise<boolean> {
   const db = getSupabaseClient();
@@ -55,27 +70,51 @@ async function fetchCarouselEnabled(): Promise<boolean> {
   return !!(data[0] as CarouselSession).display_carousel_enabled;
 }
 
+async function fetchCarouselItems(): Promise<Slide[]> {
+  const db = getSupabaseClient();
+  const { data, error } = await db
+    .from("open_mic_carousel_item")
+    .select("item_id, title, body, image_url, sort_order")
+    .eq("venue_slug", "copperrocket")
+    .eq("is_enabled", true)
+    .order("sort_order", { ascending: true });
+
+  if (error || !data || data.length === 0) return [];
+
+  return (data as CarouselItem[]).map((item) => ({
+    heading: item.title ?? undefined,
+    body: item.body ?? undefined,
+    imageUrl: item.image_url ?? undefined,
+  }));
+}
+
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function CarouselPanel() {
   const [enabled, setEnabled] = useState(false);
+  const [slides, setSlides] = useState<Slide[]>(PLACEHOLDER_SLIDES);
   const [slideIndex, setSlideIndex] = useState(0);
   const [fading, setFading] = useState(false);
 
-  // ── Session subscription: enables/disables carousel in real time ───────────
+  // ── Session + items: polling and realtime subscriptions ───────────────────
   useEffect(() => {
     const db = getSupabaseClient();
     let mounted = true;
 
     async function load() {
-      const result = await fetchCarouselEnabled();
-      if (mounted) setEnabled(result);
+      const [isEnabled, dbSlides] = await Promise.all([
+        fetchCarouselEnabled(),
+        fetchCarouselItems(),
+      ]);
+      if (!mounted) return;
+      setEnabled(isEnabled);
+      setSlides(dbSlides.length > 0 ? dbSlides : PLACEHOLDER_SLIDES);
     }
 
     load();
     const poll = setInterval(load, POLL_INTERVAL_MS);
 
-    const channel = db
+    const sessionChannel = db
       .channel("cr_session_carousel")
       .on(
         "postgres_changes",
@@ -89,31 +128,47 @@ export default function CarouselPanel() {
       )
       .subscribe();
 
+    const itemsChannel = db
+      .channel("cr_carousel_items")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "open_mic_carousel_item",
+          filter: "venue_slug=eq.copperrocket",
+        },
+        () => load()
+      )
+      .subscribe();
+
     return () => {
       mounted = false;
       clearInterval(poll);
-      db.removeChannel(channel);
+      db.removeChannel(sessionChannel);
+      db.removeChannel(itemsChannel);
     };
   }, []);
 
   // ── Auto-advance slides with fade ──────────────────────────────────────────
   useEffect(() => {
-    if (!enabled) return;
+    if (!enabled || slides.length <= 1) return;
 
     const timer = setInterval(() => {
       setFading(true);
       setTimeout(() => {
-        setSlideIndex((i) => (i + 1) % SLIDES.length);
+        setSlideIndex((i) => (i + 1) % slides.length);
         setFading(false);
       }, FADE_DURATION_MS);
     }, SLIDE_INTERVAL_MS);
 
     return () => clearInterval(timer);
-  }, [enabled]);
+  }, [enabled, slides]);
 
   if (!enabled) return null;
 
-  const slide = SLIDES[slideIndex];
+  const slide = slides[slideIndex % Math.max(slides.length, 1)] ?? PLACEHOLDER_SLIDES[0];
+  const hasImage = !!slide.imageUrl;
 
   return (
     <div
@@ -127,23 +182,25 @@ export default function CarouselPanel() {
         overflow: "hidden",
       }}
     >
-      {/* Slide label pill — top-right */}
-      <span
-        className="absolute uppercase font-semibold"
-        style={{
-          top: -11,
-          right: 12,
-          fontSize: 9,
-          letterSpacing: "0.3em",
-          padding: "3px 10px",
-          borderRadius: 20,
-          border: "1.5px solid rgba(255,122,26,0.40)",
-          backgroundColor: "#000000",
-          color: "rgba(255,122,26,0.75)",
-        }}
-      >
-        {slide.label}
-      </span>
+      {/* Slide label pill — top-right (placeholder slides only) */}
+      {slide.label && (
+        <span
+          className="absolute uppercase font-semibold"
+          style={{
+            top: -11,
+            right: 12,
+            fontSize: 9,
+            letterSpacing: "0.3em",
+            padding: "3px 10px",
+            borderRadius: 20,
+            border: "1.5px solid rgba(255,122,26,0.40)",
+            backgroundColor: "#000000",
+            color: "rgba(255,122,26,0.75)",
+          }}
+        >
+          {slide.label}
+        </span>
+      )}
 
       {/* Slide content — fades on transition */}
       <div
@@ -152,33 +209,58 @@ export default function CarouselPanel() {
           opacity: fading ? 0 : 1,
         }}
       >
-        <p
-          className="font-bold text-white"
-          style={{
-            fontSize: "clamp(1rem, 1.6vw, 1.45rem)",
-            letterSpacing: "0.02em",
-            opacity: 0.78,
-            marginBottom: "0.4rem",
-            lineHeight: 1.25,
-          }}
-        >
-          {slide.heading}
-        </p>
-        <p
-          className="text-white"
-          style={{
-            fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
-            letterSpacing: "0.03em",
-            opacity: 0.38,
-          }}
-        >
-          {slide.body}
-        </p>
+        {/* Image — hides itself silently on load error */}
+        {hasImage && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={slide.imageUrl}
+            alt={slide.heading ?? ""}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+            style={{
+              display: "block",
+              width: "100%",
+              maxHeight: 160,
+              objectFit: "cover",
+              borderRadius: 6,
+              marginBottom: slide.heading || slide.body ? "0.75rem" : 0,
+            }}
+          />
+        )}
+
+        {slide.heading && (
+          <p
+            className="font-bold text-white"
+            style={{
+              fontSize: "clamp(1rem, 1.6vw, 1.45rem)",
+              letterSpacing: "0.02em",
+              opacity: 0.78,
+              marginBottom: "0.4rem",
+              lineHeight: 1.25,
+            }}
+          >
+            {slide.heading}
+          </p>
+        )}
+
+        {slide.body && (
+          <p
+            className="text-white"
+            style={{
+              fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
+              letterSpacing: "0.03em",
+              opacity: 0.38,
+            }}
+          >
+            {slide.body}
+          </p>
+        )}
       </div>
 
       {/* Progress dots */}
       <div className="flex gap-1.5 mt-3">
-        {SLIDES.map((_, i) => (
+        {slides.map((_, i) => (
           <div
             key={i}
             style={{
