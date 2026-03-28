@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import SignupDisplay from "./SignupDisplay";
 import NoticePanel from "./NoticePanel";
+import CarouselPanel from "./CarouselPanel";
 
 export const metadata: Metadata = {
   title: "Copper Rocket Open Mic — AnchorStage",
@@ -66,20 +67,29 @@ export default function CopperRocketPage() {
         {/* 1. Notice panel — driven by session.display_notice / display_subnotice */}
         <NoticePanel />
 
-        {/* 2. Event identity — text only, centered */}
-        <div className="flex flex-col items-center gap-1 text-center">
-          <p
-            className="font-bold uppercase text-white"
-            style={{ fontSize: "clamp(1.25rem, 2vw, 1.9rem)", letterSpacing: "0.22em", opacity: 0.36 }}
-          >
-            Open Mic Night
-          </p>
-          <p
-            className="font-medium uppercase text-white"
-            style={{ fontSize: "clamp(0.75rem, 1.1vw, 1rem)", letterSpacing: "0.4em", opacity: 0.18 }}
-          >
-            Copper Rocket
-          </p>
+        {/* 2. Event identity + optional carousel — grouped so layout stays
+             consistent whether the carousel is enabled or not */}
+        <div className="flex flex-col items-center gap-5 w-full">
+
+          {/* Event identity — text only, centered */}
+          <div className="flex flex-col items-center gap-1 text-center">
+            <p
+              className="font-bold uppercase text-white"
+              style={{ fontSize: "clamp(1.25rem, 2vw, 1.9rem)", letterSpacing: "0.22em", opacity: 0.36 }}
+            >
+              Open Mic Night
+            </p>
+            <p
+              className="font-medium uppercase text-white"
+              style={{ fontSize: "clamp(0.75rem, 1.1vw, 1rem)", letterSpacing: "0.4em", opacity: 0.18 }}
+            >
+              Copper Rocket
+            </p>
+          </div>
+
+          {/* Carousel — renders null when display_carousel_enabled is false */}
+          <CarouselPanel />
+
         </div>
 
         {/* 3. Branding footer — matched two-card sponsor strip */}
