@@ -192,31 +192,11 @@ export default function CarouselPanel() {
     <div
       className="w-full"
       style={{
-        padding: "1.4rem 1.75rem 1.25rem",
         position: "relative",
         overflow: "hidden",
+        borderRadius: 8,
       }}
     >
-      {/* Slide label pill — top-right (placeholder slides only) */}
-      {slide.label && (
-        <span
-          className="absolute uppercase font-semibold"
-          style={{
-            top: -11,
-            right: 12,
-            fontSize: 9,
-            letterSpacing: "0.3em",
-            padding: "3px 10px",
-            borderRadius: 20,
-            border: "1.5px solid rgba(255,122,26,0.40)",
-            backgroundColor: "#000000",
-            color: "rgba(255,122,26,0.75)",
-          }}
-        >
-          {slide.label}
-        </span>
-      )}
-
       {/* Slide content — fades on transition */}
       <div
         style={{
@@ -224,7 +204,7 @@ export default function CarouselPanel() {
           opacity: fading ? 0 : 1,
         }}
       >
-        {/* Image — hides itself silently on load error */}
+        {/* Image — fills width, drives panel height; hides silently on error */}
         {hasImage && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -236,45 +216,67 @@ export default function CarouselPanel() {
             style={{
               display: "block",
               width: "100%",
-              maxHeight: 160,
+              height: 260,
               objectFit: "cover",
-              borderRadius: 6,
-              marginBottom: slide.heading || slide.body ? "0.75rem" : 0,
             }}
           />
         )}
 
-        {slide.heading && (
-          <p
-            className="font-bold text-white"
-            style={{
-              fontSize: "clamp(1rem, 1.6vw, 1.45rem)",
-              letterSpacing: "0.02em",
-              opacity: 0.78,
-              marginBottom: "0.4rem",
-              lineHeight: 1.25,
-            }}
-          >
-            {slide.heading}
-          </p>
-        )}
+        {/* Text — padded below the image (or standalone for text-only slides) */}
+        {(slide.label || slide.heading || slide.body) && (
+          <div style={{ padding: "0.75rem 1.25rem 0" }}>
+            {/* Label pill inline for text-only slides */}
+            {slide.label && (
+              <span
+                className="uppercase font-semibold"
+                style={{
+                  display: "inline-block",
+                  fontSize: 9,
+                  letterSpacing: "0.3em",
+                  padding: "3px 10px",
+                  borderRadius: 20,
+                  border: "1.5px solid rgba(255,122,26,0.40)",
+                  color: "rgba(255,122,26,0.75)",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                {slide.label}
+              </span>
+            )}
 
-        {slide.body && (
-          <p
-            className="text-white"
-            style={{
-              fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
-              letterSpacing: "0.03em",
-              opacity: 0.38,
-            }}
-          >
-            {slide.body}
-          </p>
+            {slide.heading && (
+              <p
+                className="font-bold text-white"
+                style={{
+                  fontSize: "clamp(1rem, 1.6vw, 1.45rem)",
+                  letterSpacing: "0.02em",
+                  opacity: 0.78,
+                  marginBottom: "0.35rem",
+                  lineHeight: 1.25,
+                }}
+              >
+                {slide.heading}
+              </p>
+            )}
+
+            {slide.body && (
+              <p
+                className="text-white"
+                style={{
+                  fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
+                  letterSpacing: "0.03em",
+                  opacity: 0.38,
+                }}
+              >
+                {slide.body}
+              </p>
+            )}
+          </div>
         )}
       </div>
 
       {/* Progress dots */}
-      <div className="flex gap-1.5 mt-3">
+      <div className="flex gap-1.5" style={{ padding: "0.5rem 1.25rem 0.75rem" }}>
         {slides.map((_, i) => (
           <div
             key={i}
