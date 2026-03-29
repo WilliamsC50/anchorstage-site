@@ -209,7 +209,7 @@ export default function CarouselPanel() {
           <div
             style={{
               width: "100%",
-              height: 480,
+              height: 320,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
