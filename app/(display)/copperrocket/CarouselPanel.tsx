@@ -28,7 +28,7 @@ type Slide = {
 
 const ACTIVE_SESSION_STATUSES = ["ACTIVE"];
 const POLL_INTERVAL_MS = 30_000;
-const SLIDE_INTERVAL_MS = 7_000;
+const SLIDE_INTERVAL_MS = 10_000;
 const FADE_DURATION_MS = 350;
 
 const PLACEHOLDER_SLIDES: Slide[] = [
