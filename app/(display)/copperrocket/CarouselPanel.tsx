@@ -165,7 +165,25 @@ export default function CarouselPanel() {
     return () => clearInterval(timer);
   }, [enabled, slides]);
 
-  if (!enabled) return null;
+  // When carousel is off, render the static event identity block in its place
+  if (!enabled) {
+    return (
+      <div className="flex flex-col items-center gap-1 text-center">
+        <p
+          className="font-bold uppercase text-white"
+          style={{ fontSize: "clamp(1.25rem, 2vw, 1.9rem)", letterSpacing: "0.22em", opacity: 0.36 }}
+        >
+          Open Mic Night
+        </p>
+        <p
+          className="font-medium uppercase text-white"
+          style={{ fontSize: "clamp(0.75rem, 1.1vw, 1rem)", letterSpacing: "0.4em", opacity: 0.18 }}
+        >
+          Copper Rocket
+        </p>
+      </div>
+    );
+  }
 
   const slide = slides[slideIndex % Math.max(slides.length, 1)] ?? PLACEHOLDER_SLIDES[0];
   const hasImage = !!slide.imageUrl;
@@ -174,9 +192,6 @@ export default function CarouselPanel() {
     <div
       className="w-full"
       style={{
-        border: "1.5px solid rgba(255,122,26,0.28)",
-        borderRadius: 10,
-        backgroundColor: "rgba(255,255,255,0.03)",
         padding: "1.4rem 1.75rem 1.25rem",
         position: "relative",
         overflow: "hidden",
