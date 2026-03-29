@@ -89,7 +89,7 @@ export default function NoticePanel() {
         border: "1.5px solid rgba(255,122,26,0.45)",
         borderRadius: 10,
         backgroundColor: "rgba(255,255,255,0.04)",
-        padding: "1.75rem 2rem 2rem",
+        padding: "28px 32px 32px",
       }}
     >
       {/* LIVE NOTICE pill — top-right of container */}
@@ -118,13 +118,13 @@ export default function NoticePanel() {
       </p>
       <p
         className="font-bold text-white"
-        style={{ fontSize: "clamp(1.5rem, 2.3vw, 2.2rem)", letterSpacing: "0.01em", opacity: 0.80, lineHeight: 1.2 }}
+        style={{ fontSize: 34, letterSpacing: "0.01em", opacity: 0.80, lineHeight: 1.2 }}
       >
         {headline}
       </p>
       <p
         className="text-white"
-        style={{ fontSize: "clamp(0.95rem, 1.35vw, 1.2rem)", letterSpacing: "0.03em", opacity: 0.40 }}
+        style={{ fontSize: 18, letterSpacing: "0.03em", opacity: 0.40 }}
       >
         {body}
       </p>

@@ -171,13 +171,13 @@ export default function CarouselPanel() {
       <div className="flex flex-col items-center gap-1 text-center">
         <p
           className="font-bold uppercase text-white"
-          style={{ fontSize: "clamp(1.25rem, 2vw, 1.9rem)", letterSpacing: "0.22em", opacity: 0.36 }}
+          style={{ fontSize: 28, letterSpacing: "0.22em", opacity: 0.36 }}
         >
           Open Mic Night
         </p>
         <p
           className="font-medium uppercase text-white"
-          style={{ fontSize: "clamp(0.75rem, 1.1vw, 1rem)", letterSpacing: "0.4em", opacity: 0.18 }}
+          style={{ fontSize: 15, letterSpacing: "0.4em", opacity: 0.18 }}
         >
           Copper Rocket
         </p>
@@ -261,7 +261,7 @@ export default function CarouselPanel() {
               <p
                 className="font-bold text-white"
                 style={{
-                  fontSize: "clamp(1rem, 1.6vw, 1.45rem)",
+                  fontSize: 22,
                   letterSpacing: "0.02em",
                   opacity: 0.78,
                   marginBottom: "0.35rem",
@@ -276,7 +276,7 @@ export default function CarouselPanel() {
               <p
                 className="text-white"
                 style={{
-                  fontSize: "clamp(0.8rem, 1.1vw, 1rem)",
+                  fontSize: 16,
                   letterSpacing: "0.03em",
                   opacity: 0.38,
                 }}
