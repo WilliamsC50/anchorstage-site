@@ -204,22 +204,35 @@ export default function CarouselPanel() {
           opacity: fading ? 0 : 1,
         }}
       >
-        {/* Image — fills width, drives panel height; hides silently on error */}
+        {/* Image — contain-fit so full graphic is always visible; no cropping */}
         {hasImage && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={slide.imageUrl}
-            alt={slide.heading ?? ""}
-            onError={(e) => {
-              e.currentTarget.style.display = "none";
-            }}
+          <div
             style={{
-              display: "block",
               width: "100%",
-              height: 260,
-              objectFit: "cover",
+              height: 480,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "rgba(5, 10, 20, 0.60)",
             }}
-          />
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={slide.imageUrl}
+              alt={slide.heading ?? ""}
+              onError={(e) => {
+                (e.currentTarget.parentElement as HTMLElement).style.display = "none";
+              }}
+              style={{
+                display: "block",
+                maxWidth: "100%",
+                maxHeight: "100%",
+                width: "auto",
+                height: "auto",
+                objectFit: "contain",
+              }}
+            />
+          </div>
         )}
 
         {/* Text — padded below the image (or standalone for text-only slides) */}
