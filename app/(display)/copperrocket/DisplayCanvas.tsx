@@ -156,8 +156,8 @@ export default function DisplayCanvas() {
               <Image
                 src="/logos/aso-logo-white.png"
                 alt="AnchorStage Operations"
-                width={156}
-                height={156}
+                width={178}
+                height={178}
                 style={{ objectFit: "contain" }}
               />
 
@@ -172,7 +172,7 @@ export default function DisplayCanvas() {
               >
                 <QRCodeSVG
                   value="https://anchorstageops.com"
-                  size={240}
+                  size={208}
                   bgColor="#ffffff"
                   fgColor="#000000"
                   level="M"
