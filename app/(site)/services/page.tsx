@@ -1,144 +1,197 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 
-export default function Services() {
+export const metadata: Metadata = {
+  title: "Services — AnchorStage Operations",
+  description:
+    "Live audio, stage, lighting, videography, and production execution for events of all sizes.",
+};
+
+// ─── Service definitions ──────────────────────────────────────────────────────
+
+const SERVICES = [
+  {
+    icon: "/icons/Audio.png",
+    title: "Audio Services",
+    body: "Full PA systems, mixing, and live sound operation. We can bring the system or run yours — whatever the event needs.",
+  },
+  {
+    icon: "/icons/Staging.png",
+    title: "Stage & PA Setup",
+    body: "Clean, professional stage setups for bands, speakers, and events. Fast setup, clean cabling, and efficient teardown.",
+  },
+  {
+    icon: "/icons/Lighting.png",
+    title: "Lighting & Rigging",
+    body: "Simple, effective lighting that makes your event look right without overcomplicating it. Truss, stage wash, and basic show lighting.",
+  },
+  {
+    icon: "/icons/Production.png",
+    title: "Production & Show Execution",
+    body: "We run the show. From load-in to strike, we keep everything organized, on time, and working.",
+  },
+  {
+    icon: "/icons/Event Videography.png",
+    title: "Event Videography",
+    body: "Clean, reliable video capture for performances, events, and content. Built for real-world use — not overproduced, just done right.",
+  },
+  {
+    icon: null, // No icon yet — text badge fallback
+    title: "Artist & Event Graphics",
+    body: "Flyers, logos, and one-sheet EPKs designed to promote your event or project. Simple, clean, and ready to use.",
+  },
+  {
+    icon: "/icons/Mobile Podcast Setup.png",
+    title: "Podcast & Content Setups",
+    body: "Mobile podcast and content rigs for live or recorded sessions. Great for events, interviews, and creator content.",
+  },
+] as const;
+
+// ─── How it works ─────────────────────────────────────────────────────────────
+
+const STEPS = [
+  {
+    step: "01",
+    title: "Tell us about your event",
+    desc: "Submit your event details — date, location, type, and any technical needs. Takes a few minutes.",
+  },
+  {
+    step: "02",
+    title: "We scope what's needed and confirm details",
+    desc: "We review your event and follow up with a clear picture of what we'll bring, how it'll run, and what it costs.",
+  },
+  {
+    step: "03",
+    title: "We show up and execute cleanly",
+    desc: "On the day, we handle setup, direction, and strike. Your event runs clean — that's the job.",
+  },
+] as const;
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+export default function ServicesPage() {
   return (
     <main className="bg-white text-gray-900">
 
-      {/* PAGE HEADER */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
-        <h1
-          className="text-4xl font-bold mb-4"
-          style={{ color: "var(--aso-navy)" }}
-        >
-          Services
-        </h1>
-        <p className="text-lg text-gray-500 max-w-2xl">
-          Professional sound, lighting, and production direction for live events —
-          from compact venue shows to full outdoor stages.
-        </p>
-      </section>
+      {/* ── HERO — video background ────────────────────────────────────────── */}
+      <section className="relative min-h-[72vh] flex items-center bg-gray-950 overflow-hidden">
 
-      {/* PAGE IMAGE */}
-      <section className="relative h-56 md:h-72 bg-gray-900">
-        <Image
-          src="/images/card-full.jpg"
-          alt="Live event production"
-          fill
-          className="object-cover"
-          sizes="100vw"
+        {/* Background video */}
+        <video
+          src="/Videos/Services_Fin.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
         />
-      </section>
 
-      {/* SERVICE AREAS */}
-      <section className="bg-gray-50 py-20">
-        <div className="max-w-6xl mx-auto px-6">
+        {/* Gradient overlay — left-heavy so text reads clearly */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(15,47,79,0.92) 0%, rgba(15,47,79,0.75) 55%, rgba(15,47,79,0.50) 100%)",
+          }}
+        />
 
-          <div className="grid md:grid-cols-2 gap-8">
+        {/* Content */}
+        <div className="relative z-10 w-full">
+          <div className="max-w-6xl mx-auto px-6 py-20 md:py-28">
 
-            <div
-              className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
-              style={{ borderLeftColor: "var(--aso-blue)" }}
+            <p
+              className="text-xs font-semibold tracking-widest uppercase mb-5"
+              style={{ color: "var(--aso-blue-light)", opacity: 0.80 }}
             >
-              <h2
-                className="text-lg font-semibold mb-3"
-                style={{ color: "var(--aso-navy)" }}
-              >
-                Audio Services
-              </h2>
-              <p className="text-sm text-gray-500 leading-relaxed">
-                We can step into your event and run live sound regardless of what
-                gear is already on site. If you have a PA and just need an operator,
-                we can fill that role. If you need us to bring a system, we do that too.
-              </p>
-            </div>
+              Live Event Production
+            </p>
 
-            <div
-              className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
-              style={{ borderLeftColor: "var(--aso-blue)" }}
-            >
-              <h2
-                className="text-lg font-semibold mb-3"
-                style={{ color: "var(--aso-navy)" }}
-              >
-                Stage / PA
-              </h2>
-              <p className="text-sm text-gray-500 leading-relaxed">
-                PA support scaled to your event — from small indoor venues to outdoor
-                stages. We size the system to the room, handle setup, and make sure
-                it&apos;s dialed before the first act.
-              </p>
-            </div>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-white max-w-3xl">
+              We handle the stage.<br className="hidden md:block" /> You handle everything else.
+            </h1>
 
-            <div
-              className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
-              style={{ borderLeftColor: "var(--aso-blue)" }}
-            >
-              <h2
-                className="text-lg font-semibold mb-3"
-                style={{ color: "var(--aso-navy)" }}
-              >
-                Lighting / Rigging
-              </h2>
-              <p className="text-sm text-gray-500 leading-relaxed">
-                Wash and work lighting for stages and events. We keep it practical —
-                clean light that reads well on stage and supports the show without
-                overcomplicating the rig.
-              </p>
-            </div>
+            <p className="text-lg text-white/70 mb-10 max-w-xl leading-relaxed">
+              Live audio, stage, and event execution — built for clean, reliable shows.
+            </p>
 
-            <div
-              className="bg-white rounded-xl p-8 shadow-sm border border-gray-100 border-l-[3px] hover:shadow-md transition-shadow"
-              style={{ borderLeftColor: "var(--aso-blue)" }}
-            >
-              <h2
-                className="text-lg font-semibold mb-3"
-                style={{ color: "var(--aso-navy)" }}
+            <div className="flex flex-wrap gap-4">
+              <a
+                href="https://intake.anchorstageops.com"
+                className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
+                style={{ backgroundColor: "var(--aso-orange)" }}
               >
-                Direction &amp; Execution
-              </h2>
-              <p className="text-sm text-gray-500 leading-relaxed">
-                One person who owns the show flow and keeps everything on track.
-                We coordinate load-in, run soundcheck, manage the show, and stay
-                through strike — so you&apos;re not the one chasing details.
-              </p>
+                Start Your Event
+              </a>
+              <a
+                href="/contact"
+                className="inline-block border border-white/40 text-white px-8 py-3.5 rounded-lg font-medium transition hover:bg-white/10"
+              >
+                Get in Touch
+              </a>
             </div>
 
           </div>
-
         </div>
       </section>
 
-      {/* EVENT TYPES */}
-      <section className="bg-white py-20">
+      {/* ── SERVICES GRID ─────────────────────────────────────────────────── */}
+      <section className="py-20" style={{ backgroundColor: "var(--aso-bg)" }}>
         <div className="max-w-6xl mx-auto px-6">
 
-          <h2
-            className="text-2xl font-semibold mb-3"
-            style={{ color: "var(--aso-navy)" }}
-          >
-            Common events we support
-          </h2>
-          <p className="text-sm text-gray-500 max-w-xl mb-10 leading-relaxed">
-            If you&apos;re not sure whether we&apos;re the right fit, here&apos;s a quick look at the kinds of events we handle regularly.
-          </p>
+          <div className="mb-12">
+            <h2
+              className="text-2xl font-semibold mb-3"
+              style={{ color: "var(--aso-navy)" }}
+            >
+              What we offer
+            </h2>
+            <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
+              We can bring gear, run existing gear, and execute cleanly using the
+              right equipment and people for the job.
+            </p>
+          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {[
-              "Bars & venue shows",
-              "Outdoor concerts",
-              "Community events",
-              "Festivals",
-              "Private parties",
-              "Small weddings",
-              "Branded & promotional events",
-              "Corporate gatherings",
-            ].map((type) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SERVICES.map((svc) => (
               <div
-                key={type}
-                className="rounded-lg px-4 py-3 text-sm font-medium border border-gray-100"
-                style={{ backgroundColor: "var(--aso-bg)", color: "var(--aso-navy)" }}
+                key={svc.title}
+                className="bg-white rounded-xl p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-4"
               >
-                {type}
+                {/* Icon or text badge */}
+                {svc.icon ? (
+                  <Image
+                    src={svc.icon}
+                    alt={svc.title}
+                    width={52}
+                    height={52}
+                    style={{ objectFit: "contain" }}
+                  />
+                ) : (
+                  // Fallback for Artist & Event Graphics — no icon file yet
+                  <div
+                    className="flex items-center justify-center rounded-lg font-bold text-sm"
+                    style={{
+                      width: 52,
+                      height: 52,
+                      backgroundColor: "var(--aso-bg)",
+                      border: "1.5px solid var(--aso-blue)",
+                      color: "var(--aso-navy)",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    AG
+                  </div>
+                )}
+
+                <div>
+                  <h3
+                    className="font-semibold text-base mb-2 leading-snug"
+                    style={{ color: "var(--aso-navy)" }}
+                  >
+                    {svc.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{svc.body}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -146,24 +199,86 @@ export default function Services() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="max-w-6xl mx-auto px-6 py-20 text-center">
-        <h2
-          className="text-2xl font-semibold mb-3"
-          style={{ color: "var(--aso-navy)" }}
-        >
-          Ready to get started?
-        </h2>
-        <p className="text-sm text-gray-500 mb-8 max-w-sm mx-auto">
-          Submit your event details and we&apos;ll follow up with a clear plan.
-        </p>
-        <a
-          href="https://intake.anchorstageops.com"
-          className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
-          style={{ backgroundColor: "var(--aso-orange)" }}
-        >
-          Start Your Event
-        </a>
+      {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+
+          <h2
+            className="text-2xl font-semibold mb-12"
+            style={{ color: "var(--aso-navy)" }}
+          >
+            How it works
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {STEPS.map(({ step, title, desc }) => (
+              <div key={step}>
+                <p
+                  className="text-3xl font-bold mb-4"
+                  style={{ color: "var(--aso-blue)" }}
+                >
+                  {step}
+                </p>
+                <h3
+                  className="text-base font-semibold mb-2"
+                  style={{ color: "var(--aso-navy)" }}
+                >
+                  {title}
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-12">
+            <a
+              href="https://intake.anchorstageops.com"
+              className="inline-block text-white px-7 py-3.5 rounded-lg text-sm font-medium transition hover:opacity-90"
+              style={{ backgroundColor: "var(--aso-orange)" }}
+            >
+              Start Your Event
+            </a>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── BOTTOM CTA ────────────────────────────────────────────────────── */}
+      <section className="py-20" style={{ backgroundColor: "var(--aso-navy)" }}>
+        <div className="max-w-6xl mx-auto px-6 text-center">
+
+          <h2 className="text-2xl font-semibold text-white mb-3">
+            Ready to plan your event?
+          </h2>
+          <p
+            className="text-sm mb-8 max-w-md mx-auto leading-relaxed"
+            style={{ color: "var(--aso-blue-light)", opacity: 0.85 }}
+          >
+            Start with the intake form — it takes a few minutes and gives us
+            everything we need to follow up with a clear plan.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <a
+              href="https://intake.anchorstageops.com"
+              className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
+              style={{ backgroundColor: "var(--aso-orange)" }}
+            >
+              Start Your Event
+            </a>
+            <a
+              href="/contact"
+              className="inline-block border border-white/30 text-white px-8 py-3.5 rounded-lg font-medium transition hover:bg-white/10"
+            >
+              Contact Us
+            </a>
+          </div>
+
+          <p className="text-xs" style={{ color: "var(--aso-blue-light)", opacity: 0.55 }}>
+            Powered by Central Florida AV Solutions
+          </p>
+
+        </div>
       </section>
 
     </main>
