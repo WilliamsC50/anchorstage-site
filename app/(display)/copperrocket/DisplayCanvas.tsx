@@ -172,7 +172,7 @@ export default function DisplayCanvas() {
               >
                 <QRCodeSVG
                   value="https://anchorstageops.com"
-                  size={208}
+                  size={198}
                   bgColor="#ffffff"
                   fgColor="#000000"
                   level="M"
