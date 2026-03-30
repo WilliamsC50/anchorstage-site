@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { QRCodeSVG } from "qrcode.react";
 import SignupDisplay from "./SignupDisplay";
 import NoticePanel from "./NoticePanel";
 import CarouselPanel from "./CarouselPanel";
@@ -126,20 +127,20 @@ export default function DisplayCanvas() {
           {/* 2. Event identity or carousel */}
           <CarouselPanel />
 
-          {/* 3. Sponsor row */}
+          {/* 3. CTA row — Logo + QR */}
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              gap: 12,
+              gap: 16,
             }}
           >
             <p
-              className="uppercase text-white"
-              style={{ fontSize: 10, letterSpacing: "0.35em", opacity: 0.22 }}
+              className="font-semibold text-white"
+              style={{ fontSize: 15, letterSpacing: "0.06em", opacity: 0.60, textAlign: "center" }}
             >
-              Brought to you by
+              Scan the QR below to visit AnchorStageOps.com!
             </p>
 
             <div
@@ -147,62 +148,34 @@ export default function DisplayCanvas() {
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
-                gap: 20,
+                justifyContent: "space-evenly",
+                width: "100%",
               }}
             >
-              {/* CFAV card */}
-              <div
-                style={{
-                  width: 140,
-                  height: 140,
-                  borderRadius: 10,
-                  backgroundColor: "rgba(255,255,255,0.06)",
-                  backdropFilter: "blur(10px)",
-                  border: "1.5px solid rgba(255,122,26,0.45)",
-                  filter: "drop-shadow(0px 10px 18px rgba(0,0,0,0.40))",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
-                }}
-              >
-                <span
-                  className="uppercase font-bold text-white"
-                  style={{ fontSize: 22, letterSpacing: "0.2em" }}
-                >
-                  CFAV
-                </span>
-                <span
-                  className="uppercase text-white"
-                  style={{ fontSize: 9, letterSpacing: "0.3em", opacity: 0.45 }}
-                >
-                  Logo Pending
-                </span>
-              </div>
+              {/* ASO logo */}
+              <Image
+                src="/logos/aso-logo-white.png"
+                alt="AnchorStage Operations"
+                width={156}
+                height={156}
+                style={{ objectFit: "contain" }}
+              />
 
-              {/* ASO card */}
+              {/* QR code */}
               <div
                 style={{
-                  width: 140,
-                  height: 140,
-                  borderRadius: 10,
-                  backgroundColor: "rgba(255,255,255,0.06)",
-                  backdropFilter: "blur(10px)",
-                  border: "1.5px solid rgba(255,122,26,0.45)",
-                  filter: "drop-shadow(0px 10px 18px rgba(0,0,0,0.40))",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 16,
+                  backgroundColor: "#ffffff",
+                  padding: 12,
+                  borderRadius: 8,
+                  lineHeight: 0,
                 }}
               >
-                <Image
-                  src="/logos/aso-logo-white.png"
-                  alt="AnchorStage Operations"
-                  width={108}
-                  height={108}
-                  style={{ objectFit: "contain", width: "100%", height: "100%" }}
+                <QRCodeSVG
+                  value="https://anchorstageops.com"
+                  size={240}
+                  bgColor="#ffffff"
+                  fgColor="#000000"
+                  level="M"
                 />
               </div>
             </div>
