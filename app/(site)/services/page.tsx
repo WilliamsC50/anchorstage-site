@@ -83,11 +83,11 @@ export default function ServicesPage() {
               </p>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-white">
-                We handle the stage.<br className="hidden md:block" /> You handle everything else.
+                Anchored in execution. Built for live events.
               </h1>
 
               <p className="text-lg text-white/70 mb-10 leading-relaxed">
-                Live audio, stage, and event execution — built for clean, reliable shows.
+                Audio, staging, lighting, production, and event support — delivered cleanly from setup to strike.
               </p>
 
               <div className="flex flex-wrap gap-4">
