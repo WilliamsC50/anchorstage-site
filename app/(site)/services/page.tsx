@@ -11,27 +11,27 @@ export const metadata: Metadata = {
 
 const SERVICES = [
   {
-    icon: "/icons/Audio.png",
+    icon: "/Icons/Audio.png",
     title: "Audio Services",
     body: "Full PA systems, mixing, and live sound operation. We can bring the system or run yours — whatever the event needs.",
   },
   {
-    icon: "/icons/Staging.png",
+    icon: "/Icons/Staging.png",
     title: "Stage & PA Setup",
     body: "Clean, professional stage setups for bands, speakers, and events. Fast setup, clean cabling, and efficient teardown.",
   },
   {
-    icon: "/icons/Lighting.png",
+    icon: "/Icons/Lighting.png",
     title: "Lighting & Rigging",
     body: "Simple, effective lighting that makes your event look right without overcomplicating it. Truss, stage wash, and basic show lighting.",
   },
   {
-    icon: "/icons/Production.png",
+    icon: "/Icons/Production.png",
     title: "Production & Show Execution",
     body: "We run the show. From load-in to strike, we keep everything organized, on time, and working.",
   },
   {
-    icon: "/icons/Event Videography.png",
+    icon: "/Icons/Event Videography.png",
     title: "Event Videography",
     body: "Clean, reliable video capture for performances, events, and content. Built for real-world use — not overproduced, just done right.",
   },
@@ -41,7 +41,7 @@ const SERVICES = [
     body: "Flyers, logos, and one-sheet EPKs designed to promote your event or project. Simple, clean, and ready to use.",
   },
   {
-    icon: "/icons/Mobile Podcast Setup.png",
+    icon: "/Icons/Mobile Podcast Setup.png",
     title: "Podcast & Content Setups",
     body: "Mobile podcast and content rigs for live or recorded sessions. Great for events, interviews, and creator content.",
   },
@@ -73,61 +73,58 @@ export default function ServicesPage() {
   return (
     <main className="bg-white text-gray-900">
 
-      {/* ── HERO — video background ────────────────────────────────────────── */}
-      <section className="relative min-h-[72vh] flex items-center bg-gray-950 overflow-hidden">
+      {/* ── HERO — split layout: copy left / video right ───────────────────── */}
+      <section className="bg-gray-950">
+        <div className="max-w-6xl mx-auto px-6 py-20 md:py-28">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
 
-        {/* Background video */}
-        <video
-          src="/Videos/Services_Fin.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
-        />
+            {/* Left: copy + CTA */}
+            <div>
+              <p
+                className="text-xs font-semibold tracking-widest uppercase mb-5"
+                style={{ color: "var(--aso-blue-light)", opacity: 0.80 }}
+              >
+                Live Event Production
+              </p>
 
-        {/* Gradient overlay — left-heavy so text reads clearly */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(15,47,79,0.92) 0%, rgba(15,47,79,0.75) 55%, rgba(15,47,79,0.50) 100%)",
-          }}
-        />
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-white">
+                We handle the stage.<br className="hidden md:block" /> You handle everything else.
+              </h1>
 
-        {/* Content */}
-        <div className="relative z-10 w-full">
-          <div className="max-w-6xl mx-auto px-6 py-20 md:py-28">
+              <p className="text-lg text-white/70 mb-10 leading-relaxed">
+                Live audio, stage, and event execution — built for clean, reliable shows.
+              </p>
 
-            <p
-              className="text-xs font-semibold tracking-widest uppercase mb-5"
-              style={{ color: "var(--aso-blue-light)", opacity: 0.80 }}
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="https://intake.anchorstageops.com"
+                  className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
+                  style={{ backgroundColor: "var(--aso-orange)" }}
+                >
+                  Start Your Event
+                </a>
+                <a
+                  href="/contact"
+                  className="inline-block border border-white/40 text-white px-8 py-3.5 rounded-lg font-medium transition hover:bg-white/10"
+                >
+                  Get in Touch
+                </a>
+              </div>
+            </div>
+
+            {/* Right: video panel */}
+            <div
+              className="relative rounded-2xl overflow-hidden"
+              style={{ aspectRatio: "16 / 9", backgroundColor: "var(--aso-navy)" }}
             >
-              Live Event Production
-            </p>
-
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-5 text-white max-w-3xl">
-              We handle the stage.<br className="hidden md:block" /> You handle everything else.
-            </h1>
-
-            <p className="text-lg text-white/70 mb-10 max-w-xl leading-relaxed">
-              Live audio, stage, and event execution — built for clean, reliable shows.
-            </p>
-
-            <div className="flex flex-wrap gap-4">
-              <a
-                href="https://intake.anchorstageops.com"
-                className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
-                style={{ backgroundColor: "var(--aso-orange)" }}
-              >
-                Start Your Event
-              </a>
-              <a
-                href="/contact"
-                className="inline-block border border-white/40 text-white px-8 py-3.5 rounded-lg font-medium transition hover:bg-white/10"
-              >
-                Get in Touch
-              </a>
+              <video
+                src="/Videos/Services_Fin.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+              />
             </div>
 
           </div>
