@@ -113,11 +113,12 @@ export default function ServicesPage() {
               style={{ aspectRatio: "16 / 9", backgroundColor: "var(--aso-navy)" }}
             >
               <video
-                src="/Videos/Services_Fin.mp4"
+                src="/Videos/Services_Short.mp4"
                 autoPlay
                 muted
                 loop
                 playsInline
+                preload="metadata"
                 className="w-full h-full object-cover"
               />
             </div>
