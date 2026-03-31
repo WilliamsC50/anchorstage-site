@@ -22,8 +22,8 @@ const SERVICES = [
   },
   {
     icon: "/Icons/Lighting.png",
-    title: "Lighting & Rigging",
-    body: "Simple, effective lighting that makes your event look right without overcomplicating it. Truss, stage wash, and basic show lighting.",
+    title: "Lighting",
+    body: "Simple, effective lighting that makes your event look right. Stage wash, truss, and show lighting without overcomplicating it.",
   },
   {
     icon: "/Icons/Production.png",
@@ -34,11 +34,6 @@ const SERVICES = [
     icon: "/Icons/Event Videography.png",
     title: "Event Videography",
     body: "Clean, reliable video capture for performances, events, and content. Built for real-world use — not overproduced, just done right.",
-  },
-  {
-    icon: null, // No icon yet — text badge fallback
-    title: "Artist & Event Graphics",
-    body: "Flyers, logos, and one-sheet EPKs designed to promote your event or project. Simple, clean, and ready to use.",
   },
   {
     icon: "/Icons/Mobile Podcast Setup.png",
@@ -154,31 +149,13 @@ export default function ServicesPage() {
                 key={svc.title}
                 className="bg-white rounded-xl p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-4"
               >
-                {/* Icon or text badge */}
-                {svc.icon ? (
-                  <Image
-                    src={svc.icon}
-                    alt={svc.title}
-                    width={52}
-                    height={52}
-                    style={{ objectFit: "contain" }}
-                  />
-                ) : (
-                  // Fallback for Artist & Event Graphics — no icon file yet
-                  <div
-                    className="flex items-center justify-center rounded-lg font-bold text-sm"
-                    style={{
-                      width: 52,
-                      height: 52,
-                      backgroundColor: "var(--aso-bg)",
-                      border: "1.5px solid var(--aso-blue)",
-                      color: "var(--aso-navy)",
-                      letterSpacing: "0.08em",
-                    }}
-                  >
-                    AG
-                  </div>
-                )}
+                <Image
+                  src={svc.icon}
+                  alt={svc.title}
+                  width={68}
+                  height={68}
+                  style={{ objectFit: "contain" }}
+                />
 
                 <div>
                   <h3
