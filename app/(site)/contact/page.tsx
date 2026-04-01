@@ -26,19 +26,18 @@ export default function Contact() {
           >
             Direct contact
           </h2>
-          <div className="mb-5">
+          <div className="mb-6">
             <p className="text-base font-semibold" style={{ color: "var(--aso-navy)" }}>
               Cody Williams
             </p>
             <p className="text-sm text-gray-500">Founder / Production Lead</p>
-            <p className="text-sm text-gray-500">AnchorStage Operations</p>
+            <p className="text-sm text-gray-500">AnchorStage Operations LLC</p>
           </div>
           <div className="space-y-3 text-sm text-gray-500 leading-relaxed">
             <p>
               <span className="font-medium" style={{ color: "var(--aso-navy)" }}>Phone</span>
               <br />
-              {/* TODO: add final business number */}
-              (placeholder — number coming soon)
+              360-720-8622
             </p>
             <p>
               <span className="font-medium" style={{ color: "var(--aso-navy)" }}>Email</span>
@@ -83,10 +82,11 @@ export default function Contact() {
               Need a larger setup?
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed mb-4">
-              AnchorStage handles compact and mid-size events directly — sound,
-              lighting, stage, and direction. For shows that need additional scale
-              or expanded production capacity, we work with Central Florida AV
-              Solutions (CFAV), a trusted local production partner.
+              AnchorStage Operations LLC handles compact and mid-size events
+              directly — sound, lighting, stage, and direction. For shows that
+              need additional scale or expanded production capacity, we work with
+              Central Florida AV Solutions (CFAV), a trusted local production
+              partner.
             </p>
             <p className="text-sm text-gray-500 leading-relaxed">
               Submit through the intake form and we&apos;ll coordinate the right

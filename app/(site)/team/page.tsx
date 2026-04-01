@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Team — AnchorStage Operations",
+  title: "Team — AnchorStage Operations LLC",
   description:
-    "Meet the operators behind AnchorStage Operations — focused on clean execution and reliable live event production.",
+    "Meet the operators behind AnchorStage Operations LLC — focused on clean execution and reliable live event production.",
 };
 
 export default function TeamPage() {
   return (
     <main className="bg-white text-gray-900">
 
-      {/* HERO */}
+      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-6 py-20">
         <h1
           className="text-4xl font-bold mb-4"
@@ -19,35 +19,126 @@ export default function TeamPage() {
           Meet the team behind AnchorStage
         </h1>
         <p className="text-lg text-gray-500 max-w-2xl">
-          Real operators focused on clean execution and reliable shows.
+          Focused on execution. Built for live events.
         </p>
       </section>
 
-      {/* MAIN PROFILE */}
+      {/* ── FOUNDER PROFILE ──────────────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
-        <div
-          className="rounded-xl p-8 border border-gray-100"
-          style={{ backgroundColor: "var(--aso-bg)" }}
-        >
-          <p
-            className="text-xl font-bold mb-1"
-            style={{ color: "var(--aso-navy)" }}
+        <div className="grid md:grid-cols-[260px_1fr] gap-12 items-start">
+
+          {/* Left: image placeholder */}
+          <div
+            className="rounded-xl flex items-center justify-center text-sm font-medium"
+            style={{
+              aspectRatio: "3 / 4",
+              backgroundColor: "var(--aso-bg)",
+              border: "1.5px dashed rgba(79,168,209,0.35)",
+              color: "var(--aso-blue)",
+            }}
           >
-            Cody Williams
-          </p>
-          <p className="text-sm text-gray-500 mb-6">Founder / Production Lead</p>
-          <p className="text-sm text-gray-600 leading-relaxed max-w-2xl">
-            Cody leads production and event execution for AnchorStage Operations,
-            focusing on clean audio, efficient setups, and shows that run right
-            from load-in to strike. With hands-on experience across live music,
-            open mic events, and small-to-mid scale productions, the priority is
-            simple: make the show run right, every time.
-          </p>
+            Founder photo
+          </div>
+
+          {/* Right: identity + bio */}
+          <div>
+            <p
+              className="text-2xl font-bold mb-1"
+              style={{ color: "var(--aso-navy)" }}
+            >
+              Cody Williams
+            </p>
+            <p className="text-sm text-gray-500 mb-1">Founder / Production Lead</p>
+            <p className="text-sm text-gray-500 mb-8">AnchorStage Operations LLC</p>
+
+            <div className="space-y-4 text-sm text-gray-600 leading-relaxed max-w-2xl">
+              <p>
+                Cody Williams leads production and event execution for AnchorStage
+                Operations LLC, with a focus on clean audio, efficient setups, and
+                shows that run right from load-in to strike.
+              </p>
+              <p>
+                With hands-on experience in live music, open mic events, and
+                small-to-mid scale productions, Cody operates directly in the field
+                — not from a distance. Every system is built and tested with
+                real-world use in mind, prioritizing reliability, clarity, and speed.
+              </p>
+              <p>
+                AnchorStage was built around a simple idea: most events don&apos;t
+                fail because of big problems — they fail because of small details
+                that get missed. The goal is to eliminate those problems before they
+                happen, and to keep everything running smoothly once the show starts.
+              </p>
+              <p>
+                Whether it&apos;s a small venue or a larger production supported by
+                trusted partners, the focus stays the same — make the show run
+                right, every time.
+              </p>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* TRUSTED PARTNERS */}
-      <section className="bg-gray-50 py-16">
+      {/* ── OUR APPROACH ─────────────────────────────────────────────────────── */}
+      <section className="bg-gray-50 py-20">
+        <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-16">
+
+          <div>
+            <h2
+              className="text-xl font-semibold mb-5"
+              style={{ color: "var(--aso-navy)" }}
+            >
+              Our approach
+            </h2>
+            <div className="space-y-4 text-sm text-gray-600 leading-relaxed">
+              <p>
+                We handle the stage, sound, and production side of your event so
+                you can focus on everything else.
+              </p>
+              <p>
+                AnchorStage Operations LLC is built around execution — not theory,
+                not overpromising, and not unnecessary complexity. Every setup is
+                designed to be practical, reliable, and appropriate for the event
+                it supports.
+              </p>
+              <p>
+                We don&apos;t try to be everything. We focus on doing the
+                production side right.
+              </p>
+            </div>
+          </div>
+
+          {/* What we do */}
+          <div>
+            <h2
+              className="text-xl font-semibold mb-5"
+              style={{ color: "var(--aso-navy)" }}
+            >
+              What we do
+            </h2>
+            <ul className="space-y-2 text-sm text-gray-600">
+              {[
+                "Live event audio systems",
+                "Stage and PA setups",
+                "Lighting for small to mid-size events",
+                "Event videography (as scoped per event)",
+                "On-site podcast / recording setups",
+                "Technical execution and show operation",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <span style={{ color: "var(--aso-orange)" }} className="mt-0.5 shrink-0">—</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── TRUSTED PARTNERS ─────────────────────────────────────────────────── */}
+      <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <h2
             className="text-base font-semibold mb-2"
@@ -56,8 +147,7 @@ export default function TeamPage() {
             Built with trusted partners
           </h2>
           <p className="text-sm text-gray-500 leading-relaxed max-w-xl">
-            For larger productions that need additional scale, AnchorStage works
-            with{" "}
+            For larger productions, we work with trusted partners like{" "}
             <a
               href="https://cfav.solutions"
               target="_blank"
@@ -67,7 +157,8 @@ export default function TeamPage() {
             >
               Central Florida AV Solutions
             </a>
-            {" "}— a trusted local production partner with full-scale event capability.
+            {" "}to scale up while maintaining the same level of execution and
+            reliability.
           </p>
         </div>
       </section>
