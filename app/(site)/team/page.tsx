@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Team — AnchorStage Operations LLC",
@@ -27,17 +28,15 @@ export default function TeamPage() {
       <section className="max-w-6xl mx-auto px-6 pb-20">
         <div className="grid md:grid-cols-[260px_1fr] gap-12 items-start">
 
-          {/* Left: image placeholder */}
-          <div
-            className="rounded-xl flex items-center justify-center text-sm font-medium"
-            style={{
-              aspectRatio: "3 / 4",
-              backgroundColor: "var(--aso-bg)",
-              border: "1.5px dashed rgba(79,168,209,0.35)",
-              color: "var(--aso-blue)",
-            }}
-          >
-            Founder photo
+          {/* Left: founder photo */}
+          <div className="relative rounded-xl overflow-hidden" style={{ aspectRatio: "3 / 4" }}>
+            <Image
+              src="/images/Headshot.jpg"
+              alt="Cody Williams — Founder, AnchorStage Operations LLC"
+              fill
+              className="object-cover object-top"
+              sizes="260px"
+            />
           </div>
 
           {/* Right: identity + bio */}
