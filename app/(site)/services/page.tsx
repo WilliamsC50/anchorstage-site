@@ -33,12 +33,12 @@ const SERVICES = [
   {
     icon: "/Icons/Event Videography.png",
     title: "Event Videography",
-    body: "Clean, reliable video capture for performances, events, and content. Built for real-world use — not overproduced, just done right.",
+    body: "Clean, reliable video capture for performances and events. Deliverables vary by scope — typically clean recordings or edited footage — coordinated before the event so you know what to expect.",
   },
   {
     icon: "/Icons/Mobile Podcast Setup.png",
     title: "Podcast & Content Setups",
-    body: "Mobile podcast and content rigs for live or recorded sessions. Great for events, interviews, and creator content.",
+    body: "Mobile podcast and recording rigs set up on-site for events. Works well for live interviews, panel discussions, and recorded sessions built into your event day.",
   },
 ] as const;
 
@@ -250,7 +250,7 @@ export default function ServicesPage() {
           </div>
 
           <p className="text-xs" style={{ color: "var(--aso-blue-light)", opacity: 0.55 }}>
-            Powered by Central Florida AV Solutions
+            For larger productions, we work with our trusted partner Central Florida AV Solutions.
           </p>
 
         </div>
