@@ -8,57 +8,65 @@ export default function Contact() {
           className="text-4xl font-bold mb-4"
           style={{ color: "var(--aso-navy)" }}
         >
-          Contact
+          Let&apos;s talk about your event
         </h1>
         <p className="text-lg text-gray-500 max-w-2xl">
-          The best way to get started is through the intake form — it takes a few
-          minutes and gives us what we need to follow up with a clear plan.
+          Tell us what you need, and we&apos;ll take it from there.
         </p>
       </section>
 
-      {/* CONTACT INFO + INTAKE CTA */}
+      {/* DIRECT IDENTITY + INTAKE CTA */}
       <section className="max-w-6xl mx-auto px-6 pb-20 grid md:grid-cols-2 gap-16">
 
+        {/* Direct contact identity */}
+        <div>
+          <h2
+            className="text-xl font-semibold mb-6"
+            style={{ color: "var(--aso-navy)" }}
+          >
+            Direct contact
+          </h2>
+          <div className="mb-5">
+            <p className="text-base font-semibold" style={{ color: "var(--aso-navy)" }}>
+              Cody Williams
+            </p>
+            <p className="text-sm text-gray-500">Founder / Production Lead</p>
+            <p className="text-sm text-gray-500">AnchorStage Operations</p>
+          </div>
+          <div className="space-y-3 text-sm text-gray-500 leading-relaxed">
+            <p>
+              <span className="font-medium" style={{ color: "var(--aso-navy)" }}>Phone</span>
+              <br />
+              {/* TODO: add final business number */}
+              (placeholder — number coming soon)
+            </p>
+            <p>
+              <span className="font-medium" style={{ color: "var(--aso-navy)" }}>Email</span>
+              <br />
+              contact@anchorstageops.com
+            </p>
+          </div>
+        </div>
+
+        {/* Intake CTA */}
         <div>
           <h2
             className="text-xl font-semibold mb-4"
             style={{ color: "var(--aso-navy)" }}
           >
-            Start with the intake form
+            Start your event request
           </h2>
           <p className="text-sm text-gray-500 leading-relaxed mb-6">
-            Tell us about your event — date, location, type, and any technical
-            needs. We&apos;ll review it and follow up directly with a plan.
+            Our intake form helps us get the details we need to scope your event
+            quickly and accurately.
           </p>
           <a
             href="https://intake.anchorstageops.com"
             className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
             style={{ backgroundColor: "var(--aso-orange)" }}
           >
-            Start Your Event
+            Fill out the intake form
           </a>
-        </div>
-
-        <div>
-          <h2
-            className="text-xl font-semibold mb-4"
-            style={{ color: "var(--aso-navy)" }}
-          >
-            Direct contact
-          </h2>
-          <div className="space-y-4 text-sm text-gray-500 leading-relaxed">
-            <p>
-              <span className="font-medium" style={{ color: "var(--aso-navy)" }}>
-                Email
-              </span>
-              <br />
-              contact@anchorstageops.com
-            </p>
-            <p>
-              We check email regularly and respond directly. Submitting the
-              intake form helps us get back to you faster with the right details.
-            </p>
-          </div>
         </div>
 
       </section>

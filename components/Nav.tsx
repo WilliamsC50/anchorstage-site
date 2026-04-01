@@ -31,6 +31,7 @@ export default function Nav() {
           <Link href="/" className="opacity-70 hover:opacity-100 transition">Home</Link>
           <Link href="/services" className="opacity-70 hover:opacity-100 transition">Services</Link>
           <Link href="/photos" className="opacity-70 hover:opacity-100 transition">Photos</Link>
+          <Link href="/team" className="opacity-70 hover:opacity-100 transition">Team</Link>
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition">Contact</Link>
         </nav>
 

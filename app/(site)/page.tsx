@@ -68,10 +68,10 @@ export default function Home() {
       {/* PROOF STRIP */}
       <section className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-300">
         {[
-          { src: "/images/proof-1.jpg", alt: "Live event production", caption: "Live band setup — Orlando, FL" },
-          { src: "/images/proof-2.jpg", alt: "Stage and lighting setup", caption: "Outdoor stage — festival event" },
-          { src: "/images/proof-3.jpg", alt: "Concert production", caption: "Open mic night — Copper Rocket" },
-        ].map(({ src, alt, caption }) => (
+          { src: "/images/proof-1.jpg", alt: "Live event production" },
+          { src: "/images/proof-2.jpg", alt: "Stage and lighting setup" },
+          { src: "/images/proof-3.jpg", alt: "Concert production" },
+        ].map(({ src, alt }) => (
           <div key={src} className="relative aspect-video bg-gray-900">
             <Image
               src={src}
@@ -80,12 +80,6 @@ export default function Home() {
               className="object-cover"
               sizes="(min-width: 640px) 33vw, 100vw"
             />
-            <p
-              className="absolute bottom-0 left-0 right-0 px-3 py-2 text-xs text-white/80 font-medium"
-              style={{ background: "linear-gradient(to top, rgba(0,0,0,0.60) 0%, transparent 100%)" }}
-            >
-              {caption}
-            </p>
           </div>
         ))}
       </section>
