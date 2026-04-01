@@ -207,7 +207,7 @@ export default function SignupDisplay() {
               {nowPlaying.display_name}
             </p>
             {nowPlaying.song_title && (
-              <p className="text-lg text-white/50 mt-2">{nowPlaying.song_title}</p>
+              <p className="text-xl text-white/50 mt-2">{nowPlaying.song_title}</p>
             )}
           </div>
         ) : (
@@ -222,7 +222,7 @@ export default function SignupDisplay() {
       {/* UP NEXT ─────────────────────────────────────────────────────────── */}
       <section>
         <p
-          className="text-base font-bold tracking-widest uppercase mb-3"
+          className="text-lg font-bold tracking-widest uppercase mb-3"
           style={{ color: "var(--aso-blue-light)" }}
         >
           Up Next
@@ -232,17 +232,17 @@ export default function SignupDisplay() {
             {upNext.map((signup, i) => (
               <li key={signup.signup_id} className="flex items-baseline gap-5">
                 <span
-                  className="text-sm font-semibold tabular-nums w-5 text-right shrink-0 opacity-50"
+                  className="text-base font-semibold tabular-nums w-5 text-right shrink-0 opacity-50"
                   style={{ color: "var(--aso-blue-light)" }}
                 >
                   {i + upNextStartSlot}
                 </span>
                 <div>
-                  <p className="text-2xl font-semibold text-white">
+                  <p className="text-3xl font-semibold text-white">
                     {signup.display_name}
                   </p>
                   {signup.song_title && (
-                    <p className="text-sm text-white/40 mt-0.5">
+                    <p className="text-base text-white/40 mt-0.5">
                       {signup.song_title}
                     </p>
                   )}
@@ -251,7 +251,7 @@ export default function SignupDisplay() {
             ))}
           </ol>
         ) : (
-          <p className="text-base text-white/30 italic">No one queued yet</p>
+          <p className="text-lg text-white/30 italic">No one queued yet</p>
         )}
       </section>
 
