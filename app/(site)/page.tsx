@@ -176,6 +176,42 @@ export default function Home() {
         </div>
       </section>
 
+      {/* CREDIBILITY STRIP */}
+      <section className="bg-gray-50 py-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+
+            <div>
+              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
+                Veteran-Owned &amp; Operated
+              </p>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Founded and run by a veteran with years of hands-on live event experience.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
+                Central Florida Based
+              </p>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Local crew, local knowledge. Available for events throughout the region.
+              </p>
+            </div>
+
+            <div>
+              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
+                Built on Real Event Work
+              </p>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                From bar shows to outdoor stages — every event handled with the same professional approach.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* HOW IT WORKS */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6">
@@ -223,16 +259,6 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-12">
-            <a
-              href="https://intake.anchorstageops.com"
-              className="inline-block text-white px-7 py-3.5 rounded-lg text-sm font-medium transition hover:opacity-90"
-              style={{ backgroundColor: "var(--aso-orange)" }}
-            >
-              Start Your Event
-            </a>
-          </div>
-
         </div>
       </section>
 
@@ -254,7 +280,7 @@ export default function Home() {
             everything we need to follow up with a clear plan.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
+          <div className="flex flex-wrap justify-center gap-4">
             <a
               href="https://intake.anchorstageops.com"
               className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
@@ -270,49 +296,6 @@ export default function Home() {
             </a>
           </div>
 
-          <p
-            className="text-xs"
-            style={{ color: "var(--aso-blue-light)", opacity: 0.70 }}
-          >
-            Or reach us directly at contact@anchorstageops.com
-          </p>
-
-        </div>
-      </section>
-
-      {/* CREDIBILITY STRIP */}
-      <section className="bg-gray-50 py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-
-            <div>
-              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
-                Veteran-Owned &amp; Operated
-              </p>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Founded and run by a veteran with years of hands-on live event experience.
-              </p>
-            </div>
-
-            <div>
-              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
-                Central Florida Based
-              </p>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Local crew, local knowledge. Available for events throughout the region.
-              </p>
-            </div>
-
-            <div>
-              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
-                Built on Real Event Work
-              </p>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                From bar shows to outdoor stages — every event handled with the same professional approach.
-              </p>
-            </div>
-
-          </div>
         </div>
       </section>
 
