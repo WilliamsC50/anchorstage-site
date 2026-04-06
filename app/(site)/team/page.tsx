@@ -52,26 +52,38 @@ export default function TeamPage() {
 
             <div className="space-y-4 text-sm text-gray-600 leading-relaxed max-w-2xl">
               <p>
-                Cody Williams leads production and event execution for AnchorStage
-                Operations LLC, with a focus on clean audio, efficient setups, and
-                shows that run right from load-in to strike.
+                Cody Williams leads production and event execution at AnchorStage
+                Operations LLC, focusing on clean setups, reliable systems, and shows
+                that run smoothly from start to finish.
               </p>
               <p>
-                With hands-on experience in live music, open mic events, and
-                small-to-mid scale productions, Cody operates directly in the field
-                — not from a distance. Every system is built and tested with
-                real-world use in mind, prioritizing reliability, clarity, and speed.
+                With over 10 years of experience running sound in the Central Florida
+                area, Cody has worked across a wide range of events—from open mics
+                and small venue shows to larger productions. His approach is
+                hands-on and detail-driven, with an emphasis on getting things right
+                before the show even begins.
               </p>
               <p>
-                AnchorStage was built around a simple idea: most events don&apos;t
-                fail because of big problems — they fail because of small details
-                that get missed. The goal is to eliminate those problems before they
-                happen, and to keep everything running smoothly once the show starts.
+                Cody is a three-time graduate of the F.I.R.S.T. Institute, with
+                training in Audio Engineering, Video Production, and Graphic
+                Design/Web Development. That broader background allows him to think
+                beyond just equipment—understanding how production, content, and
+                execution all need to align on event day.
               </p>
               <p>
-                Whether it&apos;s a small venue or a larger production supported by
-                trusted partners, the focus stays the same — make the show run
-                right, every time.
+                AnchorStage was built around a simple idea: most problems on show
+                site come from small details being missed. By standardizing workflows,
+                refining pack lists, and building systems that are tested in
+                real-world conditions, Cody works to eliminate those issues before
+                they happen.
+              </p>
+              <p>
+                Whether supporting a small event or working alongside trusted
+                production partners on larger shows, the goal stays the same—make the
+                event run cleanly, efficiently, and without surprises.
+              </p>
+              <p>
+                If it matters on show day, it&apos;s handled ahead of time.
               </p>
             </div>
           </div>
