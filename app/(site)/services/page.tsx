@@ -155,97 +155,6 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* ── SERVICES GRID ─────────────────────────────────────────────────── */}
-      <section className="py-20" style={{ backgroundColor: "var(--aso-bg)" }}>
-        <div className="max-w-6xl mx-auto px-6">
-
-          <div className="mb-12">
-            <h2
-              className="text-2xl font-semibold mb-3"
-              style={{ color: "var(--aso-navy)" }}
-            >
-              What we offer
-            </h2>
-            <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
-              We can bring gear, run existing gear, and execute cleanly using the
-              right equipment and people for the job.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((svc) => (
-              <div
-                key={svc.title}
-                className="bg-white rounded-xl p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-4"
-              >
-                <Image
-                  src={svc.icon}
-                  alt={svc.title}
-                  width={68}
-                  height={68}
-                  style={{ objectFit: "contain" }}
-                />
-
-                <div>
-                  <h3
-                    className="font-semibold text-base mb-2 leading-snug"
-                    style={{ color: "var(--aso-navy)" }}
-                  >
-                    {svc.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{svc.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
-      <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-
-          <h2
-            className="text-2xl font-semibold mb-12"
-            style={{ color: "var(--aso-navy)" }}
-          >
-            How it works
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-10">
-            {STEPS.map(({ step, title, desc }) => (
-              <div key={step}>
-                <p
-                  className="text-3xl font-bold mb-4"
-                  style={{ color: "var(--aso-blue)" }}
-                >
-                  {step}
-                </p>
-                <h3
-                  className="text-base font-semibold mb-2"
-                  style={{ color: "var(--aso-navy)" }}
-                >
-                  {title}
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-12">
-            <a
-              href="https://intake.anchorstageops.com"
-              className="inline-block text-white px-7 py-3.5 rounded-lg text-sm font-medium transition hover:opacity-90"
-              style={{ backgroundColor: "var(--aso-orange)" }}
-            >
-              Start Your Event
-            </a>
-          </div>
-
-        </div>
-      </section>
-
       {/* ── BUNDLE SELECTION ──────────────────────────────────────────────── */}
       <section className="py-20" style={{ backgroundColor: "var(--aso-bg)" }}>
         <div className="max-w-6xl mx-auto px-6">
@@ -258,7 +167,7 @@ export default function ServicesPage() {
               What kind of event are you planning?
             </h2>
             <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
-              Choose a starting point and we&apos;ll help confirm the details.
+              Choose a starting point — we&apos;ll confirm the details.
             </p>
           </div>
 
@@ -311,40 +220,108 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+
+          <h2
+            className="text-2xl font-semibold mb-12"
+            style={{ color: "var(--aso-navy)" }}
+          >
+            How it works
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {STEPS.map(({ step, title, desc }) => (
+              <div key={step}>
+                <p
+                  className="text-3xl font-bold mb-4"
+                  style={{ color: "var(--aso-blue)" }}
+                >
+                  {step}
+                </p>
+                <h3
+                  className="text-base font-semibold mb-2"
+                  style={{ color: "var(--aso-navy)" }}
+                >
+                  {title}
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── SERVICES GRID ─────────────────────────────────────────────────── */}
+      <section className="py-20" style={{ backgroundColor: "var(--aso-bg)" }}>
+        <div className="max-w-6xl mx-auto px-6">
+
+          <div className="mb-12">
+            <h2
+              className="text-2xl font-semibold mb-3"
+              style={{ color: "var(--aso-navy)" }}
+            >
+              What we offer
+            </h2>
+            <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
+              We can bring gear, run existing gear, and execute cleanly using the
+              right equipment and people for the job.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SERVICES.map((svc) => (
+              <div
+                key={svc.title}
+                className="bg-white rounded-xl p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-4"
+              >
+                <Image
+                  src={svc.icon}
+                  alt={svc.title}
+                  width={68}
+                  height={68}
+                  style={{ objectFit: "contain" }}
+                />
+
+                <div>
+                  <h3
+                    className="font-semibold text-base mb-2 leading-snug"
+                    style={{ color: "var(--aso-navy)" }}
+                  >
+                    {svc.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{svc.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
       {/* ── BOTTOM CTA ────────────────────────────────────────────────────── */}
       <section className="py-20" style={{ backgroundColor: "var(--aso-navy)" }}>
         <div className="max-w-6xl mx-auto px-6 text-center">
 
           <h2 className="text-2xl font-semibold text-white mb-3">
-            Ready to plan your event?
+            Not sure what you need yet?
           </h2>
           <p
             className="text-sm mb-8 max-w-md mx-auto leading-relaxed"
             style={{ color: "var(--aso-blue-light)", opacity: 0.85 }}
           >
-            Start with the intake form — it takes a few minutes and gives us
-            everything we need to follow up with a clear plan.
+            Tell us about your event — we&apos;ll help figure out the details.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <a
-              href="https://intake.anchorstageops.com"
-              className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
-              style={{ backgroundColor: "var(--aso-orange)" }}
-            >
-              Start Your Event
-            </a>
-            <a
-              href="/contact"
-              className="inline-block border border-white/30 text-white px-8 py-3.5 rounded-lg font-medium transition hover:bg-white/10"
-            >
-              Contact Us
-            </a>
-          </div>
-
-          <p className="text-xs" style={{ color: "var(--aso-blue-light)", opacity: 0.55 }}>
-            For larger productions, we work with our trusted partner Central Florida AV Solutions.
-          </p>
+          <a
+            href={INTAKE_URL}
+            className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
+            style={{ backgroundColor: "var(--aso-orange)" }}
+          >
+            Start General Request
+          </a>
 
         </div>
       </section>
