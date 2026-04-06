@@ -42,6 +42,34 @@ const SERVICES = [
   },
 ] as const;
 
+// ─── Bundle selection ─────────────────────────────────────────────────────────
+
+const INTAKE_URL =
+  process.env.NEXT_PUBLIC_INTAKE_URL ?? "https://intake.anchorstageops.com";
+
+const BUNDLES = [
+  {
+    slug: "open-mic",
+    name: "Open Mic",
+    desc: "A recurring or one-off open mic event with house sound and performer support.",
+  },
+  {
+    slug: "stage-only",
+    name: "Stage Only",
+    desc: "A staging-focused event where the primary need is a clean stage setup.",
+  },
+  {
+    slug: "full-production",
+    name: "Full Production",
+    desc: "A full event production starting point for stage, audio, lighting, and support.",
+  },
+  {
+    slug: "house-party",
+    name: "House Party",
+    desc: "A small social event starting point for sound and simple event support.",
+  },
+] as const;
+
 // ─── How it works ─────────────────────────────────────────────────────────────
 
 const STEPS = [
@@ -213,6 +241,71 @@ export default function ServicesPage() {
             >
               Start Your Event
             </a>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── BUNDLE SELECTION ──────────────────────────────────────────────── */}
+      <section className="py-20" style={{ backgroundColor: "var(--aso-bg)" }}>
+        <div className="max-w-6xl mx-auto px-6">
+
+          <div className="mb-12">
+            <h2
+              className="text-2xl font-semibold mb-3"
+              style={{ color: "var(--aso-navy)" }}
+            >
+              What kind of event are you planning?
+            </h2>
+            <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
+              Choose a starting point and we&apos;ll help confirm the details.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {BUNDLES.map((bundle) => (
+              <div
+                key={bundle.slug}
+                className="bg-white rounded-xl p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-5"
+              >
+                <div
+                  className="w-8 h-1 rounded-full"
+                  style={{ backgroundColor: "var(--aso-blue)" }}
+                />
+
+                <div className="flex-1">
+                  <h3
+                    className="font-semibold text-base mb-2 leading-snug"
+                    style={{ color: "var(--aso-navy)" }}
+                  >
+                    {bundle.name}
+                  </h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    {bundle.desc}
+                  </p>
+                </div>
+
+                <a
+                  href={`${INTAKE_URL}?bundle=${bundle.slug}`}
+                  className="inline-block text-white text-sm px-5 py-2.5 rounded-lg font-medium transition hover:opacity-90 text-center"
+                  style={{ backgroundColor: "var(--aso-orange)" }}
+                >
+                  Book This Event
+                </a>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8">
+            <p className="text-sm text-gray-400">
+              Not sure?{" "}
+              <a
+                href={INTAKE_URL}
+                className="underline hover:text-gray-600 transition-colors"
+              >
+                Start with the general request form.
+              </a>
+            </p>
           </div>
 
         </div>
