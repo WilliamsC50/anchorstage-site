@@ -296,6 +296,16 @@ export default function Home() {
             </a>
           </div>
 
+          <p className="mt-5 text-xs" style={{ color: "var(--aso-blue-light)", opacity: 0.55 }}>
+            Already have an account?{" "}
+            <a
+              href="https://intake.anchorstageops.com/login"
+              className="underline hover:opacity-100 transition"
+            >
+              Log In →
+            </a>
+          </p>
+
         </div>
       </section>
 
