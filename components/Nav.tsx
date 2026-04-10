@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 const LOGIN_URL = "https://intake.anchorstageops.com/login";
+const SIGNUP_URL = "https://intake.anchorstageops.com/register";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -41,6 +42,7 @@ export default function Nav() {
           <Link href="/team" className="opacity-70 hover:opacity-100 transition">Team</Link>
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition">Contact</Link>
           <a href={LOGIN_URL} className="opacity-70 hover:opacity-100 transition">Log In</a>
+          <a href={SIGNUP_URL} className="opacity-70 hover:opacity-100 transition">Create Account</a>
         </nav>
 
         {/* RIGHT: CTA + mobile hamburger */}
@@ -85,6 +87,7 @@ export default function Nav() {
           <Link href="/team" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Team</Link>
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Contact</Link>
           <a href={LOGIN_URL} className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Log In</a>
+          <a href={SIGNUP_URL} className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Create Account</a>
           <a
             href="https://intake.anchorstageops.com"
             className="mt-2 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition hover:opacity-90 text-center"

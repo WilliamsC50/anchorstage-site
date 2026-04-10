@@ -18,6 +18,7 @@ export default function Footer() {
           <Link href="/team" className="opacity-70 hover:opacity-100 transition">Team</Link>
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition">Contact</Link>
           <a href="https://intake.anchorstageops.com/login" className="opacity-70 hover:opacity-100 transition">Log In</a>
+          <a href="https://intake.anchorstageops.com/register" className="opacity-70 hover:opacity-100 transition">Create Account</a>
         </nav>
 
       </div>
