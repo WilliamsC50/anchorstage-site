@@ -35,19 +35,19 @@ const POLL_INTERVAL_MS = 30_000;
 
 // ─── Data fetch ───────────────────────────────────────────────────────────────
 
-async function fetchData(): Promise<{
+async function fetchData(screenSlug: string): Promise<{
   session: OpenMicSession | null;
   signups: OpenMicSignup[];
 }> {
   const db = getSupabaseClient();
 
-  // Fetch the most recent active session for Copper Rocket.
+  // Fetch the most recent active session for this venue.
   // If more than one session can be active at once, the most recent by
   // session_date wins.
   const { data: sessions, error: sessionError } = await db
     .from("open_mic_session")
     .select("session_id, title, venue_slug, session_date, status")
-    .eq("venue_slug", "copperrocket")
+    .eq("venue_slug", screenSlug)
     .in("status", ACTIVE_SESSION_STATUSES)
     .order("session_date", { ascending: false })
     .limit(1);
@@ -76,7 +76,7 @@ async function fetchData(): Promise<{
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function SignupDisplay() {
+export default function SignupDisplay({ screenSlug = "copperrocket" }: { screenSlug?: string }) {
   const [session, setSession] = useState<OpenMicSession | null>(null);
   const [signups, setSignups] = useState<OpenMicSignup[]>([]);
   const [loading, setLoading] = useState(true);
@@ -90,7 +90,7 @@ export default function SignupDisplay() {
     let channel: ReturnType<typeof db.channel> | null = null;
 
     async function load() {
-      const { session, signups } = await fetchData();
+      const { session, signups } = await fetchData(screenSlug);
       if (!mounted) return;
 
       setSession(session);
@@ -109,7 +109,7 @@ export default function SignupDisplay() {
 
         if (newSessionId && mounted) {
           channel = db
-            .channel(`cr_signups_${newSessionId}`)
+            .channel(`${screenSlug}_signups_${newSessionId}`)
             .on(
               "postgres_changes",
               {
@@ -138,14 +138,14 @@ export default function SignupDisplay() {
     // and any other session row edits without waiting for the next poll cycle.
     // The signup channel (above) is still scoped per session_id; this complements it.
     const sessionChannel = db
-      .channel("cr_session_display")
+      .channel(`${screenSlug}_session_display`)
       .on(
         "postgres_changes",
         {
           event: "*",
           schema: "public",
           table: "open_mic_session",
-          filter: "venue_slug=eq.copperrocket",
+          filter: `venue_slug=eq.${screenSlug}`,
         },
         () => load()
       )
@@ -157,7 +157,7 @@ export default function SignupDisplay() {
       if (channel) db.removeChannel(channel);
       db.removeChannel(sessionChannel);
     };
-  }, []);
+  }, [screenSlug]);
 
   // ── Derive display sections ────────────────────────────────────────────────
   // signups arrive ordered by sort_order from the query.

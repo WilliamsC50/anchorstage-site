@@ -16,15 +16,11 @@ const CANVAS_H = 1080;
 // Safe area inset (px). Keeps content clear of TV overscan on all edges.
 const SAFE = 64;
 
-// Left panel (signup queue) width
+// Left panel (signup queue) width — only rendered for OPEN_MIC screens.
 const LEFT_W = 720;
 
 // Gap between left panel and right column
 const COL_GAP = 48;
-
-// Derived: right column origin and width
-const RIGHT_X = SAFE + LEFT_W + COL_GAP; // 832
-const RIGHT_W = CANVAS_W - RIGHT_X - SAFE; // 1024
 
 // ─── Background ───────────────────────────────────────────────────────────────
 
@@ -33,7 +29,13 @@ const GRAPHIC_URL = "";
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function DisplayCanvas() {
+export default function DisplayCanvas({
+  screenSlug = "copperrocket",
+  screenType = "OPEN_MIC",
+}: {
+  screenSlug?: string;
+  screenType?: string;
+}) {
   // tx/ty: pixel offsets that centre the canvas in the viewport
   // scale: uniform factor so the whole canvas fits the available viewport
   // ready: suppresses the initial flash before JS computes the correct transform
@@ -41,6 +43,12 @@ export default function DisplayCanvas() {
   const [ty, setTy] = useState(0);
   const [scale, setScale] = useState(1);
   const [ready, setReady] = useState(false);
+
+  const hasQueue = screenType === "OPEN_MIC";
+
+  // Right column geometry: expand to full safe width when there is no queue panel.
+  const rightX = hasQueue ? SAFE + LEFT_W + COL_GAP : SAFE;
+  const rightW = CANVAS_W - rightX - SAFE;
 
   useEffect(() => {
     function update() {
@@ -58,6 +66,14 @@ export default function DisplayCanvas() {
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
   }, []);
+
+  // Background: use the venue-specific fallback image only for Copper Rocket;
+  // other screens get the plain gradient until they configure their own graphic.
+  const backgroundImage = GRAPHIC_URL
+    ? `linear-gradient(to right, rgba(5,10,20,0.9) 0%, rgba(10,20,30,0.75) 50%, rgba(10,20,30,0.65) 100%), url('${GRAPHIC_URL}')`
+    : screenSlug === "copperrocket"
+    ? `linear-gradient(to right, rgba(5,10,20,0.85) 0%, rgba(10,20,30,0.70) 45%, rgba(10,20,30,0.58) 100%), url('/logos/CROM_BG.png')`
+    : `linear-gradient(to right, rgba(5,10,20,0.85) 0%, rgba(10,20,30,0.70) 45%, rgba(10,20,30,0.58) 100%)`;
 
   return (
     // Viewport shell — fills the browser window; black bars fill any letterbox areas
@@ -79,39 +95,39 @@ export default function DisplayCanvas() {
           transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
           opacity: ready ? 1 : 0,
           backgroundColor: "#0F2F4F",
-          backgroundImage: GRAPHIC_URL
-            ? `linear-gradient(to right, rgba(5,10,20,0.9) 0%, rgba(10,20,30,0.75) 50%, rgba(10,20,30,0.65) 100%), url('${GRAPHIC_URL}')`
-            : `linear-gradient(to right, rgba(5,10,20,0.85) 0%, rgba(10,20,30,0.70) 45%, rgba(10,20,30,0.58) 100%), url('/logos/CROM_BG.png')`,
+          backgroundImage,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
 
-        {/* ── Left: live signup queue ──────────────────────────────────────── */}
-        <div
-          style={{
-            position: "absolute",
-            left: SAFE,
-            top: SAFE,
-            width: LEFT_W,
-            bottom: SAFE,
-            borderRadius: 12,
-            backgroundColor: "rgba(5, 15, 28, 0.82)",
-            border: "1.5px solid rgba(255,122,26,0.45)",
-            overflow: "hidden",
-          }}
-        >
-          <SignupDisplay />
-        </div>
+        {/* ── Left: live signup queue (OPEN_MIC only) ──────────────────────── */}
+        {hasQueue && (
+          <div
+            style={{
+              position: "absolute",
+              left: SAFE,
+              top: SAFE,
+              width: LEFT_W,
+              bottom: SAFE,
+              borderRadius: 12,
+              backgroundColor: "rgba(5, 15, 28, 0.82)",
+              border: "1.5px solid rgba(255,122,26,0.45)",
+              overflow: "hidden",
+            }}
+          >
+            <SignupDisplay screenSlug={screenSlug} />
+          </div>
+        )}
 
         {/* ── Right: notice → carousel → sponsors ─────────────────────────── */}
         <div
           style={{
             position: "absolute",
-            left: RIGHT_X,
+            left: rightX,
             top: SAFE,
-            width: RIGHT_W,
+            width: rightW,
             bottom: SAFE,
             display: "flex",
             flexDirection: "column",
@@ -122,10 +138,10 @@ export default function DisplayCanvas() {
         >
 
           {/* 1. Notice panel */}
-          <NoticePanel />
+          <NoticePanel screenSlug={screenSlug} />
 
           {/* 2. Event identity or carousel */}
-          <CarouselPanel />
+          <CarouselPanel screenSlug={screenSlug} />
 
           {/* 3. CTA row — Logo + QR */}
           <div

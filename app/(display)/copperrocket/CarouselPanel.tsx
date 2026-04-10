@@ -56,12 +56,12 @@ const PLACEHOLDER_SLIDES: Slide[] = [
 
 // ─── Data fetchers ────────────────────────────────────────────────────────────
 
-async function fetchCarouselEnabled(): Promise<boolean> {
+async function fetchCarouselEnabled(screenSlug: string): Promise<boolean> {
   const db = getSupabaseClient();
   const { data, error } = await db
     .from("open_mic_session")
     .select("display_carousel_enabled")
-    .eq("venue_slug", "copperrocket")
+    .eq("venue_slug", screenSlug)
     .in("status", ACTIVE_SESSION_STATUSES)
     .order("session_date", { ascending: false })
     .limit(1);
@@ -70,12 +70,12 @@ async function fetchCarouselEnabled(): Promise<boolean> {
   return !!(data[0] as CarouselSession).display_carousel_enabled;
 }
 
-async function fetchCarouselItems(): Promise<Slide[]> {
+async function fetchCarouselItems(screenSlug: string): Promise<Slide[]> {
   const db = getSupabaseClient();
   const { data, error } = await db
     .from("open_mic_carousel_item")
     .select("item_id, title, body, image_url, sort_order")
-    .eq("venue_slug", "copperrocket")
+    .eq("venue_slug", screenSlug)
     .eq("is_enabled", true)
     .order("sort_order", { ascending: true });
 
@@ -90,7 +90,7 @@ async function fetchCarouselItems(): Promise<Slide[]> {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function CarouselPanel() {
+export default function CarouselPanel({ screenSlug = "copperrocket" }: { screenSlug?: string }) {
   const [enabled, setEnabled] = useState(false);
   const [slides, setSlides] = useState<Slide[]>(PLACEHOLDER_SLIDES);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -103,8 +103,8 @@ export default function CarouselPanel() {
 
     async function load() {
       const [isEnabled, dbSlides] = await Promise.all([
-        fetchCarouselEnabled(),
-        fetchCarouselItems(),
+        fetchCarouselEnabled(screenSlug),
+        fetchCarouselItems(screenSlug),
       ]);
       if (!mounted) return;
       setEnabled(isEnabled);
@@ -115,28 +115,28 @@ export default function CarouselPanel() {
     const poll = setInterval(load, POLL_INTERVAL_MS);
 
     const sessionChannel = db
-      .channel("cr_session_carousel")
+      .channel(`${screenSlug}_session_carousel`)
       .on(
         "postgres_changes",
         {
           event: "*",
           schema: "public",
           table: "open_mic_session",
-          filter: "venue_slug=eq.copperrocket",
+          filter: `venue_slug=eq.${screenSlug}`,
         },
         () => load()
       )
       .subscribe();
 
     const itemsChannel = db
-      .channel("cr_carousel_items")
+      .channel(`${screenSlug}_carousel_items`)
       .on(
         "postgres_changes",
         {
           event: "*",
           schema: "public",
           table: "open_mic_carousel_item",
-          filter: "venue_slug=eq.copperrocket",
+          filter: `venue_slug=eq.${screenSlug}`,
         },
         () => load()
       )
@@ -148,7 +148,7 @@ export default function CarouselPanel() {
       db.removeChannel(sessionChannel);
       db.removeChannel(itemsChannel);
     };
-  }, []);
+  }, [screenSlug]);
 
   // ── Auto-advance slides with fade ──────────────────────────────────────────
   useEffect(() => {

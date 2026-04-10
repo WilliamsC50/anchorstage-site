@@ -22,12 +22,12 @@ const DEFAULTS = {
 
 // ─── Data fetch ───────────────────────────────────────────────────────────────
 
-async function fetchNotice(): Promise<NoticeSession | null> {
+async function fetchNotice(screenSlug: string): Promise<NoticeSession | null> {
   const db = getSupabaseClient();
   const { data, error } = await db
     .from("open_mic_session")
     .select("display_notice, display_subnotice")
-    .eq("venue_slug", "copperrocket")
+    .eq("venue_slug", screenSlug)
     .in("status", ACTIVE_SESSION_STATUSES)
     .order("session_date", { ascending: false })
     .limit(1);
@@ -38,7 +38,7 @@ async function fetchNotice(): Promise<NoticeSession | null> {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function NoticePanel() {
+export default function NoticePanel({ screenSlug = "copperrocket" }: { screenSlug?: string }) {
   const [session, setSession] = useState<NoticeSession | null>(null);
 
   useEffect(() => {
@@ -46,25 +46,25 @@ export default function NoticePanel() {
     let mounted = true;
 
     async function load() {
-      const result = await fetchNotice();
+      const result = await fetchNotice(screenSlug);
       if (mounted) setSession(result);
     }
 
     load();
     const poll = setInterval(load, POLL_INTERVAL_MS);
 
-    // Realtime: re-fetch whenever any Copper Rocket session row changes.
+    // Realtime: re-fetch whenever the venue's session row changes.
     // Catches display_notice / display_subnotice edits and status transitions
     // (e.g. ACTIVE → DRAFT) without waiting for the next poll cycle.
     const channel = db
-      .channel("cr_session_notice")
+      .channel(`${screenSlug}_session_notice`)
       .on(
         "postgres_changes",
         {
           event: "*",
           schema: "public",
           table: "open_mic_session",
-          filter: "venue_slug=eq.copperrocket",
+          filter: `venue_slug=eq.${screenSlug}`,
         },
         () => load()
       )
@@ -75,7 +75,7 @@ export default function NoticePanel() {
       clearInterval(poll);
       db.removeChannel(channel);
     };
-  }, []);
+  }, [screenSlug]);
 
   const headline =
     session?.display_notice?.trim() || DEFAULTS.headline;
