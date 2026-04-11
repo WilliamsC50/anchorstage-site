@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Photos",
+  description:
+    "Production photos from live events handled by AnchorStage Operations LLC — outdoor stages, venue shows, and live music in Central Florida.",
+};
 
 export default function Photos() {
   return (

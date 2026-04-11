@@ -13,8 +13,51 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AnchorStage Operations",
-  description: "Production systems for live events.",
+  metadataBase: new URL("https://anchorstageops.com"),
+  title: "AnchorStage Operations | Live Event Production – Orlando, FL",
+  description:
+    "Professional live sound, staging, lighting, and event production in Orlando and Central Florida. AnchorStage Operations LLC — stage to strike.",
+  openGraph: {
+    type: "website",
+    url: "https://anchorstageops.com",
+    siteName: "AnchorStage Operations",
+    title: "AnchorStage Operations | Live Event Production – Orlando, FL",
+    description:
+      "Professional live sound, staging, lighting, and event production in Orlando and Central Florida.",
+    images: [
+      {
+        url: "/images/hero-stage.jpg",
+        width: 1200,
+        height: 630,
+        alt: "AnchorStage Operations – Live Event Production",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AnchorStage Operations | Live Event Production – Orlando, FL",
+    description:
+      "Professional live sound, staging, lighting, and event production in Orlando and Central Florida.",
+    images: ["/images/hero-stage.jpg"],
+  },
+};
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "AnchorStage Operations LLC",
+  url: "https://anchorstageops.com",
+  telephone: "+1-360-720-8622",
+  email: "contact@anchorstageops.com",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Orlando",
+    addressRegion: "FL",
+    addressCountry: "US",
+  },
+  areaServed: ["Orlando", "Central Florida"],
+  description:
+    "AnchorStage Operations LLC provides professional live sound, staging, lighting, and event production services in Orlando and Central Florida.",
 };
 
 export default function RootLayout({
@@ -25,6 +68,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
         {children}
       </body>
     </html>

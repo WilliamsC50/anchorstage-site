@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description:
+    "Get in touch with AnchorStage Operations LLC to discuss your event. Call, email, or submit an intake request — we follow up with a clear plan.",
+};
+
 export default function Contact() {
   return (
     <main className="bg-white text-gray-900">

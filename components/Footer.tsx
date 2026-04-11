@@ -7,6 +7,9 @@ export default function Footer() {
 
         <div>
           <p className="font-semibold text-white">AnchorStage Operations LLC</p>
+          <p className="text-xs mt-0.5" style={{ color: "var(--aso-blue-light)", opacity: 0.65 }}>
+            Orlando, Florida
+          </p>
           <p className="text-sm mt-1" style={{ color: "var(--aso-blue-light)", opacity: 0.8 }}>
             Stage to strike.
           </p>
