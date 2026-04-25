@@ -40,6 +40,16 @@ const SERVICES = [
     title: "Podcast & Content Setups",
     body: "Mobile podcast and recording rigs set up on-site for events. Works well for live interviews, panel discussions, and recorded sessions built into your event day.",
   },
+  {
+    icon: "/Icons/Mobile Podcast Setup.png",
+    title: "Home Studio Installation & Troubleshooting",
+    body: "Already have the gear — just need it working? We help musicians, podcasters, streamers, and small creators get their home studio properly connected and dialed in. Audio interfaces, microphones, monitors, mixers, cameras, basic lighting, OBS and streaming setups, DAW input/output routing, cable cleanup, and signal-flow troubleshooting.",
+  },
+  {
+    icon: "/Icons/Production.png",
+    title: "Minor Gear Repairs & Parts Replacement",
+    body: "Practical fixes for non-working AV gear where repair makes sense. Connector replacement, cable repair, knobs, faders, buttons, lamps, fans, rack cleanup, and basic diagnosis. We don't do warranty service, board-level electronics repair, or manufacturer-authorized work — anything in that territory gets referred to the right shop.",
+  },
 ] as const;
 
 // ─── Bundle selection ─────────────────────────────────────────────────────────
