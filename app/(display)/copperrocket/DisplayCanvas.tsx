@@ -143,57 +143,67 @@ export default function DisplayCanvas({
           {/* 2. Event identity or carousel */}
           <CarouselPanel screenSlug={screenSlug} />
 
-          {/* 3. CTA row — Logo + QR */}
+          {/* 3. CTA row — Website QR | Logo | Tip QR */}
           <div
             style={{
+              backgroundColor: "rgba(5, 15, 28, 0.65)",
+              border: "1px solid rgba(255,122,26,0.25)",
+              borderRadius: 14,
+              backdropFilter: "blur(8px)",
+              padding: "20px 28px",
               display: "flex",
-              flexDirection: "column",
+              flexDirection: "row",
               alignItems: "center",
-              gap: 16,
+              justifyContent: "space-evenly",
             }}
           >
-            <p
-              className="font-semibold text-white"
-              style={{ fontSize: 15, letterSpacing: "0.06em", opacity: 0.60, textAlign: "center" }}
-            >
-              Scan the QR below to visit AnchorStageOps.com!
-            </p>
+            {/* Website QR */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+              <div style={{ backgroundColor: "#ffffff", padding: 10, borderRadius: 8, lineHeight: 0 }}>
+                <QRCodeSVG
+                  value="https://anchorstageops.com"
+                  size={156}
+                  bgColor="#ffffff"
+                  fgColor="#000000"
+                  level="H"
+                />
+              </div>
+              <p style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.75)", letterSpacing: "0.04em", textAlign: "center", margin: 0 }}>
+                Visit our website
+              </p>
+            </div>
 
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-evenly",
-                width: "100%",
-              }}
-            >
-              {/* ASO logo */}
+            {/* Center: ASO logo + subtext */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
               <Image
                 src="/logos/aso-logo-white.png"
                 alt="AnchorStage Operations"
-                width={178}
-                height={178}
+                width={210}
+                height={210}
                 style={{ objectFit: "contain" }}
               />
+              <p style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", textAlign: "center", margin: 0 }}>
+                Brought to you by CFAV + AnchorStage Operations
+              </p>
+            </div>
 
-              {/* QR code */}
-              <div
-                style={{
-                  backgroundColor: "#ffffff",
-                  padding: 12,
-                  borderRadius: 8,
-                  lineHeight: 0,
-                }}
-              >
+            {/* Tip QR */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+              <div style={{ backgroundColor: "#ffffff", padding: 10, borderRadius: 8, lineHeight: 0 }}>
                 <QRCodeSVG
-                  value="https://anchorstageops.com"
-                  size={198}
+                  value="https://intake.anchorstageops.com/pay?type=tip"
+                  size={156}
                   bgColor="#ffffff"
                   fgColor="#000000"
-                  level="M"
+                  level="H"
                 />
               </div>
+              <p style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.75)", letterSpacing: "0.04em", textAlign: "center", margin: 0 }}>
+                Scan to tip the crew
+              </p>
+              <p style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.04em", textAlign: "center", margin: 0 }}>
+                100% goes to the crew
+              </p>
             </div>
           </div>
 
