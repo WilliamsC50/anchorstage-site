@@ -24,6 +24,40 @@ body {
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
 
+/* Stage-light background overlay for dark mode */
+html.dark body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(
+      ellipse 720px 520px at 82% -8%,
+      rgba(145, 205, 255, 0.20) 0%,
+      rgba(70, 135, 200, 0.12) 28%,
+      transparent 70%
+    ),
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      transparent 55%,
+      rgba(125, 190, 255, 0.08) 68%,
+      transparent 82%
+    );
+}
+
+html.dark body > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media print {
+  html.dark body::before {
+    display: none !important;
+  }
+}
+
 /* Used by display pages to hide scrollbars while keeping scroll behavior */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
