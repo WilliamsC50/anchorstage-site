@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import ThemeToggle from "./ThemeToggle";
 
 const LOGIN_URL = "https://intake.anchorstageops.com/login";
 const SIGNUP_URL = "https://intake.anchorstageops.com/register";
@@ -45,8 +46,9 @@ export default function Nav() {
           <a href={SIGNUP_URL} className="opacity-70 hover:opacity-100 transition">Create Account</a>
         </nav>
 
-        {/* RIGHT: CTA + mobile hamburger */}
+        {/* RIGHT: theme toggle + CTA + mobile hamburger */}
         <div className="flex items-center gap-3 shrink-0">
+          <ThemeToggle />
           <a
             href="https://intake.anchorstageops.com"
             className="text-white text-sm font-medium px-5 py-2 rounded-lg transition hover:opacity-90"
@@ -88,6 +90,7 @@ export default function Nav() {
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Contact</Link>
           <a href={LOGIN_URL} className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Log In</a>
           <a href={SIGNUP_URL} className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Create Account</a>
+          <div className="py-1"><ThemeToggle /></div>
           <a
             href="https://intake.anchorstageops.com"
             className="mt-2 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition hover:opacity-90 text-center"
