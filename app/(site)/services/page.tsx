@@ -165,6 +165,87 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* ── SERVICES GRID ─────────────────────────────────────────────────── */}
+      <section className="py-20" style={{ backgroundColor: "var(--aso-bg)" }}>
+        <div className="max-w-6xl mx-auto px-6">
+
+          <div className="mb-12">
+            <h2
+              className="text-2xl font-semibold mb-3"
+              style={{ color: "var(--aso-navy)" }}
+            >
+              What we offer
+            </h2>
+            <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
+              We can bring gear, run existing gear, and execute cleanly using the
+              right equipment and people for the job.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {SERVICES.map((svc) => (
+              <div
+                key={svc.title}
+                className="bg-white rounded-xl p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-4"
+              >
+                <Image
+                  src={svc.icon}
+                  alt={svc.title}
+                  width={68}
+                  height={68}
+                  style={{ objectFit: "contain" }}
+                />
+
+                <div>
+                  <h3
+                    className="font-semibold text-base mb-2 leading-snug"
+                    style={{ color: "var(--aso-navy)" }}
+                  >
+                    {svc.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{svc.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-6">
+
+          <h2
+            className="text-2xl font-semibold mb-12"
+            style={{ color: "var(--aso-navy)" }}
+          >
+            How it works
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {STEPS.map(({ step, title, desc }) => (
+              <div key={step}>
+                <p
+                  className="text-3xl font-bold mb-4"
+                  style={{ color: "var(--aso-blue)" }}
+                >
+                  {step}
+                </p>
+                <h3
+                  className="text-base font-semibold mb-2"
+                  style={{ color: "var(--aso-navy)" }}
+                >
+                  {title}
+                </h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
       {/* ── BUNDLE SELECTION ──────────────────────────────────────────────── */}
       <section className="py-20" style={{ backgroundColor: "var(--aso-bg)" }}>
         <div className="max-w-6xl mx-auto px-6">
@@ -225,87 +306,6 @@ export default function ServicesPage() {
                 Start with the general request form.
               </a>
             </p>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
-      <section className="py-20 bg-white">
-        <div className="max-w-6xl mx-auto px-6">
-
-          <h2
-            className="text-2xl font-semibold mb-12"
-            style={{ color: "var(--aso-navy)" }}
-          >
-            How it works
-          </h2>
-
-          <div className="grid md:grid-cols-3 gap-10">
-            {STEPS.map(({ step, title, desc }) => (
-              <div key={step}>
-                <p
-                  className="text-3xl font-bold mb-4"
-                  style={{ color: "var(--aso-blue)" }}
-                >
-                  {step}
-                </p>
-                <h3
-                  className="text-base font-semibold mb-2"
-                  style={{ color: "var(--aso-navy)" }}
-                >
-                  {title}
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-
-        </div>
-      </section>
-
-      {/* ── SERVICES GRID ─────────────────────────────────────────────────── */}
-      <section className="py-20" style={{ backgroundColor: "var(--aso-bg)" }}>
-        <div className="max-w-6xl mx-auto px-6">
-
-          <div className="mb-12">
-            <h2
-              className="text-2xl font-semibold mb-3"
-              style={{ color: "var(--aso-navy)" }}
-            >
-              What we offer
-            </h2>
-            <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
-              We can bring gear, run existing gear, and execute cleanly using the
-              right equipment and people for the job.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {SERVICES.map((svc) => (
-              <div
-                key={svc.title}
-                className="bg-white rounded-xl p-7 border border-gray-100 shadow-sm hover:shadow-md transition-shadow flex flex-col gap-4"
-              >
-                <Image
-                  src={svc.icon}
-                  alt={svc.title}
-                  width={68}
-                  height={68}
-                  style={{ objectFit: "contain" }}
-                />
-
-                <div>
-                  <h3
-                    className="font-semibold text-base mb-2 leading-snug"
-                    style={{ color: "var(--aso-navy)" }}
-                  >
-                    {svc.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{svc.body}</p>
-                </div>
-              </div>
-            ))}
           </div>
 
         </div>

@@ -45,6 +45,7 @@ export default function Contact() {
             <p>
               <span className="font-medium" style={{ color: "var(--aso-navy)" }}>Phone</span>
               <br />
+              {/* TODO: Replace with Central Florida/local business number when available. */}
               360-720-8622
             </p>
             <p>

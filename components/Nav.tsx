@@ -5,9 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import ThemeToggle from "./ThemeToggle";
 
-const LOGIN_URL = "https://intake.anchorstageops.com/login";
-const SIGNUP_URL = "https://intake.anchorstageops.com/register";
-
 export default function Nav() {
   const [open, setOpen] = useState(false);
 
@@ -42,8 +39,6 @@ export default function Nav() {
           <Link href="/photos" className="opacity-70 hover:opacity-100 transition">Photos</Link>
           <Link href="/team" className="opacity-70 hover:opacity-100 transition">Team</Link>
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition">Contact</Link>
-          <a href={LOGIN_URL} className="opacity-70 hover:opacity-100 transition">Log In</a>
-          <a href={SIGNUP_URL} className="opacity-70 hover:opacity-100 transition">Create Account</a>
         </nav>
 
         {/* RIGHT: theme toggle + CTA + mobile hamburger */}
@@ -88,8 +83,6 @@ export default function Nav() {
           <Link href="/photos" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Photos</Link>
           <Link href="/team" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Team</Link>
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Contact</Link>
-          <a href={LOGIN_URL} className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Log In</a>
-          <a href={SIGNUP_URL} className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Create Account</a>
           <div className="py-1"><ThemeToggle /></div>
           <a
             href="https://intake.anchorstageops.com"

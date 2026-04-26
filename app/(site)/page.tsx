@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Live Event Production in Orlando & Central Florida",
+  title: "AnchorStage Operations | Live Event Production - Orlando & Central Florida",
   description:
     "AnchorStage Operations LLC provides professional live sound, staging, lighting, and full event production in Orlando and Central Florida — from bar shows to outdoor stages.",
 };

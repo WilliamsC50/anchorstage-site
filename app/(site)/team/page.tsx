@@ -17,10 +17,10 @@ export default function TeamPage() {
           className="text-4xl font-bold mb-4"
           style={{ color: "var(--aso-navy)" }}
         >
-          Meet the team behind AnchorStage
+          The Operator Behind AnchorStage
         </h1>
         <p className="text-lg text-gray-500 max-w-2xl">
-          Focused on execution. Built for live events.
+          Hands-on production from a single point of contact.
         </p>
       </section>
 
@@ -118,31 +118,6 @@ export default function TeamPage() {
                 production side right.
               </p>
             </div>
-          </div>
-
-          {/* What we do */}
-          <div>
-            <h2
-              className="text-xl font-semibold mb-5"
-              style={{ color: "var(--aso-navy)" }}
-            >
-              What we do
-            </h2>
-            <ul className="space-y-2 text-sm text-gray-600">
-              {[
-                "Live event audio systems",
-                "Stage and PA setups",
-                "Lighting for small to mid-size events",
-                "Event videography (as scoped per event)",
-                "On-site podcast / recording setups",
-                "Technical execution and show operation",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3">
-                  <span style={{ color: "var(--aso-orange)" }} className="mt-0.5 shrink-0">—</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
           </div>
 
         </div>
