@@ -12,7 +12,7 @@ export default function Nav() {
       className="sticky top-0 z-50 bg-white border-b border-gray-200"
       style={{ borderColor: "rgba(79, 168, 209, 0.2)" }}
     >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-8">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* LOGO + WORDMARK */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
