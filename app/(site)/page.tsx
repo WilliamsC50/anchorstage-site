@@ -44,7 +44,7 @@ export default function Home() {
             </p>
 
             <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6 text-white max-w-3xl mx-auto">
-              We handle the stage and sound.<br className="hidden md:block" /> Set to strike.
+              We Handle The Stage &amp; Sound From Set To Strike.
             </h1>
 
             <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
