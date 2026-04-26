@@ -9,14 +9,14 @@ import CarouselPanel from "./CarouselPanel";
 
 // ─── Canvas geometry ──────────────────────────────────────────────────────────
 
-// Logical display resolution — all layout values are in these coordinates.
+// Logical display resolution: all layout values are in these coordinates.
 const CANVAS_W = 1920;
 const CANVAS_H = 1080;
 
 // Safe area inset (px). Keeps content clear of TV overscan on all edges.
 const SAFE = 64;
 
-// Left panel (signup queue) width — only rendered for OPEN_MIC screens.
+// Left panel (signup queue) width, only rendered for OPEN_MIC screens.
 const LEFT_W = 720;
 
 // Gap between left panel and right column
@@ -76,7 +76,7 @@ export default function DisplayCanvas({
     : `linear-gradient(to right, rgba(5,10,20,0.85) 0%, rgba(10,20,30,0.70) 45%, rgba(10,20,30,0.58) 100%)`;
 
   return (
-    // Viewport shell — fills the browser window; black bars fill any letterbox areas
+    // Viewport shell: fills the browser window; black bars fill any letterbox areas
     <div
       style={{
         position: "fixed",
@@ -85,7 +85,7 @@ export default function DisplayCanvas({
         overflow: "hidden",
       }}
     >
-      {/* Fixed 1920×1080 canvas — positioned at (tx, ty) and scaled uniformly */}
+      {/* Fixed 1920x1080 canvas, positioned at (tx, ty) and scaled uniformly */}
       <div
         style={{
           position: "absolute",
@@ -143,7 +143,7 @@ export default function DisplayCanvas({
           {/* 2. Event identity or carousel */}
           <CarouselPanel screenSlug={screenSlug} />
 
-          {/* 3. CTA row — Website QR | Logo | Tip QR */}
+          {/* 3. CTA row: Website QR | Logo | Tip QR */}
           <div
             style={{
               backgroundColor: "rgba(5, 15, 28, 0.65)",

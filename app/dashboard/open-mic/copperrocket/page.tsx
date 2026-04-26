@@ -1,7 +1,7 @@
 import { supabaseServer } from "@/lib/supabase/server";
 import OpenMicWorkstationClient, { type SessionRow } from "./OpenMicWorkstationClient";
 
-// Admin page makes a live DB call — opt out of static prerendering.
+// Admin page makes a live DB call. Opt out of static prerendering.
 export const dynamic = "force-dynamic";
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -10,9 +10,9 @@ export const dynamic = "force-dynamic";
 // present in the prop passed to the client.
 //
 // Priority:
-//   1. Most recent ACTIVE session — show this if the event is live.
-//   2. Most recent DRAFT session  — allow admins to prepare notice text early.
-//   3. null                       — client renders the empty state.
+//   1. Most recent ACTIVE session: show this if the event is live.
+//   2. Most recent DRAFT session: allow admins to prepare notice text early.
+//   3. null: client renders the empty state.
 
 const SESSION_SELECT =
   "session_id, title, status, session_date, display_notice, display_subnotice";

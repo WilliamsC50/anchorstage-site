@@ -50,7 +50,7 @@ export default function Nav() {
             Start Event
           </a>
 
-          {/* HAMBURGER — mobile only */}
+          {/* HAMBURGER, mobile only */}
           <button
             className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5"
             onClick={() => setOpen(!open)}

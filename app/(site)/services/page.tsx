@@ -115,7 +115,7 @@ export default function ServicesPage() {
   return (
     <main className="bg-white text-gray-900">
 
-      {/* ── HERO — split layout: copy left / video right ───────────────────── */}
+      {/* HERO: split layout, copy left / video right */}
       <section className="bg-gray-950">
         <div className="max-w-6xl mx-auto px-6 py-20 md:py-28">
           <div className="grid md:grid-cols-2 gap-12 items-center">

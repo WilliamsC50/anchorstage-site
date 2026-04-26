@@ -92,7 +92,7 @@ export default function NoticePanel({ screenSlug = "copperrocket" }: { screenSlu
         padding: "28px 32px 32px",
       }}
     >
-      {/* LIVE NOTICE pill — top-right of container */}
+      {/* LIVE NOTICE pill, top-right of container */}
       <span
         className="absolute uppercase font-semibold"
         style={{

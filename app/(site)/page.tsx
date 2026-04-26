@@ -43,16 +43,8 @@ export default function Home() {
               Live Event Production
             </p>
 
-            {/*
-              Hero H1 options considered:
-              A) "We handle the stage. Sound, lighting, and production, start to finish." -- Chosen: lists services, matches "stage to strike" framing
-              B) "We handle the stage. The audio, setup, and show execution."
-              C) "We handle the stage. Sound, setup, and show flow covered."
-              D) "We handle the stage. We handle the production so your event runs clean."
-              E) "We handle the stage. The technical side is handled."
-            */}
             <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6 text-white max-w-3xl mx-auto">
-              We handle the stage.<br className="hidden md:block" /> Sound, lighting, and production, start to finish.
+              We handle the stage and sound.<br className="hidden md:block" /> Set to strike.
             </h1>
 
             <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">

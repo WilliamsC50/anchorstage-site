@@ -40,17 +40,17 @@ const PLACEHOLDER_SLIDES: Slide[] = [
   {
     label: "PA Rentals",
     heading: "Need a PA System?",
-    body: "Small PA rentals available through ASO & CFAV — ask at the Tech Table.",
+    body: "Small PA rentals available through ASO & CFAV. Ask at the Tech Table.",
   },
   {
     label: "Event Photos",
     heading: "Event Photography",
-    body: "Professional event photos from past shows — check our social pages.",
+    body: "Professional event photos from past shows. Check our social pages.",
   },
   {
     label: "Open Mic Gallery",
     heading: "Open Mic Gallery",
-    body: "Photos from past open mic nights — follow us to see yours.",
+    body: "Photos from past open mic nights. Follow us to see yours.",
   },
 ];
 
@@ -197,14 +197,14 @@ export default function CarouselPanel({ screenSlug = "copperrocket" }: { screenS
         borderRadius: 8,
       }}
     >
-      {/* Slide content — fades on transition */}
+      {/* Slide content, fades on transition */}
       <div
         style={{
           transition: `opacity ${FADE_DURATION_MS}ms ease`,
           opacity: fading ? 0 : 1,
         }}
       >
-        {/* Image — contain-fit so full graphic is always visible; no cropping */}
+        {/* Image: contain-fit so full graphic is always visible; no cropping */}
         {hasImage && (
           <div
             style={{
@@ -235,7 +235,7 @@ export default function CarouselPanel({ screenSlug = "copperrocket" }: { screenS
           </div>
         )}
 
-        {/* Text — padded below the image (or standalone for text-only slides) */}
+        {/* Text: padded below the image (or standalone for text-only slides) */}
         {(slide.label || slide.heading || slide.body) && (
           <div style={{ padding: "0.75rem 1.25rem 0" }}>
             {/* Label pill inline for text-only slides */}

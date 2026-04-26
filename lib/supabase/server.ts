@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 
 // Server-side Supabase client using the service role key.
-// Only call from Server Actions and Route Handlers — never import on the client.
+// Only call from Server Actions and Route Handlers. Never import on the client.
 //
 // Requires in environment:
 //   NEXT_PUBLIC_SUPABASE_URL

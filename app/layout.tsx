@@ -12,19 +12,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// TODO: Replace app/favicon.ico with a multi-size ICO file generated from
-// public/logos/aso-picture-logo.svg. The PNG at aso-picture-logo.png is the
-// correct mark-only asset (no text). Until the ICO is regenerated, apple and
-// shortcut icons are explicitly set below to use the correct mark.
+// TODO: Regenerate app/favicon.ico from aso-picture-logo.svg as multi-size ICO (16, 32, 48).
 export const metadata: Metadata = {
   metadataBase: new URL("https://anchorstageops.com"),
   icons: {
-    shortcut: "/logos/aso-picture-logo.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
     apple: "/logos/aso-picture-logo.png",
   },
   title: "AnchorStage Operations | Live Event Production – Orlando, FL",
   description:
-    "Professional live sound, staging, lighting, and event production in Orlando and Central Florida. AnchorStage Operations LLC — stage to strike.",
+    "Professional live sound, staging, lighting, and event production in Orlando and Central Florida. AnchorStage Operations LLC. Stage to strike.",
   openGraph: {
     type: "website",
     url: "https://anchorstageops.com",
@@ -76,7 +74,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* Runs before paint — applies saved theme class before React hydrates to prevent flash */}
+        {/* Runs before paint: applies saved theme class before React hydrates to prevent flash */}
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark')document.documentElement.classList.add('dark')}catch(e){}})()`,

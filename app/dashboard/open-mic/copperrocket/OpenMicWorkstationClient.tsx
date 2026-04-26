@@ -31,7 +31,7 @@ export default function OpenMicWorkstationClient({
   async function handleSave() {
     // Client-side guard: do not call the action when no session is loaded.
     if (!session?.session_id) {
-      setMessage({ ok: false, text: "No session loaded — cannot save." });
+      setMessage({ ok: false, text: "No session loaded. Cannot save." });
       return;
     }
 
@@ -61,7 +61,7 @@ export default function OpenMicWorkstationClient({
   if (!session) {
     return (
       <main style={{ padding: "2rem" }}>
-        <h1 style={{ marginBottom: "1rem" }}>Copper Rocket — Open Mic Admin</h1>
+        <h1 style={{ marginBottom: "1rem" }}>Copper Rocket: Open Mic Admin</h1>
         <p style={{ color: "#888" }}>
           No active or draft session found for Copper Rocket.
         </p>
@@ -72,9 +72,9 @@ export default function OpenMicWorkstationClient({
   // ── Session loaded ─────────────────────────────────────────────────────────
   return (
     <main style={{ padding: "2rem", maxWidth: 600 }}>
-      <h1 style={{ marginBottom: "0.5rem" }}>Copper Rocket — Open Mic Admin</h1>
+      <h1 style={{ marginBottom: "0.5rem" }}>Copper Rocket: Open Mic Admin</h1>
       <p style={{ marginBottom: "1.5rem", color: "#666", fontSize: "0.9rem" }}>
-        {session.title} &mdash; <strong>{session.status}</strong> &mdash;{" "}
+        {session.title}, <strong>{session.status}</strong>,{" "}
         {session.session_date}
       </p>
 

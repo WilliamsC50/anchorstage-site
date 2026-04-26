@@ -119,7 +119,7 @@ export default function SignupDisplay({ screenSlug = "copperrocket" }: { screenS
                 filter: `session_id=eq.${newSessionId}`,
               },
               // Re-fetch full state on any signup change rather than applying
-              // partial updates — keeps display consistent.
+              // partial updates, keeps display consistent.
               () => load()
             )
             .subscribe();
@@ -133,7 +133,7 @@ export default function SignupDisplay({ screenSlug = "copperrocket" }: { screenS
     // If realtime is working, polls are redundant but harmless on a low-traffic page.
     const poll = setInterval(load, POLL_INTERVAL_MS);
 
-    // Session-level realtime channel (static — watches the whole venue).
+    // Session-level realtime channel (static, watches the whole venue).
     // Catches status transitions (ACTIVE ↔ DRAFT), session selection changes,
     // and any other session row edits without waiting for the next poll cycle.
     // The signup channel (above) is still scoped per session_id; this complements it.

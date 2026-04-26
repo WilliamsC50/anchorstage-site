@@ -1,6 +1,6 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-// Lazy singleton — createClient is deferred until first use so it is never
+// Lazy singleton: createClient is deferred until first use so it is never
 // called during Next.js build-time prerendering (when env vars are absent).
 //
 // Requires in .env.local:
