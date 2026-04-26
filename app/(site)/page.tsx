@@ -4,7 +4,7 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "AnchorStage Operations | Live Event Production - Orlando & Central Florida",
   description:
-    "AnchorStage Operations LLC provides professional live sound, staging, lighting, and full event production in Orlando and Central Florida — from bar shows to outdoor stages.",
+    "AnchorStage Operations LLC provides professional live sound, staging, lighting, and full event production in Orlando and Central Florida, from bar shows to outdoor stages.",
 };
 
 export default function Home() {
@@ -48,7 +48,7 @@ export default function Home() {
             </h1>
 
             <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Professional sound, lighting, and production for live events —
+              Professional sound, lighting, and production for live events,
               from full outdoor stages to compact venue setups.
             </p>
 
@@ -103,7 +103,7 @@ export default function Home() {
               What we handle
             </h2>
             <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
-              Every event is different. We work across the full range — headliner
+              Every event is different. We work across the full range: headliner
               stages, club shows, outdoor festivals, and everything in between.
             </p>
           </div>
@@ -136,10 +136,10 @@ export default function Home() {
                   you actually need.
                 </p>
                 <ul className="text-sm text-gray-400 space-y-1.5">
-                  <li>— Bar &amp; venue live music</li>
-                  <li>— Private parties &amp; celebrations</li>
-                  <li>— Backyard &amp; compact setups</li>
-                  <li>— Small weddings &amp; receptions</li>
+                  <li>- Bar &amp; venue live music</li>
+                  <li>- Private parties &amp; celebrations</li>
+                  <li>- Backyard &amp; compact setups</li>
+                  <li>- Small weddings &amp; receptions</li>
                 </ul>
               </div>
             </div>
@@ -170,10 +170,10 @@ export default function Home() {
                   shows run cleanly.
                 </p>
                 <ul className="text-sm text-gray-400 space-y-1.5">
-                  <li>— Festival &amp; outdoor stages</li>
-                  <li>— Concert production</li>
-                  <li>— Corporate &amp; branded events</li>
-                  <li>— Technical direction &amp; crew management</li>
+                  <li>- Festival &amp; outdoor stages</li>
+                  <li>- Concert production</li>
+                  <li>- Corporate &amp; branded events</li>
+                  <li>- Technical direction &amp; crew management</li>
                 </ul>
               </div>
             </div>
@@ -202,16 +202,16 @@ export default function Home() {
                 Central Florida Based
               </p>
               <p className="text-xs text-gray-400 leading-relaxed">
-                Local crew, local knowledge. Available for events throughout the region.
+                Based in Orlando and available for events throughout Orange, Osceola, Seminole, and Lake counties.
               </p>
             </div>
 
             <div>
               <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
-                Built on Real Event Work
+                Built from Real Event Work
               </p>
               <p className="text-xs text-gray-400 leading-relaxed">
-                From bar shows to outdoor stages — every event handled with the same professional approach.
+                Production experience from live events across Central Florida, not test setups or demos.
               </p>
             </div>
 
@@ -235,7 +235,7 @@ export default function Home() {
               {
                 step: "01",
                 title: "Tell us about your event",
-                desc: "Submit your event details — date, location, type, and any technical needs. Takes a few minutes.",
+                desc: "Submit your event details: date, location, type, and any technical needs. Takes a few minutes.",
               },
               {
                 step: "02",
@@ -245,7 +245,7 @@ export default function Home() {
               {
                 step: "03",
                 title: "We show up and execute",
-                desc: "On the day, we handle setup, direction, and strike. Your event runs clean — that's the job.",
+                desc: "On the day, we handle setup, direction, and strike. Your event runs clean. That's the job.",
               },
             ].map(({ step, title, desc }) => (
               <div key={step}>
@@ -283,7 +283,7 @@ export default function Home() {
             className="text-sm mb-8 max-w-md mx-auto leading-relaxed"
             style={{ color: "var(--aso-blue-light)", opacity: 0.85 }}
           >
-            Start with the intake form — it takes a few minutes and gives us
+            Start with the intake form. It takes a few minutes and gives us
             everything we need to follow up with a clear plan.
           </p>
 

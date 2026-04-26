@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with AnchorStage Operations LLC to discuss your event. Call, email, or submit an intake request — we follow up with a clear plan.",
+    "Get in touch with AnchorStage Operations LLC to discuss your event. Call, email, or submit an intake request. We follow up with a clear plan.",
 };
 
 export default function Contact() {
@@ -92,14 +92,14 @@ export default function Contact() {
             </h2>
             <p className="text-sm text-gray-500 leading-relaxed mb-4">
               AnchorStage Operations LLC handles compact and mid-size events
-              directly — sound, lighting, stage, and direction. For shows that
+              directly: sound, lighting, stage, and direction. For shows that
               need additional scale or expanded production capacity, we work with
               Central Florida AV Solutions (CFAV), a trusted local production
               partner.
             </p>
             <p className="text-sm text-gray-500 leading-relaxed">
               Submit through the intake form and we&apos;ll coordinate the right
-              setup from there — or reach out to CFAV directly if you already
+              setup from there, or reach out to CFAV directly if you already
               know you need a larger rig.
             </p>
           </div>

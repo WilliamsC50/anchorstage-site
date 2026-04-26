@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Team — AnchorStage Operations LLC",
+  title: "Team - AnchorStage Operations LLC",
   description:
-    "Meet the operators behind AnchorStage Operations LLC — focused on clean execution and reliable live event production.",
+    "Meet the operator behind AnchorStage Operations LLC, focused on clean execution and reliable live event production.",
 };
 
 export default function TeamPage() {
@@ -32,7 +32,7 @@ export default function TeamPage() {
           <div className="relative rounded-xl overflow-hidden" style={{ aspectRatio: "3 / 4" }}>
             <Image
               src="/images/Headshot.jpg"
-              alt="Cody Williams — Founder, AnchorStage Operations LLC"
+              alt="Cody Williams, Founder of AnchorStage Operations LLC"
               fill
               className="object-cover object-top"
               sizes="260px"
@@ -58,7 +58,7 @@ export default function TeamPage() {
               </p>
               <p>
                 With over 10 years of experience running sound in the Central Florida
-                area, Cody has worked across a wide range of events—from open mics
+                area, Cody has worked across a wide range of events, from open mics
                 and small venue shows to larger productions. His approach is
                 hands-on and detail-driven, with an emphasis on getting things right
                 before the show even begins.
@@ -67,7 +67,7 @@ export default function TeamPage() {
                 Cody is a three-time graduate of the F.I.R.S.T. Institute, with
                 training in Audio Engineering, Video Production, and Graphic
                 Design/Web Development. That broader background allows him to think
-                beyond just equipment—understanding how production, content, and
+                beyond just equipment. Understanding how production, content, and
                 execution all need to align on event day.
               </p>
               <p>
@@ -79,7 +79,7 @@ export default function TeamPage() {
               </p>
               <p>
                 Whether supporting a small event or working alongside trusted
-                production partners on larger shows, the goal stays the same—make the
+                production partners on larger shows, the goal stays the same: make the
                 event run cleanly, efficiently, and without surprises.
               </p>
               <p>
@@ -108,8 +108,8 @@ export default function TeamPage() {
                 you can focus on everything else.
               </p>
               <p>
-                AnchorStage Operations LLC is built around execution — not theory,
-                not overpromising, and not unnecessary complexity. Every setup is
+                AnchorStage Operations LLC is built around execution, not theory,
+                overpromising, or unnecessary complexity. Every setup is
                 designed to be practical, reliable, and appropriate for the event
                 it supports.
               </p>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Services — AnchorStage Operations",
+  title: "Services - AnchorStage Operations",
   description:
     "Live audio, stage, lighting, videography, and production execution for events of all sizes.",
 };
@@ -14,13 +14,13 @@ const SERVICES = [
     icon: "/Icons/Audio.png",
     title: "Audio Services",
     price: "Starting around $300",
-    body: "Full PA systems, mixing, and live sound operation. We can bring the system or run yours — whatever the event needs.",
+    body: "PA systems, mixing, and live sound operation for live events and performances. We can bring a system or run yours.",
   },
   {
     icon: "/Icons/Staging.png",
     title: "Stage & PA Setup",
     price: "Quoted per event",
-    body: "Clean, professional stage setups for bands, speakers, and events. Fast setup, clean cabling, and efficient teardown.",
+    body: "Stage setups for bands, speakers, and events. Fast load-in, clean cabling, and efficient teardown.",
   },
   {
     icon: "/Icons/Lighting.png",
@@ -38,7 +38,7 @@ const SERVICES = [
     icon: "/Icons/Event Videography.png",
     title: "Event Videography",
     price: "Starting around $300",
-    body: "Clean, reliable video capture for performances and events. Deliverables vary by scope — typically clean recordings or edited footage — coordinated before the event so you know what to expect.",
+    body: "Video capture for performances and events. Deliverables are scoped before the event: unedited recordings or edited footage, depending on what you need.",
   },
   {
     icon: "/Icons/Mobile Podcast Setup.png",
@@ -50,14 +50,14 @@ const SERVICES = [
     icon: "/Icons/Mobile Podcast Setup.png",
     title: "Home Studio Installation & Troubleshooting",
     price: "Starting around $250",
-    body: "Already have the gear — just need it working? We help musicians, podcasters, streamers, and small creators get their home studio properly connected and dialed in. Audio interfaces, microphones, monitors, mixers, cameras, basic lighting, OBS and streaming setups, DAW input/output routing, cable cleanup, and signal-flow troubleshooting.",
+    body: "Have the gear but need it working? We get home studios connected and dialed in for musicians, podcasters, streamers, and content creators. Audio interfaces, microphones, monitors, mixers, cameras, basic lighting, OBS and streaming setups, DAW routing, cable cleanup, and signal-flow troubleshooting.",
   },
   {
     // TODO: Replace with dedicated repairs/tool icon asset.
     icon: "/Icons/Production.png",
     title: "Minor Gear Repairs & Parts Replacement",
     price: "Quoted after review",
-    body: "Practical fixes for non-working AV gear where repair makes sense. Connector replacement, cable repair, knobs, faders, buttons, lamps, fans, rack cleanup, and basic diagnosis. We don't do warranty service, board-level electronics repair, or manufacturer-authorized work — anything in that territory gets referred to the right shop.",
+    body: "Practical fixes for non-working AV gear where repair makes sense. Connector replacement, cable repair, knobs, faders, buttons, lamps, fans, rack cleanup, and basic diagnosis. We don't do warranty service, board-level electronics repair, or manufacturer-authorized work. Anything in that territory gets referred to the right shop.",
   },
 ] as const;
 
@@ -95,7 +95,7 @@ const STEPS = [
   {
     step: "01",
     title: "Tell us about your event",
-    desc: "Submit your event details — date, location, type, and any technical needs. Takes a few minutes.",
+    desc: "Submit your event details: date, location, type, and any technical needs. Takes a few minutes.",
   },
   {
     step: "02",
@@ -105,7 +105,7 @@ const STEPS = [
   {
     step: "03",
     title: "We show up and execute cleanly",
-    desc: "On the day, we handle setup, direction, and strike. Your event runs clean — that's the job.",
+    desc: "On the day, we handle setup, direction, and strike. Your event runs clean. That's the job.",
   },
 ] as const;
 
@@ -134,7 +134,7 @@ export default function ServicesPage() {
               </h1>
 
               <p className="text-lg text-white/70 mb-10 leading-relaxed">
-                Audio, staging, lighting, production, and event support — delivered cleanly from setup to strike.
+                Audio, staging, lighting, production, and event support, delivered cleanly from setup to strike.
               </p>
 
               <div className="flex flex-wrap gap-4">
@@ -277,7 +277,7 @@ export default function ServicesPage() {
               What kind of event are you planning?
             </h2>
             <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
-              Choose a starting point — we&apos;ll confirm the details.
+              Choose a starting point. We&apos;ll confirm the details.
             </p>
           </div>
 
@@ -341,7 +341,7 @@ export default function ServicesPage() {
             className="text-sm mb-8 max-w-md mx-auto leading-relaxed"
             style={{ color: "var(--aso-blue-light)", opacity: 0.85 }}
           >
-            Tell us about your event — we&apos;ll help figure out the details.
+            Tell us about your event. We&apos;ll help figure out the details.
           </p>
 
           <a

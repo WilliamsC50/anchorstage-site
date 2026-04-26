@@ -4,7 +4,7 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "Photos",
   description:
-    "Production photos from live events handled by AnchorStage Operations LLC — outdoor stages, venue shows, and live music in Central Florida.",
+    "Production photos from live events handled by AnchorStage Operations LLC: outdoor stages, venue shows, and live music in Central Florida.",
 };
 
 const GALLERY = [
@@ -68,7 +68,7 @@ export default function Photos() {
           Photos
         </h1>
         <p className="text-lg text-gray-500 max-w-2xl">
-          Live music, outdoor stages, venue shows, and community events — a look at
+          Live music, outdoor stages, venue shows, and community events. A look at
           production setups and real events we&apos;ve been a part of.
         </p>
       </section>
@@ -77,8 +77,10 @@ export default function Photos() {
       <section className="max-w-6xl mx-auto px-6 pb-10">
         <p className="text-sm text-gray-500 leading-relaxed max-w-2xl">
           These photos show real event setups and stage/production work from shows
-          supported through AnchorStage and CFAV-related production. Setups range
-          from compact venue shows to larger outdoor stages across Central Florida.
+          supported through AnchorStage and CFAV-related production. Included are
+          setups from recurring live events and open mic environments as well as
+          one-off productions. Setups range from compact venue shows to larger
+          outdoor stages across Central Florida.
         </p>
       </section>
 
