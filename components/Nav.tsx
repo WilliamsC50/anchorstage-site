@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import ThemeToggle from "./ThemeToggle";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -41,9 +40,8 @@ export default function Nav() {
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition">Contact</Link>
         </nav>
 
-        {/* RIGHT: theme toggle + CTA + mobile hamburger */}
+        {/* RIGHT: CTA + mobile hamburger */}
         <div className="flex items-center gap-3 shrink-0">
-          <ThemeToggle />
           <a
             href="https://intake.anchorstageops.com"
             className="text-white text-sm font-medium px-5 py-2 rounded-lg transition hover:opacity-90"
@@ -83,7 +81,6 @@ export default function Nav() {
           <Link href="/photos" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Photos</Link>
           <Link href="/team" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Team</Link>
           <Link href="/contact" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Contact</Link>
-          <div className="py-1"><ThemeToggle /></div>
           <a
             href="https://intake.anchorstageops.com"
             className="mt-2 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition hover:opacity-90 text-center"

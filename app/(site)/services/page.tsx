@@ -13,41 +13,50 @@ const SERVICES = [
   {
     icon: "/Icons/Audio.png",
     title: "Audio Services",
+    price: "Starting around $300",
     body: "Full PA systems, mixing, and live sound operation. We can bring the system or run yours — whatever the event needs.",
   },
   {
     icon: "/Icons/Staging.png",
     title: "Stage & PA Setup",
+    price: "Quoted per event",
     body: "Clean, professional stage setups for bands, speakers, and events. Fast setup, clean cabling, and efficient teardown.",
   },
   {
     icon: "/Icons/Lighting.png",
     title: "Lighting",
+    price: "Starting around $250",
     body: "Simple, effective lighting that makes your event look right. Stage wash, truss, and show lighting without overcomplicating it.",
   },
   {
     icon: "/Icons/Production.png",
     title: "Production & Show Execution",
+    price: "Custom quote",
     body: "We run the show. From load-in to strike, we keep everything organized, on time, and working.",
   },
   {
     icon: "/Icons/Event Videography.png",
     title: "Event Videography",
+    price: "Starting around $300",
     body: "Clean, reliable video capture for performances and events. Deliverables vary by scope — typically clean recordings or edited footage — coordinated before the event so you know what to expect.",
   },
   {
     icon: "/Icons/Mobile Podcast Setup.png",
     title: "Podcast & Content Setups",
+    price: "Starting around $250",
     body: "Mobile podcast and recording rigs set up on-site for events. Works well for live interviews, panel discussions, and recorded sessions built into your event day.",
   },
   {
     icon: "/Icons/Mobile Podcast Setup.png",
     title: "Home Studio Installation & Troubleshooting",
+    price: "Starting around $250",
     body: "Already have the gear — just need it working? We help musicians, podcasters, streamers, and small creators get their home studio properly connected and dialed in. Audio interfaces, microphones, monitors, mixers, cameras, basic lighting, OBS and streaming setups, DAW input/output routing, cable cleanup, and signal-flow troubleshooting.",
   },
   {
+    // TODO: Replace with dedicated repairs/tool icon asset.
     icon: "/Icons/Production.png",
     title: "Minor Gear Repairs & Parts Replacement",
+    price: "Quoted after review",
     body: "Practical fixes for non-working AV gear where repair makes sense. Connector replacement, cable repair, knobs, faders, buttons, lamps, fans, rack cleanup, and basic diagnosis. We don't do warranty service, board-level electronics repair, or manufacturer-authorized work — anything in that territory gets referred to the right shop.",
   },
 ] as const;
@@ -198,16 +207,26 @@ export default function ServicesPage() {
 
                 <div>
                   <h3
-                    className="font-semibold text-base mb-2 leading-snug"
+                    className="font-semibold text-base mb-1 leading-snug"
                     style={{ color: "var(--aso-navy)" }}
                   >
                     {svc.title}
                   </h3>
+                  <p
+                    className="text-xs font-medium mb-3"
+                    style={{ color: "var(--aso-blue)" }}
+                  >
+                    {svc.price}
+                  </p>
                   <p className="text-sm text-gray-500 leading-relaxed">{svc.body}</p>
                 </div>
               </div>
             ))}
           </div>
+
+          <p className="mt-10 text-xs text-gray-400 leading-relaxed max-w-xl">
+            Final pricing depends on event size, location, gear needs, labor, schedule, and site conditions.
+          </p>
 
         </div>
       </section>

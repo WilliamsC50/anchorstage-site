@@ -7,6 +7,54 @@ export const metadata: Metadata = {
     "Production photos from live events handled by AnchorStage Operations LLC — outdoor stages, venue shows, and live music in Central Florida.",
 };
 
+const GALLERY = [
+  {
+    src: "/images/proof-4.jpg",
+    alt: "Outdoor stage setup with lighting and audio support",
+    caption: "Outdoor stage setup with lighting and audio support.",
+  },
+  {
+    src: "/images/proof-5.jpg",
+    alt: "Stage and lighting prepared for a live music event",
+    caption: "Stage and lighting prepared for a live music event.",
+  },
+  {
+    src: "/images/proof-6.jpg",
+    alt: "Live sound production at a Central Florida venue",
+    caption: "Live sound production at a Central Florida venue.",
+  },
+  {
+    src: "/images/proof-7.jpg",
+    alt: "Outdoor stage production with full PA and lighting",
+    caption: "Outdoor stage production with full PA and lighting.",
+  },
+  {
+    src: "/images/proof-9.jpg",
+    alt: "Live event production setup for a local show",
+    caption: "Live event production setup for a local show.",
+  },
+  {
+    src: "/images/proof-10.jpg",
+    alt: "Stage lighting and performance area configured for a live event",
+    caption: "Stage lighting and performance area configured for a live event.",
+  },
+  {
+    src: "/images/proof-11.jpg",
+    alt: "On-site production crew setting up for a show",
+    caption: "On-site production crew setting up for a show.",
+  },
+  {
+    src: "/images/proof-12.jpg",
+    alt: "Venue event production with stage and audio support",
+    caption: "Venue event production with stage and audio support.",
+  },
+  {
+    src: "/images/proof-13.jpg",
+    alt: "Production support setup with stage, lighting, and PA elements",
+    caption: "Production support setup with stage, lighting, and PA elements.",
+  },
+];
+
 export default function Photos() {
   return (
     <main className="bg-white text-gray-900">
@@ -25,31 +73,30 @@ export default function Photos() {
         </p>
       </section>
 
+      {/* GALLERY INTRO */}
+      <section className="max-w-6xl mx-auto px-6 pb-10">
+        <p className="text-sm text-gray-500 leading-relaxed max-w-2xl">
+          These photos show real event setups and stage/production work from shows
+          supported through AnchorStage and CFAV-related production. Setups range
+          from compact venue shows to larger outdoor stages across Central Florida.
+        </p>
+      </section>
+
       {/* GALLERY */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
-        <div className="grid md:grid-cols-3 gap-4">
-          {[
-            { src: "/images/proof-4.jpg",  alt: "Live event production setup" },
-            { src: "/images/proof-5.jpg",  alt: "Stage and lighting at a live show" },
-            { src: "/images/proof-6.jpg",  alt: "Sound production at a venue event" },
-            { src: "/images/proof-7.jpg",  alt: "Outdoor stage production" },
-            { src: "/images/proof-9.jpg",  alt: "Live music production" },
-            { src: "/images/proof-10.jpg", alt: "Event lighting and stage setup" },
-            { src: "/images/proof-11.jpg", alt: "Production crew on site" },
-            { src: "/images/proof-12.jpg", alt: "Venue live event" },
-            { src: "/images/proof-13.jpg", alt: "AnchorStage event production" },
-          ].map(({ src, alt }) => (
-            <div
-              key={src}
-              className="relative aspect-video rounded-lg overflow-hidden bg-gray-900"
-            >
-              <Image
-                src={src}
-                alt={alt}
-                fill
-                className="object-cover"
-                sizes="(min-width: 768px) 33vw, 100vw"
-              />
+        <div className="grid md:grid-cols-3 gap-6">
+          {GALLERY.map(({ src, alt, caption }) => (
+            <div key={src} className="flex flex-col gap-2">
+              <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-900">
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                />
+              </div>
+              <p className="text-xs text-gray-400 leading-relaxed">{caption}</p>
             </div>
           ))}
         </div>
