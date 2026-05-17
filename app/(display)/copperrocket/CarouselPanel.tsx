@@ -90,7 +90,13 @@ async function fetchCarouselItems(screenSlug: string): Promise<Slide[]> {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function CarouselPanel({ screenSlug = "copperrocket" }: { screenSlug?: string }) {
+export default function CarouselPanel({
+  screenSlug = "copperrocket",
+  displayName = "",
+}: {
+  screenSlug?: string;
+  displayName?: string;
+}) {
   const [enabled, setEnabled] = useState(false);
   const [slides, setSlides] = useState<Slide[]>(PLACEHOLDER_SLIDES);
   const [slideIndex, setSlideIndex] = useState(0);
@@ -169,18 +175,14 @@ export default function CarouselPanel({ screenSlug = "copperrocket" }: { screenS
   if (!enabled) {
     return (
       <div className="flex flex-col items-center gap-1 text-center">
-        <p
-          className="font-bold uppercase text-white"
-          style={{ fontSize: 28, letterSpacing: "0.22em", opacity: 0.36 }}
-        >
-          Open Mic Night
-        </p>
-        <p
-          className="font-medium uppercase text-white"
-          style={{ fontSize: 15, letterSpacing: "0.4em", opacity: 0.18 }}
-        >
-          Copper Rocket
-        </p>
+        {displayName && (
+          <p
+            className="font-bold uppercase text-white"
+            style={{ fontSize: 24, letterSpacing: "0.22em", opacity: 0.36 }}
+          >
+            {displayName}
+          </p>
+        )}
       </div>
     );
   }

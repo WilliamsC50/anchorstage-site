@@ -15,10 +15,6 @@ type NoticeSession = {
 const ACTIVE_SESSION_STATUSES = ["ACTIVE"];
 const POLL_INTERVAL_MS = 30_000;
 
-const DEFAULTS = {
-  headline: "Sign ups start at 7:00 PM",
-  body: 'See host at the "Tech Table" for more details.',
-} as const;
 
 // ─── Data fetch ───────────────────────────────────────────────────────────────
 
@@ -38,7 +34,15 @@ async function fetchNotice(screenSlug: string): Promise<NoticeSession | null> {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function NoticePanel({ screenSlug = "copperrocket" }: { screenSlug?: string }) {
+export default function NoticePanel({
+  screenSlug = "copperrocket",
+  defaultNotice = null,
+  defaultSubnotice = null,
+}: {
+  screenSlug?: string;
+  defaultNotice?: string | null;
+  defaultSubnotice?: string | null;
+}) {
   const [session, setSession] = useState<NoticeSession | null>(null);
 
   useEffect(() => {
@@ -77,10 +81,8 @@ export default function NoticePanel({ screenSlug = "copperrocket" }: { screenSlu
     };
   }, [screenSlug]);
 
-  const headline =
-    session?.display_notice?.trim() || DEFAULTS.headline;
-  const body =
-    session?.display_subnotice?.trim() || DEFAULTS.body;
+  const headline = session?.display_notice?.trim() || defaultNotice || "";
+  const body = session?.display_subnotice?.trim() || defaultSubnotice || "";
 
   return (
     <div
