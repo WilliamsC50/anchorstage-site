@@ -26,20 +26,9 @@ export default function TeamPage() {
 
       {/* ── FOUNDER PROFILE ──────────────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-6 pb-20">
-        <div className="grid md:grid-cols-[260px_1fr] gap-12 items-start">
+        <div className="grid md:grid-cols-[1fr_260px] gap-12 items-start">
 
-          {/* Left: founder photo */}
-          <div className="relative rounded-xl overflow-hidden" style={{ aspectRatio: "3 / 4" }}>
-            <Image
-              src="/images/Headshot.jpg"
-              alt="Cody Williams, Founder of AnchorStage Operations LLC"
-              fill
-              className="object-cover object-top"
-              sizes="260px"
-            />
-          </div>
-
-          {/* Right: identity + bio */}
+          {/* Left: identity + bio */}
           <div>
             <p
               className="text-2xl font-bold mb-1"
@@ -86,6 +75,17 @@ export default function TeamPage() {
                 If it matters on show day, it&apos;s handled ahead of time.
               </p>
             </div>
+          </div>
+
+          {/* Right: founder photo */}
+          <div className="relative rounded-xl overflow-hidden" style={{ aspectRatio: "3 / 4" }}>
+            <Image
+              src="/images/ASO_Headshot.JPG"
+              alt="Cody Williams, Founder of AnchorStage Operations LLC"
+              fill
+              className="object-cover object-top"
+              sizes="260px"
+            />
           </div>
 
         </div>
