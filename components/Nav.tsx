@@ -21,10 +21,10 @@ export default function Nav() {
             alt="AnchorStage Operations mark"
             width={40}
             height={40}
-            className="h-8 w-auto md:h-10 object-contain"
+            className="h-8 w-auto md:h-11 object-contain"
           />
           <span
-            className="text-base font-semibold tracking-tight hidden sm:block"
+            className="text-base font-bold tracking-tight hidden sm:block"
             style={{ color: "var(--aso-navy)" }}
           >
             AnchorStage Operations
@@ -32,7 +32,7 @@ export default function Nav() {
         </Link>
 
         {/* DESKTOP NAV LINKS */}
-        <nav className="hidden md:flex items-center gap-7 text-sm" style={{ color: "var(--aso-navy)" }}>
+        <nav className="hidden md:flex items-center gap-7 text-sm font-medium" style={{ color: "var(--aso-navy)" }}>
           <Link href="/" className="opacity-70 hover:opacity-100 transition">Home</Link>
           <Link href="/services" className="opacity-70 hover:opacity-100 transition">Services</Link>
           <Link href="/photos" className="opacity-70 hover:opacity-100 transition">Photos</Link>
@@ -76,11 +76,11 @@ export default function Nav() {
           className="md:hidden border-t bg-white px-6 py-4 flex flex-col gap-1 text-sm"
           style={{ borderColor: "rgba(79, 168, 209, 0.2)", color: "var(--aso-navy)" }}
         >
-          <Link href="/" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Home</Link>
-          <Link href="/services" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Services</Link>
-          <Link href="/photos" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Photos</Link>
-          <Link href="/team" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Team</Link>
-          <Link href="/contact" className="opacity-70 hover:opacity-100 transition py-2" onClick={() => setOpen(false)}>Contact</Link>
+          <Link href="/" className="opacity-70 hover:opacity-100 transition py-2.5" onClick={() => setOpen(false)}>Home</Link>
+          <Link href="/services" className="opacity-70 hover:opacity-100 transition py-2.5" onClick={() => setOpen(false)}>Services</Link>
+          <Link href="/photos" className="opacity-70 hover:opacity-100 transition py-2.5" onClick={() => setOpen(false)}>Photos</Link>
+          <Link href="/team" className="opacity-70 hover:opacity-100 transition py-2.5" onClick={() => setOpen(false)}>Team</Link>
+          <Link href="/contact" className="opacity-70 hover:opacity-100 transition py-2.5" onClick={() => setOpen(false)}>Contact</Link>
           <a
             href="https://intake.anchorstageops.com"
             className="mt-2 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition hover:opacity-90 text-center"
