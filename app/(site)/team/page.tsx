@@ -20,7 +20,7 @@ export default function TeamPage() {
     <main className="bg-white text-gray-900">
 
       {/* ── HERO ─────────────────────────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
+      <section className="max-w-6xl mx-auto px-6 pt-14 pb-16">
         <h1
           className="text-4xl font-bold mb-4"
           style={{ color: "var(--aso-navy)" }}
@@ -69,9 +69,10 @@ export default function TeamPage() {
                 <p>
                   Over 10 years running live sound in Central Florida, across open mics,
                   small venues, and larger productions. Three-time graduate of the
-                  F.I.R.S.T. Institute — Audio Engineering, Video Production, and Graphic
-                  Design/Web Development — which means production, content, and show-day
-                  execution are all part of how I think about an event.
+                  F.I.R.S.T. Institute, with training in Audio Engineering, Video
+                  Production, and Graphic Design/Web Development. That background means
+                  production, content, and show-day execution are all part of how I
+                  think about an event.
                 </p>
               </div>
 
@@ -81,7 +82,7 @@ export default function TeamPage() {
                 </h3>
                 <p>
                   Hands-on and detail-driven. Every setup runs through a standardized
-                  workflow — pack lists, system checks, advance prep — so show day
+                  workflow: pack lists, system checks, and advance prep. Show day
                   isn&apos;t where problems get discovered. The goal is to identify and
                   resolve issues before load-in, not during it.
                 </p>
@@ -112,7 +113,7 @@ export default function TeamPage() {
               src="/images/ASO_Headshot.JPG"
               alt="Cody Williams, Founder of AnchorStage Operations LLC"
               fill
-              className="object-cover object-top"
+              className="object-cover object-[center_15%]"
               sizes="300px"
             />
           </div>
@@ -152,7 +153,7 @@ export default function TeamPage() {
       </section>
 
       {/* ── TRUSTED PARTNERS ─────────────────────────────────────────────────── */}
-      <section className="py-14 bg-white">
+      <section className="pt-14 pb-24 bg-white">
         <div className="max-w-6xl mx-auto px-6">
           <h2
             className="text-base font-semibold mb-2"
@@ -161,7 +162,8 @@ export default function TeamPage() {
             Built with trusted partners
           </h2>
           <p className="text-sm text-gray-500 leading-relaxed max-w-xl">
-            For larger productions, we work with trusted partners like{" "}
+            For larger productions, AnchorStage works alongside trusted local
+            production partners including{" "}
             <a
               href="https://cfav.solutions"
               target="_blank"
@@ -171,8 +173,8 @@ export default function TeamPage() {
             >
               Central Florida AV Solutions
             </a>
-            {" "}to scale up while maintaining the same level of execution and
-            reliability.
+            {" "}to scale crew, staging, audio, and logistics while maintaining
+            a single operational workflow.
           </p>
         </div>
       </section>
