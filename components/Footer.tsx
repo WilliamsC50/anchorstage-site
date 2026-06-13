@@ -68,10 +68,16 @@ export default function Footer() {
       </div>
 
       <div
-        className="border-t text-center text-xs py-4"
+        className="border-t text-xs py-4"
         style={{ borderColor: "rgba(127, 211, 244, 0.15)", color: "rgba(127, 211, 244, 0.5)" }}
       >
-        &copy; {new Date().getFullYear()} AnchorStage Operations LLC
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-2 text-center">
+          <p>&copy; {new Date().getFullYear()} AnchorStage Operations LLC</p>
+          <nav className="flex gap-4">
+            <Link href="/terms" className="opacity-80 hover:opacity-100 transition">Terms</Link>
+            <Link href="/privacy" className="opacity-80 hover:opacity-100 transition">Privacy</Link>
+          </nav>
+        </div>
       </div>
     </footer>
   );
