@@ -61,3 +61,136 @@ html.dark body > * {
 /* Used by display pages to hide scrollbars while keeping scroll behavior */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Long-form policy / legal pages ──────────────────────────────────────── */
+.legal-page {
+  background: #ffffff;
+  color: #111827;
+}
+
+html.dark .legal-page {
+  background: var(--aso-navy);
+}
+
+.legal-title {
+  color: var(--aso-navy);
+}
+
+html.dark .legal-title {
+  color: #ffffff;
+}
+
+.legal-meta {
+  color: rgba(15, 47, 79, 0.55);
+  border-color: rgba(15, 47, 79, 0.12);
+}
+
+html.dark .legal-meta {
+  color: rgba(127, 211, 244, 0.65);
+  border-color: rgba(127, 211, 244, 0.15);
+}
+
+.legal-content {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: #374151;
+}
+
+.legal-content h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--aso-navy);
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.legal-content h2:first-child {
+  margin-top: 0;
+}
+
+.legal-content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--aso-navy);
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.legal-content p {
+  margin-bottom: 1rem;
+}
+
+.legal-content ul,
+.legal-content ol {
+  margin: 0 0 1rem 1.25rem;
+  padding-left: 1rem;
+}
+
+.legal-content ul { list-style-type: disc; }
+.legal-content ol { list-style-type: decimal; }
+
+.legal-content li {
+  margin-bottom: 0.4rem;
+}
+
+.legal-content li > ul,
+.legal-content li > ol {
+  margin-top: 0.4rem;
+  margin-bottom: 0;
+}
+
+.legal-content a {
+  color: var(--aso-blue);
+  text-decoration: underline;
+  text-decoration-color: rgba(78, 168, 209, 0.35);
+  text-underline-offset: 2px;
+}
+
+.legal-content a:hover {
+  text-decoration-color: currentColor;
+}
+
+.legal-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 1.5rem;
+  font-size: 0.875rem;
+}
+
+.legal-content th,
+.legal-content td {
+  border: 1px solid rgba(15, 47, 79, 0.12);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.legal-content th {
+  background: var(--aso-bg);
+  font-weight: 600;
+  color: var(--aso-navy);
+}
+
+html.dark .legal-content {
+  color: rgba(247, 251, 255, 0.75);
+}
+
+html.dark .legal-content h2,
+html.dark .legal-content h3,
+html.dark .legal-content th {
+  color: var(--aso-blue-light);
+}
+
+html.dark .legal-content a {
+  color: var(--aso-blue-light);
+  text-decoration-color: rgba(127, 211, 244, 0.35);
+}
+
+html.dark .legal-content th,
+html.dark .legal-content td {
+  border-color: rgba(127, 211, 244, 0.18);
+}
+
+html.dark .legal-content th {
+  background: rgba(127, 211, 244, 0.06);
+}
