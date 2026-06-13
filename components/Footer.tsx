@@ -76,6 +76,7 @@ export default function Footer() {
           <nav className="flex gap-4">
             <Link href="/terms" className="opacity-80 hover:opacity-100 transition">Terms</Link>
             <Link href="/privacy" className="opacity-80 hover:opacity-100 transition">Privacy</Link>
+            <Link href="/insurance" className="opacity-80 hover:opacity-100 transition">Insurance</Link>
           </nav>
         </div>
       </div>
