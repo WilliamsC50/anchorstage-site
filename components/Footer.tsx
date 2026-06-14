@@ -12,7 +12,10 @@ export default function Footer() {
             Orlando, Florida
           </p>
           <p className="text-sm mt-4 leading-relaxed" style={{ color: "var(--aso-blue-light)", opacity: 0.7 }}>
-            Live sound and event production across Central Florida.
+            Professional sound, staging, and production support for live events across Central Florida.
+          </p>
+          <p className="text-xs mt-4" style={{ color: "var(--aso-blue-light)", opacity: 0.6 }}>
+            Insured for live event production work.
           </p>
         </div>
 

@@ -211,7 +211,7 @@ export default function Home() {
                 Built from Real Event Work
               </p>
               <p className="text-xs text-gray-400 leading-relaxed">
-                Production experience from live events across Central Florida, not test setups or demos.
+                Real production experience from live events across Central Florida — concerts, festivals, and corporate shows.
               </p>
             </div>
 

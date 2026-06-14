@@ -116,8 +116,16 @@ export default function ServicesPage() {
     <main className="bg-white text-gray-900">
 
       {/* HERO: split layout, copy left / video right */}
-      <section className="bg-gray-950">
-        <div className="max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <section className="relative overflow-hidden bg-gray-950">
+        {/* STAGE-LIGHT GLOW (local to this hero only) */}
+        <div
+          className="absolute inset-0 pointer-events-none z-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 720px 520px at 82% -8%, rgba(145, 205, 255, 0.20) 0%, rgba(70, 135, 200, 0.12) 28%, transparent 70%)",
+          }}
+        />
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-20 md:py-28">
           <div className="grid md:grid-cols-2 gap-12 items-center">
 
             {/* Left: copy + CTA */}
