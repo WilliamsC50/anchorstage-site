@@ -217,7 +217,9 @@ export default function CarouselPanel({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: "rgba(5, 10, 20, 0.60)",
+              backgroundColor: "rgba(15, 15, 15, 0.35)",
+              backdropFilter: "blur(10px)",
+              WebkitBackdropFilter: "blur(10px)",
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
