@@ -38,10 +38,12 @@ export default function NoticePanel({
   screenSlug = "copperrocket",
   defaultNotice = null,
   defaultSubnotice = null,
+  accentColor = "var(--aso-orange)",
 }: {
   screenSlug?: string;
   defaultNotice?: string | null;
   defaultSubnotice?: string | null;
+  accentColor?: string;
 }) {
   const [session, setSession] = useState<NoticeSession | null>(null);
 
@@ -88,9 +90,9 @@ export default function NoticePanel({
     <div
       className="relative flex flex-col gap-4"
       style={{
-        border: "1.5px solid rgba(255,122,26,0.45)",
+        border: `1.5px solid color-mix(in srgb, ${accentColor} 32%, transparent)`,
         borderRadius: 10,
-        backgroundColor: "rgba(255,255,255,0.04)",
+        backgroundColor: "rgba(5, 15, 28, 0.72)",
         padding: "28px 32px 32px",
       }}
     >
@@ -114,7 +116,7 @@ export default function NoticePanel({
 
       <p
         className="font-semibold uppercase"
-        style={{ fontSize: 12, letterSpacing: "0.45em", color: "var(--aso-orange)", opacity: 0.80 }}
+        style={{ fontSize: 12, letterSpacing: "0.45em", color: accentColor, opacity: 0.80 }}
       >
         Tonight
       </p>

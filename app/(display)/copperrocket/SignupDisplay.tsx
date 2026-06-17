@@ -76,7 +76,15 @@ async function fetchData(screenSlug: string): Promise<{
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function SignupDisplay({ screenSlug = "copperrocket" }: { screenSlug?: string }) {
+export default function SignupDisplay({
+  screenSlug = "copperrocket",
+  accentColor = "var(--aso-orange)",
+  secondaryColor = "var(--aso-blue-light)",
+}: {
+  screenSlug?: string;
+  accentColor?: string;
+  secondaryColor?: string;
+}) {
   const [session, setSession] = useState<OpenMicSession | null>(null);
   const [signups, setSignups] = useState<OpenMicSignup[]>([]);
   const [loading, setLoading] = useState(true);
@@ -197,7 +205,7 @@ export default function SignupDisplay({ screenSlug = "copperrocket" }: { screenS
       <section>
         <p
           className="font-semibold uppercase mb-1"
-          style={{ fontSize: "3.75rem", letterSpacing: "0.06em", color: "var(--aso-orange)", opacity: 0.82 }}
+          style={{ fontSize: "3.75rem", letterSpacing: "0.06em", color: accentColor, opacity: 0.82 }}
         >
           Now Playing
         </p>
@@ -223,7 +231,7 @@ export default function SignupDisplay({ screenSlug = "copperrocket" }: { screenS
       <section>
         <p
           className="text-lg font-bold tracking-widest uppercase mb-3"
-          style={{ color: "var(--aso-blue-light)" }}
+          style={{ color: secondaryColor }}
         >
           Up Next
         </p>
@@ -233,7 +241,7 @@ export default function SignupDisplay({ screenSlug = "copperrocket" }: { screenS
               <li key={signup.signup_id} className="flex items-baseline gap-5">
                 <span
                   className="text-base font-semibold tabular-nums w-5 text-right shrink-0 opacity-50"
-                  style={{ color: "var(--aso-blue-light)" }}
+                  style={{ color: secondaryColor }}
                 >
                   {i + upNextStartSlot}
                 </span>

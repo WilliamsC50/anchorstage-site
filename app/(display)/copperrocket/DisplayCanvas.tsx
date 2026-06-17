@@ -26,6 +26,8 @@ type ScreenConfig = {
   default_notice: string | null;
   default_subnotice: string | null;
   logo_url: string | null;
+  accent_color: string | null;
+  secondary_color: string | null;
 };
 
 const EMPTY_CONFIG: ScreenConfig = {
@@ -37,6 +39,8 @@ const EMPTY_CONFIG: ScreenConfig = {
   default_notice: null,
   default_subnotice: null,
   logo_url: null,
+  accent_color: null,
+  secondary_color: null,
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -61,6 +65,10 @@ export default function DisplayCanvas({
 
   const rightX = hasQueue ? SAFE + LEFT_W + COL_GAP : SAFE;
   const rightW = CANVAS_W - rightX - SAFE;
+
+  // Per-screen overrides from signage_screen; null preserves the built-in ASO palette.
+  const accentColor = screenConfig.accent_color ?? "var(--aso-orange)";
+  const secondaryColor = screenConfig.secondary_color ?? "var(--aso-blue-light)";
 
   useEffect(() => {
     function update() {
@@ -127,12 +135,16 @@ export default function DisplayCanvas({
               width: LEFT_W,
               bottom: SAFE,
               borderRadius: 12,
-              backgroundColor: "rgba(5, 15, 28, 0.82)",
-              border: "1.5px solid rgba(255,122,26,0.45)",
+              backgroundColor: "rgba(5, 15, 28, 0.88)",
+              border: `1.5px solid color-mix(in srgb, ${accentColor} 32%, transparent)`,
               overflow: "hidden",
             }}
           >
-            <SignupDisplay screenSlug={screenSlug} />
+            <SignupDisplay
+              screenSlug={screenSlug}
+              accentColor={accentColor}
+              secondaryColor={secondaryColor}
+            />
           </div>
         )}
 
@@ -157,20 +169,22 @@ export default function DisplayCanvas({
             screenSlug={screenSlug}
             defaultNotice={screenConfig.default_notice}
             defaultSubnotice={screenConfig.default_subnotice}
+            accentColor={accentColor}
           />
 
           {/* 2. Carousel */}
           <CarouselPanel
             screenSlug={screenSlug}
             displayName={screenConfig.display_name}
+            accentColor={accentColor}
           />
 
           {/* 3. CTA row — hidden when no config is set */}
           {hasCta && (
             <div
               style={{
-                backgroundColor: "rgba(5, 15, 28, 0.65)",
-                border: "1px solid rgba(255,122,26,0.25)",
+                backgroundColor: "rgba(5, 15, 28, 0.72)",
+                border: `1px solid color-mix(in srgb, ${accentColor} 16%, transparent)`,
                 borderRadius: 14,
                 backdropFilter: "blur(8px)",
                 padding: "20px 28px",

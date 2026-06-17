@@ -93,9 +93,11 @@ async function fetchCarouselItems(screenSlug: string): Promise<Slide[]> {
 export default function CarouselPanel({
   screenSlug = "copperrocket",
   displayName = "",
+  accentColor = "var(--aso-orange)",
 }: {
   screenSlug?: string;
   displayName?: string;
+  accentColor?: string;
 }) {
   const [enabled, setEnabled] = useState(false);
   const [slides, setSlides] = useState<Slide[]>(PLACEHOLDER_SLIDES);
@@ -250,8 +252,8 @@ export default function CarouselPanel({
                   letterSpacing: "0.3em",
                   padding: "3px 10px",
                   borderRadius: 20,
-                  border: "1.5px solid rgba(255,122,26,0.40)",
-                  color: "rgba(255,122,26,0.75)",
+                  border: `1.5px solid color-mix(in srgb, ${accentColor} 40%, transparent)`,
+                  color: `color-mix(in srgb, ${accentColor} 75%, transparent)`,
                   marginBottom: "0.5rem",
                 }}
               >
@@ -301,7 +303,7 @@ export default function CarouselPanel({
               width: i === slideIndex ? 18 : 5,
               backgroundColor:
                 i === slideIndex
-                  ? "rgba(255,122,26,0.75)"
+                  ? `color-mix(in srgb, ${accentColor} 75%, transparent)`
                   : "rgba(255,255,255,0.18)",
               transition: "width 0.3s ease, background-color 0.3s ease",
             }}

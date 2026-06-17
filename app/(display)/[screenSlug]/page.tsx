@@ -13,7 +13,7 @@ export default async function GenericDisplayPage({ params }: Props) {
 
   const { data: rawScreen } = await db
     .from("signage_screen")
-    .select("screen_slug, screen_type, is_active, display_name, website_url, tip_url, background_image_url, attribution_text, default_notice, default_subnotice, logo_url")
+    .select("screen_slug, screen_type, is_active, display_name, website_url, tip_url, background_image_url, attribution_text, default_notice, default_subnotice, logo_url, accent_color, secondary_color")
     .eq("screen_slug", screenSlug)
     .single();
 
@@ -33,6 +33,8 @@ export default async function GenericDisplayPage({ params }: Props) {
     default_notice: string | null;
     default_subnotice: string | null;
     logo_url: string | null;
+    accent_color: string | null;
+    secondary_color: string | null;
   };
 
   const { data: rawSession } = await db
@@ -57,6 +59,8 @@ export default async function GenericDisplayPage({ params }: Props) {
         default_notice: screen.default_notice,
         default_subnotice: screen.default_subnotice,
         logo_url: screen.logo_url,
+        accent_color: screen.accent_color,
+        secondary_color: screen.secondary_color,
       }}
       sessionGraphicUrl={(rawSession as { graphic_url: string | null } | null)?.graphic_url ?? null}
     />
