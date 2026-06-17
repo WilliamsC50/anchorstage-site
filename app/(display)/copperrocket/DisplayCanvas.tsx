@@ -135,10 +135,10 @@ export default function DisplayCanvas({
               width: LEFT_W,
               bottom: SAFE,
               borderRadius: 12,
-              backgroundColor: "rgba(15, 15, 15, 0.35)",
-              backdropFilter: "blur(10px)",
-              WebkitBackdropFilter: "blur(10px)",
-              border: `1.5px solid color-mix(in srgb, ${accentColor} 26%, transparent)`,
+              backgroundColor: "rgba(0, 0, 0, 0.20)",
+              backdropFilter: "blur(14px)",
+              WebkitBackdropFilter: "blur(14px)",
+              border: `1.5px solid color-mix(in srgb, ${accentColor} 20%, transparent)`,
               overflow: "hidden",
             }}
           >
@@ -185,11 +185,11 @@ export default function DisplayCanvas({
           {hasCta && (
             <div
               style={{
-                backgroundColor: "rgba(15, 15, 15, 0.35)",
-                border: `1px solid color-mix(in srgb, ${accentColor} 13%, transparent)`,
+                backgroundColor: "rgba(0, 0, 0, 0.20)",
+                border: `1px solid color-mix(in srgb, ${accentColor} 10%, transparent)`,
                 borderRadius: 14,
-                backdropFilter: "blur(10px)",
-                WebkitBackdropFilter: "blur(10px)",
+                backdropFilter: "blur(14px)",
+                WebkitBackdropFilter: "blur(14px)",
                 padding: "20px 28px",
                 display: "flex",
                 flexDirection: "row",
