@@ -90,8 +90,8 @@ export default function DisplayCanvas({
   // session graphic_url overrides screen background; screen background overrides plain gradient
   const bgUrl = sessionGraphicUrl || screenConfig.background_image_url || null;
   const backgroundImage = bgUrl
-    ? `linear-gradient(to right, rgba(5,10,20,0.85) 0%, rgba(10,20,30,0.70) 45%, rgba(10,20,30,0.58) 100%), url('${bgUrl}')`
-    : `linear-gradient(to right, rgba(5,10,20,0.85) 0%, rgba(10,20,30,0.70) 45%, rgba(10,20,30,0.58) 100%)`;
+    ? `linear-gradient(to right, rgba(5,10,20,0.45) 0%, rgba(10,20,30,0.38) 45%, rgba(10,20,30,0.32) 100%), url('${bgUrl}')`
+    : `linear-gradient(to right, rgba(5,10,20,0.45) 0%, rgba(10,20,30,0.38) 45%, rgba(10,20,30,0.32) 100%)`;
 
   const hasCta = !!(
     screenConfig.website_url ||
