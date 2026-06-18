@@ -237,9 +237,17 @@ export default function DisplayCanvas({
                       style={{ objectFit: "contain", position: "relative", top: 60 }}
                     />
                   )}
-                  <p style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", textAlign: "center", margin: 0, whiteSpace: "nowrap" }}>
-                    Presented by Central Florida AV Solutions • Hosted by AnchorStage Operations
-                  </p>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 22 }}>
+                    <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>
+                      Presented by Central Florida AV Solutions
+                    </span>
+                    <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em" }}>
+                      •
+                    </span>
+                    <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>
+                      Hosted by AnchorStage Operations
+                    </span>
+                  </div>
                 </div>
               )}
 
