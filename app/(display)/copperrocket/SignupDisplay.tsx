@@ -203,23 +203,13 @@ export default function SignupDisplay({
 
       {/* NOW PLAYING ─────────────────────────────────────────────────────── */}
       <section>
-        <div
-          style={{
-            width: 64,
-            height: 2,
-            borderRadius: 2,
-            marginBottom: 14,
-            backgroundColor: `color-mix(in srgb, ${accentColor} 50%, transparent)`,
-            boxShadow: `0 0 8px color-mix(in srgb, ${accentColor} 12%, transparent)`,
-          }}
-        />
         <p
           className="font-semibold uppercase mb-1"
           style={{ fontSize: "3.75rem", letterSpacing: "0.06em", color: accentColor, opacity: 0.82 }}
         >
           Now Playing
         </p>
-        <div className="border-t border-white/10" />
+        <div className="border-t" style={{ borderTopColor: `color-mix(in srgb, ${accentColor} 25%, transparent)` }} />
         {nowPlaying && (
           <div>
             <p className="font-black text-white leading-tight tracking-tight" style={{ fontSize: "5rem" }}>
