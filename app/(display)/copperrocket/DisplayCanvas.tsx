@@ -219,11 +219,13 @@ export default function DisplayCanvas({
               {(screenConfig.logo_url || screenConfig.attribution_text) && (
                 <div
                   style={{
+                    position: "relative",
+                    top: 14,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     gap: 10,
-                    padding: "0 28px",
+                    padding: "0 40px",
                     borderLeft: "1px solid rgba(255,255,255,0.12)",
                     borderRight: "1px solid rgba(255,255,255,0.12)",
                   }}
