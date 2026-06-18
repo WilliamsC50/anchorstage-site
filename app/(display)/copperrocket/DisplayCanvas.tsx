@@ -234,7 +234,7 @@ export default function DisplayCanvas({
                       alt="Logo"
                       width={260}
                       height={260}
-                      style={{ objectFit: "contain", position: "relative", top: 48 }}
+                      style={{ objectFit: "contain", position: "relative", top: 60 }}
                     />
                   )}
                   <p style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", textAlign: "center", margin: 0, whiteSpace: "nowrap" }}>
