@@ -219,8 +219,6 @@ export default function DisplayCanvas({
               {(screenConfig.logo_url || screenConfig.attribution_text) && (
                 <div
                   style={{
-                    position: "relative",
-                    top: 14,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -236,7 +234,7 @@ export default function DisplayCanvas({
                       alt="Logo"
                       width={260}
                       height={260}
-                      style={{ objectFit: "contain" }}
+                      style={{ objectFit: "contain", marginTop: 28 }}
                     />
                   )}
                   <p style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", textAlign: "center", margin: 0, whiteSpace: "nowrap" }}>
