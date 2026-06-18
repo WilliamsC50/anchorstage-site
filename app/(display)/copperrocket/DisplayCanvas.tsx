@@ -240,13 +240,13 @@ export default function DisplayCanvas({
                     />
                   )}
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 22 }}>
-                    <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>
+                    <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.46)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>
                       Presented by Central Florida AV Solutions
                     </span>
-                    <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em" }}>
+                    <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.46)", letterSpacing: "0.05em" }}>
                       •
                     </span>
-                    <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>
+                    <span style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.46)", letterSpacing: "0.05em", whiteSpace: "nowrap" }}>
                       Hosted by AnchorStage Operations
                     </span>
                   </div>

@@ -203,6 +203,16 @@ export default function SignupDisplay({
 
       {/* NOW PLAYING ─────────────────────────────────────────────────────── */}
       <section>
+        <div
+          style={{
+            width: 64,
+            height: 2,
+            borderRadius: 2,
+            marginBottom: 14,
+            backgroundColor: `color-mix(in srgb, ${accentColor} 50%, transparent)`,
+            boxShadow: `0 0 8px color-mix(in srgb, ${accentColor} 12%, transparent)`,
+          }}
+        />
         <p
           className="font-semibold uppercase mb-1"
           style={{ fontSize: "3.75rem", letterSpacing: "0.06em", color: accentColor, opacity: 0.82 }}
@@ -246,7 +256,7 @@ export default function SignupDisplay({
                   {i + upNextStartSlot}
                 </span>
                 <div>
-                  <p className="text-3xl font-semibold text-white">
+                  <p className="text-3xl font-bold text-white">
                     {signup.display_name}
                   </p>
                   {signup.song_title && (
