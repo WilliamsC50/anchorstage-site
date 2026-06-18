@@ -138,7 +138,8 @@ export default function DisplayCanvas({
               backgroundColor: "rgba(0, 0, 0, 0.20)",
               backdropFilter: "blur(14px)",
               WebkitBackdropFilter: "blur(14px)",
-              border: `1.5px solid color-mix(in srgb, ${accentColor} 20%, transparent)`,
+              border: `1.5px solid color-mix(in srgb, ${accentColor} 38%, transparent)`,
+              boxShadow: `0 0 12px color-mix(in srgb, ${accentColor} 12%, transparent)`,
               overflow: "hidden",
             }}
           >
@@ -186,7 +187,8 @@ export default function DisplayCanvas({
             <div
               style={{
                 backgroundColor: "rgba(0, 0, 0, 0.20)",
-                border: `1px solid color-mix(in srgb, ${accentColor} 10%, transparent)`,
+                border: `1px solid color-mix(in srgb, ${accentColor} 38%, transparent)`,
+                boxShadow: `0 0 12px color-mix(in srgb, ${accentColor} 12%, transparent)`,
                 borderRadius: 14,
                 backdropFilter: "blur(14px)",
                 WebkitBackdropFilter: "blur(14px)",

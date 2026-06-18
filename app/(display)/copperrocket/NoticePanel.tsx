@@ -90,7 +90,8 @@ export default function NoticePanel({
     <div
       className="relative flex flex-col gap-4"
       style={{
-        border: `1.5px solid color-mix(in srgb, ${accentColor} 20%, transparent)`,
+        border: `1.5px solid color-mix(in srgb, ${accentColor} 38%, transparent)`,
+        boxShadow: `0 0 12px color-mix(in srgb, ${accentColor} 12%, transparent)`,
         borderRadius: 10,
         backgroundColor: "rgba(0, 0, 0, 0.20)",
         backdropFilter: "blur(14px)",
