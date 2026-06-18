@@ -217,21 +217,29 @@ export default function DisplayCanvas({
 
               {/* Center: logo + attribution */}
               {(screenConfig.logo_url || screenConfig.attribution_text) && (
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 10,
+                    padding: "0 28px",
+                    borderLeft: "1px solid rgba(255,255,255,0.12)",
+                    borderRight: "1px solid rgba(255,255,255,0.12)",
+                  }}
+                >
                   {screenConfig.logo_url && (
                     <Image
                       src={screenConfig.logo_url}
                       alt="Logo"
-                      width={210}
-                      height={210}
+                      width={260}
+                      height={260}
                       style={{ objectFit: "contain" }}
                     />
                   )}
-                  {screenConfig.attribution_text && (
-                    <p style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", textAlign: "center", margin: 0 }}>
-                      {screenConfig.attribution_text}
-                    </p>
-                  )}
+                  <p style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.05em", textAlign: "center", margin: 0, whiteSpace: "nowrap" }}>
+                    Presented by Central Florida AV Solutions • Hosted by AnchorStage Operations
+                  </p>
                 </div>
               )}
 
@@ -249,9 +257,6 @@ export default function DisplayCanvas({
                   </div>
                   <p style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.75)", letterSpacing: "0.04em", textAlign: "center", margin: 0 }}>
                     Scan to tip the crew
-                  </p>
-                  <p style={{ fontSize: 12, fontWeight: 500, color: "rgba(255,255,255,0.40)", letterSpacing: "0.04em", textAlign: "center", margin: 0 }}>
-                    100% goes to the crew
                   </p>
                 </div>
               )}
