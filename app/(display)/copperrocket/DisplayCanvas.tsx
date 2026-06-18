@@ -219,17 +219,24 @@ export default function DisplayCanvas({
 
               {/* Center: logo + attribution */}
               {(screenConfig.logo_url || screenConfig.attribution_text) && (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: 10,
-                    padding: "0 40px",
-                    borderLeft: "1px solid rgba(255,255,255,0.12)",
-                    borderRight: "1px solid rgba(255,255,255,0.12)",
-                  }}
-                >
+                <>
+                  <div
+                    style={{
+                      width: 1,
+                      height: 150,
+                      borderRadius: 1,
+                      backgroundColor: `color-mix(in srgb, ${accentColor} 35%, transparent)`,
+                    }}
+                  />
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      gap: 10,
+                      padding: "0 40px",
+                    }}
+                  >
                   {screenConfig.logo_url && (
                     <Image
                       src={screenConfig.logo_url}
@@ -250,7 +257,16 @@ export default function DisplayCanvas({
                       Hosted by AnchorStage Operations
                     </span>
                   </div>
-                </div>
+                  </div>
+                  <div
+                    style={{
+                      width: 1,
+                      height: 150,
+                      borderRadius: 1,
+                      backgroundColor: `color-mix(in srgb, ${accentColor} 35%, transparent)`,
+                    }}
+                  />
+                </>
               )}
 
               {/* Tip QR */}

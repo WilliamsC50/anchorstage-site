@@ -219,7 +219,8 @@ export default function SignupDisplay({
         >
           Now Playing
         </p>
-        {nowPlaying ? (
+        <div className="border-t border-white/10" />
+        {nowPlaying && (
           <div>
             <p className="font-black text-white leading-tight tracking-tight" style={{ fontSize: "5rem" }}>
               {nowPlaying.display_name}
@@ -228,14 +229,8 @@ export default function SignupDisplay({
               <p className="text-xl text-white/50 mt-2">{nowPlaying.song_title}</p>
             )}
           </div>
-        ) : (
-          <p className="text-3xl font-semibold text-white/40 italic">
-            Signups Open
-          </p>
         )}
       </section>
-
-      <div className="border-t border-white/10" />
 
       {/* UP NEXT ─────────────────────────────────────────────────────────── */}
       <section>
