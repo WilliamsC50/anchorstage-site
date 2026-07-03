@@ -64,42 +64,9 @@ function isSpokeLit(slug: PersonaSlug, active: ActiveTarget) {
 const LINE_TRANSITION_CLASSES =
   "transition-[stroke,stroke-opacity,stroke-width] duration-300 ease-out motion-reduce:transition-none";
 
-function CogRing({ active }: { active: boolean }) {
-  const TICKS = 20;
-  return (
-    <svg
-      viewBox="0 0 100 100"
-      className={`pointer-events-none absolute inset-0 h-full w-full animate-[network-tree-spin_50s_linear_infinite] transition-opacity duration-300 ease-out motion-reduce:animate-none motion-reduce:transition-none ${
-        active ? "opacity-90" : "opacity-55"
-      }`}
-      aria-hidden="true"
-    >
-      <circle cx="50" cy="50" r="40" fill="none" stroke="var(--aso-blue-light)" strokeWidth="0.6" strokeOpacity="0.3" />
-      {Array.from({ length: TICKS }).map((_, i) => {
-        const angle = (360 / TICKS) * i;
-        const rad = (angle * Math.PI) / 180;
-        const outer = i % 2 === 0 ? 47 : 44;
-        return (
-          <line
-            key={i}
-            x1={50 + 40 * Math.cos(rad)}
-            y1={50 + 40 * Math.sin(rad)}
-            x2={50 + outer * Math.cos(rad)}
-            y2={50 + outer * Math.sin(rad)}
-            stroke="var(--aso-blue-light)"
-            strokeWidth="1.6"
-            strokeOpacity="0.4"
-            strokeLinecap="round"
-          />
-        );
-      })}
-    </svg>
-  );
-}
-
 function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boolean }) {
   return (
-    <div className="relative flex h-36 w-36 items-center justify-center">
+    <div className="relative flex h-44 w-44 items-center justify-center">
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 -z-20 rounded-full blur-2xl transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none ${
@@ -111,7 +78,16 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
         }}
       />
 
-      <CogRing active={engaged} />
+      <Image
+        src="/images/cogwheel.png"
+        alt=""
+        aria-hidden="true"
+        fill
+        sizes="176px"
+        className={`pointer-events-none select-none object-contain animate-[network-tree-spin_50s_linear_infinite] transition-opacity duration-300 ease-out motion-reduce:animate-none motion-reduce:transition-none ${
+          engaged ? "opacity-90" : "opacity-55"
+        }`}
+      />
 
       <div
         className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-white/5 shadow-lg transition-colors duration-200 ease-out motion-reduce:transition-none ${
