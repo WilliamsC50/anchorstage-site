@@ -82,11 +82,13 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
         }}
       />
 
-      {/* 2. Solid navy hub disc + anchor logo — opaque so lines never show
-          through behind the logo. */}
+      {/* 2. Solid navy hub disc + anchor logo — same navy token as the
+          section background, fully opaque so lines never show through.
+          Border stays transparent at rest so the disc blends into the
+          page; the glow and cogwheel carry the hub's visual weight. */}
       <div
-        className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-aso-navy shadow-lg transition-colors duration-200 ease-out motion-reduce:transition-none ${
-          targeted ? "border-aso-orange" : "border-white/20"
+        className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-aso-navy transition-colors duration-200 ease-out motion-reduce:transition-none ${
+          targeted ? "border-aso-orange" : "border-transparent"
         }`}
       >
         <Image
@@ -94,12 +96,10 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
           alt=""
           width={200}
           height={176}
-          // The source PNG's opaque anchor artwork isn't centered in its own
-          // canvas. An earlier -3px correction (based on measuring the
-          // asset) still read as too far left in review, so this nudges
-          // right off that value per direct visual feedback; vertical bias
-          // unchanged.
-          style={{ transform: "translate(1px, -1px)" }}
+          // Optical center per direct review, not the source PNG's measured
+          // content bbox: horizontal reset to 0 (prior measured corrections
+          // oscillated), small upward bias retained.
+          style={{ transform: "translate(0, -1px)" }}
           className={`h-20 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
             engaged ? "brightness-110" : "brightness-100"
           }`}
@@ -124,13 +124,19 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
         </div>
       </div>
 
-      {/* 4. ASO nameplate — topmost, overlapping the disc's lower rim like a
-          badge riveted to the hub. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[142px] z-40 -translate-x-1/2 -translate-y-1/2 rounded-full border border-aso-orange bg-white px-2 py-0.5 shadow-sm"
-      >
-        <span className="text-[9px] font-extrabold uppercase tracking-wider text-aso-blue">ASO</span>
+      {/* 4. ASO branding plate — topmost, riveted to the lower rim of the
+          cogwheel. The source asset has an opaque off-white fill (no alpha
+          channel), so it's presented as a small rounded plate rather than a
+          bare transparent wordmark. Offset left of center by eye. */}
+      <div className="pointer-events-none absolute left-[44%] top-[150px] z-40 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-md shadow-md">
+        <Image
+          src="/images/ASO.png"
+          alt=""
+          aria-hidden="true"
+          width={207}
+          height={100}
+          className="h-[26px] w-auto object-contain"
+        />
       </div>
     </div>
   );
