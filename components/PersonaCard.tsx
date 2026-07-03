@@ -38,8 +38,14 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
   return (
     <Link
       href={`/for-members/${persona.slug}`}
-      className="group relative flex h-full flex-col items-center gap-4 rounded-xl border border-gray-100 bg-white p-7 text-center shadow-sm transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-blue focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+      className="group relative flex h-full flex-col items-center gap-4 overflow-hidden rounded-xl border border-gray-100 bg-white p-7 text-center shadow-sm transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-xl focus-visible:-translate-y-1 focus-visible:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white motion-reduce:transition-none"
     >
+      {/* Premium accent line, top edge */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 top-0 h-[3px] bg-aso-orange opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none"
+      />
+
       {/* Credential header: role icon + hover/focus network reveal */}
       <div className="relative flex h-32 w-32 items-center justify-center">
         <div
@@ -54,31 +60,34 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
                 y1="50"
                 x2={pos.x}
                 y2={pos.y}
-                stroke="var(--aso-blue-light)"
-                strokeWidth="1"
-                strokeOpacity="0.6"
+                stroke="var(--aso-orange)"
+                strokeWidth="0.75"
+                strokeOpacity="0.5"
               />
             ))}
           </svg>
           {NODE_POSITIONS.map((pos, i) => (
-            <span
+            <div
               key={i}
-              className="absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-aso-blue/30 bg-white px-2 py-0.5 text-[9px] font-medium text-aso-navy shadow-sm"
+              className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1"
               style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
             >
-              {persona.networkNodes[i]}
-            </span>
+              <span className="block h-1.5 w-1.5 rounded-full bg-aso-orange" />
+              <span className="whitespace-nowrap text-[8px] font-medium text-aso-navy/60">
+                {persona.networkNodes[i]}
+              </span>
+            </div>
           ))}
         </div>
 
-        <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border-2 border-aso-blue/30 bg-aso-bg text-aso-blue ring-4 ring-white">
+        <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border-2 border-aso-blue/30 bg-aso-bg text-aso-blue ring-4 ring-white transition-[border-color,box-shadow] duration-300 ease-out group-hover:border-aso-orange/60 group-hover:shadow-[0_0_16px_rgba(255,122,26,0.35)] group-focus-visible:border-aso-orange/60 group-focus-visible:shadow-[0_0_16px_rgba(255,122,26,0.35)] motion-reduce:transition-none">
           <PersonaIcon slug={persona.slug} />
         </div>
       </div>
 
       <div>
         <h3 className="text-base font-semibold text-aso-navy">{persona.singularName}</h3>
-        <p className="mt-1 text-sm font-medium text-aso-blue">{persona.tagline}</p>
+        <p className="mt-1 text-sm font-medium text-aso-orange">{persona.tagline}</p>
       </div>
 
       <ul className="flex-1 space-y-2">
@@ -90,7 +99,7 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
         ))}
       </ul>
 
-      <span className="text-xs font-medium text-aso-blue">See how ASO helps →</span>
+      <span className="text-xs font-medium text-aso-orange">See how ASO helps →</span>
 
       <span className="sr-only">Connects with {persona.networkNodes.join(", ")}.</span>
     </Link>
