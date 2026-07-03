@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Hero from "@/components/Hero";
+import Section from "@/components/Section";
+import Card from "@/components/Card";
+import PersonaIcon from "@/components/PersonaIcon";
 import { AUTH_NAV } from "@/lib/nav";
+import { PERSONAS } from "@/lib/personas";
 
 export const metadata: Metadata = {
   title: "AnchorStage Operations | Live Event Production - Orlando & Central Florida",
@@ -21,6 +25,37 @@ export default function Home() {
         primaryCta={AUTH_NAV.join}
         backgroundImage="/images/hero-stage.jpg"
       />
+
+      {/* WHO ARE YOU */}
+      <Section background="white">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
+            Where do you fit in live events?
+          </h2>
+          <p className="text-gray-500 leading-relaxed">
+            Whether you&apos;re building events, performing on stage, managing venues,
+            renting equipment, or supporting productions, ASO helps you connect with
+            the people and tools you need to grow.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PERSONAS.map((persona) => (
+            <Card
+              key={persona.slug}
+              title={persona.singularName}
+              centered
+              icon={
+                <div className="w-12 h-12 rounded-full bg-aso-bg flex items-center justify-center text-aso-blue">
+                  <PersonaIcon slug={persona.slug} />
+                </div>
+              }
+            >
+              {persona.tagline}
+            </Card>
+          ))}
+        </div>
+      </Section>
 
       {/* PROOF STRIP */}
       <section className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-300">

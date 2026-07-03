@@ -24,7 +24,12 @@ export type PersonaSlug =
 
 export interface Persona {
   slug: PersonaSlug;
+  /** Category label, e.g. nav/index listings ("Musicians"). */
   name: string;
+  /** Individual-identity label, e.g. "Which one are you?" cards ("Musician"). */
+  singularName: string;
+  /** Short one-line description used on identity/path-selector cards. */
+  tagline: string;
 }
 
 export interface PricingTier {
