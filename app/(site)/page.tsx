@@ -18,22 +18,15 @@ export const metadata: Metadata = {
     "AnchorStage Operations LLC provides professional live sound, staging, lighting, and full event production in Orlando and Central Florida, from bar shows to outdoor stages.",
 };
 
-const GROWTH_STEPS = [
-  {
-    step: "1",
-    title: "Build Your Presence",
-    desc: "Create a profile that shows who you are and what you offer.",
-  },
-  {
-    step: "2",
-    title: "Connect With Others",
-    desc: "Find collaborators, opportunities, gear, venues, and event partners.",
-  },
-  {
-    step: "3",
-    title: "Grow Through the Network",
-    desc: "Take on work that would be harder to manage alone.",
-  },
+const NETWORK_LAYER = [
+  "People",
+  "Events",
+  "Gear",
+  "Crew",
+  "Venues",
+  "Documents",
+  "Media",
+  "Marketing",
 ] as const;
 
 const WORKING_ALONE = [
@@ -113,52 +106,61 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {PERSONAS.map((persona) => (
-            <Card
-              key={persona.slug}
-              title={persona.singularName}
-              centered
-              icon={
-                <div className="w-12 h-12 rounded-full bg-aso-bg flex items-center justify-center text-aso-blue">
-                  <PersonaIcon slug={persona.slug} />
-                </div>
-              }
-            >
-              {persona.tagline}
-            </Card>
+            <Link key={persona.slug} href={`/for-members/${persona.slug}`} className="block h-full">
+              <Card
+                title={persona.singularName}
+                className="h-full"
+                icon={
+                  <div className="w-12 h-12 rounded-full bg-aso-bg flex items-center justify-center text-aso-blue">
+                    <PersonaIcon slug={persona.slug} />
+                  </div>
+                }
+                footer={
+                  <span className="text-xs font-medium text-aso-blue">See how ASO helps →</span>
+                }
+              >
+                <p className="font-semibold text-aso-navy mb-2">{persona.tagline}</p>
+                <p>{persona.description}</p>
+              </Card>
+            </Link>
           ))}
         </div>
       </Section>
 
-      {/* JOIN AS ONE ROLE */}
+      {/* EVERYTHING STARTS WITH ONE CONNECTION */}
       <Section background="navy">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Join as one role. Grow into the network.
+            Everything Starts With One Connection.
           </h2>
           <p className="text-white/70 leading-relaxed">
-            You may join ASO as a freelancer, musician, venue, rental provider,
-            production company, or event organizer — but the platform is built for
-            how people actually grow. One account can support the different roles,
-            relationships, and opportunities you build over time.
+            When you join ASO, you&apos;re not just creating another account.
+            You&apos;re joining a professional network built around the live event
+            industry, connecting you with the people, opportunities, and resources
+            that help events happen.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {GROWTH_STEPS.map((item) => (
-            <Card
-              key={item.step}
-              title={item.title}
-              centered
-              tone="tinted"
-              icon={
-                <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white font-bold text-sm">
-                  {item.step}
-                </div>
-              }
-            >
-              {item.desc}
-            </Card>
-          ))}
+        <div className="flex flex-col items-center">
+          <div className="px-5 py-2 rounded-full border border-white/25 text-white/70 text-xs font-semibold uppercase tracking-widest">
+            You
+          </div>
+
+          <div className="w-px h-10 bg-white/25" aria-hidden="true" />
+
+          <div className="px-8 py-3 rounded-full bg-white text-aso-navy text-sm font-bold uppercase tracking-widest shadow-lg">
+            The Network
+          </div>
+
+          <div className="w-px h-10 bg-white/25" aria-hidden="true" />
+
+          <div className="grid grid-cols-2 gap-x-14 gap-y-4">
+            {NETWORK_LAYER.map((item) => (
+              <span key={item} className="text-white/80 text-sm font-medium text-center">
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </Section>
 

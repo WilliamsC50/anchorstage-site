@@ -45,6 +45,8 @@ export interface Persona {
   singularName: string;
   /** Short one-line description used on identity/path-selector cards. */
   tagline: string;
+  /** Longer descriptive sentence linking the persona to /for-members/[slug]. */
+  description: string;
 }
 
 export interface PricingTier {

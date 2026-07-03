@@ -12,6 +12,7 @@ interface CardProps {
   centered?: boolean;
   /** "tinted" reads as a blue glass card for use on navy sections. */
   tone?: CardTone;
+  className?: string;
 }
 
 const TONE_STYLES: Record<CardTone, { card: string; title: string; body: string }> = {
@@ -35,6 +36,7 @@ export default function Card({
   comingSoon,
   centered = false,
   tone = "light",
+  className = "",
 }: CardProps) {
   const styles = TONE_STYLES[tone];
 
@@ -42,7 +44,7 @@ export default function Card({
     <div
       className={`rounded-xl p-7 transition-shadow flex flex-col gap-4 ${styles.card} ${
         centered ? "items-center text-center" : ""
-      } ${comingSoon ? "opacity-60" : ""}`}
+      } ${comingSoon ? "opacity-60" : ""} ${className}`}
     >
       {icon}
 
