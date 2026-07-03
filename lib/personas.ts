@@ -9,7 +9,7 @@ export const PERSONAS: Persona[] = [
     description:
       "Find work, source collaborators, request gear, and grow your business through one connected network.",
     checklist: ["Get Hired", "Find Gear", "Build Crew", "Grow Your Business"],
-    networkNodes: ["Venues", "Production", "Rental", "Organizers"],
+    examples: ["Audio Techs", "Video Techs", "Lighting Techs", "Camera Operators", "Video Wall Specialists"],
   },
   {
     slug: "production-companies",
@@ -19,7 +19,7 @@ export const PERSONAS: Persona[] = [
     description:
       "Expand your crew, equipment, partnerships, and production capabilities through connected organizations.",
     checklist: ["Find Crew", "Share Inventory", "Win Larger Events", "Scale Operations"],
-    networkNodes: ["Freelancers", "Venues", "Rental", "Organizers"],
+    examples: ["Live Event Productions", "Conferences", "Galas", "General Sessions", "Corporate Events"],
   },
   {
     slug: "musicians",
@@ -29,7 +29,7 @@ export const PERSONAS: Persona[] = [
     description:
       "Find opportunities, promote your work, manage performances, and build lasting industry relationships.",
     checklist: ["Find Gigs", "Promote Shows", "Source Support", "Build Your Career"],
-    networkNodes: ["Venues", "Organizers", "Production", "Media"],
+    examples: ["Original Bands", "Cover Bands", "Solo Musicians", "Theatrical Performers", "DJs"],
   },
   {
     slug: "venues",
@@ -39,7 +39,7 @@ export const PERSONAS: Persona[] = [
     description:
       "Build stronger events by connecting with performers, production partners, organizers, and rental providers.",
     checklist: ["Book Talent", "Find Production", "Promote Events", "Build Programs"],
-    networkNodes: ["Musicians", "Production", "Organizers", "Rental"],
+    examples: ["Breweries", "Pubs", "Clubs", "Performance Houses", "Places of Worship", "Concert Halls"],
   },
   {
     slug: "rental-providers",
@@ -49,7 +49,7 @@ export const PERSONAS: Persona[] = [
     description:
       "Keep your equipment working by connecting with productions, venues, and professionals who need it.",
     checklist: ["List Equipment", "Receive Requests", "Connect with Productions", "Increase Utilization"],
-    networkNodes: ["Production", "Freelancers", "Venues", "Organizers"],
+    examples: ["PA Systems", "Lighting Packages", "Video Walls", "IEM Racks", "Backline", "Staging"],
   },
   {
     slug: "event-organizers",
@@ -59,6 +59,6 @@ export const PERSONAS: Persona[] = [
     description:
       "Bring together the people, venues, equipment, documents, media, and marketing behind every event.",
     checklist: ["Coordinate People", "Source Gear", "Manage Documents", "Promote Events"],
-    networkNodes: ["Venues", "Production", "Freelancers", "Musicians"],
+    examples: ["Festivals", "Fundraisers", "Open Mics", "Community Events", "Corporate Events", "Private Events"],
   },
 ];

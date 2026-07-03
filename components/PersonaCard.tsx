@@ -6,17 +6,6 @@ interface PersonaCardProps {
   persona: Persona;
 }
 
-// Four satellite positions around the hub (percent coordinates within the
-// navy header band), matching the hub-and-spoke language already used by
-// NetworkDiagram elsewhere on the homepage. Kept clear of both the header's
-// edges and the center icon so pills never clip or overlap it.
-const NODE_POSITIONS = [
-  { x: 18, y: 15 },
-  { x: 82, y: 15 },
-  { x: 18, y: 85 },
-  { x: 82, y: 85 },
-] as const;
-
 function CheckMark() {
   return (
     <svg
@@ -41,44 +30,31 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
       href={`/for-members/${persona.slug}`}
       className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-100 bg-white text-center shadow-sm transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-1 hover:shadow-xl focus-visible:-translate-y-1 focus-visible:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-white motion-reduce:transition-none"
     >
-      {/* Branded header: role icon + hover/focus network reveal, on navy */}
-      <div className="relative flex h-36 shrink-0 items-center justify-center bg-aso-navy">
+      {/* Branded header: role icon by default, example roles fade in on hover/focus */}
+      <div className="relative flex h-40 shrink-0 items-center justify-center overflow-hidden bg-aso-navy px-4">
+        {/* Icon — stays visible, recedes slightly once examples take over */}
+        <div className="relative z-0 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/25 bg-white/10 text-white transition-[opacity,transform,border-color] duration-300 ease-out group-hover:scale-90 group-hover:border-aso-orange/60 group-hover:opacity-30 group-focus-visible:scale-90 group-focus-visible:border-aso-orange/60 group-focus-visible:opacity-30 motion-reduce:transition-none">
+          <PersonaIcon slug={persona.slug} />
+        </div>
+
+        {/* Example-roles overlay, decorative only */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none"
+          className="pointer-events-none absolute inset-0 z-10 flex flex-wrap content-center items-center justify-center gap-1.5 p-4 opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none"
         >
-          <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full">
-            {NODE_POSITIONS.map((pos, i) => (
-              <line
-                key={i}
-                x1="50"
-                y1="50"
-                x2={pos.x}
-                y2={pos.y}
-                stroke="var(--aso-orange)"
-                strokeWidth="0.9"
-                strokeOpacity="0.7"
-              />
-            ))}
-          </svg>
-          {NODE_POSITIONS.map((pos, i) => (
+          {persona.examples.map((example, i) => (
             <span
-              key={i}
-              className="absolute inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 whitespace-nowrap rounded-full border border-aso-orange/50 bg-white px-2 py-1 text-[10px] font-semibold text-aso-navy shadow-sm"
-              style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+              key={example}
+              style={{ transitionDelay: `${i * 40}ms` }}
+              className="translate-x-2 whitespace-nowrap rounded-full border border-white/20 bg-white/15 px-2.5 py-1 text-[10px] font-medium text-white/90 transition-transform duration-300 ease-out group-hover:translate-x-0 group-focus-visible:translate-x-0 motion-reduce:transition-none"
             >
-              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-aso-orange" />
-              {persona.networkNodes[i]}
+              {example}
             </span>
           ))}
         </div>
-
-        <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/25 bg-white/10 text-white transition-[border-color,box-shadow] duration-300 ease-out group-hover:border-aso-orange/70 group-hover:shadow-[0_0_18px_rgba(255,122,26,0.45)] group-focus-visible:border-aso-orange/70 group-focus-visible:shadow-[0_0_18px_rgba(255,122,26,0.45)] motion-reduce:transition-none">
-          <PersonaIcon slug={persona.slug} />
-        </div>
       </div>
 
-      {/* Body: title, tagline, checklist, footer link — stays light */}
+      {/* Body: title, tagline, checklist, footer link — unchanged */}
       <div className="flex flex-1 flex-col items-center gap-4 p-7">
         <div>
           <h3 className="text-base font-semibold text-aso-navy">{persona.singularName}</h3>
@@ -97,7 +73,7 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
         <span className="text-xs font-medium text-aso-orange">See how ASO helps →</span>
       </div>
 
-      <span className="sr-only">Connects with {persona.networkNodes.join(", ")}.</span>
+      <span className="sr-only">Examples: {persona.examples.join(", ")}.</span>
     </Link>
   );
 }

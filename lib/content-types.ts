@@ -49,8 +49,9 @@ export interface Persona {
   description: string;
   /** Four action-oriented items shown on the homepage identity card. */
   checklist: readonly [string, string, string, string];
-  /** Four network areas revealed on the identity card's hover/focus state. */
-  networkNodes: readonly [string, string, string, string];
+  /** Concrete role/event examples revealed on the identity card's hover/focus
+   *  state — "people like me belong here." Length varies by persona (5-6). */
+  examples: readonly string[];
 }
 
 export interface PricingTier {
