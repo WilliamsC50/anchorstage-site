@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import Section from "@/components/Section";
+import Button from "@/components/Button";
 import Card from "@/components/Card";
 import PersonaIcon from "@/components/PersonaIcon";
 import NetworkDiagram from "@/components/NetworkDiagram";
@@ -326,61 +327,21 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* BOTTOM CTA */}
-      <section
-        className="py-20"
-        style={{ backgroundColor: "var(--aso-navy)" }}
-      >
-        <div className="max-w-6xl mx-auto px-6 text-center">
-
-          <h2 className="text-2xl font-semibold text-white mb-3">
-            Ready to plan your event?
+      {/* JOIN THE NETWORK */}
+      <Section background="navy">
+        <div className="text-center max-w-2xl mx-auto">
+          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
+            Join the Network
           </h2>
-          <p
-            className="text-sm mb-8 max-w-md mx-auto leading-relaxed"
-            style={{ color: "var(--aso-blue-light)", opacity: 0.85 }}
-          >
-            Start with the intake form. It takes a few minutes and gives us
-            everything we need to follow up with a clear plan.
+          <p className="text-white/70 leading-relaxed mb-10 max-w-xl mx-auto">
+            Membership is free. Whether you&apos;re a freelancer, production
+            company, venue, musician, rental provider, or event organizer, ASO
+            was built to help you collaborate, grow, and operate bigger. The
+            network becomes more valuable every time another professional joins.
           </p>
-
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href="https://intake.anchorstageops.com"
-              className="inline-block text-white px-8 py-3.5 rounded-lg font-medium transition hover:opacity-90"
-              style={{ backgroundColor: "var(--aso-orange)" }}
-            >
-              Start Your Event
-            </a>
-            <a
-              href="/contact"
-              className="inline-block border border-white/30 text-white px-8 py-3.5 rounded-lg font-medium transition hover:bg-white/10"
-            >
-              Contact Us
-            </a>
-          </div>
-
-          <p className="mt-5 text-xs" style={{ color: "var(--aso-blue-light)", opacity: 0.55 }}>
-            Already have an account?{" "}
-            <a
-              href="https://intake.anchorstageops.com/login"
-              className="underline hover:opacity-100 transition"
-            >
-              Log In →
-            </a>
-          </p>
-          <p className="mt-2 text-xs" style={{ color: "var(--aso-blue-light)", opacity: 0.55 }}>
-            New here?{" "}
-            <a
-              href="https://intake.anchorstageops.com/register"
-              className="underline hover:opacity-100 transition"
-            >
-              Create an account →
-            </a>
-          </p>
-
+          <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
         </div>
-      </section>
+      </Section>
 
     </main>
   );
