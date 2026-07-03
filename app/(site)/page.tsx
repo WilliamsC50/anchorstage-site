@@ -38,6 +38,22 @@ const CONNECTED_THROUGH_ASO = [
   "Marketing",
 ] as const;
 
+const WORKING_ALONE = [
+  "Limited crew",
+  "Scattered tools",
+  "No shared gear",
+  "Manual follow-up",
+  "Harder to scale",
+] as const;
+
+const OPERATING_THROUGH_ASO = [
+  "Connected collaborators",
+  "Shared resources",
+  "Professional workstations",
+  "Repeatable workflows",
+  "Room to grow",
+] as const;
+
 function TransitionArrow() {
   return (
     <svg
@@ -215,41 +231,61 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* CREDIBILITY STRIP */}
-      <section className="bg-gray-50 py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+      {/* OPERATE BIGGER */}
+      <Section background="navy">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Operate Like a Larger Company
+          </h2>
+          <p className="text-white/70 leading-relaxed mb-3">
+            ASO gives members the structure, collaborators, and connected workflows
+            to take on bigger opportunities without building everything alone.
+          </p>
+          <p className="text-white/70 leading-relaxed">
+            Whether you&apos;re a solo freelancer, musician, venue, rental provider,
+            or growing production company, the network helps you move with more
+            confidence.
+          </p>
+        </div>
 
-            <div>
-              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
-                Veteran-Owned &amp; Operated
-              </p>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Founded and run by a veteran with years of hands-on live event experience.
-              </p>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-6 items-center max-w-4xl mx-auto">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-4">
+              Working Alone
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {WORKING_ALONE.map((item) => (
+                <span
+                  key={item}
+                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-white/70 border border-white/10"
+                >
+                  {item}
+                </span>
+              ))}
             </div>
+          </div>
 
-            <div>
-              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
-                Central Florida Based
-              </p>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Based in Orlando and available for events throughout Orange, Osceola, Seminole, and Lake counties.
-              </p>
+          <div className="flex justify-center">
+            <TransitionArrow />
+          </div>
+
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-aso-orange mb-4">
+              Operating Through ASO
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {OPERATING_THROUGH_ASO.map((item) => (
+                <span
+                  key={item}
+                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-aso-orange text-white"
+                >
+                  {item}
+                </span>
+              ))}
             </div>
-
-            <div>
-              <p className="text-sm font-semibold mb-1" style={{ color: "var(--aso-navy)" }}>
-                Built from Real Event Work
-              </p>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                Real production experience from live events across Central Florida — concerts, festivals, and corporate shows.
-              </p>
-            </div>
-
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* HOW IT WORKS */}
       <section className="py-20 bg-gray-50">
