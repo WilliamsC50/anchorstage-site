@@ -6,6 +6,7 @@ import Section from "@/components/Section";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
 import PersonaCard from "@/components/PersonaCard";
+import NetworkTree from "@/components/NetworkTree";
 import NetworkDiagram from "@/components/NetworkDiagram";
 import WorkstationIcon from "@/components/WorkstationIcon";
 import { AUTH_NAV } from "@/lib/nav";
@@ -17,17 +18,6 @@ export const metadata: Metadata = {
   description:
     "AnchorStage Operations LLC provides professional live sound, staging, lighting, and full event production in Orlando and Central Florida, from bar shows to outdoor stages.",
 };
-
-const NETWORK_LAYER = [
-  "People",
-  "Events",
-  "Gear",
-  "Crew",
-  "Venues",
-  "Documents",
-  "Media",
-  "Marketing",
-] as const;
 
 const WORKING_ALONE = [
   "Limited crew",
@@ -125,27 +115,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="flex flex-col items-center">
-          <div className="px-5 py-2 rounded-full border border-white/25 text-white/70 text-xs font-semibold uppercase tracking-widest">
-            You
-          </div>
-
-          <div className="w-px h-10 bg-white/25" aria-hidden="true" />
-
-          <div className="px-8 py-3 rounded-full bg-white text-aso-navy text-sm font-bold uppercase tracking-widest shadow-lg">
-            The Network
-          </div>
-
-          <div className="w-px h-10 bg-white/25" aria-hidden="true" />
-
-          <div className="grid grid-cols-2 gap-x-14 gap-y-4">
-            {NETWORK_LAYER.map((item) => (
-              <span key={item} className="text-white/80 text-sm font-medium text-center">
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
+        <NetworkTree />
       </Section>
 
       {/* NETWORK OVERVIEW */}
