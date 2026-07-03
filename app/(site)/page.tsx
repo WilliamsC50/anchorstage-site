@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import Section from "@/components/Section";
 import Card from "@/components/Card";
 import PersonaIcon from "@/components/PersonaIcon";
+import NetworkDiagram from "@/components/NetworkDiagram";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
 
@@ -55,6 +56,28 @@ export default function Home() {
             </Card>
           ))}
         </div>
+      </Section>
+
+      {/* NETWORK OVERVIEW */}
+      <Section background="bg">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
+            Built Around the Way Live Events Actually Work
+          </h2>
+          <p className="text-gray-500 leading-relaxed">
+            The live event industry is already full of talented people, great
+            companies, trusted venues, and valuable equipment. The problem isn&apos;t
+            a lack of resources. It&apos;s that everyone operates separately. ASO
+            connects those people, organizations, and opportunities into one
+            professional network built for collaboration.
+          </p>
+        </div>
+
+        <NetworkDiagram />
+
+        <p className="text-center text-sm font-medium text-aso-navy mt-10">
+          Every new member strengthens the network.
+        </p>
       </Section>
 
       {/* PROOF STRIP */}
