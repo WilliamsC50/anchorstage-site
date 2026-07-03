@@ -83,12 +83,16 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
       />
 
       {/* 2. Solid navy hub disc + anchor logo — same navy token as the
-          section background, fully opaque so lines never show through.
-          Border stays transparent at rest so the disc blends into the
-          page; the glow and cogwheel carry the hub's visual weight. */}
+          section background, fully opaque so lines never show through. At
+          rest the border is the same navy token as the fill (not
+          "transparent," an actual matching color), so it is guaranteed
+          indistinguishable from the disc rather than merely invisible. It
+          only turns orange when the hub itself is targeted, as interaction
+          feedback. The glow and cogwheel carry the hub's visual weight, not
+          the disc. */}
       <div
         className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-aso-navy transition-colors duration-200 ease-out motion-reduce:transition-none ${
-          targeted ? "border-aso-orange" : "border-transparent"
+          targeted ? "border-aso-orange" : "border-aso-navy"
         }`}
       >
         <Image
@@ -122,21 +126,6 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
             }`}
           />
         </div>
-      </div>
-
-      {/* 4. ASO branding plate — topmost, riveted to the lower rim of the
-          cogwheel. The source asset has an opaque off-white fill (no alpha
-          channel), so it's presented as a small rounded plate rather than a
-          bare transparent wordmark. Offset left of center by eye. */}
-      <div className="pointer-events-none absolute left-[44%] top-[150px] z-40 -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-md shadow-md">
-        <Image
-          src="/images/ASO.png"
-          alt=""
-          aria-hidden="true"
-          width={207}
-          height={100}
-          className="h-[26px] w-auto object-contain"
-        />
       </div>
     </div>
   );
