@@ -31,12 +31,12 @@ const CENTER = { x: 50, y: 50 };
 // lower-left, Event Organizers upper-left) with only a few degrees/units
 // of jitter per node — close to symmetric, not perfectly uniform.
 const MEMBER_LAYOUT: Record<PersonaSlug, { angle: number; radius: number }> = {
-  freelancers: { angle: -92, radius: 30 },
-  "production-companies": { angle: -28, radius: 32 },
-  musicians: { angle: 33, radius: 29 },
-  venues: { angle: 88, radius: 31 },
-  "rental-providers": { angle: 152, radius: 30 },
-  "event-organizers": { angle: -148, radius: 32 },
+  freelancers: { angle: -92, radius: 35 },
+  "production-companies": { angle: -28, radius: 38 },
+  musicians: { angle: 33, radius: 34 },
+  venues: { angle: 88, radius: 36 },
+  "rental-providers": { angle: 152, radius: 35 },
+  "event-organizers": { angle: -148, radius: 38 },
 };
 
 function polar(angleDeg: number, radius: number) {
@@ -81,16 +81,20 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
         }}
       />
 
-      <Image
-        src="/images/cogwheel.png"
-        alt=""
-        aria-hidden="true"
-        fill
-        sizes="176px"
-        className={`pointer-events-none select-none object-contain animate-[network-tree-spin_50s_linear_infinite] transition-opacity duration-300 ease-out motion-reduce:animate-none motion-reduce:transition-none ${
-          engaged ? "opacity-90" : "opacity-55"
-        }`}
-      />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="relative h-[154px] w-[154px]">
+          <Image
+            src="/images/cogwheel.png"
+            alt=""
+            aria-hidden="true"
+            fill
+            sizes="154px"
+            className={`pointer-events-none select-none object-contain animate-[network-tree-spin_50s_linear_infinite] transition-opacity duration-300 ease-out motion-reduce:animate-none motion-reduce:transition-none ${
+              engaged ? "opacity-90" : "opacity-55"
+            }`}
+          />
+        </div>
+      </div>
 
       <div
         className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-white/5 shadow-lg transition-colors duration-200 ease-out motion-reduce:transition-none ${
@@ -104,10 +108,12 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
           height={176}
           // The source PNG's opaque anchor artwork isn't centered in its own
           // canvas (measured ~4% right, ~4% up of the image's true center),
-          // so it renders visually off-center by default. This nudges the
-          // rendered glyph back to optical center without touching the asset.
-          style={{ transform: "translate(-3px, 2px)" }}
-          className="h-16 w-auto object-contain"
+          // so this offsets the horizontal drift, plus a small intentional
+          // upward bias for optical balance at the larger display size.
+          style={{ transform: "translate(-3px, -1px)" }}
+          className={`h-[75px] w-auto object-contain transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
+            engaged ? "brightness-110" : "brightness-100"
+          }`}
         />
       </div>
     </div>
@@ -135,7 +141,7 @@ function BenefitPanel({ active }: { active: ActiveTarget }) {
 
   return (
     <div>
-      <p className="mb-3 text-sm font-semibold text-white">{persona.name} gain access to:</p>
+      <p className="mb-3 text-sm font-semibold text-white">ASO connects {persona.name} with:</p>
       <dl className="space-y-2">
         {PERSONA_NETWORK_BENEFITS[active].map((entry) => (
           <div key={entry.from} className="flex flex-wrap items-baseline gap-x-1.5">
@@ -180,8 +186,8 @@ export default function NetworkTree() {
                   y2={pos.y}
                   className={LINE_TRANSITION_CLASSES}
                   stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
-                  strokeWidth={lit ? 0.55 : 0.25}
-                  strokeOpacity={lit ? 0.65 : 0.18}
+                  strokeWidth={lit ? 0.5 : 0.18}
+                  strokeOpacity={lit ? 0.6 : 0.1}
                 />
               );
             })}
@@ -198,8 +204,8 @@ export default function NetworkTree() {
                   y2={posB.y}
                   className={LINE_TRANSITION_CLASSES}
                   stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
-                  strokeWidth={lit ? 0.35 : 0.1}
-                  strokeOpacity={lit ? 0.55 : 0.08}
+                  strokeWidth={lit ? 0.3 : 0.07}
+                  strokeOpacity={lit ? 0.5 : 0.05}
                 />
               );
             })}
@@ -224,11 +230,11 @@ export default function NetworkTree() {
             const isSelf = active === persona.slug;
             const isBrightened = active !== null && !isSelf;
 
-            let stateClasses = "border-white/25 bg-white/10 text-white";
+            let stateClasses = "border-white/15 bg-black/25 text-white/90";
             if (isSelf) {
               stateClasses = "border-aso-orange bg-aso-orange text-white shadow-[0_0_14px_rgba(255,122,26,0.5)]";
             } else if (isBrightened) {
-              stateClasses = "border-white/60 bg-white/25 text-white";
+              stateClasses = "border-white/35 bg-white/10 text-white";
             }
 
             return (
@@ -239,7 +245,7 @@ export default function NetworkTree() {
                 onMouseLeave={() => setActive(null)}
                 onFocus={() => setActive(persona.slug)}
                 onBlur={() => setActive(null)}
-                className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-3 py-1.5 text-[10px] font-semibold transition-colors duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy lg:text-xs ${stateClasses}`}
+                className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-2.5 py-1 text-[9px] font-bold uppercase tracking-wide transition-[background-color,border-color,color,box-shadow] duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy lg:text-[10px] ${stateClasses}`}
                 style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
               >
                 {persona.name}
