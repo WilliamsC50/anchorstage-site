@@ -26,14 +26,17 @@ type ActiveTarget = PersonaSlug | "aso" | null;
 
 const CENTER = { x: 50, y: 50 };
 
-// Organic, deliberately uneven angles/radii — not a symmetric hexagon.
+// Balanced hexagon (Freelancers top, then clockwise: Production Companies
+// upper-right, Musicians lower-right, Venues bottom, Rental Providers
+// lower-left, Event Organizers upper-left) with only a few degrees/units
+// of jitter per node — close to symmetric, not perfectly uniform.
 const MEMBER_LAYOUT: Record<PersonaSlug, { angle: number; radius: number }> = {
-  freelancers: { angle: -95, radius: 32 },
-  "production-companies": { angle: -35, radius: 35 },
-  musicians: { angle: 25, radius: 30 },
-  venues: { angle: 100, radius: 34 },
-  "rental-providers": { angle: 160, radius: 31 },
-  "event-organizers": { angle: 205, radius: 35 },
+  freelancers: { angle: -92, radius: 30 },
+  "production-companies": { angle: -28, radius: 32 },
+  musicians: { angle: 33, radius: 29 },
+  venues: { angle: 88, radius: 31 },
+  "rental-providers": { angle: 152, radius: 30 },
+  "event-organizers": { angle: -148, radius: 32 },
 };
 
 function polar(angleDeg: number, radius: number) {
@@ -99,6 +102,11 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
           alt=""
           width={200}
           height={176}
+          // The source PNG's opaque anchor artwork isn't centered in its own
+          // canvas (measured ~4% right, ~4% up of the image's true center),
+          // so it renders visually off-center by default. This nudges the
+          // rendered glyph back to optical center without touching the asset.
+          style={{ transform: "translate(-3px, 2px)" }}
           className="h-16 w-auto object-contain"
         />
       </div>
@@ -172,8 +180,8 @@ export default function NetworkTree() {
                   y2={pos.y}
                   className={LINE_TRANSITION_CLASSES}
                   stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
-                  strokeWidth={lit ? 0.7 : 0.35}
-                  strokeOpacity={lit ? 0.85 : 0.3}
+                  strokeWidth={lit ? 0.55 : 0.25}
+                  strokeOpacity={lit ? 0.65 : 0.18}
                 />
               );
             })}
@@ -190,8 +198,8 @@ export default function NetworkTree() {
                   y2={posB.y}
                   className={LINE_TRANSITION_CLASSES}
                   stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
-                  strokeWidth={lit ? 0.45 : 0.15}
-                  strokeOpacity={lit ? 0.7 : 0.15}
+                  strokeWidth={lit ? 0.35 : 0.1}
+                  strokeOpacity={lit ? 0.55 : 0.08}
                 />
               );
             })}
