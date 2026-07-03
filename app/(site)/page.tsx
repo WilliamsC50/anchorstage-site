@@ -55,6 +55,10 @@ const OPERATING_THROUGH_ASO = [
   "Room to grow",
 ] as const;
 
+// Fixed per-item tilt for the "scattered" chip cloud — static, not randomized
+// per render, so server and client markup match exactly.
+const SCATTER_ROTATIONS = [-3, 2, -1.5, 3, -2.5, 1.5, 2.5, -1] as const;
+
 const TRUST_HIGHLIGHTS = [
   {
     title: "Built from Real Event Work",
@@ -88,6 +92,24 @@ function TransitionArrow() {
   );
 }
 
+function ConvergeArrow() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="w-7 h-7 text-aso-blue-light"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="12" y1="3" x2="12" y2="17" />
+      <polyline points="6 12 12 18 18 12" />
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <main>
@@ -102,12 +124,12 @@ export default function Home() {
       />
 
       {/* WHO ARE YOU */}
-      <Section background="white">
+      <Section background="navy">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Where do you fit in live events?
           </h2>
-          <p className="text-gray-500 leading-relaxed">
+          <p className="text-white/70 leading-relaxed">
             Whether you&apos;re building events, performing on stage, managing venues,
             renting equipment, or supporting productions, ASO helps you connect with
             the people and tools you need to grow.
@@ -155,12 +177,12 @@ export default function Home() {
       </Section>
 
       {/* THE PROBLEM */}
-      <Section background="white">
+      <Section background="navy">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Live Events Are Not the Problem. Fragmentation Is.
           </h2>
-          <p className="text-gray-500 leading-relaxed">
+          <p className="text-white/70 leading-relaxed">
             Most event professionals already know how to do the work. The hard part
             is keeping the people, gear, schedules, documents, media, marketing, and
             communication connected before the event ever happens. ASO exists to
@@ -168,16 +190,17 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-6 items-center max-w-4xl mx-auto">
+        <div className="max-w-lg mx-auto">
           <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-6">
               Disconnected Today
             </p>
-            <div className="flex flex-wrap justify-center gap-2">
-              {DISCONNECTED_TODAY.map((item) => (
+            <div className="flex flex-wrap justify-center gap-3">
+              {DISCONNECTED_TODAY.map((item, i) => (
                 <span
                   key={item}
-                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500 border border-gray-200"
+                  style={{ transform: `rotate(${SCATTER_ROTATIONS[i % SCATTER_ROTATIONS.length]}deg)` }}
+                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-white/60 border border-white/10"
                 >
                   {item}
                 </span>
@@ -185,19 +208,19 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex justify-center">
-            <TransitionArrow />
+          <div className="flex justify-center my-8">
+            <ConvergeArrow />
           </div>
 
           <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-aso-blue mb-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-white mb-6">
               Connected Through ASO
             </p>
-            <div className="flex flex-wrap justify-center gap-2">
+            <div className="flex flex-wrap justify-center gap-1.5 max-w-sm mx-auto">
               {CONNECTED_THROUGH_ASO.map((item) => (
                 <span
                   key={item}
-                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-aso-navy text-white"
+                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-white text-aso-navy"
                 >
                   {item}
                 </span>
