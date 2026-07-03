@@ -45,8 +45,12 @@ export interface Persona {
   singularName: string;
   /** Short one-line description used on identity/path-selector cards. */
   tagline: string;
-  /** Longer descriptive sentence linking the persona to /for-members/[slug]. */
+  /** Longer descriptive sentence, reserved for the future /for-members/[slug] page. */
   description: string;
+  /** Four action-oriented items shown on the homepage identity card. */
+  checklist: readonly [string, string, string, string];
+  /** Four network areas revealed on the identity card's hover/focus state. */
+  networkNodes: readonly [string, string, string, string];
 }
 
 export interface PricingTier {

@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 import Section from "@/components/Section";
 import Button from "@/components/Button";
 import Card from "@/components/Card";
-import PersonaIcon from "@/components/PersonaIcon";
+import PersonaCard from "@/components/PersonaCard";
 import NetworkDiagram from "@/components/NetworkDiagram";
 import WorkstationIcon from "@/components/WorkstationIcon";
 import { AUTH_NAV } from "@/lib/nav";
@@ -106,23 +106,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {PERSONAS.map((persona) => (
-            <Link key={persona.slug} href={`/for-members/${persona.slug}`} className="block h-full">
-              <Card
-                title={persona.singularName}
-                className="h-full"
-                icon={
-                  <div className="w-12 h-12 rounded-full bg-aso-bg flex items-center justify-center text-aso-blue">
-                    <PersonaIcon slug={persona.slug} />
-                  </div>
-                }
-                footer={
-                  <span className="text-xs font-medium text-aso-blue">See how ASO helps →</span>
-                }
-              >
-                <p className="font-semibold text-aso-navy mb-2">{persona.tagline}</p>
-                <p>{persona.description}</p>
-              </Card>
-            </Link>
+            <PersonaCard key={persona.slug} persona={persona} />
           ))}
         </div>
       </Section>
