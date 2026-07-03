@@ -14,6 +14,46 @@ export const metadata: Metadata = {
     "AnchorStage Operations LLC provides professional live sound, staging, lighting, and full event production in Orlando and Central Florida, from bar shows to outdoor stages.",
 };
 
+const DISCONNECTED_TODAY = [
+  "Texts",
+  "Email",
+  "Messenger",
+  "Spreadsheets",
+  "Phone Calls",
+  "Paper Notes",
+  "Cloud Drives",
+  "Memory",
+] as const;
+
+const CONNECTED_THROUGH_ASO = [
+  "Members",
+  "Events",
+  "Gear",
+  "Crew",
+  "Venues",
+  "Documents",
+  "Media",
+  "Marketing",
+] as const;
+
+function TransitionArrow() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className="w-8 h-8 md:w-10 md:h-10 text-aso-blue rotate-90 md:rotate-0"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <polyline points="14 6 20 12 14 18" />
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <main>
@@ -80,24 +120,58 @@ export default function Home() {
         </p>
       </Section>
 
-      {/* PROOF STRIP */}
-      <section className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-300">
-        {[
-          { src: "/images/proof-1.jpg", alt: "Live event production" },
-          { src: "/images/proof-2.jpg", alt: "Stage and lighting setup" },
-          { src: "/images/proof-3.jpg", alt: "Concert production" },
-        ].map(({ src, alt }) => (
-          <div key={src} className="relative aspect-video bg-gray-900">
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              className="object-cover"
-              sizes="(min-width: 640px) 33vw, 100vw"
-            />
+      {/* THE PROBLEM */}
+      <Section background="white">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
+            Live Events Are Not the Problem. Fragmentation Is.
+          </h2>
+          <p className="text-gray-500 leading-relaxed">
+            Most event professionals already know how to do the work. The hard part
+            is keeping the people, gear, schedules, documents, media, marketing, and
+            communication connected before the event ever happens. ASO exists to
+            bring that work into one connected operating network.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-6 items-center max-w-4xl mx-auto">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
+              Disconnected Today
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {DISCONNECTED_TODAY.map((item) => (
+                <span
+                  key={item}
+                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500 border border-gray-200"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
-        ))}
-      </section>
+
+          <div className="flex justify-center">
+            <TransitionArrow />
+          </div>
+
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-aso-blue mb-4">
+              Connected Through ASO
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {CONNECTED_THROUGH_ASO.map((item) => (
+                <span
+                  key={item}
+                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-aso-navy text-white"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Section>
 
       {/* WHAT WE HANDLE */}
       <section className="bg-white py-20">
