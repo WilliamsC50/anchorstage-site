@@ -92,21 +92,14 @@ function TransitionArrow() {
   );
 }
 
-function ConvergeArrow() {
+function ScatteredChip({ label, index }: { label: string; index: number }) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      className="w-7 h-7 text-aso-blue-light"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
+    <span
+      style={{ transform: `rotate(${SCATTER_ROTATIONS[index % SCATTER_ROTATIONS.length]}deg)` }}
+      className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-white/60 border border-white/10"
     >
-      <line x1="12" y1="3" x2="12" y2="17" />
-      <polyline points="6 12 12 18 18 12" />
-    </svg>
+      {label}
+    </span>
   );
 }
 
@@ -142,6 +135,7 @@ export default function Home() {
               key={persona.slug}
               title={persona.singularName}
               centered
+              tone="tinted"
               icon={
                 <div className="w-12 h-12 rounded-full bg-aso-bg flex items-center justify-center text-aso-blue">
                   <PersonaIcon slug={persona.slug} />
@@ -190,43 +184,42 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="max-w-lg mx-auto">
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-6">
-              Disconnected Today
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {DISCONNECTED_TODAY.map((item, i) => (
-                <span
-                  key={item}
-                  style={{ transform: `rotate(${SCATTER_ROTATIONS[i % SCATTER_ROTATIONS.length]}deg)` }}
-                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-white/60 border border-white/10"
-                >
-                  {item}
-                </span>
-              ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 items-center max-w-4xl mx-auto">
+          <div className="flex flex-wrap md:flex-col items-center justify-center gap-3">
+            {DISCONNECTED_TODAY.slice(0, 4).map((item, i) => (
+              <ScatteredChip key={item} label={item} index={i} />
+            ))}
+          </div>
+
+          <div className="flex flex-col items-center">
+            <div className="w-40 h-40 sm:w-44 sm:h-44 rounded-full bg-aso-orange flex items-center justify-center text-center px-6 shadow-xl shadow-black/20 mb-6">
+              <span className="text-white text-sm sm:text-base font-bold leading-snug">
+                ASO Operating Network
+              </span>
             </div>
-          </div>
-
-          <div className="flex justify-center my-8">
-            <ConvergeArrow />
-          </div>
-
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-white mb-6">
-              Connected Through ASO
-            </p>
-            <div className="flex flex-wrap justify-center gap-1.5 max-w-sm mx-auto">
+            <div className="flex flex-wrap justify-center gap-1.5 max-w-[220px] sm:max-w-xs">
               {CONNECTED_THROUGH_ASO.map((item) => (
                 <span
                   key={item}
-                  className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-white text-aso-navy"
+                  className="inline-block px-2.5 py-1 rounded-full text-[11px] font-medium bg-white text-aso-navy"
                 >
                   {item}
                 </span>
               ))}
             </div>
           </div>
+
+          <div className="flex flex-wrap md:flex-col items-center justify-center gap-3">
+            {DISCONNECTED_TODAY.slice(4, 8).map((item, i) => (
+              <ScatteredChip key={item} label={item} index={i + 4} />
+            ))}
+          </div>
+
+          <span className="sr-only">
+            Diagram showing disconnected tools — {DISCONNECTED_TODAY.join(", ")} — scattered
+            around the ASO Operating Network, which pulls {CONNECTED_THROUGH_ASO.join(", ")} into
+            one connected system.
+          </span>
         </div>
       </Section>
 
