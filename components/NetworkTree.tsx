@@ -82,9 +82,10 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
         }}
       />
 
-      {/* 2. Hub background disc + anchor logo */}
+      {/* 2. Solid navy hub disc + anchor logo — opaque so lines never show
+          through behind the logo. */}
       <div
-        className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-white/5 shadow-lg transition-colors duration-200 ease-out motion-reduce:transition-none ${
+        className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-aso-navy shadow-lg transition-colors duration-200 ease-out motion-reduce:transition-none ${
           targeted ? "border-aso-orange" : "border-white/20"
         }`}
       >
@@ -94,19 +95,20 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
           width={200}
           height={176}
           // The source PNG's opaque anchor artwork isn't centered in its own
-          // canvas (measured ~4% right, ~4% up of the image's true center),
-          // so this offsets the horizontal drift, plus a small intentional
-          // upward bias for optical balance at the larger display size.
-          style={{ transform: "translate(-3px, -1px)" }}
+          // canvas. An earlier -3px correction (based on measuring the
+          // asset) still read as too far left in review, so this nudges
+          // right off that value per direct visual feedback; vertical bias
+          // unchanged.
+          style={{ transform: "translate(1px, -1px)" }}
           className={`h-20 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
             engaged ? "brightness-110" : "brightness-100"
           }`}
         />
       </div>
 
-      {/* 3. Spinning cogwheel bezel — topmost layer, sits above the disc/anchor
-          edge and above the connection lines (which live outside this
-          component but under the hub's own stacking context). */}
+      {/* 3. Spinning cogwheel bezel — sits above the disc/anchor edge and
+          above the connection lines (which live outside this component but
+          under the hub's own stacking context). */}
       <div className="absolute inset-0 z-30 flex items-center justify-center">
         <div className="relative h-[154px] w-[154px]">
           <Image
@@ -120,6 +122,15 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
             }`}
           />
         </div>
+      </div>
+
+      {/* 4. ASO nameplate — topmost, overlapping the disc's lower rim like a
+          badge riveted to the hub. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[142px] z-40 -translate-x-1/2 -translate-y-1/2 rounded-full border border-aso-orange bg-white px-2 py-0.5 shadow-sm"
+      >
+        <span className="text-[9px] font-extrabold uppercase tracking-wider text-aso-blue">ASO</span>
       </div>
     </div>
   );
