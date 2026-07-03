@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PRIMARY_NAV, AUTH_NAV } from "@/lib/nav";
 
 export default function Footer() {
   return (
@@ -28,10 +29,11 @@ export default function Footer() {
             Navigate
           </p>
           <nav className="flex flex-col gap-2.5 text-sm" style={{ color: "var(--aso-blue-light)" }}>
-            <Link href="/services" className="opacity-70 hover:opacity-100 transition">Services</Link>
-            <Link href="/photos" className="opacity-70 hover:opacity-100 transition">Photos</Link>
-            <Link href="/team" className="opacity-70 hover:opacity-100 transition">Team</Link>
-            <Link href="/contact" className="opacity-70 hover:opacity-100 transition">Contact</Link>
+            {PRIMARY_NAV.filter((item) => item.href !== "/").map((item) => (
+              <Link key={item.href} href={item.href} className="opacity-70 hover:opacity-100 transition">
+                {item.label}
+              </Link>
+            ))}
           </nav>
         </div>
 
@@ -45,25 +47,18 @@ export default function Footer() {
           </p>
           <div className="flex flex-col gap-2.5 text-sm">
             <a
-              href="https://intake.anchorstageops.com"
+              href={AUTH_NAV.join.href}
               className="font-medium transition hover:opacity-90"
               style={{ color: "var(--aso-orange)" }}
             >
-              Start an Event →
+              {AUTH_NAV.join.label} →
             </a>
             <a
-              href="https://intake.anchorstageops.com/login"
+              href={AUTH_NAV.login.href}
               className="opacity-70 hover:opacity-100 transition"
               style={{ color: "var(--aso-blue-light)" }}
             >
-              Log In
-            </a>
-            <a
-              href="https://intake.anchorstageops.com/register"
-              className="opacity-70 hover:opacity-100 transition"
-              style={{ color: "var(--aso-blue-light)" }}
-            >
-              Create Account
+              {AUTH_NAV.login.label}
             </a>
           </div>
         </div>
