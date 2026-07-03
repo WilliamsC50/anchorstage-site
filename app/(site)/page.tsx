@@ -54,6 +54,21 @@ const OPERATING_THROUGH_ASO = [
   "Room to grow",
 ] as const;
 
+const TRUST_HIGHLIGHTS = [
+  {
+    title: "Built from Real Event Work",
+    desc: "Designed around actual event operations.",
+  },
+  {
+    title: "Built by Industry Professionals",
+    desc: "Created by people who understand live events because they work in them.",
+  },
+  {
+    title: "Always Improving",
+    desc: "The network grows because members help shape what gets built next.",
+  },
+] as const;
+
 function TransitionArrow() {
   return (
     <svg
@@ -287,55 +302,29 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* HOW IT WORKS */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6">
-
-          <h2
-            className="text-2xl font-semibold mb-12"
-            style={{ color: "var(--aso-navy)" }}
-          >
-            How it works
+      {/* BUILT BY OPERATORS */}
+      <Section background="white">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
+            Built by Operators
           </h2>
-
-          <div className="grid md:grid-cols-3 gap-10">
-            {[
-              {
-                step: "01",
-                title: "Tell us about your event",
-                desc: "Submit your event details: date, location, type, and any technical needs. Takes a few minutes.",
-              },
-              {
-                step: "02",
-                title: "We scope and confirm",
-                desc: "We review your event and follow up with a clear picture of what we'll bring, how it'll run, and what it costs.",
-              },
-              {
-                step: "03",
-                title: "We show up and execute",
-                desc: "On the day, we handle setup, direction, and strike. Your event runs clean. That's the job.",
-              },
-            ].map(({ step, title, desc }) => (
-              <div key={step}>
-                <p
-                  className="text-3xl font-bold mb-4"
-                  style={{ color: "var(--aso-blue)" }}
-                >
-                  {step}
-                </p>
-                <h3
-                  className="text-base font-semibold mb-2"
-                  style={{ color: "var(--aso-navy)" }}
-                >
-                  {title}
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-
+          <p className="text-gray-500 leading-relaxed">
+            Every workstation, workflow, and tool inside ASO comes from real event
+            experience. The platform wasn&apos;t imagined in a conference room. It was
+            built while planning events, loading trucks, solving production problems,
+            managing crews, working with venues, and finding better ways to operate.
+            That&apos;s why ASO feels different.
+          </p>
         </div>
-      </section>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {TRUST_HIGHLIGHTS.map((highlight) => (
+            <Card key={highlight.title} title={highlight.title} centered>
+              {highlight.desc}
+            </Card>
+          ))}
+        </div>
+      </Section>
 
       {/* BOTTOM CTA */}
       <section
