@@ -6,11 +6,26 @@ export interface NavItem {
 /**
  * Official product terminology: "Workstations" — never "Modules" or
  * "Features" in marketing-facing content.
+ *
+ * Full canonical set per the approved architecture; only a subset is
+ * populated in lib/workstations.ts until the Workstations page ships.
  */
+export type WorkstationSlug =
+  | "event"
+  | "operations"
+  | "crew"
+  | "inventory"
+  | "marketing"
+  | "media"
+  | "financial"
+  | "power"
+  | "practice"
+  | "automation";
+
 export interface Workstation {
-  slug: string;
+  slug: WorkstationSlug;
   name: string;
-  icon: string;
+  tagline: string;
   comingSoon?: boolean;
 }
 

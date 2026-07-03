@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import Link from "next/link";
 import Hero from "@/components/Hero";
 import Section from "@/components/Section";
 import Card from "@/components/Card";
 import PersonaIcon from "@/components/PersonaIcon";
 import NetworkDiagram from "@/components/NetworkDiagram";
+import WorkstationIcon from "@/components/WorkstationIcon";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
+import { WORKSTATIONS } from "@/lib/workstations";
 
 export const metadata: Metadata = {
   title: "AnchorStage Operations | Live Event Production - Orlando & Central Florida",
@@ -173,97 +175,45 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* WHAT WE HANDLE */}
-      <section className="bg-white py-20">
-        <div className="max-w-6xl mx-auto px-6">
-
-          <div className="mb-10">
-            <h2
-              className="text-2xl font-semibold mb-3"
-              style={{ color: "var(--aso-navy)" }}
-            >
-              What we handle
-            </h2>
-            <p className="text-sm text-gray-500 max-w-xl leading-relaxed">
-              Every event is different. We work across the full range: headliner
-              stages, club shows, outdoor festivals, and everything in between.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-
-            <div
-              className="rounded-xl overflow-hidden border border-gray-100"
-              style={{ backgroundColor: "var(--aso-bg)" }}
-            >
-              <div className="relative aspect-video bg-gray-900">
-                <Image
-                  src="/images/card-compact.jpg"
-                  alt="Compact venue live music event"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                />
-              </div>
-              <div className="p-8">
-                <h3
-                  className="text-base font-semibold mb-3"
-                  style={{ color: "var(--aso-navy)" }}
-                >
-                  Compact &amp; Venue Events
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed mb-5">
-                  Bar shows, private events, live music nights, and smaller
-                  gatherings. The same professional approach, scaled to what
-                  you actually need.
-                </p>
-                <ul className="text-sm text-gray-400 space-y-1.5">
-                  <li>- Bar &amp; venue live music</li>
-                  <li>- Private parties &amp; celebrations</li>
-                  <li>- Backyard &amp; compact setups</li>
-                  <li>- Small weddings &amp; receptions</li>
-                </ul>
-              </div>
-            </div>
-
-            <div
-              className="rounded-xl overflow-hidden border border-gray-100"
-              style={{ backgroundColor: "var(--aso-bg)" }}
-            >
-              <div className="relative aspect-video bg-gray-900">
-                <Image
-                  src="/images/card-full.jpg"
-                  alt="Full outdoor stage production"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                />
-              </div>
-              <div className="p-8">
-                <h3
-                  className="text-base font-semibold mb-3"
-                  style={{ color: "var(--aso-navy)" }}
-                >
-                  Full Production
-                </h3>
-                <p className="text-sm text-gray-500 leading-relaxed mb-5">
-                  Stage builds, outdoor concerts, festivals, and corporate events.
-                  We bring the crew, the gear, and the direction to make large-scale
-                  shows run cleanly.
-                </p>
-                <ul className="text-sm text-gray-400 space-y-1.5">
-                  <li>- Festival &amp; outdoor stages</li>
-                  <li>- Concert production</li>
-                  <li>- Corporate &amp; branded events</li>
-                  <li>- Technical direction &amp; crew management</li>
-                </ul>
-              </div>
-            </div>
-
-          </div>
-
+      {/* WORKSTATIONS PREVIEW */}
+      <Section background="gray">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
+            Workstations Built for Real Event Work
+          </h2>
+          <p className="text-gray-500 leading-relaxed">
+            ASO gives members connected workstations for planning events, managing
+            operations, coordinating people, organizing media, building documents,
+            and growing their business.
+          </p>
         </div>
-      </section>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {WORKSTATIONS.map((workstation) => (
+            <Card
+              key={workstation.slug}
+              title={workstation.name}
+              centered
+              icon={
+                <div className="w-12 h-12 rounded-full bg-aso-bg flex items-center justify-center text-aso-blue">
+                  <WorkstationIcon slug={workstation.slug} />
+                </div>
+              }
+            >
+              {workstation.tagline}
+            </Card>
+          ))}
+        </div>
+
+        <div className="text-center mt-14">
+          <Link
+            href="/workstations"
+            className="inline-block text-sm font-medium text-aso-blue hover:text-aso-navy transition"
+          >
+            Explore Workstations →
+          </Link>
+        </div>
+      </Section>
 
       {/* CREDIBILITY STRIP */}
       <section className="bg-gray-50 py-12">
