@@ -52,13 +52,16 @@ export interface Persona {
   /** Concrete role/event examples revealed on the identity card's hover/focus
    *  state — "people like me belong here." Length varies by persona (5-6). */
   examples: readonly string[];
-  /** Other member types this role connects with through ASO — powers the
-   *  homepage network map's hover/focus highlight state. */
-  relatedPersonas: readonly PersonaSlug[];
 }
 
 export interface PricingTier {
   slug: string;
   name: string;
   isMembership: boolean;
+}
+
+/** One "what this role gains from that role" entry, keyed by the other role. */
+export interface PersonaBenefit {
+  from: PersonaSlug;
+  benefit: string;
 }

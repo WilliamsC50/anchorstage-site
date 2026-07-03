@@ -4,24 +4,25 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { PERSONAS } from "@/lib/personas";
+import { PERSONA_NETWORK_BENEFITS, ASO_NETWORK_VALUE } from "@/lib/network-benefits";
 import type { PersonaSlug } from "@/lib/content-types";
 
 /**
- * ASO network map: the anchor hub at the center, six member-type roles
- * around it. Default state is a clean map — hub, six nodes, quiet spokes,
- * no permanent clutter. Hovering or focusing a member type highlights it,
- * brightens the *other* member types it actually connects with (per
- * relatedPersonas), illuminates the connecting lines between them, and
- * surfaces a few of that role's real-world examples as small supporting
- * labels — never as a permanent branch structure.
+ * ASO network map. The whole ecosystem is always visibly connected — every
+ * member type links to every other member type, subtly, all the time.
+ * Hovering or focusing a member type (or the ASO hub itself) highlights it,
+ * brightens the rest of the network, and drives a benefit panel below the
+ * diagram explaining what that role gains from the others. No permanent
+ * per-role example branches — this is a living map, not a taxonomy.
  *
- * This needs client-side state rather than pure CSS: hovering one member
- * node has to affect *other* sibling nodes, the lines between *other*
- * pairs, and a hub glow that lives elsewhere in the tree — relationships
- * CSS :hover/group-hover can't express without matching some of Tailwind's
- * newer :has()-based tricks that are far more fragile than one small
- * useState. No external library — just React's own state.
+ * Client component: one role can be hovered while several *other* nodes,
+ * lines between *other* pairs, and the hub glow all need to react together.
+ * That's a cross-cutting effect CSS :hover/group-hover can't express
+ * cleanly without :has() gymnastics — one small useState instead. No
+ * external library.
  */
+
+type ActiveTarget = PersonaSlug | "aso" | null;
 
 const CENTER = { x: 50, y: 50 };
 
@@ -44,22 +45,24 @@ function personaName(slug: PersonaSlug) {
   return PERSONAS.find((p) => p.slug === slug)?.name ?? slug;
 }
 
-// Each unordered member-to-member pair drawn exactly once, derived from
-// relatedPersonas rather than hand-listed (the data is symmetric).
-const CONNECTION_PAIRS: [PersonaSlug, PersonaSlug][] = (() => {
-  const seen = new Set<string>();
-  const pairs: [PersonaSlug, PersonaSlug][] = [];
-  for (const persona of PERSONAS) {
-    for (const related of persona.relatedPersonas) {
-      const key = [persona.slug, related].sort().join("|");
-      if (!seen.has(key)) {
-        seen.add(key);
-        pairs.push([persona.slug, related]);
-      }
-    }
-  }
-  return pairs;
-})();
+// Every unique member-to-member pair — the ecosystem is fully connected,
+// not a partial graph.
+const ALL_PAIRS: [PersonaSlug, PersonaSlug][] = PERSONAS.flatMap((persona, i) =>
+  PERSONAS.slice(i + 1).map((other): [PersonaSlug, PersonaSlug] => [persona.slug, other.slug])
+);
+
+function isPairLit(a: PersonaSlug, b: PersonaSlug, active: ActiveTarget) {
+  if (active === "aso") return true;
+  if (active === null) return false;
+  return active === a || active === b;
+}
+
+function isSpokeLit(slug: PersonaSlug, active: ActiveTarget) {
+  return active === "aso" || active === slug;
+}
+
+const LINE_TRANSITION_CLASSES =
+  "transition-[stroke,stroke-opacity,stroke-width] duration-300 ease-out motion-reduce:transition-none";
 
 function CogRing({ active }: { active: boolean }) {
   const TICKS = 20;
@@ -94,13 +97,13 @@ function CogRing({ active }: { active: boolean }) {
   );
 }
 
-function AnchorHub({ active }: { active: boolean }) {
+function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boolean }) {
   return (
     <div className="relative flex h-44 w-44 items-center justify-center">
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 -z-20 rounded-full blur-2xl transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none ${
-          active ? "scale-[1.7] opacity-100" : "scale-150 opacity-75"
+          engaged ? "scale-[1.7] opacity-100" : "scale-150 opacity-75"
         }`}
         style={{
           background:
@@ -108,12 +111,16 @@ function AnchorHub({ active }: { active: boolean }) {
         }}
       />
 
-      <CogRing active={active} />
+      <CogRing active={engaged} />
 
-      <div className="relative z-10 flex h-32 w-32 items-center justify-center rounded-full border-2 border-white/20 bg-white/5 shadow-lg">
+      <div
+        className={`relative z-10 flex h-32 w-32 items-center justify-center rounded-full border-2 bg-white/5 shadow-lg transition-colors duration-200 ease-out motion-reduce:transition-none ${
+          targeted ? "border-aso-orange" : "border-white/20"
+        }`}
+      >
         <Image
           src="/logos/aso-picture-logo.png"
-          alt="AnchorStage Operations anchor mark"
+          alt=""
           width={200}
           height={176}
           className="h-20 w-auto object-contain"
@@ -123,134 +130,188 @@ function AnchorHub({ active }: { active: boolean }) {
   );
 }
 
-export default function NetworkTree() {
-  const [activeSlug, setActiveSlug] = useState<PersonaSlug | null>(null);
-  const activePersona = activeSlug ? PERSONAS.find((p) => p.slug === activeSlug) ?? null : null;
-  const activeRelated = activePersona ? new Set(activePersona.relatedPersonas) : null;
+function BenefitPanel({ active }: { active: ActiveTarget }) {
+  if (active === null) {
+    return (
+      <p className="text-center text-sm text-white/60">
+        Hover a role to see how ASO connects it to the rest of the network.
+      </p>
+    );
+  }
+
+  if (active === "aso") {
+    return (
+      <div className="text-center">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-aso-orange">ASO</p>
+        <p className="text-sm leading-relaxed text-white/80">{ASO_NETWORK_VALUE}</p>
+      </div>
+    );
+  }
+
+  const persona = PERSONAS.find((p) => p.slug === active);
+  if (!persona) return null;
 
   return (
     <div>
-      {/* Desktop / tablet: interactive network map */}
-      <div className="hidden w-full overflow-x-auto md:block">
-        <div className="relative mx-auto aspect-square min-w-[700px] max-w-3xl">
-          <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden="true">
-            {PERSONAS.map((persona) => {
-              const layout = MEMBER_LAYOUT[persona.slug];
-              const pos = polar(layout.angle, layout.radius);
-              const isActive = activeSlug === persona.slug;
-              return (
-                <line
-                  key={`hub-${persona.slug}`}
-                  x1={CENTER.x}
-                  y1={CENTER.y}
-                  x2={pos.x}
-                  y2={pos.y}
-                  className="transition-[stroke,stroke-opacity,stroke-width] duration-300 ease-out motion-reduce:transition-none"
-                  stroke={isActive ? "var(--aso-orange)" : "var(--aso-blue-light)"}
-                  strokeWidth={isActive ? 0.7 : 0.4}
-                  strokeOpacity={isActive ? 0.9 : 0.4}
-                />
-              );
-            })}
-
-            {CONNECTION_PAIRS.map(([a, b]) => {
-              const posA = polar(MEMBER_LAYOUT[a].angle, MEMBER_LAYOUT[a].radius);
-              const posB = polar(MEMBER_LAYOUT[b].angle, MEMBER_LAYOUT[b].radius);
-              const lit = activeSlug === a || activeSlug === b;
-              return (
-                <line
-                  key={`${a}-${b}`}
-                  x1={posA.x}
-                  y1={posA.y}
-                  x2={posB.x}
-                  y2={posB.y}
-                  className="transition-[stroke,stroke-opacity,stroke-width] duration-300 ease-out motion-reduce:transition-none"
-                  stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
-                  strokeWidth={lit ? 0.5 : 0.2}
-                  strokeOpacity={lit ? 0.75 : 0.12}
-                />
-              );
-            })}
-          </svg>
-
-          <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
-            <AnchorHub active={activeSlug !== null} />
+      <p className="mb-4 text-center text-sm font-semibold text-white">{persona.name} gain access to:</p>
+      <dl className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
+        {PERSONA_NETWORK_BENEFITS[active].map((entry) => (
+          <div key={entry.from}>
+            <dt className="text-xs font-semibold text-aso-orange">{personaName(entry.from)}</dt>
+            <dd className="text-sm leading-relaxed text-white/70">{entry.benefit}</dd>
           </div>
+        ))}
+      </dl>
+      <div className="mt-5 text-center">
+        <Link
+          href={`/for-members/${persona.slug}`}
+          className="text-xs font-medium text-aso-orange transition-colors hover:text-white"
+        >
+          See how ASO helps {persona.singularName} →
+        </Link>
+      </div>
+    </div>
+  );
+}
 
-          {PERSONAS.map((persona) => {
-            const layout = MEMBER_LAYOUT[persona.slug];
-            const pos = polar(layout.angle, layout.radius);
-            const isSelf = activeSlug === persona.slug;
-            const isRelated = activeRelated?.has(persona.slug) ?? false;
-            const labelsBelow = pos.y < 50;
+const HUB_BUTTON_CLASSES =
+  "rounded-full border-0 bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy";
 
-            let stateClasses = "border-white/25 bg-white/10 text-white";
-            if (isSelf) {
-              stateClasses = "border-aso-orange bg-aso-orange text-white shadow-[0_0_14px_rgba(255,122,26,0.5)]";
-            } else if (isRelated) {
-              stateClasses = "border-white/60 bg-white/25 text-white";
-            }
+export default function NetworkTree() {
+  const [active, setActive] = useState<ActiveTarget>(null);
 
-            return (
-              <div
-                key={persona.slug}
-                className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+  return (
+    <div>
+      {/* Desktop / tablet: full network map with hover/focus benefit panel */}
+      <div className="hidden md:block">
+        <div className="w-full overflow-x-auto">
+          <div className="relative mx-auto aspect-square min-w-[700px] max-w-3xl">
+            <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden="true">
+              {PERSONAS.map((persona) => {
+                const pos = polar(MEMBER_LAYOUT[persona.slug].angle, MEMBER_LAYOUT[persona.slug].radius);
+                const lit = isSpokeLit(persona.slug, active);
+                return (
+                  <line
+                    key={`hub-${persona.slug}`}
+                    x1={CENTER.x}
+                    y1={CENTER.y}
+                    x2={pos.x}
+                    y2={pos.y}
+                    className={LINE_TRANSITION_CLASSES}
+                    stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
+                    strokeWidth={lit ? 0.7 : 0.35}
+                    strokeOpacity={lit ? 0.85 : 0.3}
+                  />
+                );
+              })}
+              {ALL_PAIRS.map(([a, b]) => {
+                const posA = polar(MEMBER_LAYOUT[a].angle, MEMBER_LAYOUT[a].radius);
+                const posB = polar(MEMBER_LAYOUT[b].angle, MEMBER_LAYOUT[b].radius);
+                const lit = isPairLit(a, b, active);
+                return (
+                  <line
+                    key={`${a}-${b}`}
+                    x1={posA.x}
+                    y1={posA.y}
+                    x2={posB.x}
+                    y2={posB.y}
+                    className={LINE_TRANSITION_CLASSES}
+                    stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
+                    strokeWidth={lit ? 0.45 : 0.15}
+                    strokeOpacity={lit ? 0.7 : 0.15}
+                  />
+                );
+              })}
+            </svg>
+
+            <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+              <button
+                type="button"
+                aria-label="About the ASO network"
+                onMouseEnter={() => setActive("aso")}
+                onMouseLeave={() => setActive(null)}
+                onFocus={() => setActive("aso")}
+                onBlur={() => setActive(null)}
+                className={HUB_BUTTON_CLASSES}
               >
+                <AnchorVisual engaged={active !== null} targeted={active === "aso"} />
+              </button>
+            </div>
+
+            {PERSONAS.map((persona) => {
+              const pos = polar(MEMBER_LAYOUT[persona.slug].angle, MEMBER_LAYOUT[persona.slug].radius);
+              const isSelf = active === persona.slug;
+              const isBrightened = active !== null && !isSelf;
+
+              let stateClasses = "border-white/25 bg-white/10 text-white";
+              if (isSelf) {
+                stateClasses = "border-aso-orange bg-aso-orange text-white shadow-[0_0_14px_rgba(255,122,26,0.5)]";
+              } else if (isBrightened) {
+                stateClasses = "border-white/60 bg-white/25 text-white";
+              }
+
+              return (
                 <Link
+                  key={persona.slug}
                   href={`/for-members/${persona.slug}`}
-                  onMouseEnter={() => setActiveSlug(persona.slug)}
-                  onMouseLeave={() => setActiveSlug(null)}
-                  onFocus={() => setActiveSlug(persona.slug)}
-                  onBlur={() => setActiveSlug(null)}
-                  className={`block whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold transition-colors duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy sm:text-sm ${stateClasses}`}
+                  onMouseEnter={() => setActive(persona.slug)}
+                  onMouseLeave={() => setActive(null)}
+                  onFocus={() => setActive(persona.slug)}
+                  onBlur={() => setActive(null)}
+                  className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold transition-colors duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy sm:text-sm ${stateClasses}`}
+                  style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
                 >
                   {persona.name}
-                  <span className="sr-only">
-                    {" "}
-                    Connects with {persona.relatedPersonas.map(personaName).join(", ")}.
-                  </span>
                 </Link>
+              );
+            })}
+          </div>
+        </div>
 
-                {isSelf && (
-                  <div
-                    aria-hidden="true"
-                    className={`pointer-events-none absolute left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 ${
-                      labelsBelow ? "top-full mt-2" : "bottom-full mb-2"
-                    }`}
-                  >
-                    {persona.examples.slice(0, 3).map((example) => (
-                      <span key={example} className="flex items-center gap-1.5 whitespace-nowrap text-[9px] font-medium text-white/60">
-                        <span className="h-1 w-1 rounded-full bg-aso-orange" />
-                        {example}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+        <div
+          aria-live="polite"
+          className="mx-auto mt-8 min-h-[200px] max-w-2xl rounded-xl border border-white/10 bg-white/5 p-6"
+        >
+          <BenefitPanel active={active} />
         </div>
       </div>
 
-      {/* Mobile: simplified static layout — no hover network */}
+      {/* Mobile: tap-to-select roles, same benefit panel, no hover */}
       <div className="flex flex-col items-center gap-6 md:hidden">
-        <AnchorHub active={false} />
-
-        <p className="max-w-xs text-center text-sm text-white/60">
-          Every role connects to the others through ASO.
-        </p>
+        <button
+          type="button"
+          aria-label="About the ASO network"
+          aria-pressed={active === "aso"}
+          onClick={() => setActive((current) => (current === "aso" ? null : "aso"))}
+          className={HUB_BUTTON_CLASSES}
+        >
+          <AnchorVisual engaged={active !== null} targeted={active === "aso"} />
+        </button>
 
         <div className="grid w-full max-w-sm grid-cols-2 gap-3">
-          {PERSONAS.map((persona) => (
-            <Link
-              key={persona.slug}
-              href={`/for-members/${persona.slug}`}
-              className="whitespace-nowrap rounded-full border border-white/25 bg-white/10 px-3 py-2 text-center text-xs font-medium text-white transition-colors hover:border-aso-orange/50 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy"
-            >
-              {persona.name}
-            </Link>
-          ))}
+          {PERSONAS.map((persona) => {
+            const selected = active === persona.slug;
+            return (
+              <button
+                key={persona.slug}
+                type="button"
+                aria-pressed={selected}
+                onClick={() => setActive((current) => (current === persona.slug ? null : persona.slug))}
+                className={`whitespace-nowrap rounded-full border px-3 py-2 text-center text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy ${
+                  selected ? "border-aso-orange bg-aso-orange text-white" : "border-white/25 bg-white/10 text-white"
+                }`}
+              >
+                {persona.name}
+              </button>
+            );
+          })}
+        </div>
+
+        <div
+          aria-live="polite"
+          className="min-h-[240px] w-full max-w-sm rounded-xl border border-white/10 bg-white/5 p-4"
+        >
+          <BenefitPanel active={active} />
         </div>
       </div>
     </div>
