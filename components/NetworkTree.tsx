@@ -99,7 +99,7 @@ function CogRing({ active }: { active: boolean }) {
 
 function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boolean }) {
   return (
-    <div className="relative flex h-44 w-44 items-center justify-center">
+    <div className="relative flex h-36 w-36 items-center justify-center">
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 -z-20 rounded-full blur-2xl transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none ${
@@ -114,7 +114,7 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
       <CogRing active={engaged} />
 
       <div
-        className={`relative z-10 flex h-32 w-32 items-center justify-center rounded-full border-2 bg-white/5 shadow-lg transition-colors duration-200 ease-out motion-reduce:transition-none ${
+        className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-white/5 shadow-lg transition-colors duration-200 ease-out motion-reduce:transition-none ${
           targeted ? "border-aso-orange" : "border-white/20"
         }`}
       >
@@ -123,7 +123,7 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
           alt=""
           width={200}
           height={176}
-          className="h-20 w-auto object-contain"
+          className="h-16 w-auto object-contain"
         />
       </div>
     </div>
@@ -133,15 +133,13 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
 function BenefitPanel({ active }: { active: ActiveTarget }) {
   if (active === null) {
     return (
-      <p className="text-center text-sm text-white/60">
-        Hover a role to see how ASO connects it to the rest of the network.
-      </p>
+      <p className="text-sm text-white/60">Hover a role to see how ASO connects it to the rest of the network.</p>
     );
   }
 
   if (active === "aso") {
     return (
-      <div className="text-center">
+      <div>
         <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-aso-orange">ASO</p>
         <p className="text-sm leading-relaxed text-white/80">{ASO_NETWORK_VALUE}</p>
       </div>
@@ -153,16 +151,16 @@ function BenefitPanel({ active }: { active: ActiveTarget }) {
 
   return (
     <div>
-      <p className="mb-4 text-center text-sm font-semibold text-white">{persona.name} gain access to:</p>
-      <dl className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2">
+      <p className="mb-3 text-sm font-semibold text-white">{persona.name} gain access to:</p>
+      <dl className="space-y-2">
         {PERSONA_NETWORK_BENEFITS[active].map((entry) => (
-          <div key={entry.from}>
-            <dt className="text-xs font-semibold text-aso-orange">{personaName(entry.from)}</dt>
-            <dd className="text-sm leading-relaxed text-white/70">{entry.benefit}</dd>
+          <div key={entry.from} className="flex flex-wrap items-baseline gap-x-1.5">
+            <dt className="shrink-0 text-xs font-semibold text-aso-orange">{personaName(entry.from)}:</dt>
+            <dd className="text-xs leading-snug text-white/70">{entry.benefit}</dd>
           </div>
         ))}
       </dl>
-      <div className="mt-5 text-center">
+      <div className="mt-4">
         <Link
           href={`/for-members/${persona.slug}`}
           className="text-xs font-medium text-aso-orange transition-colors hover:text-white"
@@ -182,95 +180,93 @@ export default function NetworkTree() {
 
   return (
     <div>
-      {/* Desktop / tablet: full network map with hover/focus benefit panel */}
-      <div className="hidden md:block">
-        <div className="w-full overflow-x-auto">
-          <div className="relative mx-auto aspect-square min-w-[700px] max-w-3xl">
-            <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden="true">
-              {PERSONAS.map((persona) => {
-                const pos = polar(MEMBER_LAYOUT[persona.slug].angle, MEMBER_LAYOUT[persona.slug].radius);
-                const lit = isSpokeLit(persona.slug, active);
-                return (
-                  <line
-                    key={`hub-${persona.slug}`}
-                    x1={CENTER.x}
-                    y1={CENTER.y}
-                    x2={pos.x}
-                    y2={pos.y}
-                    className={LINE_TRANSITION_CLASSES}
-                    stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
-                    strokeWidth={lit ? 0.7 : 0.35}
-                    strokeOpacity={lit ? 0.85 : 0.3}
-                  />
-                );
-              })}
-              {ALL_PAIRS.map(([a, b]) => {
-                const posA = polar(MEMBER_LAYOUT[a].angle, MEMBER_LAYOUT[a].radius);
-                const posB = polar(MEMBER_LAYOUT[b].angle, MEMBER_LAYOUT[b].radius);
-                const lit = isPairLit(a, b, active);
-                return (
-                  <line
-                    key={`${a}-${b}`}
-                    x1={posA.x}
-                    y1={posA.y}
-                    x2={posB.x}
-                    y2={posB.y}
-                    className={LINE_TRANSITION_CLASSES}
-                    stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
-                    strokeWidth={lit ? 0.45 : 0.15}
-                    strokeOpacity={lit ? 0.7 : 0.15}
-                  />
-                );
-              })}
-            </svg>
-
-            <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
-              <button
-                type="button"
-                aria-label="About the ASO network"
-                onMouseEnter={() => setActive("aso")}
-                onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive("aso")}
-                onBlur={() => setActive(null)}
-                className={HUB_BUTTON_CLASSES}
-              >
-                <AnchorVisual engaged={active !== null} targeted={active === "aso"} />
-              </button>
-            </div>
-
+      {/* Desktop / tablet: network map beside its benefit panel */}
+      <div className="hidden md:flex md:flex-col lg:flex-row lg:items-stretch lg:gap-10">
+        <div className="relative mx-auto aspect-square w-full max-w-lg lg:mx-0 lg:max-w-md lg:shrink-0">
+          <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden="true">
             {PERSONAS.map((persona) => {
               const pos = polar(MEMBER_LAYOUT[persona.slug].angle, MEMBER_LAYOUT[persona.slug].radius);
-              const isSelf = active === persona.slug;
-              const isBrightened = active !== null && !isSelf;
-
-              let stateClasses = "border-white/25 bg-white/10 text-white";
-              if (isSelf) {
-                stateClasses = "border-aso-orange bg-aso-orange text-white shadow-[0_0_14px_rgba(255,122,26,0.5)]";
-              } else if (isBrightened) {
-                stateClasses = "border-white/60 bg-white/25 text-white";
-              }
-
+              const lit = isSpokeLit(persona.slug, active);
               return (
-                <Link
-                  key={persona.slug}
-                  href={`/for-members/${persona.slug}`}
-                  onMouseEnter={() => setActive(persona.slug)}
-                  onMouseLeave={() => setActive(null)}
-                  onFocus={() => setActive(persona.slug)}
-                  onBlur={() => setActive(null)}
-                  className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-4 py-2 text-xs font-semibold transition-colors duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy sm:text-sm ${stateClasses}`}
-                  style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-                >
-                  {persona.name}
-                </Link>
+                <line
+                  key={`hub-${persona.slug}`}
+                  x1={CENTER.x}
+                  y1={CENTER.y}
+                  x2={pos.x}
+                  y2={pos.y}
+                  className={LINE_TRANSITION_CLASSES}
+                  stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
+                  strokeWidth={lit ? 0.7 : 0.35}
+                  strokeOpacity={lit ? 0.85 : 0.3}
+                />
               );
             })}
+            {ALL_PAIRS.map(([a, b]) => {
+              const posA = polar(MEMBER_LAYOUT[a].angle, MEMBER_LAYOUT[a].radius);
+              const posB = polar(MEMBER_LAYOUT[b].angle, MEMBER_LAYOUT[b].radius);
+              const lit = isPairLit(a, b, active);
+              return (
+                <line
+                  key={`${a}-${b}`}
+                  x1={posA.x}
+                  y1={posA.y}
+                  x2={posB.x}
+                  y2={posB.y}
+                  className={LINE_TRANSITION_CLASSES}
+                  stroke={lit ? "var(--aso-orange)" : "var(--aso-blue-light)"}
+                  strokeWidth={lit ? 0.45 : 0.15}
+                  strokeOpacity={lit ? 0.7 : 0.15}
+                />
+              );
+            })}
+          </svg>
+
+          <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+            <button
+              type="button"
+              aria-label="About the ASO network"
+              onMouseEnter={() => setActive("aso")}
+              onMouseLeave={() => setActive(null)}
+              onFocus={() => setActive("aso")}
+              onBlur={() => setActive(null)}
+              className={HUB_BUTTON_CLASSES}
+            >
+              <AnchorVisual engaged={active !== null} targeted={active === "aso"} />
+            </button>
           </div>
+
+          {PERSONAS.map((persona) => {
+            const pos = polar(MEMBER_LAYOUT[persona.slug].angle, MEMBER_LAYOUT[persona.slug].radius);
+            const isSelf = active === persona.slug;
+            const isBrightened = active !== null && !isSelf;
+
+            let stateClasses = "border-white/25 bg-white/10 text-white";
+            if (isSelf) {
+              stateClasses = "border-aso-orange bg-aso-orange text-white shadow-[0_0_14px_rgba(255,122,26,0.5)]";
+            } else if (isBrightened) {
+              stateClasses = "border-white/60 bg-white/25 text-white";
+            }
+
+            return (
+              <Link
+                key={persona.slug}
+                href={`/for-members/${persona.slug}`}
+                onMouseEnter={() => setActive(persona.slug)}
+                onMouseLeave={() => setActive(null)}
+                onFocus={() => setActive(persona.slug)}
+                onBlur={() => setActive(null)}
+                className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-3 py-1.5 text-[10px] font-semibold transition-colors duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy lg:text-xs ${stateClasses}`}
+                style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+              >
+                {persona.name}
+              </Link>
+            );
+          })}
         </div>
 
         <div
           aria-live="polite"
-          className="mx-auto mt-8 min-h-[200px] max-w-2xl rounded-xl border border-white/10 bg-white/5 p-6"
+          className="mt-8 rounded-xl border border-white/10 bg-white/5 p-5 lg:mt-0 lg:flex lg:h-full lg:flex-1 lg:flex-col lg:justify-center"
         >
           <BenefitPanel active={active} />
         </div>
@@ -309,7 +305,7 @@ export default function NetworkTree() {
 
         <div
           aria-live="polite"
-          className="min-h-[240px] w-full max-w-sm rounded-xl border border-white/10 bg-white/5 p-4"
+          className="min-h-[140px] w-full max-w-sm rounded-xl border border-white/10 bg-white/5 p-4"
         >
           <BenefitPanel active={active} />
         </div>
