@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Hero from "@/components/Hero";
+import { AUTH_NAV } from "@/lib/nav";
 
 export const metadata: Metadata = {
   title: "AnchorStage Operations | Live Event Production - Orlando & Central Florida",
@@ -12,65 +14,13 @@ export default function Home() {
     <main>
 
       {/* HERO */}
-      <section
-        className="relative min-h-[80vh] flex items-center bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/hero-stage.jpg')" }}
-      >
-        {/* GRADIENT OVERLAY */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.52) 100%)",
-          }}
-        />
-
-        {/* CONTENT */}
-        <div className="relative z-10 w-full">
-          <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 text-center">
-
-            <div className="flex justify-center mb-10">
-              <Image
-                src="/logos/aso-logo-white.svg"
-                alt="AnchorStage Operations"
-                width={220}
-                height={194}
-                className="w-[110px] md:w-[150px] lg:w-[220px] h-auto object-contain opacity-90"
-              />
-            </div>
-
-            <p className="text-xs font-semibold tracking-widest uppercase mb-5 text-white/60">
-              Live Event Production
-            </p>
-
-            <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6 text-white max-w-3xl mx-auto">
-              We Handle The Stage &amp; Sound From Set To Strike.
-            </h1>
-
-            <p className="text-lg md:text-xl text-white/80 mb-10 max-w-2xl mx-auto leading-relaxed">
-              Professional sound, lighting, and production for live events,
-              from full outdoor stages to compact venue setups.
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              <a
-                href="https://intake.anchorstageops.com"
-                className="inline-block text-white px-8 py-3.5 rounded-lg text-base font-medium transition hover:opacity-90"
-                style={{ backgroundColor: "var(--aso-orange)" }}
-              >
-                Start Your Event
-              </a>
-              <a
-                href="/contact"
-                className="inline-block border border-white/50 text-white px-8 py-3.5 rounded-lg text-base font-medium transition hover:bg-white/10"
-              >
-                Get in Touch
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </section>
+      <Hero
+        eyebrow="The Operating System for Live Events"
+        title="The Professional Network for Live Events"
+        description="Join the free professional network where production companies, freelancers, venues, musicians, rental providers, and event organizers collaborate to plan, staff, equip, market, and grow live events."
+        primaryCta={AUTH_NAV.join}
+        backgroundImage="/images/hero-stage.jpg"
+      />
 
       {/* PROOF STRIP */}
       <section className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-300">

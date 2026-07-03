@@ -78,18 +78,18 @@ export default function Hero({
 
   return (
     <section
-      className="relative min-h-[80vh] flex items-center bg-cover bg-center bg-no-repeat"
+      className="relative min-h-[64vh] flex items-center bg-cover bg-center bg-no-repeat"
       style={backgroundImage ? { backgroundImage: `url('${backgroundImage}')` } : undefined}
     >
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.58) 50%, rgba(0,0,0,0.52) 100%)",
+            "linear-gradient(to bottom, rgba(9,20,32,0.82) 0%, rgba(9,20,32,0.74) 50%, rgba(9,20,32,0.68) 100%)",
         }}
       />
       <div className="relative z-10 w-full">
-        <div className="max-w-6xl mx-auto px-6 py-20 md:py-24 text-center">
+        <div className="max-w-6xl mx-auto px-6 py-16 md:py-20 text-center">
           {logo && (
             <div className="flex justify-center mb-10">
               <Image
@@ -102,11 +102,11 @@ export default function Hero({
             </div>
           )}
           {eyebrow && (
-            <p className="text-xs font-semibold tracking-widest uppercase mb-5 text-white/60">
+            <p className="text-xs font-semibold tracking-widest uppercase mb-6 text-white/60">
               {eyebrow}
             </p>
           )}
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6 text-white max-w-3xl mx-auto">
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-7 text-white max-w-3xl mx-auto">
             {title}
           </h1>
           {description && (
