@@ -33,7 +33,7 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
       {/* Branded header: role icon by default, example roles fade in on hover/focus */}
       <div className="relative flex h-40 shrink-0 items-center justify-center overflow-hidden bg-aso-navy px-4">
         {/* Icon — stays visible, recedes slightly once examples take over */}
-        <div className="relative z-0 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/25 bg-white/10 text-white transition-[opacity,transform,border-color] duration-300 ease-out group-hover:scale-90 group-hover:border-aso-orange/60 group-hover:opacity-30 group-focus-visible:scale-90 group-focus-visible:border-aso-orange/60 group-focus-visible:opacity-30 motion-reduce:transition-none">
+        <div className="relative z-0 flex h-14 w-14 items-center justify-center rounded-full border-2 border-white/25 bg-white/10 text-white transition-[opacity,transform,border-color,box-shadow] duration-300 ease-out group-hover:scale-90 group-hover:border-aso-orange/60 group-hover:opacity-30 group-hover:shadow-[0_0_16px_rgba(255,122,26,0.35)] group-focus-visible:scale-90 group-focus-visible:border-aso-orange/60 group-focus-visible:opacity-30 group-focus-visible:shadow-[0_0_16px_rgba(255,122,26,0.35)] motion-reduce:transition-none">
           <PersonaIcon slug={persona.slug} />
         </div>
 
@@ -46,7 +46,7 @@ export default function PersonaCard({ persona }: PersonaCardProps) {
             <span
               key={example}
               style={{ transitionDelay: `${i * 40}ms` }}
-              className="translate-x-2 whitespace-nowrap rounded-full border border-white/20 bg-white/15 px-2.5 py-1 text-[10px] font-medium text-white/90 transition-transform duration-300 ease-out group-hover:translate-x-0 group-focus-visible:translate-x-0 motion-reduce:transition-none"
+              className="translate-x-2 whitespace-nowrap rounded-full bg-aso-orange px-2.5 py-1 text-[10px] font-medium text-white shadow-sm transition-transform duration-300 ease-out group-hover:translate-x-0 group-focus-visible:translate-x-0 motion-reduce:transition-none"
             >
               {example}
             </span>
