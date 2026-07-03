@@ -70,6 +70,7 @@ const LINE_TRANSITION_CLASSES =
 function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boolean }) {
   return (
     <div className="relative flex h-44 w-44 items-center justify-center">
+      {/* 1. Orange glow — furthest back */}
       <div
         aria-hidden="true"
         className={`pointer-events-none absolute inset-0 -z-20 rounded-full blur-2xl transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none ${
@@ -81,21 +82,7 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
         }}
       />
 
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="relative h-[154px] w-[154px]">
-          <Image
-            src="/images/cogwheel.png"
-            alt=""
-            aria-hidden="true"
-            fill
-            sizes="154px"
-            className={`pointer-events-none select-none object-contain animate-[network-tree-spin_50s_linear_infinite] transition-opacity duration-300 ease-out motion-reduce:animate-none motion-reduce:transition-none ${
-              engaged ? "opacity-90" : "opacity-55"
-            }`}
-          />
-        </div>
-      </div>
-
+      {/* 2. Hub background disc + anchor logo */}
       <div
         className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-white/5 shadow-lg transition-colors duration-200 ease-out motion-reduce:transition-none ${
           targeted ? "border-aso-orange" : "border-white/20"
@@ -111,10 +98,28 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
           // so this offsets the horizontal drift, plus a small intentional
           // upward bias for optical balance at the larger display size.
           style={{ transform: "translate(-3px, -1px)" }}
-          className={`h-[75px] w-auto object-contain transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
+          className={`h-20 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
             engaged ? "brightness-110" : "brightness-100"
           }`}
         />
+      </div>
+
+      {/* 3. Spinning cogwheel bezel — topmost layer, sits above the disc/anchor
+          edge and above the connection lines (which live outside this
+          component but under the hub's own stacking context). */}
+      <div className="absolute inset-0 z-30 flex items-center justify-center">
+        <div className="relative h-[154px] w-[154px]">
+          <Image
+            src="/images/cogwheel.png"
+            alt=""
+            aria-hidden="true"
+            fill
+            sizes="154px"
+            className={`pointer-events-none select-none object-contain animate-[network-tree-spin_50s_linear_infinite] transition-opacity duration-300 ease-out motion-reduce:animate-none motion-reduce:transition-none ${
+              engaged ? "opacity-90" : "opacity-55"
+            }`}
+          />
+        </div>
       </div>
     </div>
   );
