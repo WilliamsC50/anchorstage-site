@@ -33,6 +33,13 @@ body {
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
+/* Slow, subtle rotation for NetworkTree's decorative cogwheel ring. */
+@keyframes network-tree-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ── Long-form policy / legal pages ──────────────────────────────────────── */
 .legal-page {
   background: #ffffff;
