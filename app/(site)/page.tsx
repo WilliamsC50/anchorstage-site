@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import Section from "@/components/Section";
@@ -17,26 +18,22 @@ export const metadata: Metadata = {
     "AnchorStage Operations LLC provides professional live sound, staging, lighting, and full event production in Orlando and Central Florida, from bar shows to outdoor stages.",
 };
 
-const DISCONNECTED_TODAY = [
-  "Texts",
-  "Email",
-  "Messenger",
-  "Spreadsheets",
-  "Phone Calls",
-  "Paper Notes",
-  "Cloud Drives",
-  "Memory",
-] as const;
-
-const CONNECTED_THROUGH_ASO = [
-  "Members",
-  "Events",
-  "Gear",
-  "Crew",
-  "Venues",
-  "Documents",
-  "Media",
-  "Marketing",
+const GROWTH_STEPS = [
+  {
+    step: "1",
+    title: "Build Your Presence",
+    desc: "Create a profile that shows who you are and what you offer.",
+  },
+  {
+    step: "2",
+    title: "Connect With Others",
+    desc: "Find collaborators, opportunities, gear, venues, and event partners.",
+  },
+  {
+    step: "3",
+    title: "Grow Through the Network",
+    desc: "Take on work that would be harder to manage alone.",
+  },
 ] as const;
 
 const WORKING_ALONE = [
@@ -54,10 +51,6 @@ const OPERATING_THROUGH_ASO = [
   "Repeatable workflows",
   "Room to grow",
 ] as const;
-
-// Fixed per-item tilt for the "scattered" chip cloud — static, not randomized
-// per render, so server and client markup match exactly.
-const SCATTER_ROTATIONS = [-3, 2, -1.5, 3, -2.5, 1.5, 2.5, -1] as const;
 
 const TRUST_HIGHLIGHTS = [
   {
@@ -92,17 +85,6 @@ function TransitionArrow() {
   );
 }
 
-function ScatteredChip({ label, index }: { label: string; index: number }) {
-  return (
-    <span
-      style={{ transform: `rotate(${SCATTER_ROTATIONS[index % SCATTER_ROTATIONS.length]}deg)` }}
-      className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-white/10 text-white/60 border border-white/10"
-    >
-      {label}
-    </span>
-  );
-}
-
 export default function Home() {
   return (
     <main>
@@ -117,12 +99,12 @@ export default function Home() {
       />
 
       {/* WHO ARE YOU */}
-      <Section background="navy">
+      <Section background="white">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
             Where do you fit in live events?
           </h2>
-          <p className="text-white/70 leading-relaxed">
+          <p className="text-gray-500 leading-relaxed">
             Whether you&apos;re building events, performing on stage, managing venues,
             renting equipment, or supporting productions, ASO helps you connect with
             the people and tools you need to grow.
@@ -135,7 +117,6 @@ export default function Home() {
               key={persona.slug}
               title={persona.singularName}
               centered
-              tone="tinted"
               icon={
                 <div className="w-12 h-12 rounded-full bg-aso-bg flex items-center justify-center text-aso-blue">
                   <PersonaIcon slug={persona.slug} />
@@ -143,6 +124,39 @@ export default function Home() {
               }
             >
               {persona.tagline}
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      {/* JOIN AS ONE ROLE */}
+      <Section background="navy">
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Join as one role. Grow into the network.
+          </h2>
+          <p className="text-white/70 leading-relaxed">
+            You may join ASO as a freelancer, musician, venue, rental provider,
+            production company, or event organizer — but the platform is built for
+            how people actually grow. One account can support the different roles,
+            relationships, and opportunities you build over time.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          {GROWTH_STEPS.map((item) => (
+            <Card
+              key={item.step}
+              title={item.title}
+              centered
+              tone="tinted"
+              icon={
+                <div className="w-10 h-10 rounded-full bg-white/15 flex items-center justify-center text-white font-bold text-sm">
+                  {item.step}
+                </div>
+              }
+            >
+              {item.desc}
             </Card>
           ))}
         </div>
@@ -184,42 +198,15 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 items-center max-w-4xl mx-auto">
-          <div className="flex flex-wrap md:flex-col items-center justify-center gap-3">
-            {DISCONNECTED_TODAY.slice(0, 4).map((item, i) => (
-              <ScatteredChip key={item} label={item} index={i} />
-            ))}
-          </div>
-
-          <div className="flex flex-col items-center">
-            <div className="w-40 h-40 sm:w-44 sm:h-44 rounded-full bg-aso-orange flex items-center justify-center text-center px-6 shadow-xl shadow-black/20 mb-6">
-              <span className="text-white text-sm sm:text-base font-bold leading-snug">
-                ASO Operating Network
-              </span>
-            </div>
-            <div className="flex flex-wrap justify-center gap-1.5 max-w-[220px] sm:max-w-xs">
-              {CONNECTED_THROUGH_ASO.map((item) => (
-                <span
-                  key={item}
-                  className="inline-block px-2.5 py-1 rounded-full text-[11px] font-medium bg-white text-aso-navy"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex flex-wrap md:flex-col items-center justify-center gap-3">
-            {DISCONNECTED_TODAY.slice(4, 8).map((item, i) => (
-              <ScatteredChip key={item} label={item} index={i + 4} />
-            ))}
-          </div>
-
-          <span className="sr-only">
-            Diagram showing disconnected tools — {DISCONNECTED_TODAY.join(", ")} — scattered
-            around the ASO Operating Network, which pulls {CONNECTED_THROUGH_ASO.join(", ")} into
-            one connected system.
-          </span>
+        <div className="max-w-3xl mx-auto">
+          <Image
+            src="/images/Fragmentation.png"
+            alt="Diagram showing disconnected event tools flowing into the ASO operating network and becoming organized into members, events, gear, crew, venues, documents, media, and marketing."
+            width={1535}
+            height={1024}
+            className="w-full h-auto rounded-2xl shadow-2xl shadow-black/40"
+            sizes="(min-width: 1024px) 768px, 100vw"
+          />
         </div>
       </Section>
 
