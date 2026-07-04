@@ -66,19 +66,46 @@ export interface PersonaBenefit {
   benefit: string;
 }
 
+/** The ten canonical event lifecycle stages, in order. */
+export type WorkflowStageId =
+  | "inquiry"
+  | "planning"
+  | "staffing"
+  | "equipment"
+  | "quote"
+  | "approval"
+  | "show-day"
+  | "media"
+  | "marketing"
+  | "reporting";
+
+/**
+ * How much a given member type participates in a given lifecycle stage.
+ * Drives timeline styling only — every stage stays visible for every role.
+ */
+export type StageRelevance = "primary" | "secondary" | "occasional" | "not-used";
+
 /**
  * One stage in the event lifecycle, from first inquiry through reporting.
- * Drives the homepage Event Workflow Explorer.
+ * Drives the homepage Event Workflow Explorer. Stage content (description,
+ * tasks, workstations) is role-specific and lives in StagePerspective.
  */
 export interface WorkflowStage {
-  id: string;
+  id: WorkflowStageId;
   title: string;
-  /** One-sentence, product-documentation-tone summary of the stage. */
-  description: string;
-  /** Concrete actions a member performs inside ASO during this stage. */
-  tasks: readonly string[];
-  /** ASO module names touched during this stage (display strings). */
-  modules: readonly string[];
-  /** Member types most commonly active in this stage. */
+  /** Member types most commonly active in this stage (role-independent). */
   usedBy: readonly PersonaSlug[];
+}
+
+/** One role's view of one lifecycle stage. */
+export interface StagePerspective {
+  relevance: StageRelevance;
+  /** What this stage means for this role, product-documentation tone. */
+  description: string;
+  /** Actions this role performs inside ASO during this stage. Empty when
+   *  the role isn't active in the stage. */
+  tasks: readonly string[];
+  /** ASO workstations this role touches during this stage (display names
+   *  from the canonical workstation set). Empty when the role isn't active. */
+  workstations: readonly string[];
 }
