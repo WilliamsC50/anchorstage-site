@@ -119,15 +119,24 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
 
       {/* 3. Spinning cogwheel bezel — sits above the disc/anchor edge and
           above the connection lines (which live outside this component but
-          under the hub's own stacking context). */}
+          under the hub's own stacking context). The cogwheel PNG's inner
+          hole is drawn off-center in its canvas (hole center at y=485.1 of
+          1024, measured by alpha-channel circle fit), so two compensations
+          keep the spin orbit-free: the image rotates about the hole center
+          (transform-origin 50% 47.37%), and the static wrapper shifts the
+          artwork down 3.97px (26.4/1024 × 154) so that hole center lands on
+          the hub center. The translate lives on the wrapper because the
+          spin keyframe would overwrite any transform on the image itself.
+          Both values are tied to this exact asset — remeasure if it changes. */}
       <div className="absolute inset-0 z-30 flex items-center justify-center">
-        <div className="relative h-[154px] w-[154px]">
+        <div className="relative h-[154px] w-[154px]" style={{ transform: "translateY(3.97px)" }}>
           <Image
             src="/images/cogwheel.png"
             alt=""
             aria-hidden="true"
             fill
             sizes="154px"
+            style={{ transformOrigin: "50% 47.37%" }}
             className={`pointer-events-none select-none object-contain animate-[network-tree-spin_50s_linear_infinite] transition-opacity duration-300 ease-out motion-reduce:animate-none motion-reduce:transition-none ${
               engaged ? "opacity-90" : "opacity-55"
             }`}
