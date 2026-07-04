@@ -7,7 +7,7 @@ import Button from "@/components/Button";
 import Card from "@/components/Card";
 import PersonaCard from "@/components/PersonaCard";
 import NetworkTree from "@/components/NetworkTree";
-import NetworkDiagram from "@/components/NetworkDiagram";
+import EventWorkflowExplorer from "@/components/EventWorkflowExplorer";
 import WorkstationIcon from "@/components/WorkstationIcon";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
@@ -118,7 +118,7 @@ export default function Home() {
         <NetworkTree />
       </Section>
 
-      {/* NETWORK OVERVIEW */}
+      {/* EVENT LIFECYCLE EXPLORER */}
       <Section background="bg">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
@@ -133,11 +133,7 @@ export default function Home() {
           </p>
         </div>
 
-        <NetworkDiagram />
-
-        <p className="text-center text-sm font-medium text-aso-navy mt-10">
-          Every new member strengthens the network.
-        </p>
+        <EventWorkflowExplorer />
       </Section>
 
       {/* THE PROBLEM */}

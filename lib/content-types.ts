@@ -65,3 +65,20 @@ export interface PersonaBenefit {
   from: PersonaSlug;
   benefit: string;
 }
+
+/**
+ * One stage in the event lifecycle, from first inquiry through reporting.
+ * Drives the homepage Event Workflow Explorer.
+ */
+export interface WorkflowStage {
+  id: string;
+  title: string;
+  /** One-sentence, product-documentation-tone summary of the stage. */
+  description: string;
+  /** Concrete actions a member performs inside ASO during this stage. */
+  tasks: readonly string[];
+  /** ASO module names touched during this stage (display strings). */
+  modules: readonly string[];
+  /** Member types most commonly active in this stage. */
+  usedBy: readonly PersonaSlug[];
+}
