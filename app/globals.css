@@ -39,6 +39,53 @@ body {
   --animate-panel-fade: panel-fade 250ms ease-out;
 }
 
+/* ── Chaos → Operating Record (components/ChaosToRecord.tsx) ─────────────
+   JS owns WHEN (phase machine); these classes own HOW. Transform/opacity
+   only; all suppressed under prefers-reduced-motion. */
+@keyframes chaos-drift {
+  0%, 100% { transform: translate(0, 0); }
+  30% { transform: translate(2px, -2px); }
+  65% { transform: translate(-2px, 1px); }
+}
+.chaos-drift { animation: chaos-drift 8s ease-in-out infinite; }
+
+@keyframes chaos-pulse-ring {
+  from { transform: translate(-50%, -50%) scale(0.6); opacity: 0.9; }
+  to { transform: translate(-50%, -50%) scale(1.9); opacity: 0; }
+}
+.chaos-pulse {
+  animation: chaos-pulse-ring 500ms ease-out forwards;
+  opacity: 0; /* keyframes own visibility; hidden under reduced motion */
+}
+
+@keyframes logo-tick-kf {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.03); }
+}
+.logo-tick { animation: logo-tick-kf 220ms ease-out; }
+
+@keyframes intake-in-kf {
+  from { opacity: 0; transform: scale(0.85) translateY(6px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.intake-in { animation: intake-in-kf 300ms cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+
+@keyframes cta-pulse-kf {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 122, 26, 0.35); }
+  50% { box-shadow: 0 0 0 10px rgba(255, 122, 26, 0); }
+}
+.cta-pulse { animation: cta-pulse-kf 3s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chaos-drift,
+  .chaos-pulse,
+  .logo-tick,
+  .intake-in,
+  .cta-pulse {
+    animation: none;
+  }
+}
+
 /* Used by display pages to hide scrollbars while keeping scroll behavior */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

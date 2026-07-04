@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import Section from "@/components/Section";
@@ -8,6 +7,7 @@ import Card from "@/components/Card";
 import PersonaCard from "@/components/PersonaCard";
 import NetworkTree from "@/components/NetworkTree";
 import EventWorkflowExplorer from "@/components/EventWorkflowExplorer";
+import ChaosToRecord from "@/components/ChaosToRecord";
 import WorkstationIcon from "@/components/WorkstationIcon";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
@@ -148,15 +148,8 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto">
-          <Image
-            src="/images/Fragmentation.png"
-            alt="Diagram showing disconnected event tools flowing into the ASO operating network and becoming organized into members, events, gear, crew, venues, documents, media, and marketing."
-            width={1535}
-            height={1024}
-            className="w-full h-auto rounded-2xl shadow-2xl shadow-black/40"
-            sizes="(min-width: 1024px) 768px, 100vw"
-          />
+        <div className="max-w-5xl mx-auto">
+          <ChaosToRecord />
         </div>
       </Section>
 
