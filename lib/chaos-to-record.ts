@@ -67,26 +67,28 @@ export interface RecordStep {
 }
 
 /**
- * Seven beats (~220–340ms apart), 90ms stagger inside a beat:
+ * Seven beats (~210–230ms apart), 80ms stagger inside a beat — compressed
+ * to offset the pre-consumption wiggle phase and keep the whole interaction
+ * under ~7 seconds:
  * [Intake, Event] [Client, Venue] [Collaborators] [Gear, Crew Assignments]
  * [Quote, Readiness] [Production Brief, Pack List, Media & Assets]
  * [Invoice, Financials]
  */
 export const RECORD_STEPS: RecordStep[] = [
   { id: "intake", label: "Intake Submission", delayMs: 0 },
-  { id: "event", label: "Event", delayMs: 90, emphasis: true, badge: { text: "EVT-20260704-0001", tone: "code" } },
-  { id: "client", label: "Client", delayMs: 340 },
-  { id: "venue", label: "Venue", delayMs: 430 },
-  { id: "collaborators", label: "Collaborators", delayMs: 640 },
-  { id: "gear", label: "Gear", delayMs: 900 },
-  { id: "crew", label: "Crew Assignments", delayMs: 990 },
-  { id: "quote", label: "Quote", delayMs: 1240 },
-  { id: "readiness", label: "Readiness", delayMs: 1330, badge: { text: "Ready", tone: "ready" } },
-  { id: "production-brief", label: "Production Brief", delayMs: 1580 },
-  { id: "pack-list", label: "Pack List", delayMs: 1670 },
-  { id: "media-assets", label: "Media & Assets", delayMs: 1760 },
-  { id: "invoice", label: "Invoice", delayMs: 2000 },
-  { id: "financials", label: "Financials", delayMs: 2090 },
+  { id: "event", label: "Event", delayMs: 80, emphasis: true, badge: { text: "EVT-20260704-0001", tone: "code" } },
+  { id: "client", label: "Client", delayMs: 300 },
+  { id: "venue", label: "Venue", delayMs: 380 },
+  { id: "collaborators", label: "Collaborators", delayMs: 560 },
+  { id: "gear", label: "Gear", delayMs: 790 },
+  { id: "crew", label: "Crew Assignments", delayMs: 870 },
+  { id: "quote", label: "Quote", delayMs: 1080 },
+  { id: "readiness", label: "Readiness", delayMs: 1160, badge: { text: "Ready", tone: "ready" } },
+  { id: "production-brief", label: "Production Brief", delayMs: 1370 },
+  { id: "pack-list", label: "Pack List", delayMs: 1450 },
+  { id: "media-assets", label: "Media & Assets", delayMs: 1530 },
+  { id: "invoice", label: "Invoice", delayMs: 1740 },
+  { id: "financials", label: "Financials", delayMs: 1820 },
 ];
 
 /** Master timeline (ms). All offsets are relative to the CTA click. */
@@ -94,20 +96,25 @@ export const TIMELINE = {
   /** Dotted connectors die first. */
   disconnectMs: 400,
   /**
+   * Unstable beat: chips stay put and wiggle, fully readable, before ASO
+   * starts consuming them.
+   */
+  unstableMs: 1050,
+  /**
    * Departure offsets from the start of the consuming phase — accelerating
    * cadence with a deliberate hesitation before the final item.
    */
-  departOffsetsMs: [0, 340, 640, 910, 1150, 1370, 1570, 1910] as readonly number[],
+  departOffsetsMs: [0, 280, 520, 730, 920, 1090, 1240, 1520] as readonly number[],
   /** Chip travel time into the ASO mark. */
-  travelMs: 420,
+  travelMs: 380,
   /** Pause after the last arrival before the Intake Submission beat. */
   intakeLeadMs: 120,
   /** Intake Submission chip visible duration. */
-  intakeHoldMs: 750,
-  /** Glow (700ms) + stillness (200ms). */
-  absorbMs: 900,
+  intakeHoldMs: 600,
+  /** Glow (~600ms) + stillness (150ms). */
+  absorbMs: 750,
   /** Build phase duration (last row delay + settle). */
-  buildMs: 2500,
+  buildMs: 2150,
 } as const;
 
 export const COMPLETE_STORAGE_KEY = "aso-chaos-to-record-complete";

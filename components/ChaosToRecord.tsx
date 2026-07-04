@@ -30,6 +30,7 @@ import {
 type Phase =
   | "idle"
   | "disconnecting"
+  | "unstable"
   | "consuming"
   | "intake"
   | "absorbing"
@@ -143,16 +144,21 @@ export default function ChaosToRecord() {
     setPhase("disconnecting");
 
     const T = TIMELINE;
+    // Connectors die, then the chips wobble in place — a readable beat of
+    // instability — before ASO starts pulling them in.
+    at(T.disconnectMs, () => setPhase("unstable"));
+
+    const consumeStart = T.disconnectMs + T.unstableMs;
     T.departOffsetsMs.forEach((offset, i) => {
-      at(T.disconnectMs + offset, () => {
+      at(consumeStart + offset, () => {
         setPhase("consuming");
         setConsumedCount(i + 1);
       });
-      at(T.disconnectMs + offset + T.travelMs, () => setPulseCount((c) => c + 1));
+      at(consumeStart + offset + T.travelMs, () => setPulseCount((c) => c + 1));
     });
 
     const lastArrival =
-      T.disconnectMs + T.departOffsetsMs[T.departOffsetsMs.length - 1] + T.travelMs;
+      consumeStart + T.departOffsetsMs[T.departOffsetsMs.length - 1] + T.travelMs;
     const absorbStart = lastArrival + T.intakeLeadMs + T.intakeHoldMs;
 
     at(lastArrival + T.intakeLeadMs, () => setPhase("intake"));
@@ -184,10 +190,12 @@ export default function ChaosToRecord() {
   return (
     <div>
       <div className="flex flex-col gap-8 md:grid md:grid-cols-2 md:items-start md:gap-12">
-        {/* ── Chaos stage (logo lives inside it on all breakpoints) ── */}
+        {/* ── Chaos stage (logo lives inside it on all breakpoints).
+             Desktop: right column, so the section mirrors the NetworkTree
+             layout above instead of echoing it. Mobile: first. ── */}
         <div
           aria-hidden="true"
-          className="relative order-1 h-80 md:order-none md:h-[460px]"
+          className="relative order-1 h-80 md:order-2 md:h-[460px]"
         >
           <div className="absolute inset-4 md:inset-8">
             {/* Tangled peer-to-peer connectors */}
@@ -226,6 +234,8 @@ export default function ChaosToRecord() {
             {CHAOS_SOURCES.map((source) => {
               const consumed = consumedCount >= source.consumeOrder;
               const delta = deltas[source.id];
+              const wiggling =
+                !consumed && (phase === "unstable" || phase === "consuming");
               return (
                 <div
                   key={source.id}
@@ -233,7 +243,7 @@ export default function ChaosToRecord() {
                     if (el) chipRefs.current.set(source.id, el);
                     else chipRefs.current.delete(source.id);
                   }}
-                  className="absolute transition-[transform,opacity] duration-[420ms] ease-in motion-reduce:transition-none"
+                  className="absolute transition-[transform,opacity] duration-[380ms] ease-in motion-reduce:transition-none"
                   style={{
                     left: `${source.x}%`,
                     top: `${source.y}%`,
@@ -245,9 +255,15 @@ export default function ChaosToRecord() {
                 >
                   <div
                     className={`flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/10 px-2.5 py-1.5 text-xs font-medium text-white/80 ${
-                      phase === "idle" ? "chaos-drift" : ""
+                      phase === "idle" ? "chaos-drift" : wiggling ? "chaos-wiggle" : ""
                     }`}
-                    style={{ animationDelay: `${source.driftDelay}ms` }}
+                    style={{
+                      // Negative delays desync the wiggle so the chips read
+                      // as individually unstable, not choreographed.
+                      animationDelay: wiggling
+                        ? `${source.consumeOrder * -70}ms`
+                        : `${source.driftDelay}ms`,
+                    }}
                   >
                     <ChipIcon id={source.id} />
                     {source.label}
@@ -312,8 +328,8 @@ export default function ChaosToRecord() {
           </div>
         </div>
 
-        {/* ── Operating record slot ── */}
-        <div className="relative order-3 min-h-[440px] md:order-none">
+        {/* ── Operating record slot (desktop: left column; mobile: last) ── */}
+        <div className="relative order-3 min-h-[440px] md:order-1">
           {/* Faint skeleton — structure is "pending" until the build */}
           <div
             aria-hidden="true"
@@ -342,7 +358,7 @@ export default function ChaosToRecord() {
                 className="absolute bottom-1 left-[7px] top-1 w-0.5 origin-top bg-aso-orange/70 transition-transform ease-linear motion-reduce:transition-none"
                 style={{
                   transform: phase === "building" || phase === "complete" ? "scaleY(1)" : "scaleY(0)",
-                  transitionDuration: phase === "building" ? "2200ms" : "0ms",
+                  transitionDuration: phase === "building" ? "1900ms" : "0ms",
                 }}
               />
               {RECORD_STEPS.map((step) => {
@@ -404,7 +420,7 @@ export default function ChaosToRecord() {
         </div>
 
         {/* ── CTA row (between stage and record on mobile) ── */}
-        <div className="order-2 flex flex-col items-center gap-3 md:order-none md:col-span-2">
+        <div className="order-2 flex flex-col items-center gap-3 md:order-3 md:col-span-2">
           <button
             type="button"
             onClick={handleConvert}

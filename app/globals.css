@@ -49,6 +49,16 @@ body {
 }
 .chaos-drift { animation: chaos-drift 8s ease-in-out infinite; }
 
+/* Unstable beat before consumption: small, desynced, professional —
+   1–2px translation, ~1deg rotation. Readable, not broken. */
+@keyframes chaos-wiggle-kf {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(1.5px, -1px) rotate(0.8deg); }
+  50% { transform: translate(-1.5px, 1px) rotate(-1deg); }
+  75% { transform: translate(1px, 1.5px) rotate(0.6deg); }
+}
+.chaos-wiggle { animation: chaos-wiggle-kf 450ms ease-in-out infinite; }
+
 @keyframes chaos-pulse-ring {
   from { transform: translate(-50%, -50%) scale(0.6); opacity: 0.9; }
   to { transform: translate(-50%, -50%) scale(1.9); opacity: 0; }
@@ -78,6 +88,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .chaos-drift,
+  .chaos-wiggle,
   .chaos-pulse,
   .logo-tick,
   .intake-in,
