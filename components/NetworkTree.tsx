@@ -9,17 +9,20 @@ import type { PersonaSlug } from "@/lib/content-types";
 
 /**
  * ASO network map. The whole ecosystem is always visibly connected — every
- * member type links to every other member type, subtly, all the time.
- * Hovering or focusing a member type (or the ASO hub itself) highlights it,
- * brightens the rest of the network, and drives a benefit panel below the
- * diagram explaining what that role gains from the others. No permanent
- * per-role example branches — this is a living map, not a taxonomy.
+ * member type links to every other member type, subtly, all the time. The
+ * ASO anchor sits at the center as the hub of the network.
  *
- * Client component: one role can be hovered while several *other* nodes,
- * lines between *other* pairs, and the hub glow all need to react together.
+ * Interaction: hovering/focusing a role (or the hub) previews it in the
+ * benefit panel; clicking locks that selection so the panel stays put when
+ * the pointer leaves. Clicking another role moves the lock; clicking the
+ * locked role again clears it. The diagram nodes are buttons — navigation
+ * to the persona pages lives in the panel link — so a tap on mobile selects
+ * without accidentally navigating.
+ *
+ * Client component: one role can be hovered/selected while several *other*
+ * nodes, lines between *other* pairs, and the hub glow all react together.
  * That's a cross-cutting effect CSS :hover/group-hover can't express
- * cleanly without :has() gymnastics — one small useState instead. No
- * external library.
+ * cleanly — two small useState values instead. No external library.
  */
 
 type ActiveTarget = PersonaSlug | "aso" | null;
@@ -55,12 +58,10 @@ const ALL_PAIRS: [PersonaSlug, PersonaSlug][] = PERSONAS.flatMap((persona, i) =>
 );
 
 // Hub spokes start at this radius (viewBox units) instead of the exact
-// center, because the hub disc is transparent — the cogwheel opening shows
-// the real section background, so nothing masks lines that would otherwise
-// converge under the anchor. The cog ring body spans ~9.7–15.1 units at the
-// 448px container and ~8.5–13.2 units at 512px, so 11.5 keeps the line ends
-// tucked under the gear at every breakpoint that renders the SVG.
-const SPOKE_START_RADIUS = 11.5;
+// center so no line runs over the anchor logo. The visible anchor artwork
+// reaches ~8 units from center at the smallest SVG container, so 10 leaves
+// clean breathing room around the logo at every breakpoint.
+const SPOKE_START_RADIUS = 10;
 
 function isPairLit(a: PersonaSlug, b: PersonaSlug, active: ActiveTarget) {
   if (active === "aso") return true;
@@ -75,74 +76,33 @@ function isSpokeLit(slug: PersonaSlug, active: ActiveTarget) {
 const LINE_TRANSITION_CLASSES =
   "transition-[stroke,stroke-opacity,stroke-width] duration-300 ease-out motion-reduce:transition-none";
 
-function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boolean }) {
+/**
+ * The hub: just the ASO anchor, cleanly centered. Calm by default — the
+ * orange glow exists only while the hub itself is previewed or selected,
+ * so it reads as deliberate interaction feedback rather than ambience.
+ */
+function AnchorVisual({ glowing }: { glowing: boolean }) {
   return (
-    <div className="relative flex h-44 w-44 items-center justify-center">
-      {/* 1. Orange glow — furthest back. Annular: the center stays fully
-          transparent out past the cogwheel's opening so the hole shows the
-          real section background with no orange tint; the glow ring sits
-          over the gear body and just beyond it. Feathering comes mostly
-          from the gradient itself — blur is kept moderate so it doesn't
-          smear orange back into the open center. */}
+    <div className="relative flex h-36 w-36 items-center justify-center">
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 -z-20 rounded-full blur-lg transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none ${
-          engaged ? "scale-[1.7] opacity-100" : "scale-150 opacity-75"
+        className={`pointer-events-none absolute inset-0 rounded-full blur-xl transition-opacity duration-300 ease-out motion-reduce:transition-none ${
+          glowing ? "opacity-100" : "opacity-0"
         }`}
         style={{
           background:
-            "radial-gradient(circle, transparent 0%, transparent 42%, rgba(255,122,26,0.5) 60%, rgba(255,122,26,0.18) 78%, transparent 95%)",
+            "radial-gradient(circle, rgba(255,122,26,0.6) 0%, rgba(255,122,26,0.22) 55%, transparent 78%)",
         }}
       />
-
-      {/* 2. Hub ring + anchor logo. Deliberately unfilled: a painted disc
-          can never match the section's rendered background (navy token plus
-          gradient/glow overlays), so the cogwheel opening shows the actual
-          page background instead. Spokes stop at SPOKE_START_RADIUS, so
-          nothing needs masking here. The border is the only paint — orange
-          when the hub itself is targeted, invisible at rest. */}
-      <div
-        className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-transparent transition-colors duration-200 ease-out motion-reduce:transition-none ${
-          targeted ? "border-aso-orange" : "border-transparent"
+      <Image
+        src="/logos/ASO_Anchor.png"
+        alt=""
+        width={200}
+        height={200}
+        className={`relative h-28 w-auto object-contain drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)] transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
+          glowing ? "brightness-110" : "brightness-100"
         }`}
-      >
-        <Image
-          src="/logos/ASO_Anchor.png"
-          alt=""
-          width={200}
-          height={200}
-          className={`h-20 w-auto object-contain drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)] transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
-            engaged ? "brightness-110" : "brightness-100"
-          }`}
-        />
-      </div>
-
-      {/* 3. Spinning cogwheel bezel — sits above the disc/anchor edge and
-          above the connection lines (which live outside this component but
-          under the hub's own stacking context). The cogwheel PNG's inner
-          hole is drawn off-center in its canvas (hole center at y=485.1 of
-          1024, measured by alpha-channel circle fit), so two compensations
-          keep the spin orbit-free: the image rotates about the hole center
-          (transform-origin 50% 47.37%), and the static wrapper shifts the
-          artwork down 3.97px (26.4/1024 × 154) so that hole center lands on
-          the hub center. The translate lives on the wrapper because the
-          spin keyframe would overwrite any transform on the image itself.
-          Both values are tied to this exact asset — remeasure if it changes. */}
-      <div className="absolute inset-0 z-30 flex items-center justify-center">
-        <div className="relative h-[154px] w-[154px]" style={{ transform: "translateY(3.97px)" }}>
-          <Image
-            src="/images/cogwheel.png"
-            alt=""
-            aria-hidden="true"
-            fill
-            sizes="154px"
-            style={{ transformOrigin: "50% 47.37%" }}
-            className={`pointer-events-none select-none object-contain animate-[network-tree-spin_50s_linear_infinite] transition-opacity duration-300 ease-out motion-reduce:animate-none motion-reduce:transition-none ${
-              engaged ? "opacity-90" : "opacity-55"
-            }`}
-          />
-        </div>
-      </div>
+      />
     </div>
   );
 }
@@ -150,7 +110,9 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
 function BenefitPanel({ active }: { active: ActiveTarget }) {
   if (active === null) {
     return (
-      <p className="text-sm text-white/60">Hover a role to see how ASO connects it to the rest of the network.</p>
+      <p className="text-sm text-white/60">
+        Select a role to see how ASO connects it to the rest of the network.
+      </p>
     );
   }
 
@@ -190,10 +152,18 @@ function BenefitPanel({ active }: { active: ActiveTarget }) {
 }
 
 const HUB_BUTTON_CLASSES =
-  "rounded-full border-0 bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy";
+  "cursor-pointer rounded-full border-0 bg-transparent p-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy";
 
 export default function NetworkTree() {
-  const [active, setActive] = useState<ActiveTarget>(null);
+  // Locked selection (click/tap) wins over transient hover/focus preview;
+  // with neither, the panel shows its default prompt. Locking is what lets
+  // the panel survive the pointer leaving the diagram.
+  const [locked, setLocked] = useState<ActiveTarget>(null);
+  const [hovered, setHovered] = useState<ActiveTarget>(null);
+  const active = locked ?? hovered;
+
+  const toggleLock = (target: PersonaSlug | "aso") =>
+    setLocked((current) => (current === target ? null : target));
 
   return (
     <div>
@@ -244,13 +214,15 @@ export default function NetworkTree() {
             <button
               type="button"
               aria-label="About the ASO network"
-              onMouseEnter={() => setActive("aso")}
-              onMouseLeave={() => setActive(null)}
-              onFocus={() => setActive("aso")}
-              onBlur={() => setActive(null)}
+              aria-pressed={locked === "aso"}
+              onMouseEnter={() => setHovered("aso")}
+              onMouseLeave={() => setHovered(null)}
+              onFocus={() => setHovered("aso")}
+              onBlur={() => setHovered(null)}
+              onClick={() => toggleLock("aso")}
               className={HUB_BUTTON_CLASSES}
             >
-              <AnchorVisual engaged={active !== null} targeted={active === "aso"} />
+              <AnchorVisual glowing={active === "aso"} />
             </button>
           </div>
 
@@ -267,18 +239,20 @@ export default function NetworkTree() {
             }
 
             return (
-              <Link
+              <button
                 key={persona.slug}
-                href={`/for-members/${persona.slug}`}
-                onMouseEnter={() => setActive(persona.slug)}
-                onMouseLeave={() => setActive(null)}
-                onFocus={() => setActive(persona.slug)}
-                onBlur={() => setActive(null)}
-                className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border px-2.5 py-1 text-[9px] font-bold uppercase tracking-wide transition-[background-color,border-color,color,box-shadow] duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy lg:text-[10px] ${stateClasses}`}
+                type="button"
+                aria-pressed={locked === persona.slug}
+                onMouseEnter={() => setHovered(persona.slug)}
+                onMouseLeave={() => setHovered(null)}
+                onFocus={() => setHovered(persona.slug)}
+                onBlur={() => setHovered(null)}
+                onClick={() => toggleLock(persona.slug)}
+                className={`absolute z-10 -translate-x-1/2 -translate-y-1/2 cursor-pointer whitespace-nowrap rounded-full border px-2.5 py-1 text-[9px] font-bold uppercase tracking-wide transition-[background-color,border-color,color,box-shadow] duration-200 ease-out motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy lg:text-[10px] ${stateClasses}`}
                 style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
               >
                 {persona.name}
-              </Link>
+              </button>
             );
           })}
         </div>
@@ -296,11 +270,11 @@ export default function NetworkTree() {
         <button
           type="button"
           aria-label="About the ASO network"
-          aria-pressed={active === "aso"}
-          onClick={() => setActive((current) => (current === "aso" ? null : "aso"))}
+          aria-pressed={locked === "aso"}
+          onClick={() => toggleLock("aso")}
           className={HUB_BUTTON_CLASSES}
         >
-          <AnchorVisual engaged={active !== null} targeted={active === "aso"} />
+          <AnchorVisual glowing={active === "aso"} />
         </button>
 
         <div className="grid w-full max-w-sm grid-cols-2 gap-3">
@@ -310,9 +284,9 @@ export default function NetworkTree() {
               <button
                 key={persona.slug}
                 type="button"
-                aria-pressed={selected}
-                onClick={() => setActive((current) => (current === persona.slug ? null : persona.slug))}
-                className={`whitespace-nowrap rounded-full border px-3 py-2 text-center text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy ${
+                aria-pressed={locked === persona.slug}
+                onClick={() => toggleLock(persona.slug)}
+                className={`cursor-pointer whitespace-nowrap rounded-full border px-3 py-2 text-center text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-orange focus-visible:ring-offset-2 focus-visible:ring-offset-aso-navy ${
                   selected ? "border-aso-orange bg-aso-orange text-white" : "border-white/25 bg-white/10 text-white"
                 }`}
               >
