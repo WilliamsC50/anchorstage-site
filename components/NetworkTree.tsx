@@ -54,6 +54,14 @@ const ALL_PAIRS: [PersonaSlug, PersonaSlug][] = PERSONAS.flatMap((persona, i) =>
   PERSONAS.slice(i + 1).map((other): [PersonaSlug, PersonaSlug] => [persona.slug, other.slug])
 );
 
+// Hub spokes start at this radius (viewBox units) instead of the exact
+// center, because the hub disc is transparent — the cogwheel opening shows
+// the real section background, so nothing masks lines that would otherwise
+// converge under the anchor. The cog ring body spans ~9.7–15.1 units at the
+// 448px container and ~8.5–13.2 units at 512px, so 11.5 keeps the line ends
+// tucked under the gear at every breakpoint that renders the SVG.
+const SPOKE_START_RADIUS = 11.5;
+
 function isPairLit(a: PersonaSlug, b: PersonaSlug, active: ActiveTarget) {
   if (active === "aso") return true;
   if (active === null) return false;
@@ -70,29 +78,32 @@ const LINE_TRANSITION_CLASSES =
 function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boolean }) {
   return (
     <div className="relative flex h-44 w-44 items-center justify-center">
-      {/* 1. Orange glow — furthest back */}
+      {/* 1. Orange glow — furthest back. Annular: the center stays fully
+          transparent out past the cogwheel's opening so the hole shows the
+          real section background with no orange tint; the glow ring sits
+          over the gear body and just beyond it. Feathering comes mostly
+          from the gradient itself — blur is kept moderate so it doesn't
+          smear orange back into the open center. */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 -z-20 rounded-full blur-2xl transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none ${
+        className={`pointer-events-none absolute inset-0 -z-20 rounded-full blur-lg transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none ${
           engaged ? "scale-[1.7] opacity-100" : "scale-150 opacity-75"
         }`}
         style={{
           background:
-            "radial-gradient(circle, rgba(255,122,26,0.55) 0%, rgba(255,122,26,0.18) 50%, transparent 75%)",
+            "radial-gradient(circle, transparent 0%, transparent 42%, rgba(255,122,26,0.5) 60%, rgba(255,122,26,0.18) 78%, transparent 95%)",
         }}
       />
 
-      {/* 2. Solid navy hub disc + anchor logo — same navy token as the
-          section background, fully opaque so lines never show through. At
-          rest the border is the same navy token as the fill (not
-          "transparent," an actual matching color), so it is guaranteed
-          indistinguishable from the disc rather than merely invisible. It
-          only turns orange when the hub itself is targeted, as interaction
-          feedback. The glow and cogwheel carry the hub's visual weight, not
-          the disc. */}
+      {/* 2. Hub ring + anchor logo. Deliberately unfilled: a painted disc
+          can never match the section's rendered background (navy token plus
+          gradient/glow overlays), so the cogwheel opening shows the actual
+          page background instead. Spokes stop at SPOKE_START_RADIUS, so
+          nothing needs masking here. The border is the only paint — orange
+          when the hub itself is targeted, invisible at rest. */}
       <div
-        className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-aso-navy transition-colors duration-200 ease-out motion-reduce:transition-none ${
-          targeted ? "border-aso-orange" : "border-aso-navy"
+        className={`relative z-10 flex h-28 w-28 items-center justify-center rounded-full border-2 bg-transparent transition-colors duration-200 ease-out motion-reduce:transition-none ${
+          targeted ? "border-aso-orange" : "border-transparent"
         }`}
       >
         <Image
@@ -104,7 +115,7 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
           // content bbox: horizontal reset to 0 (prior measured corrections
           // oscillated), small upward bias retained.
           style={{ transform: "translate(0, -1px)" }}
-          className={`h-20 w-auto object-contain drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)] transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
+          className={`h-20 w-auto object-contain drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)] transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
             engaged ? "brightness-110" : "brightness-100"
           }`}
         />
@@ -186,13 +197,15 @@ export default function NetworkTree() {
         <div className="relative mx-auto aspect-square w-full max-w-lg lg:mx-0 lg:max-w-md lg:shrink-0">
           <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full" aria-hidden="true">
             {PERSONAS.map((persona) => {
-              const pos = polar(MEMBER_LAYOUT[persona.slug].angle, MEMBER_LAYOUT[persona.slug].radius);
+              const { angle, radius } = MEMBER_LAYOUT[persona.slug];
+              const start = polar(angle, SPOKE_START_RADIUS);
+              const pos = polar(angle, radius);
               const lit = isSpokeLit(persona.slug, active);
               return (
                 <line
                   key={`hub-${persona.slug}`}
-                  x1={CENTER.x}
-                  y1={CENTER.y}
+                  x1={start.x}
+                  y1={start.y}
                   x2={pos.x}
                   y2={pos.y}
                   className={LINE_TRANSITION_CLASSES}
