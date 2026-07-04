@@ -125,11 +125,9 @@ export default function Home() {
             Built Around the Way Live Events Actually Work
           </h2>
           <p className="text-gray-500 leading-relaxed">
-            The live event industry is already full of talented people, great
-            companies, trusted venues, and valuable equipment. The problem isn&apos;t
-            a lack of resources. It&apos;s that everyone operates separately. ASO
-            connects those people, organizations, and opportunities into one
-            professional network built for collaboration.
+            Every event moves through a lifecycle. ASO keeps the people,
+            planning, resources, documents, money, media, and marketing
+            connected from the first inquiry to the final report.
           </p>
         </div>
 
