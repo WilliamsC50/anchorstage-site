@@ -126,8 +126,8 @@ export default function Home() {
           </h2>
           <p className="text-gray-500 leading-relaxed">
             Every event moves through a lifecycle. ASO keeps the people,
-            planning, resources, documents, money, media, and marketing
-            connected from the first inquiry to the final report.
+            planning, gear, documents, money, and media connected from the
+            first intake submission to the final invoice.
           </p>
         </div>
 

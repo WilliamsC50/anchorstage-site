@@ -6,15 +6,24 @@ import type {
 } from "./content-types";
 
 /**
- * The event lifecycle as ASO models it: ten stages from first inquiry to
- * final reporting. Drives the homepage Event Workflow Explorer.
+ * The event lifecycle as ASO models it: ten stages from first intake
+ * submission to financial close-out. Drives the homepage Event Workflow
+ * Explorer.
+ *
+ * Content follows the ASO Platform Canon Audit — every task and chip below
+ * names a real, shipped platform capability (Intake Review & Convert, the
+ * Event Workstation, Gear Requests, Power Planner, Readiness, Production
+ * Brief, Pack List, Media & Assets / Asset Library, the Marketing
+ * Workstation lead pipeline, Financials, and the Dashboard). No invented
+ * or future features.
  *
  * The stage list is role-independent and never reorders or hides stages.
  * What changes per role is the perspective: STAGE_PERSPECTIVES holds each
  * member type's view of each stage (relevance, description, tasks, and the
- * ASO workstations that role touches).
+ * ASO surfaces that role touches).
  *
- * Placeholder-quality copy authored for review — not confirmed final.
+ * Stage titles are visitor-facing wayfinding labels ("Inquiry",
+ * "Equipment"); descriptions and tasks use platform canon (Intake, Gear).
  */
 export const EVENT_WORKFLOW_STAGES: WorkflowStage[] = [
   { id: "inquiry", title: "Inquiry", usedBy: ["production-companies", "event-organizers", "venues"] },
@@ -26,7 +35,7 @@ export const EVENT_WORKFLOW_STAGES: WorkflowStage[] = [
   { id: "show-day", title: "Show Day", usedBy: ["production-companies", "freelancers", "venues", "musicians"] },
   { id: "media", title: "Media", usedBy: ["musicians", "venues", "event-organizers"] },
   { id: "marketing", title: "Marketing", usedBy: ["venues", "musicians", "event-organizers"] },
-  { id: "reporting", title: "Reporting", usedBy: ["production-companies", "event-organizers", "venues"] },
+  { id: "reporting", title: "Financials", usedBy: ["production-companies", "event-organizers", "venues"] },
 ];
 
 /** Roles offered by the "View As" selector, in display order. */
@@ -42,9 +51,11 @@ export const WORKFLOW_ROLES: readonly PersonaSlug[] = [
 export const DEFAULT_WORKFLOW_ROLE: PersonaSlug = "production-companies";
 
 /**
- * Each role's view of each lifecycle stage. Workstation chips use display
- * names from the canonical workstation set (see WorkstationSlug) — real ASO
- * capabilities only, no invented features.
+ * Each role's view of each lifecycle stage. Chips under "ASO Workstations
+ * Used" name the platform surfaces involved: the named workstations (Event,
+ * Inventory, Marketing, Signage) plus canonical tools and views (Intake,
+ * Gear Requests, Power Planner, Media & Assets, Asset Library, Financials,
+ * Dashboard, Calendar).
  */
 export const STAGE_PERSPECTIVES: Record<
   PersonaSlug,
@@ -54,119 +65,123 @@ export const STAGE_PERSPECTIVES: Record<
     inquiry: {
       relevance: "primary",
       description:
-        "Every event starts as an inquiry. Capture the client, date, and scope in one intake record instead of an email thread.",
+        "Every event starts as an intake submission. Review it, qualify it, and convert it into an event — client, date, and scope captured from first contact.",
       tasks: [
-        "Receive Intake Submission",
+        "Receive Intake Submissions",
         "Create Client Record",
-        "Capture Event Details",
-        "Check Date Availability",
-        "Qualify the Request",
+        "Review & Qualify",
+        "Quote from Intake",
+        "Convert to Event",
       ],
-      workstations: ["Event"],
+      workstations: ["Intake", "Event Workstation"],
     },
     planning: {
       relevance: "primary",
       description:
-        "Turn a confirmed inquiry into a working event plan — one record that holds the schedule, documents, and production requirements.",
+        "Turn a converted intake into a working event — one record that holds the client, venue, schedule, notes, and linked documents.",
       tasks: [
-        "Create Event",
-        "Assign Venue",
-        "Build Schedule",
-        "Upload Documents",
-        "Estimate Power",
+        "Create the Event",
+        "Start from an Event Template",
+        "Link Client & Venue",
+        "Set Up a Recurring Series",
+        "Add Event Notes",
         "Invite Collaborators",
       ],
-      workstations: ["Event", "Power", "Crew"],
+      workstations: ["Event Workstation", "Calendar"],
     },
     staffing: {
       relevance: "primary",
       description:
-        "Assign the people the event needs — in-house crew, freelancers from the network, and collaborators from partner companies.",
+        "Build the crew list on the event — define the roles the show needs, then fill each slot.",
       tasks: [
         "Define Crew Roles",
-        "Assign In-House Crew",
-        "Request Freelancers",
-        "Confirm Availability",
-        "Set Call Times",
+        "Fill Crew Slots",
+        "Pick from Your Roster",
+        "Share the Crew List",
       ],
-      workstations: ["Crew", "Event"],
+      workstations: ["Event Workstation"],
     },
     equipment: {
       relevance: "primary",
       description:
-        "Reserve gear against the event date — from your own inventory, shared packages, or rental providers in the network.",
+        "Assign gear to the event — your own gear items, reusable gear packages, or gear requested from other organizations.",
       tasks: [
-        "Build Equipment List",
-        "Reserve Inventory",
-        "Request Rentals",
+        "Assign Gear Packages",
+        "Add Gear Items",
+        "Send Gear Requests",
         "Resolve Shortages",
-        "Prep Load Sheets",
+        "Estimate Power",
       ],
-      workstations: ["Inventory", "Event"],
+      workstations: ["Inventory Workstation", "Gear Requests", "Power Planner"],
     },
     quote: {
       relevance: "primary",
       description:
-        "Generate the quote from what's already planned — labor, equipment, and services priced from the event record itself.",
+        "Build the quote from what's already planned — line items come straight from the event's gear and crew, then issue a numbered, revisable quote.",
       tasks: [
-        "Price Labor & Gear",
-        "Apply Package Rates",
-        "Generate Quote PDF",
+        "Build Line Items",
+        "Apply a Discount",
+        "Issue the Quote",
         "Send to Client",
+        "Revise if Needed",
       ],
-      workstations: ["Financial", "Event"],
+      workstations: ["Event Workstation", "Financials"],
     },
     approval: {
       relevance: "primary",
       description:
-        "Client sign-off, deposits, and agreements tracked on the event — so everyone works from one confirmed scope.",
+        "Track sign-off on the event — quote approval, the deposit, and a Readiness check that flags blockers before show day.",
       tasks: [
-        "Send Agreement",
-        "Collect Signature",
-        "Record Deposit",
-        "Lock Event Scope",
+        "Track Quote Approval",
+        "Record the Deposit",
+        "Clear Readiness Blockers",
+        "Confirm the Event",
       ],
-      workstations: ["Event", "Financial"],
+      workstations: ["Event Workstation", "Financials", "Dashboard"],
     },
     "show-day": {
       relevance: "primary",
       description:
-        "Run the event from the same record it was planned in — schedules, contacts, stage plots, and checklists in one place on site.",
+        "Run the show from the event record — the Production Brief and Pack List carry timing, gear, logistics, crew, and show contacts on site.",
       tasks: [
-        "Publish Day-of Schedule",
-        "Run Load-In Checklist",
-        "Track Crew Check-Ins",
-        "Access Show Documents",
-        "Log Changes On Site",
+        "Print the Production Brief",
+        "Run the Pack List",
+        "Set Call & Show Times",
+        "Work the Checklist",
+        "Mark the Event Active",
       ],
-      workstations: ["Event", "Crew", "Operations"],
+      workstations: ["Event Workstation"],
     },
     media: {
       relevance: "secondary",
       description:
-        "Collect the photos, video, and recordings captured at the event and attach them to the record — ready for recaps and future proposals.",
-      tasks: ["Upload Event Media", "Tag People & Venues", "Share with Collaborators"],
-      workstations: ["Media", "Event"],
+        "Attach photos, video, and recordings to the event — tagged and searchable in your Asset Library.",
+      tasks: ["Upload Event Media", "Tag Assets", "Browse the Asset Library"],
+      workstations: ["Media & Assets", "Asset Library"],
     },
     marketing: {
       relevance: "secondary",
       description:
-        "Turn finished events into the next booking — recaps and promotion built from real event history and media.",
-      tasks: ["Build Event Recap", "Reuse Media Assets", "Promote Your Work"],
-      workstations: ["Marketing", "Media"],
+        "Marketing in ASO is the booking pipeline — lead health, quote follow-up, and the content that wins the next event.",
+      tasks: [
+        "Watch Lead Health",
+        "Follow Up on Quotes",
+        "Organize Content in the Asset Library",
+      ],
+      workstations: ["Marketing Workstation", "Asset Library"],
     },
     reporting: {
       relevance: "primary",
       description:
-        "Close the event out — final invoices, settlement, and the numbers that show what worked and what to improve next time.",
+        "Close the event out — issue the invoice, record payment, settle payouts, and see projected profit across your events in Financials.",
       tasks: [
-        "Send Final Invoice",
-        "Reconcile Costs",
+        "Issue the Invoice",
+        "Record Payment",
         "Settle Payouts",
-        "Review Event Metrics",
+        "Review Projected Profit",
         "Archive the Event",
       ],
-      workstations: ["Financial", "Event", "Automation"],
+      workstations: ["Financials", "Event Workstation", "Dashboard"],
     },
   },
 
@@ -174,82 +189,80 @@ export const STAGE_PERSPECTIVES: Record<
     inquiry: {
       relevance: "not-used",
       description:
-        "Inquiries are handled by the production company or organizer booking the event. You enter the workflow once staffing begins.",
+        "Intake is handled by the organization booking the event. You enter the workflow once the crew list is being built.",
       tasks: [],
       workstations: [],
     },
     planning: {
       relevance: "occasional",
       description:
-        "On larger shows you may be looped in early — reviewing schedules and documents shared to the event record.",
-      tasks: ["Review Shared Schedule", "Access Event Documents"],
-      workstations: ["Event"],
+        "On larger shows you may be brought in early as a collaborator, with access to the event's details and notes.",
+      tasks: ["Join as a Collaborator", "Review Event Details"],
+      workstations: ["Event Workstation"],
     },
     staffing: {
       relevance: "primary",
       description:
-        "This is where work finds you. Crew requests from the network arrive with the role, dates, and rate — confirm and you're on the show.",
+        "This is where you land on the show — you're added to the event's crew list with a role, and solo operators can join as the event's Primary Collaborator.",
       tasks: [
-        "Receive Crew Requests",
-        "Confirm Availability",
-        "Accept the Booking",
-        "Review Call Times",
+        "Get Added to the Crew List",
+        "Take a Role Slot",
+        "Join as Primary Collaborator",
       ],
-      workstations: ["Crew", "Event"],
+      workstations: ["Event Workstation"],
     },
     equipment: {
       relevance: "secondary",
       description:
-        "Know exactly what gear the event carries before you arrive — and flag anything your position needs.",
-      tasks: ["Review Equipment List", "Flag Position Needs", "Request Rentals"],
-      workstations: ["Inventory", "Event"],
+        "See what gear the event carries — and if you run your own inventory, respond to gear requests from the production.",
+      tasks: ["Review Assigned Gear", "Respond to Gear Requests", "List Your Own Gear"],
+      workstations: ["Inventory Workstation", "Gear Requests"],
     },
     quote: {
       relevance: "not-used",
       description:
-        "Quoting happens between the production company and the client. Your confirmed rate is already part of it.",
+        "Quoting happens between the production company and the client.",
       tasks: [],
       workstations: [],
     },
     approval: {
       relevance: "secondary",
       description:
-        "When the client signs off, your booking is confirmed — dates, role, and scope locked on the event record.",
-      tasks: ["Receive Booking Confirmation", "Review Locked Scope"],
-      workstations: ["Event", "Crew"],
+        "When the event is confirmed and clears its Readiness checks, your spot on the crew list is part of a locked plan.",
+      tasks: ["Review the Confirmed Plan"],
+      workstations: ["Event Workstation"],
     },
     "show-day": {
       relevance: "primary",
       description:
-        "Everything you need on site — schedule, contacts, stage documents, and check-in — from the same event record the show was planned in.",
+        "Everything you need on site comes from the Production Brief — timing, gear summary, logistics, and show contacts.",
       tasks: [
-        "Check In On Site",
-        "Follow Day-of Schedule",
-        "Access Show Documents",
-        "Log Changes On Site",
+        "Work from the Production Brief",
+        "Follow Call & Show Times",
+        "Use the Pack List",
       ],
-      workstations: ["Event", "Crew", "Operations"],
+      workstations: ["Event Workstation"],
     },
     media: {
       relevance: "primary",
       description:
-        "Your work, on the record. Media from the event tags you — building a portfolio from shows you actually worked.",
-      tasks: ["Upload Your Media", "Get Tagged in Event Media", "Build Your Portfolio"],
-      workstations: ["Media", "Event"],
+        "Media from your events stays attached to them — upload and tag assets so the work you do is organized in your own Asset Library.",
+      tasks: ["Upload Show Media", "Tag Your Assets", "Build Your Asset Library"],
+      workstations: ["Media & Assets", "Asset Library"],
     },
     marketing: {
       relevance: "occasional",
       description:
-        "Reuse tagged event media to promote your services to companies in the network.",
-      tasks: ["Share Event Highlights"],
-      workstations: ["Marketing", "Media"],
+        "Solo operators run their own pipeline — track inquiries and outstanding quotes for your services.",
+      tasks: ["Track Your Own Leads"],
+      workstations: ["Marketing Workstation"],
     },
     reporting: {
       relevance: "primary",
       description:
-        "Close out your side of the show — confirm your hours, track your payout, and keep your work history complete.",
-      tasks: ["Confirm Hours Worked", "Track Your Payout", "Review Your Event History"],
-      workstations: ["Financial", "Event"],
+        "Close out your side — as a collaborator organization you can issue a Sub Invoice and get paid through the event's payout ledger.",
+      tasks: ["Issue a Sub Invoice", "Track Your Payout", "Review Your Financials"],
+      workstations: ["Financials", "Event Workstation"],
     },
   },
 
@@ -257,97 +270,92 @@ export const STAGE_PERSPECTIVES: Record<
     inquiry: {
       relevance: "primary",
       description:
-        "Booking requests land in one intake queue — date, act, and production needs captured against your calendar from the start.",
+        "Booking requests land as intake submissions — review, qualify, and convert the ones that fit your calendar.",
       tasks: [
-        "Receive Booking Requests",
-        "Check Calendar Availability",
-        "Capture Event Details",
-        "Qualify the Request",
+        "Receive Intake Submissions",
+        "Review & Qualify",
+        "Check the Calendar",
+        "Convert to Event",
       ],
-      workstations: ["Event"],
+      workstations: ["Intake", "Calendar"],
     },
     planning: {
       relevance: "primary",
       description:
-        "Hold the event on your calendar and share what productions need — house specs, load-in details, and venue documents.",
+        "Hold the date and build the event record — house notes and linked documents the production can work from.",
       tasks: [
-        "Hold the Date",
-        "Share Venue Specs",
-        "Upload House Documents",
-        "Coordinate with Production",
+        "Create the Event",
+        "Set Up a Recurring Series",
+        "Add House Notes",
+        "Link House Documents",
+        "Invite the Production as a Collaborator",
       ],
-      workstations: ["Event"],
+      workstations: ["Event Workstation", "Calendar"],
     },
     staffing: {
       relevance: "occasional",
       description:
-        "Most crewing is handled by the production. You may add house staff to the event when the room provides them.",
-      tasks: ["Assign House Staff"],
-      workstations: ["Crew"],
+        "Most crewing is handled by the production — add house staff to the crew list when your room provides them.",
+      tasks: ["Add House Staff to the Crew List"],
+      workstations: ["Event Workstation"],
     },
     equipment: {
       relevance: "occasional",
       description:
-        "Your house rig lives in inventory, so productions know what's already in the room before they load a truck.",
-      tasks: ["Share House Inventory"],
-      workstations: ["Inventory"],
+        "Keep your house rig in your gear inventory so productions can see what's already in the room.",
+      tasks: ["List House Gear"],
+      workstations: ["Inventory Workstation"],
     },
     quote: {
       relevance: "occasional",
       description:
-        "Room rates and house fees feed the event's pricing when the booking calls for them.",
-      tasks: ["Provide Venue Rates"],
-      workstations: ["Financial"],
+        "House fees can be added to the event as quote line items when the booking calls for them.",
+      tasks: ["Add House Fees as Line Items"],
+      workstations: ["Event Workstation", "Financials"],
     },
     approval: {
       relevance: "primary",
       description:
-        "Confirm the booking — agreements signed, deposit recorded, and the date locked on your calendar.",
-      tasks: [
-        "Send Venue Agreement",
-        "Collect Signature",
-        "Record Deposit",
-        "Confirm the Date",
-      ],
-      workstations: ["Event", "Financial"],
+        "Confirm the booking — quote approved, deposit recorded, and the date locked on your calendar.",
+      tasks: ["Track Quote Approval", "Record the Deposit", "Confirm the Event"],
+      workstations: ["Event Workstation", "Financials"],
     },
     "show-day": {
       relevance: "primary",
       description:
-        "Run the room from the same record the production planned in — schedule, contacts, and house documents on site.",
+        "Run the room from the same record the production planned in — Production Brief timing, contacts, and the event checklist on site.",
       tasks: [
-        "Publish House Schedule",
-        "Coordinate Load-In",
-        "Track Arrivals",
-        "Log Changes On Site",
+        "Work from the Production Brief",
+        "Track Load-In & Doors Times",
+        "Run the Checklist",
       ],
-      workstations: ["Event", "Operations"],
+      workstations: ["Event Workstation"],
     },
     media: {
       relevance: "secondary",
       description:
-        "Media from every show stays attached to your venue — a growing visual record of what your room looks like full.",
-      tasks: ["Collect Event Media", "Tag Your Venue"],
-      workstations: ["Media"],
+        "Media from every show stays attached to your events — a growing, tagged record of your room in your Asset Library.",
+      tasks: ["Collect Show Media", "Tag Assets"],
+      workstations: ["Media & Assets", "Asset Library"],
     },
     marketing: {
       relevance: "primary",
       description:
-        "Fill the calendar. Promote upcoming shows and turn past events into proof your room delivers.",
+        "Keep the calendar full — track booking inquiries from first contact, follow up on outstanding quotes, and keep your show content organized.",
       tasks: [
-        "Promote Upcoming Shows",
-        "Publish Event Recaps",
-        "Reuse Event Media",
-        "Build Your Program",
+        "Watch Lead Health",
+        "Follow Up on Quotes",
+        "Organize Content in the Asset Library",
+        "Run In-House Signage",
       ],
-      workstations: ["Marketing", "Media"],
+      workstations: ["Marketing Workstation", "Asset Library", "Signage Workstation"],
     },
     reporting: {
       relevance: "secondary",
       description:
-        "Settle the event and see how your calendar is performing — what booked, what drew, what to bring back.",
-      tasks: ["Settle the Event", "Review Booking Metrics"],
-      workstations: ["Financial", "Event"],
+        "Settle each event — invoices, payments, and payouts tracked in Financials across your calendar.",
+      tasks: ["Record Payments", "Review Financials"],
+      workstations: ["Financials", "Dashboard"],
     },
   },
 
@@ -355,72 +363,76 @@ export const STAGE_PERSPECTIVES: Record<
     inquiry: {
       relevance: "primary",
       description:
-        "Gigs start here. Booking requests from venues and organizers arrive with the date, room, and terms attached.",
-      tasks: ["Receive Booking Requests", "Check Your Availability", "Respond to Inquiries"],
-      workstations: ["Event"],
+        "Shows you play start as intake submissions with the venue or production — the act, date, and scope captured from first contact.",
+      tasks: ["Share Show Details for Intake", "Confirm the Date"],
+      workstations: ["Intake"],
     },
     planning: {
       relevance: "occasional",
       description:
-        "Share what your act needs — stage plot, input list, and set details — on the event record everyone works from.",
-      tasks: ["Upload Stage Plot", "Share Set Details"],
-      workstations: ["Event"],
+        "Your stage needs live on the event record — notes and linked documents like stage plots and input lists.",
+      tasks: ["Share Stage Plot & Input List"],
+      workstations: ["Event Workstation"],
     },
     staffing: {
       relevance: "not-used",
       description:
-        "Crewing is handled by the production and venue. Your booking already covers the performance.",
+        "Crewing is handled by the production and venue — your performance is already on the event.",
       tasks: [],
       workstations: [],
     },
     equipment: {
       relevance: "occasional",
       description:
-        "List backline needs on the event so the production and rental providers can cover them.",
+        "Backline and stage needs are captured as gear on the event, so nothing is missing on show day.",
       tasks: ["List Backline Needs"],
-      workstations: ["Event", "Inventory"],
+      workstations: ["Event Workstation"],
     },
     quote: {
       relevance: "not-used",
       description:
-        "Pricing between the production and the client happens without you. Your performance fee is set in your booking.",
+        "Pricing between the production and the client happens without you.",
       tasks: [],
       workstations: [],
     },
     approval: {
       relevance: "secondary",
       description:
-        "Sign the performance agreement and the date is locked — no chasing confirmations by text.",
-      tasks: ["Sign Performance Agreement", "Confirm the Date"],
-      workstations: ["Event"],
+        "When the event is confirmed and clears its Readiness checks, your date is locked.",
+      tasks: ["Get the Confirmed Date"],
+      workstations: ["Event Workstation"],
     },
     "show-day": {
       relevance: "primary",
       description:
-        "Everything for the show in one place — set times, contacts, and stage documents from the same record the venue runs on.",
-      tasks: ["Review Set Times", "Access Stage Documents", "Check In at the Venue"],
-      workstations: ["Event"],
+        "Set times, doors, and show contacts come from the Production Brief — the same record the venue and production run on.",
+      tasks: [
+        "Follow Set & Doors Times",
+        "Check the Production Brief",
+        "Know Your Show Contacts",
+      ],
+      workstations: ["Event Workstation"],
     },
     media: {
       relevance: "primary",
       description:
-        "Photos, video, and recordings from the show tag your act — every performance builds your catalog.",
-      tasks: ["Collect Show Media", "Tag Your Act", "Organize Your Catalog"],
-      workstations: ["Media"],
+        "Media from your shows is uploaded to the event and tagged with your act — organized and findable after every performance.",
+      tasks: ["Get Show Media Tagged", "Collect Assets from Your Shows"],
+      workstations: ["Media & Assets", "Asset Library"],
     },
     marketing: {
       relevance: "primary",
       description:
-        "Turn shows into a following — promote upcoming dates and publish highlights from real performances.",
-      tasks: ["Promote Upcoming Dates", "Publish Show Highlights", "Reuse Show Media"],
-      workstations: ["Marketing", "Media"],
+        "Show media tagged to your act gives the venues and productions you work with ready content when promoting the dates you play.",
+      tasks: ["Source Tagged Show Media"],
+      workstations: ["Asset Library"],
     },
     reporting: {
       relevance: "occasional",
       description:
-        "Confirm your payout and keep your performance history complete.",
-      tasks: ["Track Your Payout"],
-      workstations: ["Financial"],
+        "Payment for your performance is tracked on the event by the organization that booked you.",
+      tasks: [],
+      workstations: [],
     },
   },
 
@@ -428,57 +440,56 @@ export const STAGE_PERSPECTIVES: Record<
     inquiry: {
       relevance: "occasional",
       description:
-        "Rental requests can arrive directly — capture what's needed and for which dates before it becomes a scramble.",
-      tasks: ["Receive Rental Requests"],
-      workstations: ["Event", "Inventory"],
+        "Gear requests can arrive alongside a new event — what's needed and for which dates.",
+      tasks: ["Receive Gear Requests"],
+      workstations: ["Gear Requests"],
     },
     planning: {
       relevance: "secondary",
       description:
-        "See what productions are planning early, so your gear is reserved before shortages appear.",
-      tasks: ["Review Equipment Requests", "Check Gear Availability"],
-      workstations: ["Inventory", "Event"],
+        "See what events need early — gear requests reference the event, so you can plan against real dates.",
+      tasks: ["Review Incoming Gear Requests", "Review Your Gear Inventory"],
+      workstations: ["Gear Requests", "Inventory Workstation"],
     },
     staffing: {
       relevance: "not-used",
       description:
-        "Crewing is handled by the production. Unless you also freelance, this stage runs without you.",
+        "Crewing is handled by the production — this stage runs without you.",
       tasks: [],
       workstations: [],
     },
     equipment: {
       relevance: "primary",
       description:
-        "This is your stage. Rental requests come to you from the network — reserve gear, confirm availability, and keep inventory working.",
+        "This is your stage. Keep your gear inventory and gear packages current, and respond to gear requests from productions and venues.",
       tasks: [
-        "Receive Rental Requests",
-        "Reserve Inventory",
-        "Confirm Availability",
-        "Prep the Order",
-        "Schedule Delivery",
+        "Maintain Your Gear Inventory",
+        "Build Gear Packages",
+        "Respond to Gear Requests",
+        "Keep Power Data Current",
       ],
-      workstations: ["Inventory", "Event"],
+      workstations: ["Inventory Workstation", "Gear Requests", "Power Audit"],
     },
     quote: {
       relevance: "secondary",
       description:
-        "Price the rental from your inventory rates and send it back to the production.",
-      tasks: ["Price the Rental", "Send Rental Quote"],
-      workstations: ["Financial", "Inventory"],
+        "When you're the event's Primary Collaborator, issue a Sub Quote to the owner organization for your side of the work.",
+      tasks: ["Issue a Sub Quote"],
+      workstations: ["Financials", "Event Workstation"],
     },
     approval: {
       relevance: "occasional",
       description:
-        "Rental agreement signed and the reservation is locked against the event date.",
-      tasks: ["Confirm the Reservation"],
-      workstations: ["Event", "Financial"],
+        "The gear request is accepted and tied to the confirmed event.",
+      tasks: ["Confirm the Gear Request"],
+      workstations: ["Gear Requests"],
     },
     "show-day": {
       relevance: "secondary",
       description:
-        "Deliver, check gear out, and know exactly where every piece is while the show runs.",
-      tasks: ["Deliver & Check Out Gear", "Track Gear On Site"],
-      workstations: ["Inventory", "Operations"],
+        "Your gear travels on the event's Pack List — what's going, where it loads in, and who to contact.",
+      tasks: ["Work from the Pack List", "Coordinate Load-In"],
+      workstations: ["Event Workstation"],
     },
     media: {
       relevance: "not-used",
@@ -490,16 +501,16 @@ export const STAGE_PERSPECTIVES: Record<
     marketing: {
       relevance: "occasional",
       description:
-        "Keep your catalog visible to the productions and venues that rent it.",
-      tasks: ["Update Your Listings"],
-      workstations: ["Marketing", "Inventory"],
+        "Keep your gear inventory current and visible to the organizations that request it.",
+      tasks: ["Keep Your Inventory Current"],
+      workstations: ["Inventory Workstation"],
     },
     reporting: {
       relevance: "secondary",
       description:
-        "Close the rental — invoice it, check gear back in, and review how hard your inventory is working.",
-      tasks: ["Invoice the Rental", "Check Gear In", "Review Utilization"],
-      workstations: ["Financial", "Inventory"],
+        "Close the loop — issue your Sub Invoice and track the payout from the event in Financials.",
+      tasks: ["Issue a Sub Invoice", "Track the Payout"],
+      workstations: ["Financials"],
     },
   },
 
@@ -507,98 +518,86 @@ export const STAGE_PERSPECTIVES: Record<
     inquiry: {
       relevance: "primary",
       description:
-        "Start the event — capture the concept, date, and requirements in one record everyone else will work from.",
-      tasks: ["Create the Inquiry", "Define Event Scope", "Check Date Availability"],
-      workstations: ["Event"],
+        "Start the event as an intake submission — or create it directly — with the concept, date, and requirements captured once.",
+      tasks: ["Submit or Create the Intake", "Review & Qualify", "Convert to Event"],
+      workstations: ["Intake", "Event Workstation"],
     },
     planning: {
       relevance: "primary",
       description:
-        "Bring the pieces together — venue, production, schedule, and documents coordinated on one event record.",
+        "Bring the pieces together on one event record — venue, production partners, notes, and linked documents.",
       tasks: [
-        "Create Event",
-        "Assign Venue",
-        "Build Schedule",
-        "Upload Documents",
+        "Create the Event",
+        "Link Client & Venue",
         "Invite Collaborators",
+        "Link Planning Documents",
       ],
-      workstations: ["Event"],
+      workstations: ["Event Workstation", "Calendar"],
     },
     staffing: {
       relevance: "occasional",
       description:
-        "Crewing is led by your production partners — you track that the key roles are covered.",
-      tasks: ["Review Crew Coverage"],
-      workstations: ["Crew", "Event"],
+        "Crewing is led by your production partners — the event's crew list shows how roles are filling.",
+      tasks: ["Review the Crew List"],
+      workstations: ["Event Workstation"],
     },
     equipment: {
       relevance: "occasional",
       description:
-        "Equipment is sourced by production and rental partners — you watch it come together on the event.",
-      tasks: ["Review Equipment Plan"],
-      workstations: ["Event", "Inventory"],
+        "Gear is sourced by production partners and gear requests — you watch it come together on the event.",
+      tasks: ["Review Assigned Gear"],
+      workstations: ["Event Workstation"],
     },
     quote: {
       relevance: "primary",
       description:
-        "Review pricing from your production partners against the event budget — all of it attached to the event record.",
-      tasks: [
-        "Receive Quotes",
-        "Compare Against Budget",
-        "Request Revisions",
-        "Approve Pricing",
-      ],
-      workstations: ["Financial", "Event"],
+        "Quotes are issued from the event itself — numbered, revisable, and built from the planned gear and crew.",
+      tasks: ["Receive the Issued Quote", "Request a Revision", "Approve Pricing"],
+      workstations: ["Financials", "Event Workstation"],
     },
     approval: {
       relevance: "primary",
       description:
-        "Sign off and lock the event — agreements, deposits, and confirmed scope in one place.",
-      tasks: [
-        "Sign Agreements",
-        "Record Deposits",
-        "Lock Event Scope",
-        "Confirm Bookings",
-      ],
-      workstations: ["Event", "Financial"],
+        "Sign off and lock the event — approved quote, recorded deposit, and a Readiness check before show day.",
+      tasks: ["Approve the Quote", "Record the Deposit", "Clear Readiness Blockers"],
+      workstations: ["Event Workstation", "Financials", "Dashboard"],
     },
     "show-day": {
       relevance: "secondary",
       description:
-        "Follow the show from the shared record — schedule, contacts, and status without chasing anyone by phone.",
-      tasks: ["Monitor the Schedule", "Access Event Documents", "Log Changes"],
-      workstations: ["Event", "Operations"],
+        "Follow the show from the shared record — Production Brief timing, contacts, and the checklist without chasing anyone.",
+      tasks: ["Follow the Production Brief", "Watch the Checklist"],
+      workstations: ["Event Workstation"],
     },
     media: {
       relevance: "secondary",
       description:
-        "Everything captured at the event stays attached to it — ready for recaps, sponsors, and next year's pitch.",
-      tasks: ["Collect Event Media", "Share with Stakeholders"],
-      workstations: ["Media", "Event"],
+        "Everything captured at the event stays attached to it — tagged assets ready for stakeholders and next year's pitch.",
+      tasks: ["Collect Event Media", "Tag Assets"],
+      workstations: ["Media & Assets", "Asset Library"],
     },
     marketing: {
       relevance: "primary",
       description:
-        "Promote the event before and after — campaigns, recaps, and promotion built from the event's own media and history.",
+        "Marketing in ASO is the pipeline — track inquiries for your next events, follow up on outstanding quotes, and keep event content organized.",
       tasks: [
-        "Promote the Event",
-        "Publish Recaps",
-        "Reuse Event Media",
-        "Track Engagement",
+        "Track Event Inquiries",
+        "Follow Up on Quotes",
+        "Organize Content in the Asset Library",
       ],
-      workstations: ["Marketing", "Media"],
+      workstations: ["Marketing Workstation", "Asset Library"],
     },
     reporting: {
       relevance: "primary",
       description:
-        "Close the event out — final costs, settlement, and the numbers that shape the next one.",
+        "Close the event — final invoice, payments, payouts to partners, and the Financials view across your events.",
       tasks: [
-        "Reconcile Final Costs",
-        "Settle Invoices",
-        "Review Event Metrics",
+        "Reconcile Payments",
+        "Settle Payouts",
+        "Review Financials",
         "Archive the Event",
       ],
-      workstations: ["Financial", "Event", "Automation"],
+      workstations: ["Financials", "Dashboard"],
     },
   },
 };
