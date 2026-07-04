@@ -3,8 +3,10 @@
  * (components/ChaosToRecord.tsx). All positions, connectors, and timings are
  * authored constants — the scene is deterministic for every visitor.
  *
- * Record labels use ASO Platform Canon terminology only.
+ * Record labels use ASO Platform Canon terminology only; all fictional
+ * names/values come from the ASO Demo Data Canon (lib/demo-canon.ts).
  */
+import { DEMO_EVENT } from "./demo-canon";
 
 /** One scattered information source in the chaos field. */
 export interface ChaosSource {
@@ -58,6 +60,8 @@ export interface RecordStep {
   id: string;
   /** Canonical platform term. */
   label: string;
+  /** Operational value from the ASO Demo Data Canon (lib/demo-canon.ts). */
+  value?: string;
   /** Reveal delay in ms from the start of the "building" phase. */
   delayMs: number;
   /** Optional platform-authentic badge. */
@@ -67,28 +71,76 @@ export interface RecordStep {
 }
 
 /**
- * Seven beats (~210–230ms apart), 80ms stagger inside a beat — compressed
- * to offset the pre-consumption wiggle phase and keep the whole interaction
- * under ~7 seconds:
- * [Intake, Event] [Client, Venue] [Collaborators] [Gear, Crew Assignments]
- * [Quote, Readiness] [Production Brief, Pack List, Media & Assets]
- * [Invoice, Financials]
+ * The record assembles as the flagship demo event (DEMO_EVENT), not a
+ * generic checklist — every value maps to a real platform capability.
+ * Nine beats (~160ms apart), 80ms stagger inside a beat; last row lands at
+ * 1880ms so the total interaction stays under ~7 seconds.
  */
 export const RECORD_STEPS: RecordStep[] = [
-  { id: "intake", label: "Intake Submission", delayMs: 0 },
-  { id: "event", label: "Event", delayMs: 80, emphasis: true, badge: { text: "EVT-20260704-0001", tone: "code" } },
-  { id: "client", label: "Client", delayMs: 300 },
-  { id: "venue", label: "Venue", delayMs: 380 },
-  { id: "collaborators", label: "Collaborators", delayMs: 560 },
-  { id: "gear", label: "Gear", delayMs: 790 },
-  { id: "crew", label: "Crew Assignments", delayMs: 870 },
-  { id: "quote", label: "Quote", delayMs: 1080 },
-  { id: "readiness", label: "Readiness", delayMs: 1160, badge: { text: "Ready", tone: "ready" } },
-  { id: "production-brief", label: "Production Brief", delayMs: 1370 },
-  { id: "pack-list", label: "Pack List", delayMs: 1450 },
-  { id: "media-assets", label: "Media & Assets", delayMs: 1530 },
-  { id: "invoice", label: "Invoice", delayMs: 1740 },
-  { id: "financials", label: "Financials", delayMs: 1820 },
+  { id: "intake", label: "Intake Submission", value: "Converted", delayMs: 0 },
+  {
+    id: "event",
+    label: "Event",
+    value: DEMO_EVENT.name,
+    delayMs: 80,
+    emphasis: true,
+    badge: { text: DEMO_EVENT.code, tone: "code" },
+  },
+  { id: "client", label: "Client", value: DEMO_EVENT.client, delayMs: 240 },
+  { id: "venue", label: "Venue", value: DEMO_EVENT.venue, delayMs: 320 },
+  { id: "owner", label: "Owner", value: DEMO_EVENT.ownerOrg, delayMs: 480 },
+  {
+    id: "primary-collaborator",
+    label: "Primary Collaborator",
+    value: DEMO_EVENT.primaryCollaborator,
+    delayMs: 560,
+  },
+  {
+    id: "gear",
+    label: "Gear",
+    value: `${DEMO_EVENT.gear.packages} Packages · ${DEMO_EVENT.gear.items} Items`,
+    delayMs: 720,
+  },
+  {
+    id: "power",
+    label: "Power Planner",
+    value: `${DEMO_EVENT.powerPlannedAmps} Planned`,
+    delayMs: 800,
+  },
+  {
+    id: "crew",
+    label: "Crew Assignments",
+    value: `${DEMO_EVENT.crew.filled} / ${DEMO_EVENT.crew.total} Filled`,
+    delayMs: 960,
+  },
+  { id: "quote", label: "Quote", value: DEMO_EVENT.quoteNumber, delayMs: 1120 },
+  { id: "deposit", label: "Deposit", value: DEMO_EVENT.depositStatus, delayMs: 1200 },
+  {
+    id: "readiness",
+    label: "Readiness",
+    delayMs: 1360,
+    badge: { text: DEMO_EVENT.readiness, tone: "ready" },
+  },
+  {
+    id: "production-brief",
+    label: "Production Brief",
+    value: DEMO_EVENT.productionBriefStatus,
+    delayMs: 1500,
+  },
+  { id: "pack-list", label: "Pack List", value: DEMO_EVENT.packListStatus, delayMs: 1580 },
+  {
+    id: "media-assets",
+    label: "Media & Assets",
+    value: `${DEMO_EVENT.mediaAssetCount} Assets`,
+    delayMs: 1660,
+  },
+  { id: "invoice", label: "Invoice", value: DEMO_EVENT.invoiceStatus, delayMs: 1800 },
+  {
+    id: "margin",
+    label: "Projected Margin",
+    value: `${DEMO_EVENT.projectedMarginPct}%`,
+    delayMs: 1880,
+  },
 ];
 
 /** Master timeline (ms). All offsets are relative to the CTA click. */

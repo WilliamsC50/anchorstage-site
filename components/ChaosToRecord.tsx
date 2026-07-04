@@ -107,7 +107,7 @@ export default function ChaosToRecord() {
     setPhase("complete");
     setConsumedCount(CHAOS_SOURCES.length);
     setLiveMessage(
-      "Eight scattered sources — email, texts, calls, notes, and spreadsheets — organized into one ASO event record, from Intake Submission to Invoice and Financials."
+      "Eight scattered sources — email, texts, calls, notes, and spreadsheets — organized into one ASO operating record for Summer Concert Series: client, venue, collaborators, gear, crew, quote, readiness, production brief, pack list, media, invoice, and projected margin."
     );
     try {
       window.sessionStorage.setItem(COMPLETE_STORAGE_KEY, "1");
@@ -189,13 +189,13 @@ export default function ChaosToRecord() {
 
   return (
     <div>
-      <div className="flex flex-col gap-8 md:grid md:grid-cols-2 md:items-start md:gap-12">
+      <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:items-start md:gap-10">
         {/* ── Chaos stage (logo lives inside it on all breakpoints).
              Desktop: right column, so the section mirrors the NetworkTree
              layout above instead of echoing it. Mobile: first. ── */}
         <div
           aria-hidden="true"
-          className="relative order-1 h-80 md:order-2 md:h-[460px]"
+          className="relative order-1 h-72 md:order-2 md:h-[420px]"
         >
           <div className="absolute inset-4 md:inset-8">
             {/* Tangled peer-to-peer connectors */}
@@ -320,16 +320,16 @@ export default function ChaosToRecord() {
 
             {/* Rebalance line once the chaos is gone */}
             <p
-              className="absolute inset-x-0 bottom-0 text-center text-xs text-white/50 transition-opacity delay-500 duration-700"
+              className="absolute inset-x-0 bottom-0 text-center text-sm font-medium text-white/70 transition-opacity delay-500 duration-700"
               style={{ opacity: phase === "complete" ? 1 : 0 }}
             >
-              8 scattered sources. Zero of them the source of truth.
+              One source of truth for your event.
             </p>
           </div>
         </div>
 
         {/* ── Operating record slot (desktop: left column; mobile: last) ── */}
-        <div className="relative order-3 min-h-[440px] md:order-1">
+        <div className="relative order-3 min-h-[400px] md:order-1">
           {/* Faint skeleton — structure is "pending" until the build */}
           <div
             aria-hidden="true"
@@ -344,11 +344,11 @@ export default function ChaosToRecord() {
 
           {/* The record itself — real DOM list, always present for AT */}
           <div
-            className={`relative rounded-xl border border-white/15 bg-white p-5 transition-opacity duration-300 ${
+            className={`relative rounded-xl border border-white/15 bg-white p-4 transition-opacity duration-300 ${
               built ? "opacity-100" : "opacity-0"
             }`}
           >
-            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-aso-blue">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-aso-blue">
               One Operating Record
             </p>
             <ol aria-label="ASO operating record" className="relative">
@@ -367,7 +367,7 @@ export default function ChaosToRecord() {
                 return (
                   <li
                     key={step.id}
-                    className="relative flex items-center gap-2.5 py-[5px] pl-6 transition-[opacity,transform] duration-[240ms] motion-reduce:transition-none"
+                    className="relative flex flex-wrap items-center gap-x-2.5 gap-y-0.5 py-[3px] pl-6 transition-[opacity,transform] duration-[240ms] motion-reduce:transition-none"
                     style={{
                       opacity: shown ? 1 : 0,
                       transform: shown ? "translateY(0)" : "translateY(8px)",
@@ -377,7 +377,7 @@ export default function ChaosToRecord() {
                   >
                     <span
                       aria-hidden="true"
-                      className="absolute left-0 flex h-4 w-4 items-center justify-center rounded-full bg-aso-orange"
+                      className="absolute left-0 top-1/2 flex h-4 w-4 -translate-y-1/2 items-center justify-center rounded-full bg-aso-orange"
                     >
                       <svg viewBox="0 0 12 12" className="h-2.5 w-2.5" fill="none">
                         <path
@@ -396,22 +396,31 @@ export default function ChaosToRecord() {
                         />
                       </svg>
                     </span>
-                    <span
-                      className={`text-sm ${step.emphasis ? "font-bold text-aso-navy" : "text-aso-navy"}`}
-                    >
-                      {step.label}
+                    <span className="text-sm text-aso-navy">{step.label}</span>
+                    <span className="ml-auto flex flex-wrap items-center justify-end gap-1.5">
+                      {step.value && (
+                        <span
+                          className={
+                            step.emphasis
+                              ? "text-sm font-bold text-aso-navy"
+                              : "text-xs font-medium text-gray-500"
+                          }
+                        >
+                          {step.value}
+                        </span>
+                      )}
+                      {step.badge && (
+                        <span
+                          className={
+                            step.badge.tone === "code"
+                              ? "rounded border border-aso-blue/25 bg-aso-bg px-1.5 py-0.5 font-mono text-[10px] font-medium text-aso-navy"
+                              : "rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700"
+                          }
+                        >
+                          {step.badge.text}
+                        </span>
+                      )}
                     </span>
-                    {step.badge && (
-                      <span
-                        className={
-                          step.badge.tone === "code"
-                            ? "rounded border border-aso-blue/25 bg-aso-bg px-1.5 py-0.5 font-mono text-[10px] font-medium text-aso-navy"
-                            : "rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700"
-                        }
-                      >
-                        {step.badge.text}
-                      </span>
-                    )}
                   </li>
                 );
               })}
@@ -420,7 +429,7 @@ export default function ChaosToRecord() {
         </div>
 
         {/* ── CTA row (between stage and record on mobile) ── */}
-        <div className="order-2 flex flex-col items-center gap-3 md:order-3 md:col-span-2">
+        <div className="order-2 flex flex-col items-center gap-2 md:order-3 md:col-span-2">
           <button
             type="button"
             onClick={handleConvert}
