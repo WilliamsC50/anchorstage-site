@@ -107,14 +107,10 @@ function AnchorVisual({ engaged, targeted }: { engaged: boolean; targeted: boole
         }`}
       >
         <Image
-          src="/logos/aso-picture-logo.png"
+          src="/logos/ASO_Anchor.png"
           alt=""
           width={200}
-          height={176}
-          // Optical center per direct review, not the source PNG's measured
-          // content bbox: horizontal reset to 0 (prior measured corrections
-          // oscillated), small upward bias retained.
-          style={{ transform: "translate(0, -1px)" }}
+          height={200}
           className={`h-20 w-auto object-contain drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)] transition-[filter] duration-300 ease-out motion-reduce:transition-none ${
             engaged ? "brightness-110" : "brightness-100"
           }`}
