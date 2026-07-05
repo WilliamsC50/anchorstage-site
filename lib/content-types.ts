@@ -32,6 +32,65 @@ export interface PlatformTool {
   kind: "tool" | "mode" | "page";
 }
 
+/**
+ * Kinds of connected surfaces listed on /workstations. Extends the
+ * PlatformTool kinds with issued documents and in-workstation surfaces.
+ */
+export type ConnectedToolKind = "tool" | "mode" | "page" | "document" | "surface";
+
+/** One connected tool/page/mode/document as documented on /workstations. */
+export interface ConnectedTool {
+  name: string;
+  kind: ConnectedToolKind;
+  /** What it does and how it relates to the workstations. Doc tone. */
+  description: string;
+}
+
+/** One surface or section a workstation owns, shown on /workstations. */
+export interface OwnedSurface {
+  surface: string;
+  description: string;
+}
+
+/** One member type's presence inside a workstation. */
+export interface WorkstationRole {
+  persona: PersonaSlug;
+  /** What this member type does in the workstation, one line. */
+  note: string;
+}
+
+/**
+ * Documentation-page detail for one workstation — drives the /workstations
+ * sections. Content must follow platform canon (real surfaces only) and pull
+ * example data from lib/demo-canon.ts, never inline inventions.
+ */
+export interface WorkstationDetail {
+  slug: WorkstationSlug;
+  name: string;
+  /** One-sentence definition, product-documentation tone. */
+  definition: string;
+  /** The surfaces/sections this workstation owns, in platform nav order. */
+  owns: readonly OwnedSurface[];
+  /** What it reads from the shared operating record and network. */
+  reads: readonly string[];
+  /** What it writes to the shared operating record. */
+  writes: readonly string[];
+  /** Worked example following the flagship demo event, in order. */
+  exampleSteps: readonly string[];
+  /** Who typically works here, most active first. */
+  roles: readonly WorkstationRole[];
+}
+
+/** One step in the end-to-end operating flow shown on /workstations. */
+export interface OperatingFlowStep {
+  /** Short step label ("Convert to Event"). */
+  label: string;
+  /** The platform surface(s) active at this step. */
+  surface: string;
+  /** What changes on the operating record, using demo-canon values. */
+  detail: string;
+}
+
 export type PersonaSlug =
   | "freelancers"
   | "production-companies"

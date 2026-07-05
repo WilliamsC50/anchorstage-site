@@ -21,12 +21,12 @@ export const PRIMARY_NAV: NavItem[] = [
   {
     label: "Workstations",
     href: "/workstations",
-    // All children point at the top-level page for now — /workstations has no
-    // section anchors yet. Switch to `/workstations#${ws.slug}` once the page
-    // is rebuilt with sectioned content.
+    // Anchors match the section ids on /workstations, which use the
+    // canonical WorkstationSlug values (#event, #inventory, #marketing,
+    // #signage).
     children: WORKSTATIONS.map((ws) => ({
       label: ws.name,
-      href: "/workstations",
+      href: `/workstations#${ws.slug}`,
     })),
   },
   { label: "Plans", href: "/pricing" },
