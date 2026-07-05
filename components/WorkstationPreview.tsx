@@ -3,219 +3,228 @@ import {
   DEMO_EVENT,
   DEMO_INVENTORY,
   DEMO_MARKETING,
+  DEMO_ORGS,
   DEMO_SIGNAGE,
 } from "@/lib/demo-canon";
 
 /**
- * Miniature ASO product surfaces for the homepage Workstations Preview.
- *
- * Styling deliberately mirrors the real workstation UI language (see the
- * platform dashboard): slate-50 wells holding white hairline-bordered cards,
- * uppercase tracking-widest slate micro-labels, mono code chips, 50/700/200
- * status-badge triads, and sky text arrows. Record data comes from the demo
- * canon — never invent names inline.
+ * Miniature ASO workstation screens for the homepage Workstations Preview —
+ * each preview is the real page silhouette (identity header, left nav,
+ * slate-50 workspace well, white cards) rendered as if at ~35% zoom, using
+ * the platform's actual UI language: hairline slate borders, uppercase
+ * tracking-widest micro-labels, mono chips, and 50/700/200 status triads.
+ * All record data comes from the demo canon — never invent names inline.
  */
 
-// ── Shared atoms (match platform badge/chip patterns) ─────────────────────────
+// ── Shared miniature atoms ─────────────────────────────────────────────────────
 
-function MicroLabel({ children }: { children: React.ReactNode }) {
+function AppFrame({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-[9px] font-semibold uppercase tracking-widest text-slate-400">
-      {children}
-    </p>
-  );
-}
-
-function ReadinessPill({ children }: { children: string }) {
-  return (
-    <span className="shrink-0 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
-      {children}
-    </span>
-  );
-}
-
-function SkyBadge({ children }: { children: string }) {
-  return (
-    <span className="shrink-0 rounded border border-sky-200 bg-sky-50 px-1.5 py-0.5 text-[10px] font-semibold text-sky-700">
-      {children}
-    </span>
-  );
-}
-
-function MonoChip({ children }: { children: string }) {
-  return (
-    <span className="rounded bg-slate-100 px-1.5 py-0.5 font-mono text-[10px] text-slate-500">
-      {children}
-    </span>
-  );
-}
-
-function Well({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="space-y-1.5 rounded-xl border border-slate-200 bg-slate-50 p-1.5">
+    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white text-left shadow-sm">
       {children}
     </div>
   );
 }
 
-function InnerCard({ children }: { children: React.ReactNode }) {
+function NavColumn({ items }: { items: readonly string[] }) {
   return (
-    <div className="rounded-lg border border-slate-100 bg-white shadow-sm">{children}</div>
+    <div className="w-14 shrink-0 border-r border-slate-100 bg-white py-0.5">
+      {items.map((item, index) => (
+        <p
+          key={item}
+          className={`truncate px-1.5 py-1 text-[8px] font-medium ${
+            index === 0 ? "bg-slate-100 text-slate-900" : "text-slate-500"
+          }`}
+        >
+          {item}
+        </p>
+      ))}
+    </div>
   );
 }
 
-// ── Event Workstation — identity header + Event Health rows ───────────────────
+function MicroLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-[8px] font-semibold uppercase tracking-widest text-slate-400">
+      {children}
+    </p>
+  );
+}
+
+function MonoChip({ children }: { children: string }) {
+  return (
+    <span className="rounded bg-slate-100 px-1 py-px font-mono text-[8px] text-slate-500">
+      {children}
+    </span>
+  );
+}
+
+function StatTile({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded border border-slate-100 bg-white px-1.5 py-1 shadow-sm">
+      <MicroLabel>{label}</MicroLabel>
+      <p className="text-sm font-bold leading-tight tabular-nums text-slate-900">{value}</p>
+    </div>
+  );
+}
+
+// ── Event Workstation — identity header, left nav, Event Status card ──────────
 
 function EventPreview() {
   return (
-    <Well>
-      <InnerCard>
-        <div className="flex items-center justify-between gap-2 px-2.5 py-2">
-          <div className="min-w-0">
-            <p className="truncate text-[11px] font-semibold text-slate-900">
-              {DEMO_EVENT.name}
-            </p>
-            <p className="mt-0.5">
-              <MonoChip>{DEMO_EVENT.code}</MonoChip>
-            </p>
-          </div>
-          <ReadinessPill>{DEMO_EVENT.readiness}</ReadinessPill>
+    <AppFrame>
+      <div className="flex items-center justify-between gap-1.5 border-b border-slate-100 px-2 py-1.5">
+        <div className="flex min-w-0 items-center gap-1.5">
+          <span className="truncate text-[10px] font-semibold text-slate-900">
+            {DEMO_EVENT.name}
+          </span>
+          <span className="hidden sm:inline-flex">
+            <MonoChip>{DEMO_EVENT.code}</MonoChip>
+          </span>
         </div>
-      </InnerCard>
-      <InnerCard>
-        <div className="divide-y divide-slate-100">
-          <div className="flex items-center gap-2 px-2.5 py-1.5">
-            <span className="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[9px] font-bold text-emerald-600">
-              ✓
-            </span>
-            <span className="text-[11px] font-medium text-slate-700">Ready for Show</span>
-          </div>
-          <div className="flex items-center justify-between gap-2 px-2.5 py-1.5">
-            <span className="text-[11px] text-slate-500">Crew</span>
-            <span className="text-[11px] font-semibold text-slate-900">
-              {DEMO_EVENT.crew.filled} / {DEMO_EVENT.crew.total} Filled
-            </span>
-          </div>
-          <div className="flex items-center justify-between gap-2 px-2.5 py-1.5">
-            <span className="text-[11px] text-slate-500">Quote</span>
-            <MonoChip>{DEMO_EVENT.quoteNumber}</MonoChip>
-          </div>
-          <div className="flex items-center justify-between gap-2 px-2.5 py-1.5">
-            <span className="text-[11px] text-slate-500">Production Brief</span>
-            <SkyBadge>{DEMO_EVENT.productionBriefStatus}</SkyBadge>
+        <span className="shrink-0 rounded-full border border-emerald-200 bg-emerald-50 px-1.5 py-px text-[8px] font-semibold text-emerald-700">
+          {DEMO_EVENT.readiness}
+        </span>
+      </div>
+      <div className="flex">
+        <NavColumn items={["Overview", "Setup", "Operations", "Financials"]} />
+        <div className="min-w-0 flex-1 bg-slate-50 p-1.5">
+          <div className="rounded border border-slate-100 bg-white shadow-sm">
+            <div className="border-b border-slate-100 px-1.5 py-1">
+              <MicroLabel>Event Status</MicroLabel>
+            </div>
+            <div className="divide-y divide-slate-100">
+              <div className="flex items-center gap-1.5 px-1.5 py-1">
+                <span className="flex h-3 w-3 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-[8px] font-bold text-emerald-600">
+                  ✓
+                </span>
+                <span className="text-[9px] font-medium text-slate-700">Ready for Show</span>
+              </div>
+              <div className="flex items-center justify-between gap-1.5 px-1.5 py-1">
+                <span className="text-[9px] text-slate-500">Crew</span>
+                <span className="text-[9px] font-semibold text-slate-900">
+                  {DEMO_EVENT.crew.filled} / {DEMO_EVENT.crew.total} Filled
+                </span>
+              </div>
+              <div className="flex items-center justify-between gap-1.5 px-1.5 py-1">
+                <span className="text-[9px] text-slate-500">Quote</span>
+                <MonoChip>{DEMO_EVENT.quoteNumber}</MonoChip>
+              </div>
+            </div>
           </div>
         </div>
-      </InnerCard>
-    </Well>
+      </div>
+    </AppFrame>
   );
 }
 
-// ── Inventory Workstation — StatCard grid ──────────────────────────────────────
+// ── Inventory Workstation — org header, left nav, stat cards, Power Audit ─────
 
 function InventoryPreview() {
-  const stats = [
-    { label: "Gear Packages", value: String(DEMO_EVENT.gear.packages) },
-    { label: "Gear Items", value: String(DEMO_EVENT.gear.items) },
-    { label: "Gear Requests", value: String(DEMO_INVENTORY.gearRequestsOpen) },
-    { label: "Power Audit", value: DEMO_INVENTORY.powerAuditStatus, positive: true },
-  ];
-
   return (
-    <Well>
-      <div className="grid grid-cols-2 gap-1.5">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="rounded-lg border border-slate-100 bg-white px-2.5 py-2 shadow-sm"
-          >
-            <MicroLabel>{stat.label}</MicroLabel>
-            <p
-              className={`mt-0.5 text-lg font-bold leading-tight tabular-nums ${
-                stat.positive ? "text-emerald-600" : "text-slate-900"
-              }`}
-            >
-              {stat.value}
-            </p>
-          </div>
-        ))}
+    <AppFrame>
+      <div className="flex items-center justify-between gap-1.5 border-b border-slate-100 px-2 py-1.5">
+        <span className="truncate text-[10px] font-semibold text-slate-900">
+          {DEMO_ORGS[0].name}
+        </span>
+        <span className="shrink-0 rounded border border-slate-200 bg-slate-100 px-1.5 py-px text-[8px] font-semibold text-slate-500">
+          Inventory
+        </span>
       </div>
-    </Well>
+      <div className="flex">
+        <NavColumn items={["Overview", "Inventory", "Packages"]} />
+        <div className="min-w-0 flex-1 space-y-1.5 bg-slate-50 p-1.5">
+          <div className="grid grid-cols-2 gap-1.5">
+            <StatTile label="Active Items" value={String(DEMO_EVENT.gear.items)} />
+            <StatTile label="Packages" value={String(DEMO_EVENT.gear.packages)} />
+          </div>
+          <div className="flex items-center justify-between gap-1.5 rounded border border-slate-100 bg-white px-1.5 py-1 shadow-sm">
+            <div className="min-w-0">
+              <p className="text-[9px] font-bold text-slate-900">Power Audit</p>
+              <p className="text-[8px] font-medium text-emerald-600">
+                {DEMO_INVENTORY.powerAuditStatus}
+              </p>
+            </div>
+            <span className="shrink-0 text-[8px] font-semibold text-sky-600">Review →</span>
+          </div>
+        </div>
+      </div>
+    </AppFrame>
   );
 }
 
-// ── Marketing Workstation — KPI tiles + Needs Attention ───────────────────────
+// ── Marketing Workstation — left nav, KPI tiles, Needs Attention panel ────────
 
 function MarketingPreview() {
   return (
-    <Well>
-      <div className="grid grid-cols-2 gap-1.5">
-        <div className="rounded-lg border border-slate-100 bg-white px-2.5 py-2 shadow-sm">
-          <MicroLabel>New Leads (30d)</MicroLabel>
-          <p className="mt-0.5 text-lg font-bold leading-tight tabular-nums text-slate-900">
-            {DEMO_MARKETING.newLeads30d}
-          </p>
-        </div>
-        <div className="rounded-lg border border-slate-100 bg-white px-2.5 py-2 shadow-sm">
-          <MicroLabel>Quotes Sent</MicroLabel>
-          <p className="mt-0.5 text-lg font-bold leading-tight tabular-nums text-slate-900">
-            {DEMO_MARKETING.quotesSent}
-          </p>
+    <AppFrame>
+      <div className="flex">
+        <NavColumn items={["Overview", "Content", "Announcements"]} />
+        <div className="min-w-0 flex-1 space-y-1.5 bg-slate-50 p-1.5">
+          <div className="grid grid-cols-2 gap-1.5">
+            <StatTile label="New Leads (30d)" value={String(DEMO_MARKETING.newLeads30d)} />
+            <StatTile label="Quotes Sent" value={String(DEMO_MARKETING.quotesSent)} />
+          </div>
+          <div className="rounded border border-slate-100 bg-white shadow-sm">
+            <div className="flex items-center justify-between gap-1.5 border-b border-slate-100 px-1.5 py-1">
+              <MicroLabel>Needs Attention</MicroLabel>
+              <span className="rounded-full bg-amber-100 px-1 py-px text-[8px] font-semibold text-amber-700">
+                {DEMO_MARKETING.needsAttentionCount}
+              </span>
+            </div>
+            <div className="flex items-center justify-between gap-1.5 px-1.5 py-1">
+              <span className="truncate text-[9px] text-slate-700">
+                {DEMO_MARKETING.waitingLead.label}
+              </span>
+              <span className="shrink-0 text-[8px] font-semibold text-amber-700">
+                {DEMO_MARKETING.waitingLead.daysWaiting}d waiting
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-      <InnerCard>
-        <div className="flex items-center justify-between gap-2 border-b border-slate-100 px-2.5 py-1.5">
-          <MicroLabel>Needs Attention</MicroLabel>
-          <span className="rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700">
-            {DEMO_MARKETING.needsAttentionCount}
-          </span>
-        </div>
-        <div className="flex items-center justify-between gap-2 px-2.5 py-1.5">
-          <span className="truncate text-[11px] text-slate-700">
-            {DEMO_MARKETING.waitingLead.label}
-          </span>
-          <span className="shrink-0 text-[10px] font-semibold text-amber-700">
-            {DEMO_MARKETING.waitingLead.daysWaiting}d waiting
-          </span>
-        </div>
-      </InnerCard>
-    </Well>
+    </AppFrame>
   );
 }
 
-// ── Signage Workstation — Now Playing + queue rows ─────────────────────────────
+// ── Signage Workstation — screen registry with stacked screen records ─────────
 
 function SignagePreview() {
   return (
-    <Well>
-      <InnerCard>
-        <div className="px-2.5 pb-2 pt-1.5">
-          <MicroLabel>Now Playing</MicroLabel>
-          <div className="mt-1 rounded-md border border-sky-200 bg-sky-50 px-2 py-1.5">
-            <p className="truncate text-[11px] font-bold text-sky-900">
-              {DEMO_SIGNAGE.nowPlaying}
-            </p>
-          </div>
-        </div>
-      </InnerCard>
-      <InnerCard>
-        <div className="px-2.5 pb-2 pt-1.5">
-          <MicroLabel>Queue ({DEMO_SIGNAGE.queue.length})</MicroLabel>
-          <div className="mt-1 space-y-1">
-            {DEMO_SIGNAGE.queue.map((entry, index) => (
-              <div
-                key={entry}
-                className="flex items-center gap-2 rounded-md border border-slate-100 bg-slate-50 px-2 py-1"
-              >
-                <span className="w-3 shrink-0 text-right font-mono text-[10px] text-slate-400">
-                  {index + 1}
+    <AppFrame>
+      <div className="space-y-1.5 p-1.5">
+        <p className="border-l-2 border-l-slate-500 pl-1.5 text-[8px] font-bold uppercase tracking-wider text-slate-500">
+          Registered Screens ({DEMO_SIGNAGE.screens.length})
+        </p>
+        {DEMO_SIGNAGE.screens.map((screen) => (
+          <div
+            key={screen.slug}
+            className="flex items-start justify-between gap-1.5 rounded border border-slate-200 border-l-2 border-l-sky-400 bg-white p-1.5 shadow-sm"
+          >
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-1">
+                <span className="truncate text-[9px] font-bold text-slate-900">
+                  {screen.name}
                 </span>
-                <span className="truncate text-[11px] text-slate-700">{entry}</span>
+                <span className="rounded bg-sky-100 px-1 py-px text-[8px] font-semibold text-sky-700">
+                  {screen.type}
+                </span>
+                <span className="rounded bg-green-100 px-1 py-px text-[8px] font-bold text-green-700">
+                  ACTIVE
+                </span>
               </div>
-            ))}
+              <p className="mt-0.5 truncate font-mono text-[8px] text-slate-500">
+                slug: {screen.slug}
+              </p>
+              <p className="mt-0.5 text-[8px] font-medium text-emerald-600">● Configured</p>
+            </div>
+            <span className="shrink-0 rounded bg-slate-900 px-1.5 py-0.5 text-[8px] font-semibold text-white">
+              Manage
+            </span>
           </div>
-        </div>
-      </InnerCard>
-    </Well>
+        ))}
+      </div>
+    </AppFrame>
   );
 }
 

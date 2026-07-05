@@ -98,12 +98,26 @@ export const DEMO_INVENTORY = {
   powerAuditStatus: "Clean",
 } as const;
 
-/** Signage Workstation demo session — Now Playing + queue for previews. */
+/** Signage Workstation demo data — session content plus the registered-screen
+ *  records shown in the screen registry. Screen names/slugs derive from the
+ *  demo venues so the universe stays consistent. */
 export const DEMO_SIGNAGE = {
   nowPlaying: "Harbor Lights Duo",
   queue: [
     DEMO_RECURRING_EVENTS[3], // Jazz Under the Stars
     DEMO_RECURRING_EVENTS[0], // Summer Concert Series
+  ],
+  screens: [
+    {
+      name: `${DEMO_VENUES[0].name} Open Mic`, // Lakeside Pavilion Open Mic
+      slug: DEMO_VENUES[0].id, // lakeside
+      type: "Open Mic",
+    },
+    {
+      name: `${DEMO_VENUES[1].name} Lobby`, // Harbor Hall Lobby
+      slug: DEMO_VENUES[1].id, // harbor-hall
+      type: "General",
+    },
   ],
 } as const;
 
