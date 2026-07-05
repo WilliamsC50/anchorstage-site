@@ -9,6 +9,7 @@ import NetworkTree from "@/components/NetworkTree";
 import EventWorkflowExplorer from "@/components/EventWorkflowExplorer";
 import ChaosToRecord from "@/components/ChaosToRecord";
 import WorkstationIcon from "@/components/WorkstationIcon";
+import WorkstationPreview from "@/components/WorkstationPreview";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
 import { SUPPORT_TOOLS, WORKSTATIONS } from "@/lib/workstations";
@@ -169,27 +170,25 @@ export default function Home() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
           {WORKSTATIONS.map((workstation) => (
-            <Card
+            <div
               key={workstation.slug}
-              title={workstation.name}
-              icon={
-                <div className="w-12 h-12 rounded-full bg-aso-bg flex items-center justify-center text-aso-blue">
-                  <WorkstationIcon slug={workstation.slug} />
-                </div>
-              }
+              className="flex flex-col rounded-xl bg-white border border-gray-100 shadow-sm transition duration-200 hover:shadow-md hover:-translate-y-1"
             >
-              <p className="mb-4">{workstation.tagline}</p>
-              <ul className="flex flex-wrap gap-1.5">
-                {workstation.capabilities.map((capability) => (
-                  <li
-                    key={capability}
-                    className="px-2.5 py-1 rounded-full text-xs font-medium bg-aso-bg text-aso-navy"
-                  >
-                    {capability}
-                  </li>
-                ))}
-              </ul>
-            </Card>
+              <div className="flex items-center gap-3 p-5 pb-0">
+                <div className="w-10 h-10 rounded-lg bg-aso-bg flex items-center justify-center text-aso-blue shrink-0">
+                  <WorkstationIcon slug={workstation.slug} className="w-5 h-5" />
+                </div>
+                <h3 className="font-semibold text-base leading-snug text-aso-navy">
+                  {workstation.name}
+                </h3>
+              </div>
+              <p className="px-5 pt-3 text-sm leading-relaxed text-gray-500">
+                {workstation.tagline}
+              </p>
+              <div className="mt-auto p-5 pt-4">
+                <WorkstationPreview slug={workstation.slug} />
+              </div>
+            </div>
           ))}
         </div>
 
