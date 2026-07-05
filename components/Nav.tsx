@@ -3,8 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { PRIMARY_NAV, AUTH_NAV, FOR_MEMBERS_HREF } from "@/lib/nav";
-import { PERSONAS } from "@/lib/personas";
+import { PRIMARY_NAV, AUTH_NAV } from "@/lib/nav";
 
 function Chevron({ open }: { open: boolean }) {
   return (
@@ -27,12 +26,13 @@ function Chevron({ open }: { open: boolean }) {
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
-  const [membersOpen, setMembersOpen] = useState(false);
-  const [mobileMembersOpen, setMobileMembersOpen] = useState(false);
+  // Track open dropdowns by item label — one at a time, per viewport.
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [mobileOpenDropdown, setMobileOpenDropdown] = useState<string | null>(null);
 
   function closeAll() {
     setOpen(false);
-    setMobileMembersOpen(false);
+    setMobileOpenDropdown(null);
   }
 
   return (
@@ -59,35 +59,37 @@ export default function Nav() {
         {/* DESKTOP NAV LINKS */}
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-aso-navy">
           {PRIMARY_NAV.map((item) =>
-            item.href === FOR_MEMBERS_HREF ? (
+            item.children?.length ? (
               <div
                 key={item.href}
                 className="relative"
-                onMouseEnter={() => setMembersOpen(true)}
-                onMouseLeave={() => setMembersOpen(false)}
+                onMouseEnter={() => setOpenDropdown(item.label)}
+                onMouseLeave={() => setOpenDropdown(null)}
               >
                 <button
                   type="button"
                   className="flex items-center gap-1 opacity-70 hover:opacity-100 transition"
                   aria-haspopup="true"
-                  aria-expanded={membersOpen}
-                  onClick={() => setMembersOpen((v) => !v)}
+                  aria-expanded={openDropdown === item.label}
+                  onClick={() =>
+                    setOpenDropdown((v) => (v === item.label ? null : item.label))
+                  }
                 >
                   {item.label}
-                  <Chevron open={membersOpen} />
+                  <Chevron open={openDropdown === item.label} />
                 </button>
 
-                {membersOpen && (
+                {openDropdown === item.label && (
                   <div className="absolute top-full left-0 pt-2">
                     <div className="w-56 rounded-lg border border-gray-100 bg-white shadow-lg py-2">
-                      {PERSONAS.map((persona) => (
+                      {item.children.map((child) => (
                         <Link
-                          key={persona.slug}
-                          href={`${FOR_MEMBERS_HREF}/${persona.slug}`}
+                          key={child.label}
+                          href={child.href}
                           className="block px-4 py-2 text-sm opacity-70 hover:opacity-100 hover:bg-aso-bg transition"
-                          onClick={() => setMembersOpen(false)}
+                          onClick={() => setOpenDropdown(null)}
                         >
-                          {persona.name}
+                          {child.label}
                         </Link>
                       ))}
                     </div>
@@ -146,28 +148,30 @@ export default function Nav() {
           style={{ borderColor: "rgba(79, 168, 209, 0.2)" }}
         >
           {PRIMARY_NAV.map((item) =>
-            item.href === FOR_MEMBERS_HREF ? (
+            item.children?.length ? (
               <div key={item.href}>
                 <button
                   type="button"
                   className="w-full flex items-center justify-between opacity-70 hover:opacity-100 transition py-2.5"
-                  aria-expanded={mobileMembersOpen}
-                  onClick={() => setMobileMembersOpen((v) => !v)}
+                  aria-expanded={mobileOpenDropdown === item.label}
+                  onClick={() =>
+                    setMobileOpenDropdown((v) => (v === item.label ? null : item.label))
+                  }
                 >
                   {item.label}
-                  <Chevron open={mobileMembersOpen} />
+                  <Chevron open={mobileOpenDropdown === item.label} />
                 </button>
 
-                {mobileMembersOpen && (
+                {mobileOpenDropdown === item.label && (
                   <div className="pl-4 flex flex-col gap-1 pb-2">
-                    {PERSONAS.map((persona) => (
+                    {item.children.map((child) => (
                       <Link
-                        key={persona.slug}
-                        href={`${FOR_MEMBERS_HREF}/${persona.slug}`}
+                        key={child.label}
+                        href={child.href}
                         className="opacity-60 hover:opacity-100 transition py-2 text-sm"
                         onClick={closeAll}
                       >
-                        {persona.name}
+                        {child.label}
                       </Link>
                     ))}
                   </div>

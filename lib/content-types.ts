@@ -1,6 +1,9 @@
 export interface NavItem {
   label: string;
   href: string;
+  /** Optional dropdown (desktop) / accordion (mobile) links under this item.
+   *  Rendered by Nav.tsx only — the footer lists top-level items alone. */
+  children?: readonly NavItem[];
 }
 
 /**

@@ -1,16 +1,34 @@
 import { INTAKE_LOGIN_URL, INTAKE_REGISTER_URL } from "./constants";
 import type { NavItem } from "./content-types";
+import { PERSONAS } from "./personas";
+import { WORKSTATIONS } from "./workstations";
 
-// Referenced directly (not just via PRIMARY_NAV) because Nav.tsx renders
-// this item as a dropdown/accordion instead of a plain link.
-export const FOR_MEMBERS_HREF = "/for-members";
+const FOR_MEMBERS_HREF = "/for-members";
 
 // Order is significant — mirrors the approved site architecture.
+// Items with `children` render as a dropdown (desktop) / accordion (mobile).
 export const PRIMARY_NAV: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "For Members", href: FOR_MEMBERS_HREF },
+  {
+    label: "For Members",
+    href: FOR_MEMBERS_HREF,
+    children: PERSONAS.map((persona) => ({
+      label: persona.name,
+      href: `${FOR_MEMBERS_HREF}/${persona.slug}`,
+    })),
+  },
   { label: "Network", href: "/network" },
-  { label: "Workstations", href: "/workstations" },
+  {
+    label: "Workstations",
+    href: "/workstations",
+    // All children point at the top-level page for now — /workstations has no
+    // section anchors yet. Switch to `/workstations#${ws.slug}` once the page
+    // is rebuilt with sectioned content.
+    children: WORKSTATIONS.map((ws) => ({
+      label: ws.name,
+      href: "/workstations",
+    })),
+  },
   { label: "Plans", href: "/pricing" },
   { label: "About", href: "/about" },
 ];
