@@ -77,6 +77,36 @@ export const DEMO_IDS = {
  * issued quote/invoice, deposit tracking, Production Brief, Pack List,
  * Media & Assets counts, projected margin).
  */
+/**
+ * Marketing Workstation preview figures — mirrors the real overview surface
+ * (KPI tiles + "Needs Attention" groups). Counts stay consistent with the
+ * one-universe rule: the waiting lead is a known demo recurring event.
+ */
+export const DEMO_MARKETING = {
+  newLeads30d: 4,
+  quotesSent: 9,
+  needsAttentionCount: 2,
+  waitingLead: {
+    label: DEMO_RECURRING_EVENTS[1], // Friday Night Market
+    daysWaiting: 5,
+  },
+} as const;
+
+/** Inventory Workstation preview counters not scoped to the flagship event. */
+export const DEMO_INVENTORY = {
+  gearRequestsOpen: 2,
+  powerAuditStatus: "Clean",
+} as const;
+
+/** Signage Workstation demo session — Now Playing + queue for previews. */
+export const DEMO_SIGNAGE = {
+  nowPlaying: "Harbor Lights Duo",
+  queue: [
+    DEMO_RECURRING_EVENTS[3], // Jazz Under the Stars
+    DEMO_RECURRING_EVENTS[0], // Summer Concert Series
+  ],
+} as const;
+
 export const DEMO_EVENT = {
   name: "Summer Concert Series",
   code: DEMO_IDS.eventCode,
