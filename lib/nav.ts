@@ -11,7 +11,7 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "For Members", href: FOR_MEMBERS_HREF },
   { label: "Network", href: "/network" },
   { label: "Workstations", href: "/workstations" },
-  { label: "Pricing", href: "/pricing" },
+  { label: "Plans", href: "/pricing" },
   { label: "About", href: "/about" },
 ];
 
