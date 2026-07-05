@@ -157,13 +157,13 @@ export default function Home() {
       <Section background="gray">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
-            Four Workstations. One Operating Record.
+            Purpose-Built Workspaces for Each Operation.
           </h2>
           <p className="text-gray-500 leading-relaxed">
-            Every event in ASO lives in one operating record. The workstations are
-            where you work on it — planning the event, managing gear, running
-            marketing, and driving signage — backed by tools like Intake,
-            Financials, and the Dashboard.
+            Every organization works differently. Use the workspaces that fit your
+            operation while every event, document, crew assignment, gear
+            assignment, asset, and financial record stays connected through one
+            operating record.
           </p>
         </div>
 
