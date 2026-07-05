@@ -7,26 +7,26 @@ export interface NavItem {
  * Official product terminology: "Workstations" — never "Modules" or
  * "Features" in marketing-facing content.
  *
- * Full canonical set per the approved architecture; only a subset is
- * populated in lib/workstations.ts until the Workstations page ships.
+ * Only four workstations exist in the platform: Event, Inventory,
+ * Marketing, and Signage. Every other surface (Intake, Financials,
+ * Dashboard, Practice Mode, ...) is a tool, mode, or page — model
+ * those as PlatformTool, never as a Workstation.
  */
-export type WorkstationSlug =
-  | "event"
-  | "operations"
-  | "crew"
-  | "inventory"
-  | "marketing"
-  | "media"
-  | "financial"
-  | "power"
-  | "practice"
-  | "automation";
+export type WorkstationSlug = "event" | "inventory" | "marketing" | "signage";
 
 export interface Workstation {
   slug: WorkstationSlug;
   name: string;
   tagline: string;
-  comingSoon?: boolean;
+  /** Canonical capability names surfaced on the homepage preview card. */
+  capabilities: readonly string[];
+}
+
+/** A supporting platform surface that is not a workstation. */
+export interface PlatformTool {
+  name: string;
+  /** What kind of surface this is inside the platform. */
+  kind: "tool" | "mode" | "page";
 }
 
 export type PersonaSlug =

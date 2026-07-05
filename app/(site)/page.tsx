@@ -11,7 +11,7 @@ import ChaosToRecord from "@/components/ChaosToRecord";
 import WorkstationIcon from "@/components/WorkstationIcon";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
-import { WORKSTATIONS } from "@/lib/workstations";
+import { SUPPORT_TOOLS, WORKSTATIONS } from "@/lib/workstations";
 
 export const metadata: Metadata = {
   title: "AnchorStage Operations | Live Event Production - Orlando & Central Florida",
@@ -157,30 +157,56 @@ export default function Home() {
       <Section background="gray">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
-            Workstations Built for Real Event Work
+            Four Workstations. One Operating Record.
           </h2>
           <p className="text-gray-500 leading-relaxed">
-            ASO gives members connected workstations for planning events, managing
-            operations, coordinating people, organizing media, building documents,
-            and growing their business.
+            Every event in ASO lives in one operating record. The workstations are
+            where you work on it — planning the event, managing gear, running
+            marketing, and driving signage — backed by tools like Intake,
+            Financials, and the Dashboard.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
           {WORKSTATIONS.map((workstation) => (
             <Card
               key={workstation.slug}
               title={workstation.name}
-              centered
               icon={
                 <div className="w-12 h-12 rounded-full bg-aso-bg flex items-center justify-center text-aso-blue">
                   <WorkstationIcon slug={workstation.slug} />
                 </div>
               }
             >
-              {workstation.tagline}
+              <p className="mb-4">{workstation.tagline}</p>
+              <ul className="flex flex-wrap gap-1.5">
+                {workstation.capabilities.map((capability) => (
+                  <li
+                    key={capability}
+                    className="px-2.5 py-1 rounded-full text-xs font-medium bg-aso-bg text-aso-navy"
+                  >
+                    {capability}
+                  </li>
+                ))}
+              </ul>
             </Card>
           ))}
+        </div>
+
+        <div className="max-w-3xl mx-auto mt-14 text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
+            Connected tools that keep the record complete
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
+            {SUPPORT_TOOLS.map((tool) => (
+              <span
+                key={tool.name}
+                className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-white text-gray-600 border border-gray-200"
+              >
+                {tool.name}
+              </span>
+            ))}
+          </div>
         </div>
 
         <div className="text-center mt-14">

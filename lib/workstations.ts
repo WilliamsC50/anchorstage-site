@@ -1,37 +1,42 @@
-import type { Workstation } from "./content-types";
+import type { PlatformTool, Workstation } from "./content-types";
 
-// Only the six featured on the homepage preview so far. The remaining
-// canonical slugs (operations, media, power, automation) get populated
-// when the full /workstations page is built.
+// The four real ASO workstations — matches the platform dashboard
+// (Event, Inventory, Marketing, Signage). Capability names are canonical
+// platform labels; keep them aligned with lib/event-workflow.ts.
 export const WORKSTATIONS: Workstation[] = [
   {
     slug: "event",
     name: "Event Workstation",
-    tagline: "Plan events from inquiry to wrap-up.",
-  },
-  {
-    slug: "crew",
-    name: "Crew Workstation",
-    tagline: "Coordinate people, roles, and collaborators.",
+    tagline: "Run each event from intake conversion to final invoice.",
+    capabilities: ["Crew Assignments", "Gear", "Readiness", "Issued Documents"],
   },
   {
     slug: "inventory",
     name: "Inventory Workstation",
-    tagline: "Track gear, packages, and shared resources.",
-  },
-  {
-    slug: "financial",
-    name: "Financial Workstation",
-    tagline: "Build quotes, invoices, and business records.",
+    tagline: "Track gear, packages, and requests across every event.",
+    capabilities: ["Gear Inventory", "Gear Packages", "Gear Requests", "Power Audit"],
   },
   {
     slug: "marketing",
     name: "Marketing Workstation",
     tagline: "Turn event history into repeatable campaigns.",
+    capabilities: ["Lead Pipeline", "Quote Follow-Up", "Asset Library", "Announcements"],
   },
   {
-    slug: "practice",
-    name: "Practice Workstation",
-    tagline: "Learn the system without risking real work.",
+    slug: "signage",
+    name: "Signage Workstation",
+    tagline: "Drive screens and displays straight from the operating record.",
+    capabilities: ["Screen Management", "Venue Signage", "Event Displays"],
   },
+];
+
+// Supporting surfaces shown in the homepage tools strip. These are
+// tools, modes, and pages — never call them workstations.
+export const SUPPORT_TOOLS: PlatformTool[] = [
+  { name: "Intake", kind: "tool" },
+  { name: "Financials", kind: "tool" },
+  { name: "Dashboard", kind: "page" },
+  { name: "Media & Assets", kind: "tool" },
+  { name: "Power Planner", kind: "tool" },
+  { name: "Practice Mode", kind: "mode" },
 ];

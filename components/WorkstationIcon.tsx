@@ -30,17 +30,6 @@ export default function WorkstationIcon({ slug, className = "w-6 h-6" }: Worksta
         </svg>
       );
 
-    case "crew":
-      // Roster hierarchy — one lead branching to collaborators.
-      return (
-        <svg className={className} {...STROKE_PROPS} aria-hidden="true">
-          <circle cx="12" cy="5.5" r="2" />
-          <circle cx="6" cy="17" r="2" />
-          <circle cx="18" cy="17" r="2" />
-          <path d="M12 7.5v3M12 10.5 6 15M12 10.5l6 4.5" />
-        </svg>
-      );
-
     case "inventory":
       // Stacked gear cases.
       return (
@@ -49,18 +38,6 @@ export default function WorkstationIcon({ slug, className = "w-6 h-6" }: Worksta
           <rect x="5" y="13.5" width="14" height="6.5" rx="1" />
           <line x1="8" y1="4" x2="8" y2="10.5" />
           <line x1="16" y1="4" x2="16" y2="10.5" />
-        </svg>
-      );
-
-    case "financial":
-      // Invoice sheet with a settled line item.
-      return (
-        <svg className={className} {...STROKE_PROPS} aria-hidden="true">
-          <path d="M6 3h9l3 3v15H6z" />
-          <path d="M15 3v3h3" />
-          <line x1="9" y1="10" x2="15" y2="10" />
-          <line x1="9" y1="13" x2="15" y2="13" />
-          <path d="M9 17l1.5 1.5L14 15" />
         </svg>
       );
 
@@ -74,13 +51,15 @@ export default function WorkstationIcon({ slug, className = "w-6 h-6" }: Worksta
         </svg>
       );
 
-    case "practice":
-      // Target — a safe space to aim before it counts.
+    case "signage":
+      // Display screen on a stand — venue and event signage.
       return (
         <svg className={className} {...STROKE_PROPS} aria-hidden="true">
-          <circle cx="12" cy="12" r="8" />
-          <circle cx="12" cy="12" r="4.5" />
-          <circle cx="12" cy="12" r="1.2" />
+          <rect x="4" y="4" width="16" height="11" rx="1.5" />
+          <line x1="7.5" y1="8" x2="16.5" y2="8" />
+          <line x1="7.5" y1="11" x2="13" y2="11" />
+          <line x1="12" y1="15" x2="12" y2="19" />
+          <line x1="8.5" y1="19" x2="15.5" y2="19" />
         </svg>
       );
 
