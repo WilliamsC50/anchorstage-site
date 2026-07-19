@@ -113,15 +113,15 @@ export default function NetworkPage() {
         </div>
 
         <div className="max-w-3xl mt-14 rounded-xl border border-white/15 bg-white/5 p-7">
-          <p className="text-xs font-semibold uppercase tracking-widest text-white/50 mb-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange mb-3">
             Long-term direction
           </p>
           <p className="text-white/70 leading-relaxed">
-            ASO is being built so that organizations and professionals can eventually
-            find the right industry relationships through the network. That is direction,
-            not a feature you will find in the product today. Right now the network
-            connects organizations that already know each other, and we would rather say
-            so plainly than describe something that does not exist yet.
+            Live events run on relationships, and the work runs better when those
+            relationships stay connected to it. ASO is being built to keep strengthening
+            that connection: stronger tools for the operations organizations run every
+            week, less friction between the people working the same event, and more of
+            the day spent producing events rather than managing the systems around them.
           </p>
         </div>
       </Section>

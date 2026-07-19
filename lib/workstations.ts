@@ -1,6 +1,9 @@
 import type { Workstation } from "./content-types";
 
-// The four ASO Workstations, matching the platform application.
+// The ASO Workstations currently in the platform, matching the application.
+// This list grows as the platform does, so nothing on the site should frame
+// it as a fixed set.
+//
 // Public-facing taglines only. Full capability breakdowns belong in the
 // product, not on the marketing site.
 export const WORKSTATIONS: Workstation[] = [

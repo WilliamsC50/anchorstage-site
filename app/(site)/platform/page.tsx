@@ -107,9 +107,9 @@ export default function PlatformPage() {
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed">
             Different work needs different tools, but it does not need different
-            information. ASO is organized into four Workstations, each built for a
-            different part of running events, all working on the same connected
-            operating record.
+            information. ASO uses purpose-built Workstations for the different parts of
+            running live events. As the platform grows, new Workstations work from the
+            same Connected Operating Record.
           </p>
         </div>
 

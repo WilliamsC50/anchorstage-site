@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Button from "@/components/Button";
+import HeroMedia from "@/components/HeroMedia";
 import PersonaIcon from "@/components/PersonaIcon";
 import Section from "@/components/Section";
-import SignalFlow from "@/components/SignalFlow";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
 
@@ -48,7 +48,7 @@ export default function Home() {
         />
 
         <div className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
-          <div className="grid lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-16 lg:items-center">
+          <div className="grid lg:grid-cols-[7fr_5fr] lg:gap-14 lg:items-center">
             <div className="max-w-3xl">
               <div className="flex items-center gap-3 mb-6">
                 <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
@@ -57,15 +57,14 @@ export default function Home() {
                 </p>
               </div>
 
-              <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-[1.08] mb-7">
-                The operations behind live events, connected to the people doing the work
+              <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.03] mb-7">
+                Run the operation, not the chaos.
               </h1>
 
               <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl">
-                AnchorStage Operations is a professional network and connected operations
-                platform built for live events. Run your events, gear, documents, and
-                financial records in one place, and stay connected to the organizations
-                you work with.
+                AnchorStage Operations keeps your events, equipment, people, and partner
+                organizations connected so the work stays organized from intake to
+                invoice.
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
@@ -79,9 +78,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Signal-flow motif, desktop only so mobile stays typographic */}
+            {/* Media column. Artwork lives in HeroMedia, not here. */}
             <div className="hidden lg:block">
-              <SignalFlow className="w-full h-auto" />
+              <HeroMedia />
             </div>
           </div>
         </div>
@@ -171,8 +170,8 @@ export default function Home() {
                 key={persona.slug}
                 className="group flex items-center gap-4 rounded-lg border border-transparent py-3 px-4 -mx-1 transition hover:border-aso-blue/15 hover:bg-aso-bg"
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-aso-bg text-aso-blue transition group-hover:bg-white group-hover:text-aso-orange">
-                  <PersonaIcon slug={persona.slug} className="h-5 w-5" />
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-aso-bg text-aso-blue transition group-hover:bg-white group-hover:text-aso-orange">
+                  <PersonaIcon slug={persona.slug} className="h-6 w-6" />
                 </span>
                 <span className="font-medium text-aso-navy">{persona.name}</span>
               </li>
