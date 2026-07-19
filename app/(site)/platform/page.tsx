@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Button from "@/components/Button";
+import HeroMedia from "@/components/HeroMedia";
 import PageHeader from "@/components/PageHeader";
 import Section from "@/components/Section";
 import WorkstationIcon from "@/components/WorkstationIcon";
+import { platformHero } from "@/lib/images";
 import { buildMetadata } from "@/lib/metadata";
 import { AUTH_NAV } from "@/lib/nav";
 import { WORKSTATIONS } from "@/lib/workstations";
@@ -39,6 +42,24 @@ export default function PlatformPage() {
         eyebrow="Platform"
         title="One operational foundation for your organization"
         lead="AnchorStage Operations is a connected operations platform for live event work. Your organization gets one place where its events, records, and day to day operations live together."
+        media={
+          // Product shot, not photography. Passed as HeroMedia children so it
+          // uses object-contain instead of the default cover: the laptop,
+          // tablet, and phone stay whole at any hero height, and object-right
+          // seats the tablet against the hero's right edge so the devices read
+          // as floating in the navy. No fade — the image already sits on navy,
+          // and a fade would dim the screens.
+          <HeroMedia className="hidden lg:block absolute inset-y-0 right-0 z-[1] w-[52%] xl:w-[56%] 2xl:w-[58%]">
+            <Image
+              src={platformHero.src}
+              alt={platformHero.alt}
+              fill
+              priority
+              sizes="(min-width: 1536px) 58vw, (min-width: 1280px) 56vw, (min-width: 1024px) 52vw, 100vw"
+              className="object-contain object-right"
+            />
+          </HeroMedia>
+        }
       />
 
       {/* ORGANIZATIONS — heading left, points right, orange tick per point */}

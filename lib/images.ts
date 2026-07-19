@@ -39,12 +39,20 @@ export const networkHero: ImageAsset = {
     "music venue, a laptop open between them and the stage lit behind.",
 };
 
+export const platformHero: ImageAsset = {
+  src: "/images/heroes/platform/platform-hero.png",
+  width: 1536,
+  height: 1024,
+  alt:
+    "The ASO platform shown on a laptop, tablet, and phone: the events list, " +
+    "the financials overview, and the sign-in screen.",
+};
+
 /**
  * Heroes for the remaining pages are not yet produced. Import these once the
  * assets land in their folders; until then those pages use the typographic
  * PageHeader with no imagery.
  */
-export const platformHero: ImageAsset | null = null;
 export const whoItsForHero: ImageAsset | null = null;
 export const aboutHero: ImageAsset | null = null;
 
