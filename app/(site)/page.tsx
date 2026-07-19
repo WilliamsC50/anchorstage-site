@@ -92,18 +92,17 @@ export default function Home() {
             <div className="flex items-center gap-3 mb-6">
               <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange">
-                For the live event industry
+                Live Event Network • Live Event Operations Platform
               </p>
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.03] mb-7">
-              Run the operation, not the chaos.
+              AnchorStage Operations
             </h1>
 
             <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl">
-              AnchorStage Operations keeps your events, equipment, people, and partner
-              organizations connected so the work stays organized from intake to
-              invoice.
+              ASO keeps your events, equipment, people, and partner organizations
+              connected so the work stays organized from intake to invoice.
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
