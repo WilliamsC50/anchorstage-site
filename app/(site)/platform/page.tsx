@@ -46,9 +46,9 @@ export default function PlatformPage() {
           // Product shot, not photography. Passed as HeroMedia children so it
           // uses object-contain instead of the default cover: the laptop,
           // tablet, and phone stay whole at any hero height, and object-right
-          // seats the tablet against the hero's right edge so the devices read
-          // as floating in the navy. No fade — the image already sits on navy,
-          // and a fade would dim the screens.
+          // seats the tablet against the hero's right edge. The PNG is
+          // transparent, so the devices and their shadows float directly on
+          // the hero's navy. No fade or overlay — nothing must dim the screens.
           <HeroMedia className="hidden lg:block absolute inset-y-0 right-0 z-[1] w-[52%] xl:w-[56%] 2xl:w-[58%]">
             <Image
               src={platformHero.src}

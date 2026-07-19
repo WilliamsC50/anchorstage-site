@@ -40,9 +40,11 @@ export const networkHero: ImageAsset = {
 };
 
 export const platformHero: ImageAsset = {
-  src: "/images/heroes/platform/platform-hero.png",
-  width: 1536,
-  height: 1024,
+  // Transparent PNG: the devices and their shadows float on whatever sits
+  // behind them, so no baked background meets the hero navy.
+  src: "/images/heroes/platform/platform-hero-transparent.png",
+  width: 1605,
+  height: 957,
   alt:
     "The ASO platform shown on a laptop, tablet, and phone: the events list, " +
     "the financials overview, and the sign-in screen.",
