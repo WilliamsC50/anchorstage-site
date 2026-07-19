@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import Anchored from "@/components/Anchored";
 import Button from "@/components/Button";
+import MicroHeading, { MicroHeadingInline } from "@/components/MicroHeading";
+import OperatingRecordCard from "@/components/OperatingRecordCard";
+import ScreenshotFrame from "@/components/ScreenshotFrame";
 import Section from "@/components/Section";
+import SectionHeader from "@/components/SectionHeader";
 import WorkstationIcon from "@/components/WorkstationIcon";
+import WorkstationNode from "@/components/WorkstationNode";
 import type {
   ConnectedToolKind,
   PersonaSlug,
   WorkstationDetail,
-  WorkstationSlug,
 } from "@/lib/content-types";
 import { DEMO_EVENT } from "@/lib/demo-canon";
 import { buildMetadata } from "@/lib/metadata";
@@ -40,48 +44,6 @@ const PAGE_SECTIONS = [
   { id: "how-it-connects", label: "How It Connects" },
 ] as const;
 
-interface RecordField {
-  label: string;
-  value: string;
-  maintainedIn: string;
-}
-
-/** The record fields shown as tiles in the centerpiece card. Values come
- *  only from DEMO_EVENT; each is attributed to the surface maintaining it. */
-const RECORD_PRIMARY_FIELDS: RecordField[] = [
-  { label: "Client", value: DEMO_EVENT.client, maintainedIn: "Event Workstation" },
-  { label: "Venue", value: DEMO_EVENT.venue, maintainedIn: "Event Workstation" },
-  { label: "Readiness", value: DEMO_EVENT.readiness, maintainedIn: "Event Workstation" },
-  {
-    label: "Crew",
-    value: `${DEMO_EVENT.crew.filled} / ${DEMO_EVENT.crew.total} Filled`,
-    maintainedIn: "Event Workstation",
-  },
-  {
-    label: "Gear",
-    value: `${DEMO_EVENT.gear.packages} Packages · ${DEMO_EVENT.gear.items} Items`,
-    maintainedIn: "Inventory Workstation",
-  },
-  { label: "Quote", value: DEMO_EVENT.quoteNumber, maintainedIn: "Financials" },
-  { label: "Invoice", value: DEMO_EVENT.invoiceStatus, maintainedIn: "Financials" },
-  {
-    label: "Media & Assets",
-    value: `${DEMO_EVENT.mediaAssetCount} Tagged`,
-    maintainedIn: "Media & Assets",
-  },
-];
-
-/** The rest of the record, shown as a compact footer strip on the card. */
-const RECORD_SECONDARY_FIELDS: { label: string; value: string }[] = [
-  { label: "Owner", value: DEMO_EVENT.ownerOrg },
-  { label: "Primary Collaborator", value: DEMO_EVENT.primaryCollaborator },
-  { label: "Planned Power", value: DEMO_EVENT.powerPlannedAmps },
-  { label: "Deposit", value: DEMO_EVENT.depositStatus },
-  { label: "Production Brief", value: DEMO_EVENT.productionBriefStatus },
-  { label: "Pack List", value: DEMO_EVENT.packListStatus },
-  { label: "Projected Margin", value: `${DEMO_EVENT.projectedMarginPct}%` },
-];
-
 const KIND_BADGE_DARK_CLASSES: Record<ConnectedToolKind, string> = {
   tool: "border-sky-300/30 bg-sky-300/10 text-sky-200",
   mode: "border-violet-300/30 bg-violet-300/10 text-violet-200",
@@ -93,178 +55,6 @@ const KIND_BADGE_DARK_CLASSES: Record<ConnectedToolKind, string> = {
 const PERSONA_NAMES: Record<PersonaSlug, string> = Object.fromEntries(
   PERSONAS.map((persona) => [persona.slug, persona.name]),
 ) as Record<PersonaSlug, string>;
-
-/** Short display name for constellation nodes ("Event Workstation" → "Event"). */
-function shortName(name: string): string {
-  return name.replace(" Workstation", "");
-}
-
-// ── Documentation atoms ────────────────────────────────────────────────────────
-
-function MicroHeading({ children }: { children: ReactNode }) {
-  return (
-    <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
-      {children}
-    </p>
-  );
-}
-
-/** MicroHeading without the bottom margin, for inline header rows. */
-function MicroHeadingInline({ children }: { children: ReactNode }) {
-  return (
-    <p className="text-xs font-semibold uppercase tracking-widest text-gray-400">{children}</p>
-  );
-}
-
-/** Anchor wrapper: gives each Section a stable id with room for the sticky
- *  header + jump bar when the browser scrolls to it. */
-function Anchored({ id, children }: { id: string; children: ReactNode }) {
-  return (
-    <div id={id} className="scroll-mt-28">
-      {children}
-    </div>
-  );
-}
-
-function SectionHeader({
-  title,
-  lead,
-  dark = false,
-}: {
-  title: string;
-  lead: string;
-  dark?: boolean;
-}) {
-  return (
-    <div className="max-w-3xl mb-12">
-      <h2
-        className={`text-3xl md:text-4xl font-bold mb-4 ${dark ? "text-white" : "text-aso-navy"}`}
-      >
-        {title}
-      </h2>
-      <p className={`leading-relaxed ${dark ? "text-white/60" : "text-gray-500"}`}>{lead}</p>
-    </div>
-  );
-}
-
-// ── Screenshot placeholder ─────────────────────────────────────────────────────
-
-/**
- * Reserved frame for a real product capture. Swapping in a screenshot later
- * means replacing the inner placeholder <div> with an <Image> at the same
- * 16:9 ratio (1600 × 900) — the figure, border, and layout stay untouched.
- */
-function ScreenshotFrame({ name }: { name: string }) {
-  return (
-    <figure className="overflow-hidden rounded-xl border border-slate-200 bg-white p-2 shadow-sm">
-      <div className="flex aspect-video flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-slate-300 bg-slate-50 text-center">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden
-          className="mb-1 h-8 w-8 text-slate-300"
-        >
-          <rect x="3" y="5" width="18" height="14" rx="2" />
-          <circle cx="9" cy="10.5" r="1.5" />
-          <path d="m5.5 16.5 4-4 3 3 3-3 3 3" />
-        </svg>
-        <figcaption className="text-sm font-semibold text-slate-500">
-          {name} Screenshot
-        </figcaption>
-        <p className="font-mono text-xs text-slate-400">1600 × 900</p>
-        <p className="text-xs text-slate-400">Replace with real product capture</p>
-      </div>
-    </figure>
-  );
-}
-
-// ── Operating record constellation ─────────────────────────────────────────────
-
-function WorkstationNode({
-  slug,
-  name,
-  line,
-}: {
-  slug: WorkstationSlug;
-  name: string;
-  line?: "left" | "right";
-}) {
-  const card = (
-    <a
-      href={`#${slug}`}
-      className="flex w-full items-center gap-3 rounded-lg border border-slate-200 bg-white px-4 py-3 shadow-sm transition hover:border-aso-blue"
-    >
-      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-aso-bg text-aso-blue">
-        <WorkstationIcon slug={slug} className="h-4 w-4" />
-      </span>
-      <span className="min-w-0">
-        <span className="block truncate text-sm font-semibold text-aso-navy">
-          {shortName(name)}
-        </span>
-        <span className="block text-[10px] font-semibold uppercase tracking-widest text-gray-400">
-          Workstation
-        </span>
-      </span>
-    </a>
-  );
-
-  if (!line) return card;
-
-  return (
-    <div className="flex items-center">
-      {line === "right" && <span aria-hidden className="h-px flex-1 bg-slate-300" />}
-      <div className="w-44 xl:w-48 shrink-0">{card}</div>
-      {line === "left" && <span aria-hidden className="h-px flex-1 bg-slate-300" />}
-    </div>
-  );
-}
-
-function OperatingRecordCard() {
-  return (
-    <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-md">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-aso-navy px-6 py-4">
-        <div className="flex min-w-0 flex-wrap items-center gap-3">
-          <p className="truncate font-semibold text-white">{DEMO_EVENT.name}</p>
-          <span className="rounded bg-white/10 px-2 py-0.5 font-mono text-xs text-white/70">
-            {DEMO_EVENT.code}
-          </span>
-        </div>
-        <span className="text-[10px] font-semibold uppercase tracking-widest text-white/50">
-          Operating Record
-        </span>
-      </div>
-
-      <dl className="grid grid-cols-2 gap-px bg-slate-100 md:grid-cols-4">
-        {RECORD_PRIMARY_FIELDS.map((field) => (
-          <div key={field.label} className="bg-white px-4 py-4 sm:px-5">
-            <dt className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 sm:text-xs">
-              {field.label}
-            </dt>
-            <dd className="mt-1 text-sm font-semibold text-aso-navy sm:text-base">
-              {field.value}
-            </dd>
-            <dd className="mt-1 text-[10px] text-gray-400 sm:text-xs">{field.maintainedIn}</dd>
-          </div>
-        ))}
-      </dl>
-
-      <div className="border-t border-slate-200 bg-slate-50 px-6 py-3">
-        <dl className="flex flex-wrap gap-x-6 gap-y-1.5">
-          {RECORD_SECONDARY_FIELDS.map((field) => (
-            <div key={field.label} className="flex items-baseline gap-1.5 text-xs">
-              <dt className="text-gray-400">{field.label}</dt>
-              <dd className="font-semibold text-gray-600">{field.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </div>
-  );
-}
 
 // ── Workstation section ────────────────────────────────────────────────────────
 
