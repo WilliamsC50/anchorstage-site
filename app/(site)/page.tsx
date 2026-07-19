@@ -72,9 +72,10 @@ export default function Home() {
         />
 
         {/* Media band: flush to the section's right edge, full hero height,
-            fading into the navy before it reaches the copy. */}
+            fading into the navy before it reaches the copy. z-[1] lifts it
+            above the plot-grid and glow layers; the copy below is z-10. */}
         <HeroMedia
-          className="hidden lg:block absolute inset-y-0 right-0 w-[52%]"
+          className="hidden lg:block absolute inset-y-0 right-0 w-[52%] z-[1]"
           fadeLeft
           objectPosition="62% 50%"
           sizes="52vw"

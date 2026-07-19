@@ -5,8 +5,9 @@ import { homeHero } from "@/lib/images";
 interface HeroMediaProps {
   /** Artwork to render. Omit to use the default hero image. */
   children?: ReactNode;
-  /** Position and size come from the page, so this stays layout agnostic.
-   *  The component fills whatever box the className describes. */
+  /** The page owns position and size. This class lands on the outer element,
+   *  which is the ONLY thing that sets `position` — the component never does,
+   *  so a page can make it absolute without a class collision. */
   className?: string;
   /** Blend the left edge into the surrounding navy so the media reads as
    *  part of the background instead of a panel sitting on top of it. */
@@ -20,31 +21,29 @@ interface HeroMediaProps {
 /**
  * Hero artwork layer.
  *
- * The component owns the media and its blend, never the layout. A page places
- * it by passing a className, which is what lets the same component be a
- * full-height edge-aligned band on one page and a contained block on another.
+ * The component owns the media and its blend, never the layout or the
+ * position. The page places the outer element (typically
+ * `absolute inset-y-0 right-0 w-[52%]`); an inner `relative h-full w-full`
+ * box then gives `next/image fill` a sized positioning context.
  *
- * Anything passed as children replaces the image and fills the same box:
+ * The two are kept on separate elements on purpose. If the component also set
+ * `position` on the outer element, it would collide with the page's own
+ * position class, and Tailwind's cascade would silently pick one — which is
+ * exactly the bug this structure removes.
  *
- *   photography          <Image fill className="object-cover" ... />
- *   branded illustration <SomeSvg className="absolute inset-0 h-full w-full" />
- *   subtle motion        any absolutely positioned layer, ideally honouring
- *                        prefers-reduced-motion
- *   floating cards       absolutely positioned siblings
- *
- * No border radius is applied here. Rounding, if ever wanted, belongs in the
- * className the page supplies.
+ * Anything passed as children replaces the image and fills the same inner box.
+ * No border radius is applied here; rounding belongs in the page's className.
  */
 
 /** Left-to-right ramp from solid navy to clear, in --aso-navy (15, 47, 79).
- *  Wide and multi-stop so the blend has no perceptible edge. */
+ *  Solid through the copy side, fully clear across the far right so the
+ *  right quarter of the photograph shows at full strength. */
 const FADE_LEFT =
   "linear-gradient(to right," +
   " rgb(15,47,79) 0%," +
-  " rgb(15,47,79) 22%," +
-  " rgba(15,47,79,0.88) 40%," +
-  " rgba(15,47,79,0.55) 60%," +
-  " rgba(15,47,79,0.22) 80%," +
+  " rgb(15,47,79) 25%," +
+  " rgba(15,47,79,0.55) 50%," +
+  " rgba(15,47,79,0.12) 78%," +
   " rgba(15,47,79,0) 100%)";
 
 export default function HeroMedia({
@@ -55,26 +54,31 @@ export default function HeroMedia({
   sizes = "(min-width: 1024px) 55vw, 100vw",
 }: HeroMediaProps) {
   return (
-    <div className={`relative overflow-hidden ${className}`}>
-      {children ?? (
-        <Image
-          src={homeHero.src}
-          alt={homeHero.alt}
-          fill
-          priority
-          sizes={sizes}
-          className="object-cover"
-          style={{ objectPosition }}
-        />
-      )}
+    <div className={className}>
+      {/* Sized positioning context for the fill image. h-full/w-full inherit
+          the outer element's box, so this is nonzero whenever the page has
+          given the outer element a height and width. */}
+      <div className="relative h-full w-full overflow-hidden">
+        {children ?? (
+          <Image
+            src={homeHero.src}
+            alt={homeHero.alt}
+            fill
+            priority
+            sizes={sizes}
+            className="object-cover"
+            style={{ objectPosition }}
+          />
+        )}
 
-      {fadeLeft && (
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{ background: FADE_LEFT }}
-        />
-      )}
+        {fadeLeft && (
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 pointer-events-none"
+            style={{ background: FADE_LEFT }}
+          />
+        )}
+      </div>
     </div>
   );
 }
