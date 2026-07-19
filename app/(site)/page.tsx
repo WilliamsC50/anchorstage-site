@@ -13,6 +13,30 @@ export const metadata: Metadata = {
     "A professional network and connected operations platform built for the live event industry. Run your events, gear, documents, and financial records in one place, and work with the organizations you already work with. Join free.",
 };
 
+// The two halves of ASO, introduced together so they read as one product.
+// Network first: the platform exists because the network does.
+const HALVES = [
+  {
+    label: "Network",
+    href: "/network",
+    headline: "Connect the people you already work with.",
+    body: [
+      "The live event industry already runs on trusted relationships.",
+      "ASO keeps those organizations connected around the work instead of scattered across emails, spreadsheets, and disconnected tools.",
+    ],
+    cta: "Explore the Network",
+  },
+  {
+    label: "Platform",
+    href: "/platform",
+    headline: "Run every event from one connected record.",
+    body: [
+      "Purpose-built Workstations keep events, equipment, crew, finances, marketing, and collaboration organized while staying connected to the same operational record.",
+    ],
+    cta: "Explore the Platform",
+  },
+];
+
 const CHANGES = [
   {
     index: "01",
@@ -85,6 +109,66 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* WHAT ASO IS — the two halves of the product, network first */}
+      <Section background="bg" plot>
+        <div className="max-w-3xl mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
+            One Connected Industry.
+            <br />
+            One Connected Platform.
+          </h2>
+          <p className="text-lg text-gray-500 leading-relaxed mb-4">
+            Live events are built by people working together.
+          </p>
+          <p className="text-lg text-gray-500 leading-relaxed mb-4">
+            Production companies, venues, freelancers, musicians, rental providers, and
+            event organizers already depend on one another to make every show happen.
+          </p>
+          <p className="text-lg text-gray-500 leading-relaxed">
+            AnchorStage Operations connects those relationships through a shared network
+            and gives every organization the tools to manage the work together.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          {HALVES.map((half) => (
+            <Link
+              key={half.href}
+              href={half.href}
+              className="group relative aso-panel aso-panel-lift flex flex-col overflow-hidden rounded-xl border border-aso-blue/12 bg-white p-7 md:p-8"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute left-0 top-0 h-full w-0.5 bg-aso-blue/20 transition-colors group-hover:bg-aso-orange"
+              />
+
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange-ink mb-4">
+                {half.label}
+              </p>
+
+              <h3 className="text-xl font-bold text-aso-navy tracking-tight mb-4 leading-snug">
+                {half.headline}
+              </h3>
+
+              <div className="flex-1 space-y-4 mb-7">
+                {half.body.map((paragraph) => (
+                  <p key={paragraph} className="text-gray-500 leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-aso-orange-ink">
+                {half.cta}
+                <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+                  &rarr;
+                </span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </Section>
 
       {/* THE PROBLEM — single column, wide measure, deliberately quiet */}
       <Section background="white">
