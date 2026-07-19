@@ -179,22 +179,22 @@ export default function Home() {
       </Section>
 
       {/* THE PROBLEM — single column, wide measure, deliberately quiet */}
-      <Section background="white">
+      <Section background="navy" plot>
         <div className="grid md:grid-cols-[7rem_minmax(0,1fr)] md:gap-10">
-          <p className="hidden md:block text-xs font-semibold uppercase tracking-[0.18em] text-gray-400 pt-3">
+          <p className="hidden md:block text-xs font-semibold uppercase tracking-[0.18em] text-white/50 pt-3">
             The problem
           </p>
           <div className="max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
               The work is not the hard part
             </h2>
-            <p className="text-lg text-gray-500 leading-relaxed mb-4">
+            <p className="text-lg text-white/70 leading-relaxed mb-4">
               Most people in live events already know how to run a show. What breaks is
               everything around it. The crew list is in a text thread, the gear list is in
               a spreadsheet, the quote is in an email, and the venue has a version of the
               schedule that is two days old.
             </p>
-            <p className="text-lg text-gray-500 leading-relaxed">
+            <p className="text-lg text-white/70 leading-relaxed">
               The moment a second organization joins the job, everyone starts working from
               their own copy, and the copies stop matching.
             </p>
@@ -237,19 +237,19 @@ export default function Home() {
       </Section>
 
       {/* WHO IT SERVES — right-weighted list against a left-set heading */}
-      <Section background="white">
+      <Section background="navy" plot>
         <div className="grid lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-16">
           <div className="mb-10 lg:mb-0">
-            <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-5">
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-5">
               Built for the people who make events happen
             </h2>
-            <p className="text-gray-500 leading-relaxed mb-6">
+            <p className="text-white/70 leading-relaxed mb-6">
               Whether you work alone or run a company with a full crew, you operate
               through your own organization on ASO.
             </p>
             <Link
               href="/who-its-for"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-aso-orange-ink hover:gap-3 transition-all"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-aso-orange hover:gap-3 transition-all"
             >
               See how ASO fits your work
               <span aria-hidden="true">&rarr;</span>
@@ -260,12 +260,12 @@ export default function Home() {
             {PERSONAS.map((persona) => (
               <li
                 key={persona.slug}
-                className="group flex items-center gap-4 rounded-lg border border-transparent py-3 px-4 -mx-1 transition hover:border-aso-blue/15 hover:bg-aso-bg"
+                className="group flex items-center gap-4 rounded-lg border border-transparent py-3 px-4 -mx-1 transition hover:border-white/15 hover:bg-white/5"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-aso-bg text-aso-blue transition group-hover:bg-white group-hover:text-aso-orange">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white/10 text-aso-blue-light transition group-hover:bg-white/15 group-hover:text-aso-orange">
                   <PersonaIcon slug={persona.slug} className="h-6 w-6" />
                 </span>
-                <span className="font-medium text-aso-navy">{persona.name}</span>
+                <span className="font-medium text-white">{persona.name}</span>
               </li>
             ))}
           </ul>
@@ -273,12 +273,12 @@ export default function Home() {
       </Section>
 
       {/* CTA */}
-      <Section background="navy" plot>
+      <Section background="white">
         <div className="max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             Start with your own organization
           </h2>
-          <p className="text-lg text-white/70 leading-relaxed mb-10">
+          <p className="text-lg text-gray-500 leading-relaxed mb-10">
             Creating an account is free, and a one-person organization is a complete
             one. You do not need anyone else on the platform to start running your work
             through it.

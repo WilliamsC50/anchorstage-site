@@ -90,16 +90,16 @@ export default function AboutPage() {
       </Section>
 
       {/* LONG-TERM DIRECTION */}
-      <Section background="bg" plot>
+      <Section background="navy" plot>
         <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             Where it is going
           </h2>
-          <p className="text-lg text-gray-500 leading-relaxed mb-4">
+          <p className="text-lg text-white/70 leading-relaxed mb-4">
             The near-term work is depth: making the operations an organization runs every
             week faster and more reliable than the tools it is replacing.
           </p>
-          <p className="text-lg text-gray-500 leading-relaxed">
+          <p className="text-lg text-white/70 leading-relaxed">
             Longer term, ASO is being structured so organizations and professionals can
             find the right industry relationships through the network itself. That is a
             direction rather than a promise, and the site will say so until it ships.

@@ -118,7 +118,7 @@ export default function PlatformPage() {
       </Section>
 
       {/* WORKSTATIONS */}
-      <Section background="bg">
+      <Section background="bg" plot>
         <div className="max-w-2xl mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             Purpose-built Workstations

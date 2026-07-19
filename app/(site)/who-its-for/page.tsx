@@ -87,15 +87,36 @@ export default function WhoItsForPage() {
         <div aria-hidden="true" className="hidden lg:block h-10" />
       </Section>
 
-      {/* CTA */}
-      <Section background="navy">
-        <div className="max-w-2xl">
+      {/* WHAT EVERYONE SHARES — navy narrative bridge into the CTA */}
+      <Section background="navy" plot>
+        <div className="max-w-3xl">
+          <span aria-hidden="true" className="block h-px w-8 bg-aso-orange mb-6" />
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
-            Whichever one you are, you start the same way
+            What everyone shares
           </h2>
-          <p className="text-lg text-white/70 leading-relaxed mb-10">
-            Create your organization and run your work through it. Membership is free,
-            and you do not need anyone else on the platform to get value from it.
+          <p className="text-lg text-white/70 leading-relaxed mb-4">
+            Six kinds of work, one thing in common. Everyone here operates through their
+            own organization, on their own terms. ASO does not fold you into one larger
+            company or ask you to work the way someone else does.
+          </p>
+          <p className="text-lg text-white/70 leading-relaxed">
+            You get value from the first day, before anyone else you know has joined. As
+            more of the industry comes on, independent organizations start working
+            together on a shared network without giving up what makes each of them their
+            own.
+          </p>
+        </div>
+      </Section>
+
+      {/* CTA */}
+      <Section background="white">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
+            Join free
+          </h2>
+          <p className="text-lg text-gray-500 leading-relaxed mb-10">
+            Create your organization and start running your work through it. Membership
+            is free, and you can begin on your own today.
           </p>
           <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
         </div>
