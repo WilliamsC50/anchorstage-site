@@ -160,7 +160,7 @@ export default function Home() {
 
         <div className="text-center mt-14">
           <Link
-            href="/workstations"
+            href="/platform"
             className="inline-block text-sm font-medium text-aso-blue hover:text-aso-navy transition"
           >
             Explore Workstations →

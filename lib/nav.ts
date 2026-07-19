@@ -20,13 +20,13 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Network", href: "/network" },
   {
     label: "Workstations",
-    href: "/workstations",
-    // Anchors match the section ids on /workstations, which use the
+    href: "/platform",
+    // Anchors match the section ids on /platform, which use the
     // canonical WorkstationSlug values (#event, #inventory, #marketing,
     // #signage).
     children: WORKSTATIONS.map((ws) => ({
       label: ws.name,
-      href: `/workstations#${ws.slug}`,
+      href: `/platform#${ws.slug}`,
     })),
   },
   { label: "Plans", href: "/pricing" },
