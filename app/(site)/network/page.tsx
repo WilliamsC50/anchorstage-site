@@ -41,7 +41,7 @@ export default function NetworkPage() {
         lead="ASO is a professional network for live events. What makes it useful today is not a list of strangers. It is that the organizations you already work with are connected to the same operational information you are."
         media={
           <HeroMedia
-            className="hidden lg:block absolute inset-y-0 right-0 z-[1] w-[56%] xl:w-[62%] 2xl:w-[66%]"
+            className="absolute inset-0 z-[1] lg:left-auto lg:w-[56%] xl:w-[62%] 2xl:w-[66%]"
             fadeLeft
             image={networkHero}
             // The subjects sit centre-left of the frame. Biasing the crop

@@ -1,58 +1,40 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import { homeHero, type ImageAsset } from "@/lib/images";
 
 interface HeroMediaProps {
-  /** Artwork to render. Omit to use `image`. */
-  children?: ReactNode;
-  /** The photograph to render when no children are supplied. Defaults to the
-   *  home hero so existing callers are unaffected. */
+  /** The photograph to render. Defaults to the home hero. */
   image?: ImageAsset;
-  /** The page owns position and size. This class lands on the outer element,
-   *  which is the ONLY thing that sets `position` — the component never does,
-   *  so a page can make it absolute without a class collision. */
+  /** Page-supplied responsive position. The established pattern is a
+   *  full-bleed layer below lg that becomes a right-edge band at lg:
+   *  `absolute inset-0 z-[1] lg:left-auto lg:w-[56%] ...`. */
   className?: string;
-  /** Blend the left edge into the surrounding navy so the media reads as
-   *  part of the background instead of a panel sitting on top of it. */
+  /** Blend the left edge into the navy on desktop, under the copy. */
   fadeLeft?: boolean;
-  /** Focal point for the cover crop, e.g. "62% 50%". */
+  /** cover fills the band (photography); contain keeps the whole image in
+   *  frame without cropping (the transparent device shot). */
+  fit?: "cover" | "contain";
+  /** Focal point for the cover crop, e.g. "42% 50%". */
   objectPosition?: CSSProperties["objectPosition"];
-  /** Rendered-width hint for the optimizer. */
+  /** Rendered-width hint for the optimizer. Should end with 100vw for the
+   *  full-bleed mobile layer. */
   sizes?: string;
 }
 
 /**
- * Hero artwork layer.
+ * Hero artwork layer, shared by all five page heroes.
  *
- * The component owns the media and its blend, never the layout or the
- * position. The page places the outer element (typically
- * `absolute inset-y-0 right-0 w-[52%]`); an inner `relative h-full w-full`
- * box then gives `next/image fill` a sized positioning context.
- *
- * The two are kept on separate elements on purpose. If the component also set
- * `position` on the outer element, it would collide with the page's own
- * position class, and Tailwind's cascade would silently pick one — which is
- * exactly the bug this structure removes.
- *
- * Anything passed as children replaces the image and fills the same inner box.
- * No border radius is applied here; rounding belongs in the page's className.
+ * One image is positioned by the page's className: full-bleed below lg,
+ * a flush-right band at lg and up. Two overlays keep the copy readable in
+ * each range — a navy scrim below lg (the image sits behind the full-width
+ * copy) and the desktop left fade at lg and up (the image sits to the side
+ * of the copy). The component owns the media and its overlays; the page owns
+ * position and size.
  */
 
-/** Left-to-right ramp from navy to clear, in --aso-navy (15, 47, 79).
- *
- *  There is no flat safe zone: the band is fully navy only at its extreme
- *  left edge, and image begins hinting through almost immediately. The fade
- *  then releases over a long distance so the photograph reads as the hero's
- *  background rather than a panel bolted to the right.
- *
- *  Shape:
- *   - 0-4%    fully navy, extreme left only
- *   - 4-30%   the copy/image overlap: image present but held back (0.85 down
- *             to 0.6) so text over it stays comfortably readable
- *   - 30-54%  medium blend releasing toward clear
- *   - 54%     0.14, so the stage focal area (around here) keeps its contrast
- *   - 74%     fully clear, and it stays clear to the right edge, so the far
- *             side of the photograph carries full strength */
+/** Desktop: navy to clear, left to right, in --aso-navy (15, 47, 79). Solid
+ *  through the copy side, clear across the far right so the stage/subject
+ *  keeps full strength. */
 const FADE_LEFT =
   "linear-gradient(to right," +
   " rgb(15,47,79) 0%," +
@@ -65,36 +47,51 @@ const FADE_LEFT =
   " rgba(15,47,79,0) 74%," +
   " rgba(15,47,79,0) 100%)";
 
+/** Mobile/tablet: top-weighted navy veil over the full-bleed image. Strong
+ *  where the copy sits (top), easing lower so the imagery stays identifiable
+ *  and, on Platform, the devices are not buried. */
+const MOBILE_SCRIM =
+  "linear-gradient(180deg," +
+  " rgba(15,47,79,0.86) 0%," +
+  " rgba(15,47,79,0.72) 30%," +
+  " rgba(15,47,79,0.55) 62%," +
+  " rgba(15,47,79,0.66) 100%)";
+
 export default function HeroMedia({
-  children,
   image = homeHero,
   className = "",
   fadeLeft = false,
+  fit = "cover",
   objectPosition = "center",
   sizes = "(min-width: 1024px) 55vw, 100vw",
 }: HeroMediaProps) {
+  const fitClass = fit === "contain" ? "object-contain" : "object-cover";
+
   return (
     <div className={className}>
-      {/* Sized positioning context for the fill image. h-full/w-full inherit
-          the outer element's box, so this is nonzero whenever the page has
-          given the outer element a height and width. */}
       <div className="relative h-full w-full overflow-hidden">
-        {children ?? (
-          <Image
-            src={image.src}
-            alt={image.alt}
-            fill
-            priority
-            sizes={sizes}
-            className="object-cover"
-            style={{ objectPosition }}
-          />
-        )}
+        <Image
+          src={image.src}
+          alt={image.alt}
+          fill
+          priority
+          sizes={sizes}
+          className={fitClass}
+          style={{ objectPosition }}
+        />
 
+        {/* Mobile/tablet scrim: image is behind the full-width copy. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none lg:hidden"
+          style={{ background: MOBILE_SCRIM }}
+        />
+
+        {/* Desktop left fade: image is beside the copy. */}
         {fadeLeft && (
           <div
             aria-hidden="true"
-            className="absolute inset-0 pointer-events-none"
+            className="absolute inset-0 pointer-events-none hidden lg:block"
             style={{ background: FADE_LEFT }}
           />
         )}

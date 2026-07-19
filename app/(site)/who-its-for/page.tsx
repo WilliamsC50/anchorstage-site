@@ -28,7 +28,7 @@ export default function WhoItsForPage() {
           // The montage is a uniform grid with no single subject, so the crop
           // is centred.
           <HeroMedia
-            className="hidden lg:block absolute inset-y-0 right-0 z-[1] w-[56%] xl:w-[62%] 2xl:w-[66%]"
+            className="absolute inset-0 z-[1] lg:left-auto lg:w-[56%] xl:w-[62%] 2xl:w-[66%]"
             fadeLeft
             image={whoItsForHero}
             objectPosition="50% 50%"
