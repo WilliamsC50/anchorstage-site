@@ -3,33 +3,26 @@ import { PRIMARY_NAV, AUTH_NAV } from "@/lib/nav";
 
 export default function Footer() {
   return (
-    <footer style={{ backgroundColor: "var(--aso-navy)" }}>
-      <div className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-3 gap-12">
+    <footer className="bg-aso-navy">
+      <div className="max-w-6xl mx-auto px-6 py-14 grid gap-10 md:grid-cols-3">
 
-        {/* Column 1: Brand */}
         <div>
-          <p className="font-semibold text-white">AnchorStage Operations LLC</p>
-          <p className="text-xs mt-1" style={{ color: "var(--aso-blue-light)", opacity: 0.6 }}>
-            Orlando, Florida
-          </p>
-          <p className="text-sm mt-4 leading-relaxed" style={{ color: "var(--aso-blue-light)", opacity: 0.7 }}>
-            Professional sound, staging, and production support for live events across Central Florida.
-          </p>
-          <p className="text-xs mt-4" style={{ color: "var(--aso-blue-light)", opacity: 0.6 }}>
-            Insured for live event production work.
+          <p className="font-semibold text-white">AnchorStage Operations</p>
+          <p className="mt-3 text-sm leading-relaxed text-aso-blue-light/70 max-w-xs">
+            A professional network and connected operations platform built for the
+            live event industry.
           </p>
         </div>
 
-        {/* Column 2: Navigate */}
         <div>
-          <p
-            className="text-xs font-semibold uppercase tracking-widest mb-4"
-            style={{ color: "var(--aso-blue-light)", opacity: 0.45 }}
-          >
-            Navigate
+          <p className="text-xs font-semibold uppercase tracking-widest text-aso-blue-light/50 mb-4">
+            Site
           </p>
-          <nav className="flex flex-col gap-2.5 text-sm" style={{ color: "var(--aso-blue-light)" }}>
-            {PRIMARY_NAV.filter((item) => item.href !== "/").map((item) => (
+          <nav className="flex flex-col gap-3 text-sm text-aso-blue-light">
+            <Link href="/" className="opacity-70 hover:opacity-100 transition">
+              Home
+            </Link>
+            {PRIMARY_NAV.map((item) => (
               <Link key={item.href} href={item.href} className="opacity-70 hover:opacity-100 transition">
                 {item.label}
               </Link>
@@ -37,44 +30,34 @@ export default function Footer() {
           </nav>
         </div>
 
-        {/* Column 3: Start Here */}
         <div>
-          <p
-            className="text-xs font-semibold uppercase tracking-widest mb-4"
-            style={{ color: "var(--aso-blue-light)", opacity: 0.45 }}
-          >
-            Start Here
+          <p className="text-xs font-semibold uppercase tracking-widest text-aso-blue-light/50 mb-4">
+            Get started
           </p>
-          <div className="flex flex-col gap-2.5 text-sm">
-            <a
-              href={AUTH_NAV.join.href}
-              className="font-medium transition hover:opacity-90"
-              style={{ color: "var(--aso-orange)" }}
-            >
-              {AUTH_NAV.join.label} →
+          <div className="flex flex-col gap-3 text-sm">
+            <a href={AUTH_NAV.join.href} className="font-medium text-aso-orange transition hover:opacity-90">
+              {AUTH_NAV.join.label}
             </a>
             <a
               href={AUTH_NAV.login.href}
-              className="opacity-70 hover:opacity-100 transition"
-              style={{ color: "var(--aso-blue-light)" }}
+              className="text-aso-blue-light opacity-70 hover:opacity-100 transition"
             >
               {AUTH_NAV.login.label}
             </a>
           </div>
         </div>
-
       </div>
 
-      <div
-        className="border-t text-xs py-4"
-        style={{ borderColor: "rgba(127, 211, 244, 0.15)", color: "rgba(127, 211, 244, 0.5)" }}
-      >
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-2 text-center">
+      <div className="border-t border-aso-blue-light/15">
+        <div className="max-w-6xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-aso-blue-light/50 text-center">
           <p>&copy; {new Date().getFullYear()} AnchorStage Operations LLC</p>
-          <nav className="flex gap-4">
-            <Link href="/terms" className="opacity-80 hover:opacity-100 transition">Terms</Link>
-            <Link href="/privacy" className="opacity-80 hover:opacity-100 transition">Privacy</Link>
-            <Link href="/insurance" className="opacity-80 hover:opacity-100 transition">Insurance</Link>
+          <nav className="flex gap-5">
+            <Link href="/terms" className="hover:text-aso-blue-light transition">
+              Terms
+            </Link>
+            <Link href="/privacy" className="hover:text-aso-blue-light transition">
+              Privacy
+            </Link>
           </nav>
         </div>
       </div>

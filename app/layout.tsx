@@ -20,50 +20,53 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: "/logos/aso-picture-logo.png",
   },
-  title: "AnchorStage Operations | Live Event Production – Orlando, FL",
+  title: "AnchorStage Operations | Connected Operations Platform for Live Events",
   description:
-    "Professional live sound, staging, lighting, and event production in Orlando and Central Florida. AnchorStage Operations LLC. Stage to strike.",
+    "A professional network and connected operations platform built for the live event industry. Run your events, gear, documents, and financial records in one place.",
   openGraph: {
     type: "website",
     url: "https://anchorstageops.com",
     siteName: "AnchorStage Operations",
-    title: "AnchorStage Operations | Live Event Production – Orlando, FL",
+    title: "AnchorStage Operations | Connected Operations Platform for Live Events",
     description:
-      "Professional live sound, staging, lighting, and event production in Orlando and Central Florida.",
+      "A professional network and connected operations platform built for the live event industry.",
     images: [
       {
         url: "/images/hero-stage.jpg",
         width: 1200,
         height: 630,
-        alt: "AnchorStage Operations – Live Event Production",
+        alt: "AnchorStage Operations",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AnchorStage Operations | Live Event Production – Orlando, FL",
+    title: "AnchorStage Operations | Connected Operations Platform for Live Events",
     description:
-      "Professional live sound, staging, lighting, and event production in Orlando and Central Florida.",
+      "A professional network and connected operations platform built for the live event industry.",
     images: ["/images/hero-stage.jpg"],
   },
 };
 
-const localBusinessSchema = {
+const applicationSchema = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: "AnchorStage Operations LLC",
+  "@type": "SoftwareApplication",
+  name: "AnchorStage Operations",
   url: "https://anchorstageops.com",
-  telephone: "+1-360-720-8622",
-  email: "contact@anchorstageops.com",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Orlando",
-    addressRegion: "FL",
-    addressCountry: "US",
-  },
-  areaServed: ["Orlando", "Central Florida"],
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "Web",
   description:
-    "AnchorStage Operations LLC provides professional live sound, staging, lighting, and event production services in Orlando and Central Florida.",
+    "A professional network and connected operations platform for the live event industry. Organizations run their events, crew, inventory, documents, and financial records on one connected operating record.",
+  offers: {
+    "@type": "Offer",
+    price: "0",
+    priceCurrency: "USD",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "AnchorStage Operations LLC",
+    url: "https://anchorstageops.com",
+  },
 };
 
 export default function RootLayout({
@@ -76,7 +79,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(applicationSchema) }}
         />
         {children}
       </body>

@@ -1,61 +1,19 @@
 import type { MetadataRoute } from "next";
 
+// Only the five canonical marketing pages plus the two legal pages.
+// Retired routes are permanently redirected in next.config.ts and must not
+// appear here.
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://anchorstageops.com";
+  const lastModified = new Date();
+
   return [
-    {
-      url: `${base}/`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1.0,
-    },
-    {
-      url: `${base}/services`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${base}/contact`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${base}/team`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${base}/photos`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.6,
-    },
-    {
-      url: `${base}/terms`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${base}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${base}/media-release`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
-    {
-      url: `${base}/insurance`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.3,
-    },
+    { url: `${base}/`, lastModified, changeFrequency: "monthly", priority: 1.0 },
+    { url: `${base}/platform`, lastModified, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${base}/network`, lastModified, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${base}/who-its-for`, lastModified, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${base}/about`, lastModified, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${base}/terms`, lastModified, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${base}/privacy`, lastModified, changeFrequency: "yearly", priority: 0.2 },
   ];
 }

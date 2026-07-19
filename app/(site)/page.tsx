@@ -1,184 +1,157 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Hero from "@/components/Hero";
-import Section from "@/components/Section";
 import Button from "@/components/Button";
-import PersonaCard from "@/components/PersonaCard";
-import NetworkTree from "@/components/NetworkTree";
-import EventWorkflowExplorer from "@/components/EventWorkflowExplorer";
-import ChaosToRecord from "@/components/ChaosToRecord";
-import WorkstationIcon from "@/components/WorkstationIcon";
-import WorkstationPreview from "@/components/WorkstationPreview";
+import PersonaIcon from "@/components/PersonaIcon";
+import Section from "@/components/Section";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
-import { SUPPORT_TOOLS, WORKSTATIONS } from "@/lib/workstations";
 
 export const metadata: Metadata = {
-  title: "AnchorStage Operations | Live Event Production - Orlando & Central Florida",
+  title: "AnchorStage Operations | Connected Operations Platform for Live Events",
   description:
-    "AnchorStage Operations LLC provides professional live sound, staging, lighting, and full event production in Orlando and Central Florida, from bar shows to outdoor stages.",
+    "A professional network and connected operations platform built for the live event industry. Run your events, gear, documents, and financial records in one place, and work with the organizations you already work with. Join free.",
 };
+
+const CHANGES = [
+  {
+    title: "One record per event",
+    body: "Everything about an event lives in one connected operating record instead of a dozen places that disagree with each other.",
+  },
+  {
+    title: "One organization that keeps the work",
+    body: "Events start and finish. Your organization keeps the gear, documents, financial records, and history that came out of them.",
+  },
+  {
+    title: "Partners on the same information",
+    body: "When another organization joins your event, they work from current information with the access you give them, not from a copy you emailed last week.",
+  },
+];
 
 export default function Home() {
   return (
     <main>
 
       {/* HERO */}
-      <Hero
-        eyebrow="The Operating System for Live Events"
-        title="The Professional Network for Live Events"
-        description="Join the free professional network where production companies, freelancers, venues, musicians, rental providers, and event organizers collaborate to plan, staff, equip, market, and grow live events."
-        primaryCta={AUTH_NAV.join}
-        backgroundImage="/images/hero-stage.jpg"
-      />
-
-      {/* WHO ARE YOU */}
-      <Section background="white">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
-            Where do you fit in live events?
-          </h2>
-          <p className="text-gray-500 leading-relaxed">
-            Whether you&apos;re building events, performing on stage, managing venues,
-            renting equipment, or supporting productions, ASO helps you connect with
-            the people and tools you need to grow.
-          </p>
+      <section className="relative bg-aso-navy overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(ellipse 720px 520px at 80% -10%, rgba(145, 205, 255, 0.18) 0%, rgba(70, 135, 200, 0.10) 30%, transparent 70%)",
+          }}
+        />
+        <div className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
+          <div className="max-w-3xl">
+            <p className="text-xs font-semibold uppercase tracking-widest text-aso-blue-light mb-5">
+              For the live event industry
+            </p>
+            <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">
+              The operations behind live events, connected to the people doing the work
+            </h1>
+            <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10">
+              AnchorStage Operations is a professional network and connected operations
+              platform built for live events. Run your events, gear, documents, and
+              financial records in one place, and stay connected to the organizations
+              you work with.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
+              <Link
+                href="/platform"
+                className="inline-block border border-white/30 text-white px-8 py-3.5 rounded-lg font-medium transition hover:bg-white/10"
+              >
+                See how it works
+              </Link>
+            </div>
+          </div>
         </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PERSONAS.map((persona) => (
-            <PersonaCard key={persona.slug} persona={persona} />
-          ))}
-        </div>
-      </Section>
-
-      {/* EVERYTHING STARTS WITH ONE CONNECTION */}
-      <Section background="navy">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Everything Starts With One Connection.
-          </h2>
-          <p className="text-white/70 leading-relaxed">
-            When you join ASO, you&apos;re not just creating another account.
-            You&apos;re joining a professional network built around the live event
-            industry, connecting you with the people, opportunities, and resources
-            that help events happen.
-          </p>
-        </div>
-
-        <NetworkTree />
-      </Section>
-
-      {/* EVENT LIFECYCLE EXPLORER */}
-      <Section background="bg">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
-            Built Around the Way Live Events Actually Work
-          </h2>
-          <p className="text-gray-500 leading-relaxed">
-            Every event moves through a lifecycle. ASO keeps the people,
-            planning, gear, documents, money, and media connected from the
-            first intake submission to the final invoice.
-          </p>
-        </div>
-
-        <EventWorkflowExplorer />
-      </Section>
+      </section>
 
       {/* THE PROBLEM */}
-      <Section background="navy">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Live Events Are Not the Problem. Fragmentation Is.
+      <Section background="white">
+        <div className="max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+            The work is not the hard part
           </h2>
-          <p className="text-white/70 leading-relaxed">
-            Most event professionals already know how to do the work. The hard part
-            is keeping the people, gear, schedules, documents, media, marketing, and
-            communication connected before the event ever happens. ASO exists to
-            bring that work into one connected operating network.
+          <p className="text-lg text-gray-500 leading-relaxed mb-4">
+            Most people in live events already know how to run a show. What breaks is
+            everything around it. The crew list is in a text thread, the gear list is in
+            a spreadsheet, the quote is in an email, and the venue has a version of the
+            schedule that is two days old.
           </p>
-        </div>
-
-        <div className="max-w-5xl mx-auto">
-          <ChaosToRecord />
+          <p className="text-lg text-gray-500 leading-relaxed">
+            The moment a second organization joins the job, everyone starts working from
+            their own copy, and the copies stop matching.
+          </p>
         </div>
       </Section>
 
-      {/* WORKSTATIONS PREVIEW */}
-      <Section background="gray">
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-4">
-            Purpose-Built Workstations for Each Operation.
+      {/* WHAT ASO CHANGES */}
+      <Section background="bg">
+        <div className="max-w-3xl mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+            What ASO changes
           </h2>
-          <p className="text-gray-500 leading-relaxed">
-            Every organization works differently. Use the workstations that fit your
-            operation while every event, document, crew assignment, gear
-            assignment, asset, and financial record stays connected through one
-            operating record.
+          <p className="text-lg text-gray-500 leading-relaxed">
+            ASO puts the operational work and the working relationships in the same
+            place, so the information behind an event stays current for everyone who
+            needs it.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-          {WORKSTATIONS.map((workstation) => (
-            <div
-              key={workstation.slug}
-              className="flex flex-col rounded-xl bg-white border border-gray-100 shadow-sm transition duration-200 hover:shadow-md hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-3 p-5 pb-0">
-                <div className="w-10 h-10 rounded-lg bg-aso-bg flex items-center justify-center text-aso-blue shrink-0">
-                  <WorkstationIcon slug={workstation.slug} className="w-5 h-5" />
-                </div>
-                <h3 className="font-semibold text-base leading-snug text-aso-navy">
-                  {workstation.name}
-                </h3>
-              </div>
-              <p className="px-5 pt-3 text-sm leading-relaxed text-gray-500">
-                {workstation.tagline}
-              </p>
-              <div className="mt-auto p-5 pt-4">
-                <WorkstationPreview slug={workstation.slug} />
-              </div>
+        <div className="grid gap-8 md:grid-cols-3">
+          {CHANGES.map((item) => (
+            <div key={item.title}>
+              <div aria-hidden="true" className="w-10 h-0.5 bg-aso-orange mb-5" />
+              <h3 className="text-lg font-semibold text-aso-navy mb-3">{item.title}</h3>
+              <p className="text-gray-500 leading-relaxed">{item.body}</p>
             </div>
           ))}
         </div>
-
-        <div className="max-w-3xl mx-auto mt-14 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
-            Connected tools that keep the record complete
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {SUPPORT_TOOLS.map((tool) => (
-              <span
-                key={tool.name}
-                className="inline-block px-3 py-1.5 rounded-full text-xs font-medium bg-white text-gray-600 border border-gray-200"
-              >
-                {tool.name}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="text-center mt-14">
-          <Link
-            href="/platform"
-            className="inline-block text-sm font-medium text-aso-blue hover:text-aso-navy transition"
-          >
-            Explore Workstations →
-          </Link>
-        </div>
       </Section>
 
-      {/* JOIN THE NETWORK */}
-      <Section background="navy">
-        <div className="text-center max-w-2xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Join the Network
+      {/* WHO IT SERVES */}
+      <Section background="white">
+        <div className="max-w-3xl mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+            Built for the people who make events happen
           </h2>
-          <p className="text-white/70 leading-relaxed mb-10 max-w-xl mx-auto">
-            Membership is free. Whether you&apos;re a freelancer, production
-            company, venue, musician, rental provider, or event organizer, ASO
-            was built to help you collaborate, grow, and operate bigger. The
-            network becomes more valuable every time another professional joins.
+          <p className="text-lg text-gray-500 leading-relaxed">
+            Whether you work alone or run a company with a full crew, you operate
+            through your own organization on ASO.
+          </p>
+        </div>
+
+        <ul className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 mb-12">
+          {PERSONAS.map((persona) => (
+            <li key={persona.slug} className="flex items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-aso-bg text-aso-blue">
+                <PersonaIcon slug={persona.slug} className="h-5 w-5" />
+              </span>
+              <span className="font-medium text-aso-navy">{persona.name}</span>
+            </li>
+          ))}
+        </ul>
+
+        <Link
+          href="/who-its-for"
+          className="text-sm font-medium text-aso-blue hover:text-aso-navy transition"
+        >
+          See how ASO fits your work
+        </Link>
+      </Section>
+
+      {/* CTA */}
+      <Section background="navy">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Start with your own organization
+          </h2>
+          <p className="text-lg text-white/70 leading-relaxed mb-10">
+            Creating an account is free, and a one-person organization is a complete
+            one. You do not need anyone else on the platform to start running your work
+            through it.
           </p>
           <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
         </div>
