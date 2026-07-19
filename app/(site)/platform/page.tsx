@@ -41,38 +41,49 @@ export default function PlatformPage() {
         lead="AnchorStage Operations is a connected operations platform for live event work. Your organization gets one place where its events, records, and day to day operations live together."
       />
 
-      {/* ORGANIZATIONS */}
+      {/* ORGANIZATIONS — heading left, points right, orange tick per point */}
       <Section background="white">
-        <div className="max-w-3xl mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
-            Organizations
-          </h2>
-          <p className="text-lg text-gray-500 leading-relaxed">
-            The organization is the root of the platform. It is what owns the work, and
-            it is what keeps the work after each event is over.
-          </p>
+        <div className="grid lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-16">
+          <div className="mb-12 lg:mb-0">
+            <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-5">
+              Organizations
+            </h2>
+            <p className="text-gray-500 leading-relaxed">
+              The organization is the root of the platform. It is what owns the work, and
+              it is what keeps the work after each event is over.
+            </p>
+          </div>
+
+          <div className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
+            {ORGANIZATION_POINTS.map((point) => (
+              <div key={point.title}>
+                <span aria-hidden="true" className="block h-px w-8 bg-aso-orange mb-4" />
+                <h3 className="text-base font-semibold text-aso-navy mb-2.5 leading-snug">
+                  {point.title}
+                </h3>
+                <p className="text-gray-500 leading-relaxed">{point.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="grid gap-x-12 gap-y-10 md:grid-cols-2 mb-14">
-          {ORGANIZATION_POINTS.map((point) => (
-            <div key={point.title}>
-              <h3 className="text-lg font-semibold text-aso-navy mb-3">{point.title}</h3>
-              <p className="text-gray-500 leading-relaxed">{point.body}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className="max-w-3xl border-l-2 border-aso-blue pl-6">
-          <p className="text-lg text-aso-navy leading-relaxed">
+        <div className="mt-16 max-w-3xl border-l-2 border-aso-orange pl-6">
+          <p className="text-xl text-aso-navy leading-relaxed">
             Events are what an organization does. The organization is what remains.
           </p>
         </div>
       </Section>
 
       {/* CONNECTED OPERATING RECORD */}
-      <Section background="navy">
+      <Section background="navy" plot>
         <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <div className="flex items-center gap-3 mb-5">
+            <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange">
+              The center of the platform
+            </p>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             The Connected Operating Record
           </h2>
           <p className="text-lg text-white/70 leading-relaxed mb-5">
@@ -90,8 +101,8 @@ export default function PlatformPage() {
 
       {/* WORKSTATIONS */}
       <Section background="bg">
-        <div className="max-w-3xl mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+        <div className="max-w-2xl mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             Purpose-built Workstations
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed">
@@ -102,14 +113,22 @@ export default function PlatformPage() {
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
-          {WORKSTATIONS.map((workstation) => (
+        {/* Offset pairs so the set reads as placed panels, not a grid */}
+        <div className="grid gap-5 sm:grid-cols-2">
+          {WORKSTATIONS.map((workstation, i) => (
             <div
               key={workstation.slug}
-              className="rounded-xl border border-aso-blue/15 bg-white p-7"
+              className={`group relative aso-panel aso-panel-lift overflow-hidden rounded-xl border border-aso-blue/12 bg-white p-7 ${
+                i % 2 === 1 ? "sm:translate-y-6" : ""
+              }`}
             >
+              {/* Road-case edge: hairline that lights up on hover */}
+              <span
+                aria-hidden="true"
+                className="absolute left-0 top-0 h-full w-0.5 bg-aso-blue/20 transition-colors group-hover:bg-aso-orange"
+              />
               <div className="flex items-center gap-3 mb-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-aso-bg text-aso-blue">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-aso-bg text-aso-blue transition-colors group-hover:text-aso-orange">
                   <WorkstationIcon slug={workstation.slug} className="h-5 w-5" />
                 </span>
                 <h3 className="text-lg font-semibold text-aso-navy">
@@ -120,12 +139,13 @@ export default function PlatformPage() {
             </div>
           ))}
         </div>
+        <div aria-hidden="true" className="hidden sm:block h-6" />
       </Section>
 
       {/* CTA */}
       <Section background="white">
         <div className="max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             Set up your organization
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed mb-10">

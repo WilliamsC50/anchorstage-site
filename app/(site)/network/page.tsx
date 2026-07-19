@@ -41,8 +41,8 @@ export default function NetworkPage() {
 
       {/* WHAT THE NETWORK MEANS TODAY */}
       <Section background="white">
-        <div className="max-w-3xl mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+        <div className="max-w-2xl mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             What the network means today
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed">
@@ -51,21 +51,32 @@ export default function NetworkPage() {
           </p>
         </div>
 
-        <div className="grid gap-x-12 gap-y-10 md:grid-cols-2">
+        {/* Ledger rows: a connected list rather than four floating cards */}
+        <div className="border-t border-aso-blue/15">
           {TODAY.map((item) => (
-            <div key={item.title}>
-              <div aria-hidden="true" className="w-10 h-0.5 bg-aso-orange mb-5" />
-              <h3 className="text-lg font-semibold text-aso-navy mb-3">{item.title}</h3>
-              <p className="text-gray-500 leading-relaxed">{item.body}</p>
+            <div
+              key={item.title}
+              className="group grid gap-2 border-b border-aso-blue/15 py-7 md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] md:gap-12"
+            >
+              <div className="flex items-start gap-3">
+                <span
+                  aria-hidden="true"
+                  className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-aso-orange"
+                />
+                <h3 className="text-lg font-semibold text-aso-navy leading-snug">
+                  {item.title}
+                </h3>
+              </div>
+              <p className="text-gray-500 leading-relaxed md:pt-0.5">{item.body}</p>
             </div>
           ))}
         </div>
       </Section>
 
       {/* HOW ORGANIZATIONS WORK TOGETHER */}
-      <Section background="navy">
+      <Section background="navy" plot>
         <div className="max-w-3xl mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             How organizations work together
           </h2>
           <p className="text-lg text-white/70 leading-relaxed">
@@ -75,14 +86,14 @@ export default function NetworkPage() {
         </div>
 
         <div className="max-w-3xl space-y-8">
-          <div className="border-l-2 border-aso-blue-light/40 pl-6">
+          <div className="border-l-2 border-aso-orange/60 pl-6">
             <h3 className="text-lg font-semibold text-white mb-2">Primary Collaborator</h3>
             <p className="text-white/70 leading-relaxed">
               The organization doing the operational work alongside the owner. On a job
               you run alone, this is simply your own organization.
             </p>
           </div>
-          <div className="border-l-2 border-aso-blue-light/40 pl-6">
+          <div className="border-l-2 border-aso-orange/60 pl-6">
             <h3 className="text-lg font-semibold text-white mb-2">
               Participating organizations
             </h3>
@@ -91,7 +102,7 @@ export default function NetworkPage() {
               scoped access to the parts of the record they need.
             </p>
           </div>
-          <div className="border-l-2 border-aso-blue-light/40 pl-6">
+          <div className="border-l-2 border-aso-orange/60 pl-6">
             <h3 className="text-lg font-semibold text-white mb-2">Requests between organizations</h3>
             <p className="text-white/70 leading-relaxed">
               Connected organizations can send and receive structured gear requests tied
@@ -118,7 +129,7 @@ export default function NetworkPage() {
       {/* CTA */}
       <Section background="white">
         <div className="max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             Join free
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed mb-10">

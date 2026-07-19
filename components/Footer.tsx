@@ -3,7 +3,10 @@ import { PRIMARY_NAV, AUTH_NAV } from "@/lib/nav";
 
 export default function Footer() {
   return (
-    <footer className="bg-aso-navy">
+    <footer className="relative bg-aso-navy">
+      {/* Hairline orange edge: the site closes on the same accent it opens with */}
+      <div aria-hidden="true" className="h-px w-full bg-aso-orange/40" />
+
       <div className="max-w-6xl mx-auto px-6 py-14 grid gap-10 md:grid-cols-3">
 
         <div>

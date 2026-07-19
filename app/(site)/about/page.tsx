@@ -23,7 +23,7 @@ export default function AboutPage() {
       {/* ORIGIN */}
       <Section background="white">
         <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">Origin</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">Origin</h2>
           <p className="text-lg text-gray-500 leading-relaxed mb-4">
             ASO started inside a working production operation in Central Florida, running
             sound, staging, and lighting for venues, festivals, and private events. The
@@ -40,9 +40,9 @@ export default function AboutPage() {
       </Section>
 
       {/* MISSION */}
-      <Section background="navy">
+      <Section background="navy" plot>
         <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Mission</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">Mission</h2>
           <p className="text-lg text-white/70 leading-relaxed">
             Give live event professionals one place to run their operations, and connect
             that work to the organizations they do it with. Every organization should own
@@ -55,7 +55,7 @@ export default function AboutPage() {
       {/* BUILT FROM REAL WORK */}
       <Section background="white">
         <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             Built from real live event work
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed mb-4">
@@ -73,9 +73,9 @@ export default function AboutPage() {
       </Section>
 
       {/* LONG-TERM DIRECTION */}
-      <Section background="bg">
+      <Section background="bg" plot>
         <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             Where it is going
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed mb-4">
@@ -93,7 +93,7 @@ export default function AboutPage() {
       {/* CTA */}
       <Section background="white">
         <div className="max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             Join free
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed mb-10">

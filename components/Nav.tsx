@@ -3,10 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { PRIMARY_NAV, AUTH_NAV } from "@/lib/nav";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-aso-blue/20">
@@ -26,13 +31,29 @@ export default function Nav() {
           </span>
         </Link>
 
-        {/* Desktop links */}
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-aso-navy">
-          {PRIMARY_NAV.map((item) => (
-            <Link key={item.href} href={item.href} className="opacity-70 hover:opacity-100 transition">
-              {item.label}
-            </Link>
-          ))}
+        {/* Desktop links. Active route carries an orange underline. */}
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-aso-navy h-full">
+          {PRIMARY_NAV.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`relative h-16 flex items-center transition ${
+                  active ? "opacity-100" : "opacity-65 hover:opacity-100"
+                }`}
+              >
+                {item.label}
+                <span
+                  aria-hidden="true"
+                  className={`absolute inset-x-0 bottom-0 h-0.5 bg-aso-orange transition-opacity ${
+                    active ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-3 shrink-0">
@@ -79,16 +100,28 @@ export default function Nav() {
           id="mobile-menu"
           className="md:hidden border-t border-aso-blue/20 bg-white px-6 py-3 flex flex-col text-aso-navy"
         >
-          {PRIMARY_NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="py-3 text-base font-medium opacity-80 hover:opacity-100 transition"
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {PRIMARY_NAV.map((item) => {
+            const active = isActive(item.href);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`flex items-center gap-3 py-3 text-base font-medium transition ${
+                  active ? "opacity-100" : "opacity-75 hover:opacity-100"
+                }`}
+                onClick={() => setOpen(false)}
+              >
+                <span
+                  aria-hidden="true"
+                  className={`h-4 w-0.5 rounded-full bg-aso-orange transition-opacity ${
+                    active ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+                {item.label}
+              </Link>
+            );
+          })}
           <a
             href={AUTH_NAV.login.href}
             className="py-3 text-base font-medium opacity-80 hover:opacity-100 transition"

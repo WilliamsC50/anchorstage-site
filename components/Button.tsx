@@ -13,8 +13,11 @@ interface ButtonProps {
 }
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
-  primary: "bg-aso-orange text-white hover:opacity-90",
-  outline: "border border-white/40 text-white hover:bg-white/10",
+  // The one place brand orange carries a full surface. Warm shadow so the
+  // primary action sits above the page rather than flat on it.
+  primary:
+    "bg-aso-orange text-white shadow-[0_6px_20px_-8px_rgba(255,122,26,0.75)] hover:shadow-[0_10px_26px_-8px_rgba(255,122,26,0.9)] hover:-translate-y-0.5 motion-reduce:hover:translate-y-0",
+  outline: "border border-white/30 text-white hover:border-aso-orange hover:bg-white/5",
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {

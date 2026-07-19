@@ -1,37 +1,54 @@
 import type { ReactNode } from "react";
 
-type SectionBackground = "white" | "bg" | "gray" | "navy";
+type SectionBackground = "white" | "bg" | "navy";
 
 interface SectionProps {
   children: ReactNode;
   background?: SectionBackground;
+  /** Lay the stage-plot ground under the section. Dark sections get the
+   *  light-on-dark grid, light sections the navy-on-light one. */
+  plot?: boolean;
   className?: string;
 }
 
 const BG_CLASSES: Record<SectionBackground, string> = {
   white: "bg-white",
   bg: "bg-aso-bg",
-  gray: "bg-gray-50",
   navy: "bg-aso-navy",
 };
 
-// Same top-right glow recipe already used on the dark Hero variant, so every
-// navy section on the site shares one consistent "depth" treatment.
+// Top-right stage-light wash, kept for dark sections only.
 const NAVY_GLOW =
-  "radial-gradient(ellipse 720px 520px at 82% -8%, rgba(145, 205, 255, 0.20) 0%, rgba(70, 135, 200, 0.12) 28%, transparent 70%)";
+  "radial-gradient(ellipse 760px 540px at 82% -8%, rgba(145, 205, 255, 0.16) 0%, rgba(70, 135, 200, 0.09) 30%, transparent 72%)";
 
-export default function Section({ children, background = "white", className = "" }: SectionProps) {
+export default function Section({
+  children,
+  background = "white",
+  plot = false,
+  className = "",
+}: SectionProps) {
   const isNavy = background === "navy";
 
   return (
-    <section className={`relative overflow-hidden py-20 ${BG_CLASSES[background]} ${className}`}>
+    <section
+      className={`relative overflow-hidden py-20 md:py-28 ${BG_CLASSES[background]} ${className}`}
+    >
+      {plot && (
+        <div
+          aria-hidden="true"
+          className={`absolute inset-0 pointer-events-none ${
+            isNavy ? "aso-plot-grid" : "aso-plot-grid-light"
+          }`}
+        />
+      )}
       {isNavy && (
         <div
-          className="absolute inset-0 pointer-events-none z-0"
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none"
           style={{ background: NAVY_GLOW }}
         />
       )}
-      <div className="relative z-10 max-w-6xl mx-auto px-6">{children}</div>
+      <div className="relative max-w-6xl mx-auto px-6">{children}</div>
     </section>
   );
 }

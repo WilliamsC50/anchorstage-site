@@ -6,6 +6,12 @@
   --aso-blue-light: #7FD3F4;
   --aso-bg: #F7FBFF;
   --aso-orange: #FF7A1A;
+  /* Deepened orange for orange TEXT on light backgrounds. Brand orange on
+     white is ~2.6:1 and fails AA at body sizes; this is 6.2:1. Use
+     --aso-orange for surfaces, rules, and dots; --aso-orange-ink for words. */
+  --aso-orange-ink: #C2500F;
+  /* One step darker than navy, for layered depth on dark sections. */
+  --aso-navy-deep: #0A2137;
 
   --background: var(--aso-bg);
   --foreground: var(--aso-navy);
@@ -15,10 +21,12 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-aso-navy: var(--aso-navy);
+  --color-aso-navy-deep: var(--aso-navy-deep);
   --color-aso-blue: var(--aso-blue);
   --color-aso-blue-light: var(--aso-blue-light);
   --color-aso-bg: var(--aso-bg);
   --color-aso-orange: var(--aso-orange);
+  --color-aso-orange-ink: var(--aso-orange-ink);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -27,6 +35,56 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* ── ASO surface system ───────────────────────────────────────────────────
+   Borrowed from the platform: plot-grid ground, floating panels with soft
+   elevation, and a hairline orange edge used as an attention accent. */
+
+/* Stage-plot / rigging-plan ground. Sits under dark sections at very low
+   contrast so it reads as drafting paper, not as a pattern. */
+.aso-plot-grid {
+  background-image:
+    linear-gradient(to right, rgba(127, 211, 244, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(127, 211, 244, 0.055) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 0%, transparent 75%);
+}
+
+/* Light-section plot grid, for white/near-white backgrounds. */
+.aso-plot-grid-light {
+  background-image:
+    linear-gradient(to right, rgba(15, 47, 79, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 47, 79, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Floating information panel. Two-stage shadow so cards read as lifted off
+   the page rather than outlined on it. */
+.aso-panel {
+  box-shadow:
+    0 1px 2px rgba(15, 47, 79, 0.04),
+    0 10px 30px -12px rgba(15, 47, 79, 0.16);
+}
+
+.aso-panel-lift {
+  transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+}
+
+.aso-panel-lift:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 2px rgba(15, 47, 79, 0.05),
+    0 18px 40px -14px rgba(15, 47, 79, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aso-panel-lift,
+  .aso-panel-lift:hover {
+    transition: none;
+    transform: none;
+  }
 }
 
 /* Used by display pages to hide scrollbars while keeping scroll behavior */
