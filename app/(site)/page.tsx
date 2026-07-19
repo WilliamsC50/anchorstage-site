@@ -75,10 +75,10 @@ export default function Home() {
             fading into the navy before it reaches the copy. z-[1] lifts it
             above the plot-grid and glow layers; the copy below is z-10. */}
         <HeroMedia
-          className="hidden lg:block absolute inset-y-0 right-0 w-[52%] z-[1]"
+          className="hidden lg:block absolute inset-y-0 right-0 w-[54%] z-[1]"
           fadeLeft
-          objectPosition="62% 50%"
-          sizes="52vw"
+          objectPosition="66% 50%"
+          sizes="54vw"
         />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32">

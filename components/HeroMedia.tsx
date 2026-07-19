@@ -36,14 +36,25 @@ interface HeroMediaProps {
  */
 
 /** Left-to-right ramp from solid navy to clear, in --aso-navy (15, 47, 79).
- *  Solid through the copy side, fully clear across the far right so the
- *  right quarter of the photograph shows at full strength. */
+ *
+ *  The left edge stays fully navy, then the fade starts early (14%) and falls
+ *  gradually through many stops so the transition reads as a blend rather than
+ *  an edge. The midrange is kept light on purpose: the stage sits in the
+ *  centre of the band, so low mid opacity is what preserves its contrast. The
+ *  ramp reaches clear by 88%, so the right side of the photograph carries full
+ *  photographic strength. Between 14% and ~22% it is still near-solid, which
+ *  is the band region that sits under the copy's right edge: enough image to
+ *  hint through, not enough to hurt readability. */
 const FADE_LEFT =
   "linear-gradient(to right," +
   " rgb(15,47,79) 0%," +
-  " rgb(15,47,79) 25%," +
-  " rgba(15,47,79,0.55) 50%," +
-  " rgba(15,47,79,0.12) 78%," +
+  " rgb(15,47,79) 14%," +
+  " rgba(15,47,79,0.86) 26%," +
+  " rgba(15,47,79,0.6) 40%," +
+  " rgba(15,47,79,0.34) 55%," +
+  " rgba(15,47,79,0.14) 70%," +
+  " rgba(15,47,79,0.03) 82%," +
+  " rgba(15,47,79,0) 88%," +
   " rgba(15,47,79,0) 100%)";
 
 export default function HeroMedia({
