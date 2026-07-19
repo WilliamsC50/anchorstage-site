@@ -71,40 +71,42 @@ export default function Home() {
           }}
         />
 
-        <div className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
-          <div className="grid lg:grid-cols-[7fr_5fr] lg:gap-14 lg:items-center">
-            <div className="max-w-3xl">
-              <div className="flex items-center gap-3 mb-6">
-                <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange">
-                  For the live event industry
-                </p>
-              </div>
+        {/* Media band: flush to the section's right edge, full hero height,
+            fading into the navy before it reaches the copy. */}
+        <HeroMedia
+          className="hidden lg:block absolute inset-y-0 right-0 w-[52%]"
+          fadeLeft
+          objectPosition="62% 50%"
+          sizes="52vw"
+        />
 
-              <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.03] mb-7">
-                Run the operation, not the chaos.
-              </h1>
-
-              <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl">
-                AnchorStage Operations keeps your events, equipment, people, and partner
-                organizations connected so the work stays organized from intake to
-                invoice.
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32">
+          <div className="max-w-2xl">
+            <div className="flex items-center gap-3 mb-6">
+              <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange">
+                For the live event industry
               </p>
-
-              <div className="flex flex-wrap items-center gap-4">
-                <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
-                <Link
-                  href="/platform"
-                  className="inline-block border border-white/25 text-white px-8 py-3.5 rounded-lg font-medium transition hover:border-aso-orange hover:bg-white/5"
-                >
-                  See how it works
-                </Link>
-              </div>
             </div>
 
-            {/* Media column. Artwork lives in HeroMedia, not here. */}
-            <div className="hidden lg:block">
-              <HeroMedia />
+            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.03] mb-7">
+              Run the operation, not the chaos.
+            </h1>
+
+            <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl">
+              AnchorStage Operations keeps your events, equipment, people, and partner
+              organizations connected so the work stays organized from intake to
+              invoice.
+            </p>
+
+            <div className="flex flex-wrap items-center gap-4">
+              <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
+              <Link
+                href="/platform"
+                className="inline-block border border-white/25 text-white px-8 py-3.5 rounded-lg font-medium transition hover:border-aso-orange hover:bg-white/5"
+              >
+                See how it works
+              </Link>
             </div>
           </div>
         </div>
