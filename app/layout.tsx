@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { logoWordmarkPng, ogDefault } from "@/lib/images";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/logos/aso-picture-logo.png",
+    apple: logoWordmarkPng,
   },
   title: "AnchorStage Operations | Connected Operations Platform for Live Events",
   description:
@@ -32,10 +33,10 @@ export const metadata: Metadata = {
       "A professional network and connected operations platform built for the live event industry.",
     images: [
       {
-        url: "/images/hero-stage.jpg",
-        width: 1200,
-        height: 630,
-        alt: "AnchorStage Operations",
+        url: ogDefault.src,
+        width: ogDefault.width,
+        height: ogDefault.height,
+        alt: ogDefault.alt,
       },
     ],
   },
@@ -44,7 +45,7 @@ export const metadata: Metadata = {
     title: "AnchorStage Operations | Connected Operations Platform for Live Events",
     description:
       "A professional network and connected operations platform built for the live event industry.",
-    images: ["/images/hero-stage.jpg"],
+    images: [ogDefault.src],
   },
 };
 

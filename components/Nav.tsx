@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { logoWordmarkSvg } from "@/lib/images";
 import { PRIMARY_NAV, AUTH_NAV } from "@/lib/nav";
 
 export default function Nav() {
@@ -20,7 +21,7 @@ export default function Nav() {
         {/* Logo returns Home */}
         <Link href="/" className="flex items-center gap-3 shrink-0" onClick={() => setOpen(false)}>
           <Image
-            src="/logos/aso-picture-logo.svg"
+            src={logoWordmarkSvg}
             alt="AnchorStage Operations"
             width={40}
             height={40}
