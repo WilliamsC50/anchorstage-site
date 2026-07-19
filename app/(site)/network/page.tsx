@@ -13,20 +13,20 @@ export const metadata: Metadata = buildMetadata({
 
 const TODAY = [
   {
-    title: "Relationships that persist",
-    body: "A working relationship between two organizations is not rebuilt for every job. Once it exists, the next event starts from it.",
+    title: "Events are a group effort",
+    body: "Production companies, venues, freelancers, rental providers, musicians, and organizers already build events together. The network is those working relationships, on the platform where the work actually happens.",
   },
   {
-    title: "Permissioned membership",
-    body: "Professionals reach an organization's work through membership that is granted, not assumed. Joining an organization is approved by that organization.",
+    title: "You bring the people you already trust",
+    body: "The organizations you call when a week gets busy are the ones you connect to, and the connection holds after the event is over.",
   },
   {
-    title: "Scoped access",
-    body: "When you bring another organization onto an event, you decide what they can see and change. Access is specific rather than all or nothing.",
+    title: "The work travels with the relationship",
+    body: "The next job with the same organization does not start from an empty inbox. What you did together last time is already there.",
   },
   {
-    title: "Shared event participation",
-    body: "Organizations working the same event work on the same connected operating record, so nobody is acting on a stale copy.",
+    title: "One version of the event",
+    body: "Everyone working the job sees the same event, instead of each company keeping its own copy and reconciling the differences later.",
   },
 ];
 
@@ -46,8 +46,11 @@ export default function NetworkPage() {
             What the network means today
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed">
-            In most of this industry, a working relationship lives in someone&apos;s
-            contacts and a long email thread. On ASO it is part of how the work runs.
+            A live event is almost never built by one company. A venue books the night,
+            a production company runs the room, freelancers fill out the crew, and a
+            rental house covers the gear. Those working relationships already exist.
+            ASO keeps them connected to the work instead of scattered across email
+            threads, spreadsheets, and messages.
           </p>
         </div>
 
