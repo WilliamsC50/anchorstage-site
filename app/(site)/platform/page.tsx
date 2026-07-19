@@ -35,6 +35,8 @@ export const metadata: Metadata = buildMetadata({
  *  the four workstation ids match WorkstationSlug for deep links. */
 const PAGE_SECTIONS = [
   { id: "overview", label: "Overview" },
+  { id: "organizations", label: "Organizations" },
+  { id: "solo-organization", label: "Working Solo" },
   { id: "operating-record", label: "Operating Record" },
   { id: "event", label: "Event" },
   { id: "inventory", label: "Inventory" },
@@ -43,6 +45,46 @@ const PAGE_SECTIONS = [
   { id: "tools", label: "Connected Tools" },
   { id: "how-it-connects", label: "How It Connects" },
 ] as const;
+
+/** What an organization holds, for the Organizations section. Categories the
+ *  platform actually keeps against an organization, in the order a visitor
+ *  meets them when running an event. */
+const ORGANIZATION_HOLDINGS: { label: string; description: string }[] = [
+  {
+    label: "Events",
+    description:
+      "Every event the organization runs, from the first request through the final invoice.",
+  },
+  {
+    label: "People",
+    description:
+      "The professionals who hold membership, with their roles and what each of them can reach.",
+  },
+  {
+    label: "Inventory",
+    description:
+      "Gear and packages, and which event each item is committed to.",
+  },
+  {
+    label: "Documents",
+    description:
+      "Quotes, invoices, briefs, and pack lists, issued under the organization's own name and numbering.",
+  },
+  {
+    label: "Financial records",
+    description:
+      "Deposits, payouts, and margin across the work the organization has taken on.",
+  },
+  {
+    label: "Media and assets",
+    description: "Photos, video, and files kept with the events they came from.",
+  },
+  {
+    label: "History",
+    description:
+      "All of the above, retained after each event closes and available for the next one.",
+  },
+];
 
 const KIND_BADGE_DARK_CLASSES: Record<ConnectedToolKind, string> = {
   tool: "border-sky-300/30 bg-sky-300/10 text-sky-200",
@@ -152,8 +194,6 @@ function WorkstationSection({ detail, index }: { detail: WorkstationDetail; inde
 // ── Page ───────────────────────────────────────────────────────────────────────
 
 export default function WorkstationsPage() {
-  const workstationNames = WORKSTATION_DETAILS.map((detail) => detail.name);
-
   return (
     <main className="bg-white text-gray-900">
       {/* On-page navigation — sticky just below the h-16 site header */}
@@ -174,39 +214,114 @@ export default function WorkstationsPage() {
         </div>
       </nav>
 
-      {/* HERO / OVERVIEW */}
+      {/* HERO / PLATFORM DEFINITION */}
       <Anchored id="overview">
         <Section background="navy">
           <div className="max-w-3xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-aso-blue-light mb-4">
-              Platform Reference
+              Platform
             </p>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">Workstations</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              One operational foundation for your organization
+            </h1>
             <p className="text-lg text-white/80 leading-relaxed mb-6">
-              A Workstation is a purpose-built working surface over the shared operating
-              record. Each one gives a different operation — running an event, managing
-              gear, filling the booking pipeline, driving screens — the tools that
-              operation needs, while every workstation reads and writes the same record.
+              AnchorStage Operations is a connected operations platform for live event
+              work. Your organization gets one place where its events, records, and
+              day to day operations live together.
             </p>
-            <p className="text-white/60 leading-relaxed mb-8">
-              That&apos;s why ASO has multiple Workstations instead of one giant
-              application: different operations need different tools, but they never
-              need different data. Assign gear in one workstation and the event&apos;s
-              quote already knows about it. Issue the quote and the marketing pipeline
-              already tracks the follow-up.
+            <p className="text-white/60 leading-relaxed">
+              The platform is organized into purpose-built Workstations. Each one is
+              built for a different kind of work, and they all operate on the same
+              connected information instead of separate copies that drift apart.
             </p>
-            <div className="rounded-lg border border-white/15 bg-white/5 p-5">
-              <p className="text-sm text-white/70 leading-relaxed">
-                <span className="font-semibold text-white">
-                  There are exactly four Workstations:
-                </span>{" "}
-                {workstationNames.join(", ")}. Other surfaces — Intake, Financials, the
-                Dashboard, Power Planner, Media &amp; Assets, Practice Mode — are
-                connected tools, pages, or modes that keep the record complete. They are
-                not Workstations.
+          </div>
+        </Section>
+      </Anchored>
+
+      {/* ORGANIZATIONS */}
+      <Anchored id="organizations">
+        <Section background="white">
+          <SectionHeader
+            title="Organizations"
+            lead="Everyone who joins ASO works through an organization. An organization might be one independent professional, a production company, a venue operator, an event organizer, a musician or performing act, or a rental provider. ASO does not sort members into categories. The organization is simply how you and your work are represented."
+          />
+
+          <div className="max-w-3xl mb-12">
+            <p className="text-gray-500 leading-relaxed mb-4">
+              Professionals reach the work through membership in an organization, and
+              that membership is granted, not assumed. What each person can see and
+              change is set by the organization they belong to.
+            </p>
+            <p className="text-gray-500 leading-relaxed">
+              The organization is what holds everything. Events start and finish, but
+              the record of how they ran stays with the organization that did the work.
+            </p>
+          </div>
+
+          <MicroHeading>What an organization holds</MicroHeading>
+          <div className="divide-y divide-gray-100 border-y border-gray-100 mb-12">
+            {ORGANIZATION_HOLDINGS.map((holding) => (
+              <div
+                key={holding.label}
+                className="flex flex-col gap-1 py-3 sm:flex-row sm:gap-6"
+              >
+                <p className="w-40 shrink-0 text-sm font-semibold text-aso-navy">
+                  {holding.label}
+                </p>
+                <p className="text-sm text-gray-500 leading-relaxed">
+                  {holding.description}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div className="max-w-3xl border-l-2 border-aso-blue pl-5">
+            <p className="text-lg text-aso-navy leading-relaxed">
+              Events are what an organization does. The organization is what remains.
+            </p>
+          </div>
+        </Section>
+      </Anchored>
+
+      {/* THE ONE-PERSON ORGANIZATION */}
+      <Anchored id="solo-organization">
+        <Section background="navy">
+          <SectionHeader
+            dark
+            title="The One-Person Organization"
+            lead="A one-person organization is a complete organization. If you work independently, you get the same platform as an operation running a full crew."
+          />
+
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+            <div className="rounded-lg border border-white/15 bg-white/5 p-6">
+              <p className="text-xs font-semibold uppercase tracking-widest text-white/50 mb-3">
+                On your own
+              </p>
+              <p className="text-white/70 leading-relaxed">
+                You run your own events, track your own gear, issue your own quotes and
+                invoices, keep your own documents and media, and build your own
+                operating history. Nothing is held back until you add other people. You
+                do not need a second organization for the platform to do its job.
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-white/15 bg-white/5 p-6">
+              <p className="text-xs font-semibold uppercase tracking-widest text-white/50 mb-3">
+                When the work grows
+              </p>
+              <p className="text-white/70 leading-relaxed">
+                When a job is bigger than you want to take on alone, an organization you
+                already work with can be added to that event as Primary Collaborator,
+                with the access you decide to give them. Your organization stays as it
+                is and your history stays where it is.
               </p>
             </div>
           </div>
+
+          <p className="mt-10 max-w-3xl text-white/60 leading-relaxed">
+            Collaboration is something you add when the work calls for it, not something
+            the platform asks for before it becomes useful.
+          </p>
         </Section>
       </Anchored>
 
