@@ -35,26 +35,31 @@ interface HeroMediaProps {
  * No border radius is applied here; rounding belongs in the page's className.
  */
 
-/** Left-to-right ramp from solid navy to clear, in --aso-navy (15, 47, 79).
+/** Left-to-right ramp from navy to clear, in --aso-navy (15, 47, 79).
  *
- *  The left edge stays fully navy, then the fade starts early (14%) and falls
- *  gradually through many stops so the transition reads as a blend rather than
- *  an edge. The midrange is kept light on purpose: the stage sits in the
- *  centre of the band, so low mid opacity is what preserves its contrast. The
- *  ramp reaches clear by 88%, so the right side of the photograph carries full
- *  photographic strength. Between 14% and ~22% it is still near-solid, which
- *  is the band region that sits under the copy's right edge: enough image to
- *  hint through, not enough to hurt readability. */
+ *  There is no flat safe zone: the band is fully navy only at its extreme
+ *  left edge, and image begins hinting through almost immediately. The fade
+ *  then releases over a long distance so the photograph reads as the hero's
+ *  background rather than a panel bolted to the right.
+ *
+ *  Shape:
+ *   - 0-4%    fully navy, extreme left only
+ *   - 4-30%   the copy/image overlap: image present but held back (0.85 down
+ *             to 0.6) so text over it stays comfortably readable
+ *   - 30-54%  medium blend releasing toward clear
+ *   - 54%     0.14, so the stage focal area (around here) keeps its contrast
+ *   - 74%     fully clear, and it stays clear to the right edge, so the far
+ *             side of the photograph carries full strength */
 const FADE_LEFT =
   "linear-gradient(to right," +
   " rgb(15,47,79) 0%," +
-  " rgb(15,47,79) 14%," +
-  " rgba(15,47,79,0.86) 26%," +
-  " rgba(15,47,79,0.6) 40%," +
-  " rgba(15,47,79,0.34) 55%," +
-  " rgba(15,47,79,0.14) 70%," +
-  " rgba(15,47,79,0.03) 82%," +
-  " rgba(15,47,79,0) 88%," +
+  " rgb(15,47,79) 4%," +
+  " rgba(15,47,79,0.85) 16%," +
+  " rgba(15,47,79,0.6) 30%," +
+  " rgba(15,47,79,0.34) 42%," +
+  " rgba(15,47,79,0.14) 54%," +
+  " rgba(15,47,79,0.03) 66%," +
+  " rgba(15,47,79,0) 74%," +
   " rgba(15,47,79,0) 100%)";
 
 export default function HeroMedia({
