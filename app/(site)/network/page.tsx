@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import Button from "@/components/Button";
+import HeroMedia from "@/components/HeroMedia";
 import PageHeader from "@/components/PageHeader";
 import Section from "@/components/Section";
 import { buildMetadata } from "@/lib/metadata";
 import { AUTH_NAV } from "@/lib/nav";
+import { networkHero } from "@/lib/images";
 
 export const metadata: Metadata = buildMetadata({
   title: "Network",
@@ -37,6 +39,20 @@ export default function NetworkPage() {
         eyebrow="Network"
         title="The people you work with, connected to the work itself"
         lead="ASO is a professional network for live events. What makes it useful today is not a list of strangers. It is that the organizations you already work with are connected to the same operational information you are."
+        media={
+          <HeroMedia
+            className="hidden lg:block absolute inset-y-0 right-0 z-[1] w-[56%] xl:w-[62%] 2xl:w-[66%]"
+            fadeLeft
+            image={networkHero}
+            // The subjects sit centre-left of the frame. Biasing the crop
+            // left keeps the key speaker and the right-hand figure in the
+            // clear zone while the left figure softens toward the copy, so
+            // the conversation reads as leading into the text. The stage
+            // stays in frame behind them, recognizable but secondary.
+            objectPosition="42% 50%"
+            sizes="(min-width: 1536px) 66vw, (min-width: 1280px) 62vw, (min-width: 1024px) 56vw, 100vw"
+          />
+        }
       />
 
       {/* WHAT THE NETWORK MEANS TODAY */}

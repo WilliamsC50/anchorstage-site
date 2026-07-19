@@ -8,6 +8,11 @@ interface SectionProps {
   /** Lay the stage-plot ground under the section. Dark sections get the
    *  light-on-dark grid, light sections the navy-on-light one. */
   plot?: boolean;
+  /** Optional full-section media layer (e.g. a HeroMedia band). It is placed
+   *  behind the content and self-positions through its own classes. When
+   *  present, the content is lifted above it. Sections without media render
+   *  exactly as before. */
+  media?: ReactNode;
   className?: string;
 }
 
@@ -25,6 +30,7 @@ export default function Section({
   children,
   background = "white",
   plot = false,
+  media,
   className = "",
 }: SectionProps) {
   const isNavy = background === "navy";
@@ -48,7 +54,16 @@ export default function Section({
           style={{ background: NAVY_GLOW }}
         />
       )}
-      <div className="relative max-w-6xl mx-auto px-6">{children}</div>
+      {media}
+      <div
+        className={
+          media
+            ? "relative z-10 max-w-6xl mx-auto px-6"
+            : "relative max-w-6xl mx-auto px-6"
+        }
+      >
+        {children}
+      </div>
     </section>
   );
 }

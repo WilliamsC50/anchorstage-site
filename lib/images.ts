@@ -30,12 +30,20 @@ export const homeHero: ImageAsset = {
     "a mixing console facing the stage and crowd.",
 };
 
+export const networkHero: ImageAsset = {
+  src: "/images/heroes/network/network-hero.png",
+  width: 1672,
+  height: 940,
+  alt:
+    "Three live event professionals in conversation at a table in a small " +
+    "music venue, a laptop open between them and the stage lit behind.",
+};
+
 /**
  * Heroes for the remaining pages are not yet produced. Import these once the
  * assets land in their folders; until then those pages use the typographic
  * PageHeader with no imagery.
  */
-export const networkHero: ImageAsset | null = null;
 export const platformHero: ImageAsset | null = null;
 export const whoItsForHero: ImageAsset | null = null;
 export const aboutHero: ImageAsset | null = null;

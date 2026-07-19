@@ -1,10 +1,13 @@
 import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
-import { homeHero } from "@/lib/images";
+import { homeHero, type ImageAsset } from "@/lib/images";
 
 interface HeroMediaProps {
-  /** Artwork to render. Omit to use the default hero image. */
+  /** Artwork to render. Omit to use `image`. */
   children?: ReactNode;
+  /** The photograph to render when no children are supplied. Defaults to the
+   *  home hero so existing callers are unaffected. */
+  image?: ImageAsset;
   /** The page owns position and size. This class lands on the outer element,
    *  which is the ONLY thing that sets `position` — the component never does,
    *  so a page can make it absolute without a class collision. */
@@ -64,6 +67,7 @@ const FADE_LEFT =
 
 export default function HeroMedia({
   children,
+  image = homeHero,
   className = "",
   fadeLeft = false,
   objectPosition = "center",
@@ -77,8 +81,8 @@ export default function HeroMedia({
       <div className="relative h-full w-full overflow-hidden">
         {children ?? (
           <Image
-            src={homeHero.src}
-            alt={homeHero.alt}
+            src={image.src}
+            alt={image.alt}
             fill
             priority
             sizes={sizes}
