@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Button from "@/components/Button";
+import HeroMedia from "@/components/HeroMedia";
 import PageHeader from "@/components/PageHeader";
 import Section from "@/components/Section";
+import { aboutHero } from "@/lib/images";
 import { buildMetadata } from "@/lib/metadata";
 import { AUTH_NAV } from "@/lib/nav";
 
@@ -18,6 +20,21 @@ export default function AboutPage() {
         eyebrow="About"
         title="Why ASO exists"
         lead="AnchorStage Operations was built by someone running live events, in response to problems that show up on every job and never get solved by another spreadsheet."
+        media={
+          // Same treatment as the Home and Network heroes: photograph covering
+          // the band, flush-right, blended into the navy by the shared fade.
+          // The single subject sits centre-right, so the crop is biased that
+          // way (52% horizontal) and lifted a little (45% vertical) to keep
+          // his head and working posture in frame while the gear on the left
+          // dissolves under the copy.
+          <HeroMedia
+            className="hidden lg:block absolute inset-y-0 right-0 z-[1] w-[56%] xl:w-[62%] 2xl:w-[66%]"
+            fadeLeft
+            image={aboutHero}
+            objectPosition="52% 45%"
+            sizes="(min-width: 1536px) 66vw, (min-width: 1280px) 62vw, (min-width: 1024px) 56vw, 100vw"
+          />
+        }
       />
 
       {/* ORIGIN */}

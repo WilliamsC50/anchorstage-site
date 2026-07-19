@@ -61,12 +61,15 @@ export const whoItsForHero: ImageAsset = {
     "festival operations staff.",
 };
 
-/**
- * Heroes for the remaining pages are not yet produced. Import these once the
- * assets land in their folders; until then those pages use the typographic
- * PageHeader with no imagery.
- */
-export const aboutHero: ImageAsset | null = null;
+export const aboutHero: ImageAsset = {
+  // Filename as supplied by the project owner.
+  src: "/images/heroes/about/about_hero_flipped.jpg",
+  width: 2048,
+  height: 1365,
+  alt:
+    "A black and white photo of a technician working at a rack of amplifiers " +
+    "and audio gear at an outdoor event.",
+};
 
 // ── Social / Open Graph ───────────────────────────────────────────────────────
 
