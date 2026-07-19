@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Button from "@/components/Button";
+import HeroMedia from "@/components/HeroMedia";
 import PageHeader from "@/components/PageHeader";
 import PersonaIcon from "@/components/PersonaIcon";
 import Section from "@/components/Section";
+import { whoItsForHero } from "@/lib/images";
 import { buildMetadata } from "@/lib/metadata";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
@@ -20,6 +22,19 @@ export default function WhoItsForPage() {
         eyebrow="Who It's For"
         title="Built for the people who make live events happen"
         lead="Everyone on ASO operates through their own organization, whether that is one person or a company with a full crew. Here is what that looks like depending on the work you do."
+        media={
+          // Same treatment as the Home hero: a photographic montage covering
+          // the band, flush-right, blended into the navy by the shared fade.
+          // The montage is a uniform grid with no single subject, so the crop
+          // is centred.
+          <HeroMedia
+            className="hidden lg:block absolute inset-y-0 right-0 z-[1] w-[56%] xl:w-[62%] 2xl:w-[66%]"
+            fadeLeft
+            image={whoItsForHero}
+            objectPosition="50% 50%"
+            sizes="(min-width: 1536px) 66vw, (min-width: 1280px) 62vw, (min-width: 1024px) 56vw, 100vw"
+          />
+        }
       />
 
       <Section background="bg" plot>

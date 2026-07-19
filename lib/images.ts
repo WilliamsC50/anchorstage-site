@@ -50,12 +50,22 @@ export const platformHero: ImageAsset = {
     "the financials overview, and the sign-in screen.",
 };
 
+export const whoItsForHero: ImageAsset = {
+  src: "/images/heroes/who-its-for/whoitsfor-hero.png",
+  width: 1536,
+  height: 1024,
+  alt:
+    "A montage of live event professionals, each labeled with their role: " +
+    "lighting and audio technicians, an event organizer, a musician, a rental " +
+    "coordinator, a venue manager, a video engineer, a stage manager, and " +
+    "festival operations staff.",
+};
+
 /**
  * Heroes for the remaining pages are not yet produced. Import these once the
  * assets land in their folders; until then those pages use the typographic
  * PageHeader with no imagery.
  */
-export const whoItsForHero: ImageAsset | null = null;
 export const aboutHero: ImageAsset | null = null;
 
 // ── Social / Open Graph ───────────────────────────────────────────────────────
