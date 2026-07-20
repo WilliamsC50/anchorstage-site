@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Button from "@/components/Button";
+import ClosingCta from "@/components/ClosingCta";
 import HeroMedia from "@/components/HeroMedia";
 import PageHeader from "@/components/PageHeader";
 import Section from "@/components/Section";
@@ -146,18 +146,12 @@ export default function NetworkPage() {
       </Section>
 
       {/* CTA */}
-      <Section background="white">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
-            Join free
-          </h2>
-          <p className="text-lg text-gray-500 leading-relaxed mb-10">
-            Create your organization, run your own work, and connect the people you
-            already work with to it.
-          </p>
-          <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
-        </div>
-      </Section>
+      <ClosingCta
+        heading="Join free"
+        body="Create your organization, run your own work, and connect the people you already work with to it."
+        primary={{ label: AUTH_NAV.join.label, href: AUTH_NAV.join.href }}
+        secondary={{ label: "See Who It's For", href: "/who-its-for" }}
+      />
     </main>
   );
 }

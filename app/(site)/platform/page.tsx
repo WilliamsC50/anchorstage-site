@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import Button from "@/components/Button";
+import ClosingCta from "@/components/ClosingCta";
 import HeroMedia from "@/components/HeroMedia";
 import PageHeader from "@/components/PageHeader";
 import Section from "@/components/Section";
 import WorkstationIcon from "@/components/WorkstationIcon";
+import { INTAKE_REGISTER_URL } from "@/lib/constants";
 import { platformHero } from "@/lib/images";
 import { buildMetadata } from "@/lib/metadata";
-import { AUTH_NAV } from "@/lib/nav";
 import { WORKSTATIONS } from "@/lib/workstations";
 
 export const metadata: Metadata = buildMetadata({
@@ -60,7 +60,7 @@ export default function PlatformPage() {
       />
 
       {/* ORGANIZATIONS — heading left, points right, orange tick per point */}
-      <Section background="white">
+      <Section background="bg" plot>
         <div className="grid lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-16">
           <div className="mb-12 lg:mb-0">
             <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-5">
@@ -161,18 +161,12 @@ export default function PlatformPage() {
       </Section>
 
       {/* CTA */}
-      <Section background="white">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
-            Set up your organization
-          </h2>
-          <p className="text-lg text-gray-500 leading-relaxed mb-10">
-            Creating an account is free. Start with your own events and records, and add
-            collaboration when the work calls for it.
-          </p>
-          <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
-        </div>
-      </Section>
+      <ClosingCta
+        heading="Set up your organization"
+        body="Creating an account is free. Start with your own events and records, and add collaboration when the work calls for it."
+        primary={{ label: "Create Your Organization", href: INTAKE_REGISTER_URL }}
+        secondary={{ label: "Explore the Network", href: "/network" }}
+      />
     </main>
   );
 }

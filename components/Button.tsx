@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-type ButtonVariant = "primary" | "outline";
+type ButtonVariant = "primary" | "outline" | "secondary";
 type ButtonSize = "md" | "lg";
 
 interface ButtonProps {
@@ -17,7 +17,11 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
   // primary action sits above the page rather than flat on it.
   primary:
     "bg-aso-orange text-white shadow-[0_6px_20px_-8px_rgba(255,122,26,0.75)] hover:shadow-[0_10px_26px_-8px_rgba(255,122,26,0.9)] hover:-translate-y-0.5 motion-reduce:hover:translate-y-0",
+  // Navy-surface secondary (heroes, navy CTAs).
   outline: "border border-white/30 text-white hover:border-aso-orange hover:bg-white/5",
+  // Light-surface secondary, for white and grid-white closing sections.
+  secondary:
+    "border border-aso-blue/30 text-aso-navy bg-white hover:border-aso-blue/60 hover:bg-aso-bg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-blue/50 focus-visible:ring-offset-2",
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {

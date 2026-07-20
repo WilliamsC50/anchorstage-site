@@ -186,3 +186,43 @@ body {
   font-weight: 600;
   color: var(--aso-navy);
 }
+
+/* ── Contact dialog (components/ContactCta.tsx) ──────────────────────────────
+   Native <dialog> for the About contact panel. Centered on desktop by the UA
+   modal defaults; a bottom sheet on phones. Behavior/pseudo-element styling
+   only — layout lives in the component's utility classes. */
+.contact-dialog::backdrop {
+  background: rgba(15, 47, 79, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.contact-dialog[open] {
+  animation: contact-dialog-in 200ms ease-out;
+}
+
+@keyframes contact-dialog-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes contact-dialog-in-sheet {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Phones: dock to the bottom as a near-full-width slide-up sheet. */
+@media (max-width: 639.98px) {
+  .contact-dialog {
+    width: 100%;
+    max-width: 100%;
+    margin: auto auto 0 auto;
+    border-radius: 1rem 1rem 0 0;
+  }
+  .contact-dialog[open] {
+    animation-name: contact-dialog-in-sheet;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-dialog[open] { animation: none; }
+}

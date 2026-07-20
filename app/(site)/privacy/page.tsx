@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PolicyPageLayout from "@/components/PolicyPageLayout";
+import { CONTACT_EMAIL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -158,7 +159,7 @@ export default function PrivacyPage() {
       <p>Questions regarding this Privacy Policy may be directed to:</p>
       <p>AnchorStage Operations LLC</p>
       <p>
-        Email: <a href="mailto:contact@anchorstageops.com">contact@anchorstageops.com</a>
+        Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
       </p>
       <p>
         Website: <a href="https://anchorstageops.com">https://anchorstageops.com</a>

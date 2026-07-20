@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Button from "@/components/Button";
+import ClosingCta from "@/components/ClosingCta";
+import ContactCta from "@/components/ContactCta";
 import HeroMedia from "@/components/HeroMedia";
 import PageHeader from "@/components/PageHeader";
 import Section from "@/components/Section";
@@ -38,7 +39,7 @@ export default function AboutPage() {
       />
 
       {/* ORIGIN */}
-      <Section background="white">
+      <Section background="bg" plot>
         <div className="max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">Origin</h2>
           <p className="text-lg text-gray-500 leading-relaxed mb-4">
@@ -70,7 +71,7 @@ export default function AboutPage() {
       </Section>
 
       {/* BUILT FROM REAL WORK */}
-      <Section background="white">
+      <Section background="bg" plot>
         <div className="max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
             Built from real live event work
@@ -108,17 +109,12 @@ export default function AboutPage() {
       </Section>
 
       {/* CTA */}
-      <Section background="white">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
-            Join free
-          </h2>
-          <p className="text-lg text-gray-500 leading-relaxed mb-10">
-            Create your organization and see whether it fits the way you already work.
-          </p>
-          <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
-        </div>
-      </Section>
+      <ClosingCta
+        heading="Join free"
+        body="Create your organization and see whether it fits the way you already work."
+        primary={{ label: AUTH_NAV.join.label, href: AUTH_NAV.join.href }}
+        secondary={<ContactCta />}
+      />
     </main>
   );
 }

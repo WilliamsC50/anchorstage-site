@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Button from "@/components/Button";
+import ClosingCta from "@/components/ClosingCta";
 import HeroMedia from "@/components/HeroMedia";
 import PageHeader from "@/components/PageHeader";
 import PersonaIcon from "@/components/PersonaIcon";
@@ -109,18 +109,12 @@ export default function WhoItsForPage() {
       </Section>
 
       {/* CTA */}
-      <Section background="white">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
-            Join free
-          </h2>
-          <p className="text-lg text-gray-500 leading-relaxed mb-10">
-            Create your organization and start running your work through it. Membership
-            is free, and you can begin on your own today.
-          </p>
-          <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
-        </div>
-      </Section>
+      <ClosingCta
+        heading="Join free"
+        body="Create your organization and start running your work through it. Membership is free, and you can begin on your own today."
+        primary={{ label: AUTH_NAV.join.label, href: AUTH_NAV.join.href }}
+        secondary={{ label: "See how it works", href: "/platform" }}
+      />
     </main>
   );
 }
