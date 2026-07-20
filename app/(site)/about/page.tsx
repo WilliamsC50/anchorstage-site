@@ -106,7 +106,7 @@ export default function AboutPage() {
           </p>
           <p className="text-lg text-white/70 leading-relaxed">
             None of these were show problems. They were the work around the work, and they
-            added up. One by one, the fixes for them became software.
+            added up. One by one, those solutions became the foundation of ASO.
           </p>
         </div>
       </Section>
@@ -168,29 +168,33 @@ export default function AboutPage() {
 
       {/* FOUNDER: modest, not the focus */}
       <Section background="navy" plot>
-        <div className="max-w-3xl flex flex-col sm:flex-row sm:items-start gap-8">
-          <Image
-            src={founderHeadshot.src}
-            width={founderHeadshot.width}
-            height={founderHeadshot.height}
-            alt={founderHeadshot.alt}
-            sizes="112px"
-            className="h-28 w-28 shrink-0 rounded-xl object-cover"
-          />
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-2">
-              Cody Williams
-            </h2>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange mb-5">
-              Founder &amp; Live Event Operator
-            </p>
-            <p className="text-lg text-white/70 leading-relaxed">
-              Cody still works live events while building ASO, and that is the point. The
-              platform grows alongside real production work, so the major workflows are
-              shaped by practical experience before they become product features. What
-              ships reflects how the job actually runs.
-            </p>
+        <div className="max-w-3xl">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-6">
+            <Image
+              src={founderHeadshot.src}
+              width={founderHeadshot.width}
+              height={founderHeadshot.height}
+              alt={founderHeadshot.alt}
+              sizes="160px"
+              className="h-40 w-40 shrink-0 rounded-xl object-cover"
+            />
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-2">
+                Cody Williams
+              </h2>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange">
+                Founder &amp; Live Event Operator
+              </p>
+            </div>
           </div>
+          <p className="mt-8 text-lg text-white/70 leading-relaxed">
+            Cody still works live events while building ASO, and that is the point. The
+            platform grows alongside real production work, so the major workflows are
+            shaped by practical experience before they become product features.
+          </p>
+          <p className="mt-4 text-lg text-white/70 leading-relaxed">
+            What ships reflects how the job actually runs.
+          </p>
         </div>
       </Section>
 
