@@ -187,12 +187,12 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-          <p className="mt-8 text-lg text-white/70 leading-relaxed">
+          <p className="mt-6 text-lg text-white/70 leading-relaxed">
             Cody still works live events while building ASO, and that is the point. The
             platform grows alongside real production work, so the major workflows are
             shaped by practical experience before they become product features.
           </p>
-          <p className="mt-4 text-lg text-white/70 leading-relaxed">
+          <p className="mt-6 text-lg text-white/70 leading-relaxed">
             What ships reflects how the job actually runs.
           </p>
         </div>
