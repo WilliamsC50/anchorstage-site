@@ -9,11 +9,14 @@ interface PageHeaderProps {
    *  as an integrated image hero like Home: the band fills the section and the
    *  copy narrows to clear it. Omit it and the header is unchanged. */
   media?: ReactNode;
+  /** Optional node rendered just below the lead, inside the copy column (e.g.
+   *  a founder attribution). Omit it and the header is unchanged. */
+  footer?: ReactNode;
 }
 
 /** Navy page header for the four inner pages. The orange rule above the
  *  eyebrow is the site's recurring attention mark. */
-export default function PageHeader({ eyebrow, title, lead, media }: PageHeaderProps) {
+export default function PageHeader({ eyebrow, title, lead, media, footer }: PageHeaderProps) {
   return (
     <Section background="navy" plot media={media}>
       <div className={media ? "max-w-2xl" : "max-w-3xl"}>
@@ -27,6 +30,7 @@ export default function PageHeader({ eyebrow, title, lead, media }: PageHeaderPr
           {title}
         </h1>
         <p className="text-lg text-white/70 leading-relaxed">{lead}</p>
+        {footer}
       </div>
     </Section>
   );

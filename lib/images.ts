@@ -71,6 +71,15 @@ export const aboutHero: ImageAsset = {
     "and audio gear at an outdoor event.",
 };
 
+// ── People ────────────────────────────────────────────────────────────────────
+
+export const founderHeadshot: ImageAsset = {
+  src: "/images/content/crew/crew-founder-cody-williams.jpg",
+  width: 400,
+  height: 400,
+  alt: "Cody Williams, founder of AnchorStage Operations.",
+};
+
 // ── Social / Open Graph ───────────────────────────────────────────────────────
 
 /**

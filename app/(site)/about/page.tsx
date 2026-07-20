@@ -1,18 +1,34 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import ClosingCta from "@/components/ClosingCta";
 import ContactCta from "@/components/ContactCta";
 import HeroMedia from "@/components/HeroMedia";
 import PageHeader from "@/components/PageHeader";
 import Section from "@/components/Section";
-import { aboutHero } from "@/lib/images";
+import { aboutHero, founderHeadshot } from "@/lib/images";
 import { buildMetadata } from "@/lib/metadata";
 import { AUTH_NAV } from "@/lib/nav";
 
 export const metadata: Metadata = buildMetadata({
   title: "About",
   description:
-    "Why AnchorStage Operations exists, who is building it, and where it is going. Built from real live event production work in Central Florida.",
+    "Why AnchorStage Operations exists, who is building it, and where it is going. Built from years of real live event work in Central Florida, not from a pitch deck.",
 });
+
+const PRINCIPLES = [
+  {
+    title: "Multiply professionals",
+    body: "Help experienced people spend more time making decisions and less time managing the administration around them.",
+  },
+  {
+    title: "One source of truth",
+    body: "Critical event information should be there when it is needed, whether someone is building marketing graphics, checking a schedule, sharing a stage plot, or requesting more equipment.",
+  },
+  {
+    title: "Built alongside the industry",
+    body: "Every feature starts as a real operational problem before it becomes part of the platform.",
+  },
+];
 
 export default function AboutPage() {
   return (
@@ -20,7 +36,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="About"
         title="Why ASO exists"
-        lead="AnchorStage Operations was built by someone running live events, in response to problems that show up on every job and never get solved by another spreadsheet."
+        lead="AnchorStage Operations was built from years of solving real operational problems in live events. Not from a pitch deck, and not from a software roadmap. Every part of it begins with the way professionals actually work."
         media={
           // Same treatment as the Home and Network heroes: photograph covering
           // the band, flush-right, blended into the navy by the shared fade.
@@ -36,24 +52,87 @@ export default function AboutPage() {
             sizes="(min-width: 1536px) 66vw, (min-width: 1280px) 62vw, (min-width: 1024px) 56vw, 100vw"
           />
         }
+        footer={
+          <div className="mt-8 flex items-center gap-3">
+            <span aria-hidden="true" className="h-px w-8 bg-white/25" />
+            <div>
+              <p className="text-sm font-semibold text-white">Cody Williams</p>
+              <p className="text-sm text-white/60">Founder &amp; Live Event Operator</p>
+            </div>
+          </div>
+        }
       />
 
-      {/* ORIGIN */}
+      {/* WHY ASO EXISTS: the opening story */}
       <Section background="bg" plot>
         <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">Origin</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
+            The problem was time, not talent
+          </h2>
           <p className="text-lg text-gray-500 leading-relaxed mb-4">
-            ASO started inside a working production operation in Central Florida, running
-            sound, staging, and lighting for venues, festivals, and private events. The
-            recurring problem was never the show itself. It was that the information
-            needed to run the show was scattered across tools that did not know about
-            each other, and it got worse every time another company joined the job.
+            ASO was built because talented people were turning down work. Not because they
+            lacked the experience to do it, but because they had run out of time to take it
+            on.
+          </p>
+          <p className="text-lg text-gray-500 leading-relaxed mb-4">
+            The professionals making the biggest decisions on an event were also the ones
+            buried in phone calls, paperwork, document requests, graphics, coordination,
+            and administrative work. The parts of the job that only they could do were
+            competing with the parts almost anyone could.
           </p>
           <p className="text-lg text-gray-500 leading-relaxed">
-            Working alongside other production companies made the gap obvious. Two
-            organizations on the same event had no shared source of truth, only their own
-            versions of it. ASO was built to close that gap.
+            ASO exists to give that time back, so experienced people spend more of it on
+            the work that actually needs them.
           </p>
+        </div>
+      </Section>
+
+      {/* BUILT FROM THE INDUSTRY: the Origin concept, refocused */}
+      <Section background="navy" plot>
+        <div className="max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
+            Built from the industry
+          </h2>
+          <p className="text-lg text-white/70 leading-relaxed mb-4">
+            ASO started inside a working production operation in Central Florida, running
+            sound, staging, and lighting for venues, festivals, and private events. It was
+            not planned as a product. It grew out of the job.
+          </p>
+          <p className="text-lg text-white/70 leading-relaxed mb-4">
+            Every event exposed another operational problem. Organizing equipment. Sharing
+            stage plots. Keeping event information current as it changed. Handling
+            last-minute support requests. Producing marketing assets. Coordinating between
+            organizations working the same show.
+          </p>
+          <p className="text-lg text-white/70 leading-relaxed">
+            None of these were show problems. They were the work around the work, and they
+            added up. One by one, the fixes for them became software.
+          </p>
+        </div>
+      </Section>
+
+      {/* PHILOSOPHY: three principles */}
+      <Section background="bg" plot>
+        <div className="max-w-2xl mb-14">
+          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
+            Philosophy
+          </h2>
+          <p className="text-lg text-gray-500 leading-relaxed">
+            A few ideas shape how the platform is built. They are simple on purpose, and
+            they are what every decision gets checked against.
+          </p>
+        </div>
+
+        <div className="grid gap-x-10 gap-y-9 sm:grid-cols-3">
+          {PRINCIPLES.map((principle) => (
+            <div key={principle.title}>
+              <span aria-hidden="true" className="block h-px w-8 bg-aso-orange mb-4" />
+              <h3 className="text-base font-semibold text-aso-navy mb-2.5 leading-snug">
+                {principle.title}
+              </h3>
+              <p className="text-gray-500 leading-relaxed">{principle.body}</p>
+            </div>
+          ))}
         </div>
       </Section>
 
@@ -62,48 +141,66 @@ export default function AboutPage() {
         <div className="max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">Mission</h2>
           <p className="text-lg text-white/70 leading-relaxed">
-            Give live event professionals one place to run their operations, and connect
-            that work to the organizations they do it with. Every organization should own
-            its own record of what it has done, and should be able to work with others
-            without losing it.
+            Help live event professionals spend less time managing information and more
+            time producing exceptional events. Everything on the platform is measured
+            against that.
           </p>
         </div>
       </Section>
 
-      {/* BUILT FROM REAL WORK */}
+      {/* VISION: Current vs Future, kept honest */}
       <Section background="bg" plot>
         <div className="max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
-            Built from real live event work
+            Where it is going
           </h2>
           <p className="text-lg text-gray-500 leading-relaxed mb-4">
-            Every part of ASO comes from a job where something went wrong for a reason
-            that could have been prevented. Gear committed to two events on the same
-            night. A quote that did not match the crew that actually worked. A venue
-            running last week&apos;s schedule on the screen by the door.
+            The near-term work is depth. Making the operations an organization runs every
+            week faster and more reliable than the tools it is replacing.
           </p>
           <p className="text-lg text-gray-500 leading-relaxed">
-            That is also why the platform is honest about what it does not do yet. It is
-            built in the order the work demands, not in the order that makes for a longer
-            feature list.
+            Longer term, ASO is being built so organizations and professionals can find
+            the right industry relationships through the network itself. That is a
+            direction, not a promise, and the site will keep saying so until it ships.
           </p>
         </div>
       </Section>
 
-      {/* LONG-TERM DIRECTION */}
+      {/* FOUNDER: modest, not the focus */}
       <Section background="navy" plot>
-        <div className="max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
-            Where it is going
-          </h2>
-          <p className="text-lg text-white/70 leading-relaxed mb-4">
-            The near-term work is depth: making the operations an organization runs every
-            week faster and more reliable than the tools it is replacing.
-          </p>
-          <p className="text-lg text-white/70 leading-relaxed">
-            Longer term, ASO is being structured so organizations and professionals can
-            find the right industry relationships through the network itself. That is a
-            direction rather than a promise, and the site will say so until it ships.
+        <div className="max-w-3xl flex flex-col sm:flex-row sm:items-start gap-8">
+          <Image
+            src={founderHeadshot.src}
+            width={founderHeadshot.width}
+            height={founderHeadshot.height}
+            alt={founderHeadshot.alt}
+            sizes="112px"
+            className="h-28 w-28 shrink-0 rounded-xl object-cover"
+          />
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-2">
+              Cody Williams
+            </h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange mb-5">
+              Founder &amp; Live Event Operator
+            </p>
+            <p className="text-lg text-white/70 leading-relaxed">
+              Cody still works live events while building ASO, and that is the point. The
+              platform grows alongside real production work, so the major workflows are
+              shaped by practical experience before they become product features. What
+              ships reflects how the job actually runs.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* CLOSING */}
+      <Section background="bg" plot>
+        <div className="max-w-3xl border-l-2 border-aso-orange pl-6">
+          <p className="text-xl md:text-2xl text-aso-navy leading-relaxed">
+            ASO was not designed around a business plan. It was shaped by what live event
+            work actually requires, and it will keep changing alongside the professionals
+            who run it.
           </p>
         </div>
       </Section>
