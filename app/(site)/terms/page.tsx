@@ -1,151 +1,174 @@
 import type { Metadata } from "next";
 import PolicyPageLayout from "@/components/PolicyPageLayout";
+import { CONTACT_EMAIL } from "@/lib/constants";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions",
+  title: "Terms of Service",
   description:
-    "Terms and Conditions governing services provided by AnchorStage Operations LLC.",
+    "Terms of Service governing use of the AnchorStage Operations platform and professional network for the live event industry.",
 };
 
 export default function TermsPage() {
   return (
-    <PolicyPageLayout title="Terms & Conditions" effectiveDate="June 2026">
+    <PolicyPageLayout title="Terms of Service" effectiveDate="July 2026">
       <h2>1. Acceptance</h2>
       <p>
-        Acceptance of any quote, proposal, invoice, work order, or service provided by
-        AnchorStage Operations LLC (&ldquo;ASO&rdquo;) constitutes acceptance of these
-        Terms &amp; Conditions.
+        These Terms of Service govern use of the AnchorStage Operations LLC
+        (&ldquo;ASO&rdquo;) platform. By creating an account or using the platform, you
+        accept these Terms. If you do not agree, do not use ASO.
       </p>
 
-      <h2>2. Services</h2>
+      <h2>2. The Platform</h2>
       <p>
-        ASO provides live audio production, sound engineering, event production support,
-        corporate AV services, equipment rental coordination, stage rental coordination,
-        and related event services.
+        ASO is a software platform, a professional network, and an operations platform
+        built for the live event industry. It gives organizations one place to run their
+        operations and to connect that work to the organizations they do it with.
       </p>
       <p>
-        Services are limited to those specifically identified in the accepted quote or
-        proposal.
-      </p>
-
-      <h2>3. Payment Terms</h2>
-      <p>
-        Payment is due no later than the conclusion of the event unless otherwise stated
-        on the quote or invoice.
-      </p>
-      <p>Approved clients may be granted alternate payment terms in writing.</p>
-      <p>
-        Past due invoices may be subject to reasonable collection costs and legal fees
-        where permitted by law.
+        ASO is not a production company, an equipment rental company, a staging company, an
+        audio company, an engineering company, or an event contractor. ASO provides
+        software. It does not produce events.
       </p>
 
-      <h2>4. Deposits</h2>
-      <p>ASO may require deposits at its discretion.</p>
+      <h2>3. Accounts</h2>
       <p>
-        Any required deposit amount will be identified in the applicable quote or
-        proposal.
+        Users are responsible for providing accurate account information, keeping their
+        login credentials secure, and for the activity that takes place under their
+        account. Notify ASO promptly if you believe your account has been used without your
+        permission.
       </p>
 
-      <h2>5. Cancellation</h2>
-
-      <h3>More than Seven (7) Days Before the Event</h3>
+      <h2>4. Organizations</h2>
       <p>
-        Client shall receive a full refund of any deposit, less documented
-        non-recoverable expenses already incurred by ASO.
+        Work on ASO is represented through an organization. An organization may be a single
+        professional or a company with a full team. The organization owns the operational
+        information it creates and keeps that information as members and events come and go.
       </p>
 
-      <h3>Between Twenty-Four (24) Hours and Seven (7) Days Before the Event</h3>
+      <h2>5. Organization Administrators</h2>
       <p>
-        Client shall be responsible for documented non-recoverable expenses plus
-        twenty-five percent (25%) of contracted services.
+        Organization owners and administrators control membership, roles, and permissions
+        for their organization. They decide who can access the organization&apos;s records
+        and what the organization shares with others. Administrators are responsible for
+        managing that access appropriately.
       </p>
 
-      <h3>Less than Twenty-Four (24) Hours Before the Event</h3>
-      <p>
-        Client shall be responsible for documented non-recoverable expenses plus fifty
-        percent (50%) of contracted services.
-      </p>
-
-      <p>
-        Equipment, staging, transportation, labor, and third-party services secured
-        specifically for an event may become non-recoverable once committed.
-      </p>
-
-      <h2>6. Client Responsibilities</h2>
-      <p>Client is responsible for:</p>
+      <h2>6. User Responsibilities</h2>
+      <p>Users agree to:</p>
       <ul>
-        <li>Providing venue access</li>
-        <li>Providing adequate electrical power</li>
-        <li>Obtaining required permits and approvals</li>
-        <li>Providing a reasonably safe working environment</li>
-        <li>Providing reasonable load-in and load-out access</li>
-        <li>Providing security when required by the nature of the event</li>
+        <li>Provide accurate information and keep it current</li>
+        <li>Use ASO in a lawful manner</li>
+        <li>Respect the access and permissions set by their organization</li>
+        <li>Only upload content they have the right to use</li>
       </ul>
 
-      <h2>7. Equipment Damage, Loss, and Theft</h2>
+      <h2>7. Connected Organizations</h2>
       <p>
-        Client is responsible for loss, theft, destruction, or damage to equipment
-        caused by Client, attendees, performers, venue personnel, contractors engaged by
-        Client, or other parties under Client&apos;s control.
-      </p>
-      <p>
-        This responsibility applies to equipment owned, leased, rented, borrowed, or
-        otherwise provided by ASO as part of the event.
-      </p>
-      <p>
-        Repair, replacement, rental replacement, transportation, labor, and related
-        costs resulting from such loss or damage may be invoiced to Client.
-      </p>
-      <p>
-        Client shall not be responsible for ordinary wear and tear or equipment failures
-        resulting from normal operation.
+        ASO lets organizations work together on shared events. Collaboration is optional.
+        You control what your organization shares, and ASO does not expose your
+        organization&apos;s information to other organizations on its own. When you choose
+        to connect with another organization, you are responsible for what you share with
+        them.
       </p>
 
-      <h2>8. Weather and Force Majeure</h2>
-      <p>Outdoor events are subject to weather and conditions beyond ASO&apos;s control.</p>
+      <h2>8. Acceptable Use</h2>
+      <p>Users agree not to:</p>
+      <ul>
+        <li>Use ASO for any unlawful purpose</li>
+        <li>Attempt to access accounts, organizations, or data without authorization</li>
+        <li>Interfere with, disrupt, or attempt to compromise the platform</li>
+        <li>Upload malicious code or content that infringes the rights of others</li>
+        <li>Misuse information belonging to other Users or organizations</li>
+      </ul>
+
+      <h2>9. Platform Ownership</h2>
       <p>
-        ASO shall not be liable for delays, interruptions, cancellations, or performance
-        impacts caused by weather, acts of God, government actions, utility failures,
-        venue restrictions, labor disruptions, or other circumstances beyond ASO&apos;s
-        reasonable control.
+        ASO owns the platform, including the software, branding, product design, and
+        operational architecture. These Terms do not grant Users any ownership of the
+        platform or its underlying technology.
       </p>
 
-      <h2>9. Limitation of Liability</h2>
+      <h2>10. User Content</h2>
       <p>
-        To the maximum extent permitted by law, ASO&apos;s total liability shall not
-        exceed the amount paid by Client for the services giving rise to the claim.
-      </p>
-      <p>
-        ASO shall not be liable for indirect, incidental, special, consequential, or
-        lost-profit damages.
+        Users and their organizations retain ownership of the operational information and
+        files they create and upload. By using ASO, you grant ASO the limited rights needed
+        to host, process, and display that content so the platform can operate for you and
+        for the organizations you choose to work with.
       </p>
 
-      <h2>10. Event Performance</h2>
+      <h2>11. Platform Maturity</h2>
       <p>
-        Client acknowledges that live events involve variables outside ASO&apos;s
-        control, including venue conditions, performer conduct, audience behavior,
-        weather, power quality, and other operational factors.
-      </p>
-      <p>
-        ASO agrees to provide services in a professional manner but does not guarantee
-        any specific event outcome.
+        ASO is an actively developed platform. Features may change, improve, or be replaced
+        as the product grows. The goal is continual improvement while minimizing disruption
+        to established workflows. Some capabilities described across the ASO website reflect
+        direction rather than features that exist today.
       </p>
 
-      <h2>11. Media and Promotional Use</h2>
+      <h2>12. Professional Responsibility</h2>
       <p>
-        Unless otherwise agreed in writing, ASO may photograph or record public portions
-        of events and use such media for portfolio, promotional, marketing, and business
-        purposes.
+        ASO provides tools to organize and manage operations. Users remain responsible for
+        their events, their organizations, their staffing, their logistics, their
+        compliance, their financial decisions, and their operational decisions. The
+        platform assists with this work. It does not replace professional judgment.
       </p>
-      <p>Separate media releases may be required when applicable.</p>
 
-      <h2>12. Governing Law</h2>
-      <p>These Terms &amp; Conditions shall be governed by the laws of the State of Florida.</p>
-
-      <h2>13. Modifications</h2>
+      <h2>13. Payments</h2>
+      <p>ASO is free to use during active development.</p>
       <p>
-        ASO reserves the right to update these Terms &amp; Conditions. The version in
-        effect on the date a quote or proposal is accepted shall govern that engagement.
+        If paid services are introduced in the future, these Terms will be updated before
+        those services become available.
+      </p>
+
+      <h2>14. Suspension</h2>
+      <p>
+        ASO may suspend access to an account or organization that violates these Terms or
+        that puts the security or integrity of the platform at risk.
+      </p>
+
+      <h2>15. Termination</h2>
+      <p>
+        Users may stop using ASO and close their account at any time. ASO may terminate
+        access for violations of these Terms. Requests regarding information after
+        termination are handled as described in the Privacy Policy.
+      </p>
+
+      <h2>16. Disclaimers</h2>
+      <p>
+        ASO is provided on an &ldquo;as is&rdquo; and &ldquo;as available&rdquo; basis. ASO
+        does not guarantee business outcomes, successful events, bookings, revenue, the
+        performance of third parties, or operational success. ASO does not warrant that the
+        platform will be uninterrupted or free of errors.
+      </p>
+
+      <h2>17. Limitation of Liability</h2>
+      <p>
+        ASO provides software. Organizations remain responsible for how they use the
+        platform and for the decisions they make with it. To the maximum extent permitted
+        by law, ASO is not liable for indirect, incidental, special, consequential, or
+        lost-profit damages arising from the use of the platform.
+      </p>
+
+      <h2>18. Governing Law</h2>
+      <p>
+        These Terms are governed by the laws of the State of Florida, where AnchorStage
+        Operations LLC is based.
+      </p>
+
+      <h2>19. Changes</h2>
+      <p>
+        ASO may update these Terms from time to time. The version published on this website
+        is considered the current version, and continued use of the platform means you
+        accept the current Terms.
+      </p>
+
+      <h2>20. Contact</h2>
+      <p>Questions regarding these Terms may be directed to:</p>
+      <p>AnchorStage Operations LLC</p>
+      <p>
+        Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      </p>
+      <p>
+        Website: <a href="https://anchorstageops.com">https://anchorstageops.com</a>
       </p>
     </PolicyPageLayout>
   );

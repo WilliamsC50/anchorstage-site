@@ -15,9 +15,6 @@ export default function Footer() {
             A professional network and connected operations platform built for the
             live event industry.
           </p>
-          <p className="mt-4 text-xs text-aso-blue-light/50">
-            Insured for live event operations.
-          </p>
         </div>
 
         <div>
