@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Button from "@/components/Button";
-import ClosingCta from "@/components/ClosingCta";
 import HeroLight from "@/components/HeroLight";
 import HeroMedia from "@/components/HeroMedia";
 import PersonaIcon from "@/components/PersonaIcon";
-import Section from "@/components/Section";
+import HomeClosing from "@/components/home/HomeClosing";
+import HomeScene from "@/components/home/HomeScene";
+import HudPointer from "@/components/home/HudPointer";
+import { SignalWave } from "@/components/home/SoundGeometry";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
+// Homepage-only visual system; every rule is scoped under .aso-home.
+import "./home.css";
 
 export const metadata: Metadata = {
   title: "AnchorStage Ops | Connected Operations Platform for Live Events",
@@ -59,7 +63,10 @@ const CHANGES = [
 
 export default function Home() {
   return (
-    <main>
+    <main className="aso-home">
+      {/* Homepage-only pointer lighting for HUD panels, and a scroll readout. */}
+      <HudPointer />
+      <div aria-hidden="true" className="home-progress" />
 
       {/* HERO */}
       <section className="relative bg-aso-navy overflow-hidden">
@@ -67,7 +74,7 @@ export default function Home() {
 
         {/* Hero media: full-bleed background below lg, flush-right band at lg
             and up. z-[1] lifts it above the plot-grid layer; the stage light
-            is z-[2] and the copy below is z-10.
+            is z-[2], the mobile copy veil z-[3], and the copy below is z-10.
 
             The desktop width widens at larger breakpoints on purpose. The band
             is anchored to the viewport's right edge while the copy is centred
@@ -86,6 +93,9 @@ export default function Home() {
             reduced motion. */}
         <HeroLight />
 
+        {/* Below lg only: extra veil so copy over the photo reaches AA. */}
+        <div aria-hidden="true" className="home-hero-scrim" />
+
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32">
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 mb-6">
@@ -99,16 +109,18 @@ export default function Home() {
               AnchorStage Ops
             </h1>
 
-            <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl">
+            <p className="text-lg md:text-xl text-white/90 leading-relaxed mb-10 max-w-2xl">
               ASO keeps your events, equipment, people, and partner organizations
               connected so the work stays organized from intake to invoice.
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
-              <Button href={AUTH_NAV.join.href}>{AUTH_NAV.join.label}</Button>
+              <Button href={AUTH_NAV.join.href} className="home-cta">
+                {AUTH_NAV.join.label}
+              </Button>
               <Link
                 href="/platform"
-                className="inline-block border border-white/25 text-white px-8 py-3.5 rounded-lg font-medium transition hover:border-aso-orange hover:bg-white/5"
+                className="home-ghost inline-block border border-white/25 text-white px-8 py-3.5 rounded-lg font-medium transition hover:border-aso-orange hover:bg-white/5"
               >
                 See how it works
               </Link>
@@ -118,97 +130,116 @@ export default function Home() {
       </section>
 
       {/* WHAT ASO IS — the two halves of the product, network first */}
-      <Section background="bg" plot>
-        <div className="max-w-3xl mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
+      <HomeScene tone="deep" seed={11} fromHero>
+        <div className="max-w-3xl mb-14 home-reveal">
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             One Connected Industry.
             <br />
             One Connected Platform.
           </h2>
-          <p className="text-lg text-gray-500 leading-relaxed mb-4">
+          <p className="text-lg home-copy leading-relaxed mb-4">
             Live events are built by people working together.
           </p>
-          <p className="text-lg text-gray-500 leading-relaxed mb-4">
+          <p className="text-lg home-copy leading-relaxed mb-4">
             Production companies, venues, freelancers, musicians, rental providers, and
             event organizers already depend on one another to make every show happen.
           </p>
-          <p className="text-lg text-gray-500 leading-relaxed">
+          <p className="text-lg home-copy leading-relaxed">
             AnchorStage Ops connects those relationships through a shared network
             and gives every organization the tools to manage the work together.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {HALVES.map((half) => (
-            <Link
-              key={half.href}
-              href={half.href}
-              className="group relative aso-panel aso-panel-lift flex flex-col overflow-hidden rounded-xl border border-aso-blue/12 bg-white p-7 md:p-8"
-            >
-              <span
-                aria-hidden="true"
-                className="absolute left-0 top-0 h-full w-0.5 bg-aso-blue/20 transition-colors group-hover:bg-aso-orange"
-              />
+          {HALVES.map((half, i) => (
+            // Reveal wrapper: the panel's own transform carries tilt and lift.
+            <div key={half.href} className="flex home-reveal" data-layer={i}>
+              <Link
+                href={half.href}
+                className="group hud-panel hud-panel-interactive flex w-full flex-col p-7 md:p-8"
+              >
+                <span
+                  aria-hidden="true"
+                  className="absolute left-0 top-6 bottom-6 w-0.5 bg-aso-blue/30 transition-colors group-hover:bg-aso-orange"
+                />
 
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange-ink mb-4">
-                {half.label}
-              </p>
+                <p className="hud-tag text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange mb-4">
+                  {half.label}
+                </p>
 
-              <h3 className="text-xl font-bold text-aso-navy tracking-tight mb-4 leading-snug">
-                {half.headline}
-              </h3>
+                <h3 className="text-xl font-bold text-white tracking-tight mb-4 leading-snug">
+                  {half.headline}
+                </h3>
 
-              <div className="flex-1 space-y-4 mb-7">
-                {half.body.map((paragraph) => (
-                  <p key={paragraph} className="text-gray-500 leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+                <div className="flex-1 space-y-4 mb-7">
+                  {half.body.map((paragraph) => (
+                    <p key={paragraph} className="home-copy leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
 
-              <span className="inline-flex items-center gap-2 text-sm font-semibold text-aso-orange-ink">
-                {half.cta}
-                <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-                  &rarr;
+                <span className="inline-flex items-center gap-2 text-sm font-semibold text-aso-orange">
+                  {half.cta}
+                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+                    &rarr;
+                  </span>
                 </span>
-              </span>
-            </Link>
+              </Link>
+            </div>
           ))}
         </div>
-      </Section>
+      </HomeScene>
 
-      {/* THE PROBLEM — single column, wide measure, deliberately quiet */}
-      <Section background="navy" plot>
-        <div className="grid md:grid-cols-[7rem_minmax(0,1fr)] md:gap-10">
-          <p className="hidden md:block text-xs font-semibold uppercase tracking-[0.18em] text-white/50 pt-3">
+      {/* THE PROBLEM — single column, wide measure, deliberately quiet. Two
+          signal traces drift in and out of step beneath it. */}
+      <HomeScene
+        tone="navy"
+        seed={23}
+        rings={false}
+        backdrop={
+          <div aria-hidden="true" className="home-problem-waves">
+            <SignalWave seed={101} traces={2} amplitude={0.62} className="home-wave-drift" />
+            <SignalWave
+              seed={101}
+              traces={1}
+              amplitude={0.62}
+              stroke="rgb(255, 122, 26)"
+              className="home-wave-drift home-wave-drift-slow"
+            />
+          </div>
+        }
+      >
+        <div className="grid md:grid-cols-[7rem_minmax(0,1fr)] md:gap-10 home-reveal">
+          <p className="hidden md:block text-xs font-semibold uppercase tracking-[0.18em] text-aso-blue-light/80 pt-3">
             The problem
           </p>
           <div className="max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
               The work is not the hard part
             </h2>
-            <p className="text-lg text-white/70 leading-relaxed mb-4">
+            <p className="text-lg home-copy leading-relaxed mb-4">
               Most people in live events already know how to run a show. What breaks is
               everything around it. The crew list is in a text thread, the gear list is in
               a spreadsheet, the quote is in an email, and the venue has a version of the
               schedule that is two days old.
             </p>
-            <p className="text-lg text-white/70 leading-relaxed">
+            <p className="text-lg home-copy leading-relaxed">
               The moment a second organization joins the job, everyone starts working from
               their own copy, and the copies stop matching.
             </p>
           </div>
         </div>
-      </Section>
+      </HomeScene>
 
       {/* WHAT ASO CHANGES — staggered floating panels */}
-      <Section background="bg" plot>
-        <div className="max-w-2xl mb-16">
+      <HomeScene tone="deep" seed={37}>
+        <div className="max-w-2xl mb-16 home-reveal">
           <span aria-hidden="true" className="block h-px w-8 bg-aso-orange mb-6" />
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
+          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             What ASO changes
           </h2>
-          <p className="text-lg text-gray-500 leading-relaxed">
+          <p className="text-lg home-copy leading-relaxed">
             ASO puts the operational work and the working relationships in the same
             place, so the information behind an event stays current for everyone who
             needs it.
@@ -217,32 +248,35 @@ export default function Home() {
 
         <div className="grid gap-6 md:grid-cols-3 md:gap-5">
           {CHANGES.map((item, i) => (
-            <div
-              key={item.title}
-              className={`aso-panel aso-panel-lift rounded-xl border border-aso-blue/12 bg-white p-7 ${
-                i === 1 ? "md:translate-y-7" : ""
-              } ${i === 2 ? "md:translate-y-3" : ""}`}
-            >
-              <p className="font-mono text-xs text-aso-orange-ink mb-5">{item.index}</p>
-              <h3 className="text-lg font-semibold text-aso-navy mb-3 leading-snug">
-                {item.title}
-              </h3>
-              <p className="text-gray-500 leading-relaxed">{item.body}</p>
+            // Reveal wrapper: the stagger offset and the panel transform stay
+            // on the inner panel.
+            <div key={item.title} className="home-reveal" data-layer={i}>
+              <div
+                className={`hud-panel h-full p-7 ${i === 1 ? "md:translate-y-7" : ""} ${
+                  i === 2 ? "md:translate-y-3" : ""
+                }`}
+              >
+                <p className="hud-tag font-mono text-xs text-aso-orange mb-5">{item.index}</p>
+                <h3 className="text-lg font-semibold text-white mb-3 leading-snug">
+                  {item.title}
+                </h3>
+                <p className="home-copy leading-relaxed">{item.body}</p>
+              </div>
             </div>
           ))}
         </div>
         {/* Reclaims the space the staggered cards push down */}
         <div aria-hidden="true" className="hidden md:block h-7" />
-      </Section>
+      </HomeScene>
 
       {/* WHO IT SERVES — right-weighted list against a left-set heading */}
-      <Section background="navy" plot>
+      <HomeScene tone="navy" seed={53}>
         <div className="grid lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-16">
-          <div className="mb-10 lg:mb-0">
+          <div className="mb-10 lg:mb-0 home-reveal">
             <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-5">
               Built for the people who make events happen
             </h2>
-            <p className="text-white/70 leading-relaxed mb-6">
+            <p className="home-copy leading-relaxed mb-6">
               Whether you work alone or run a company with a full crew, you operate
               through your own organization on ASO.
             </p>
@@ -255,13 +289,13 @@ export default function Home() {
             </Link>
           </div>
 
-          <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
+          <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2 home-reveal" data-layer="1">
             {PERSONAS.map((persona) => (
               <li
                 key={persona.slug}
-                className="group flex items-center gap-4 rounded-lg border border-transparent py-3 px-4 -mx-1 transition hover:border-white/15 hover:bg-white/5"
+                className="group home-menu-item flex items-center gap-4 py-3 px-4 -mx-1"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white/10 text-aso-blue-light transition group-hover:bg-white/15 group-hover:text-aso-orange">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white/10 text-aso-blue-light ring-1 ring-aso-blue-light/15 transition group-hover:bg-white/15 group-hover:text-aso-orange group-hover:ring-aso-orange/40">
                   <PersonaIcon slug={persona.slug} className="h-6 w-6" />
                 </span>
                 <span className="font-medium text-white">{persona.name}</span>
@@ -269,16 +303,15 @@ export default function Home() {
             ))}
           </ul>
         </div>
-      </Section>
+      </HomeScene>
 
       {/* CTA */}
-      <ClosingCta
+      <HomeClosing
         heading="Keep exploring ASO"
         body="Learn how the network connects the live event industry, then see how the platform keeps the work organized."
         primary={{ label: "Explore the Network", href: "/network" }}
         secondary={{ label: "Explore the Platform", href: "/platform" }}
       />
-
     </main>
   );
 }

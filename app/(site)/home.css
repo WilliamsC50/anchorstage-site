@@ -1,0 +1,516 @@
+/* ── Homepage visual system ─────────────────────────────────────────────────
+   A unified dark ground lit from the upper-right, HUD panels, procedural
+   signal geometry, and scroll-linked scene transitions.
+
+   Scope: every rule sits under .aso-home (the homepage <main>), so nothing
+   here reaches another route, even after client-side navigation keeps this
+   stylesheet loaded.
+
+   Motion policy: scroll-linked effects run only where scroll timelines are
+   supported and motion is allowed. Everywhere else the static, fully
+   revealed page is the design, so no content ever depends on animation to
+   become visible. */
+
+.aso-home {
+  --home-base: #050d18;
+  --home-deep: #071425;
+  --home-navy: #0a1d33;
+  /* Body copy on the dark ground: about 12:1 on --home-deep. */
+  --home-copy: #c9d6e4;
+  --home-blue: 78, 168, 255;
+  --home-ice: 150, 215, 255;
+  --home-orange: 255, 122, 26;
+  background: var(--home-base);
+}
+
+.aso-home .home-copy {
+  color: var(--home-copy);
+}
+
+/* ── Scenes ─────────────────────────────────────────────────────────────── */
+
+/* overflow: clip, not hidden: a hidden box is a scroll container and would
+   capture the view() timelines of everything inside it. */
+.aso-home .home-scene {
+  position: relative;
+  overflow: clip;
+  isolation: isolate;
+  background: var(--home-deep);
+}
+
+.aso-home .home-scene-navy {
+  background: linear-gradient(180deg, var(--home-navy) 0%, #08182b 100%);
+}
+
+/* First scene: picks up from the hero's navy before settling dark. */
+.aso-home .home-scene-from-hero {
+  background: linear-gradient(180deg, #0c2742 0%, var(--home-deep) 280px);
+}
+
+/* Signature light: bloom and wash at the upper-right, plus a soft beam
+   thrown down and across the scene. */
+.aso-home .home-scene-light {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 560px 380px at 96% -6%, rgba(var(--home-ice), 0.22) 0%, rgba(var(--home-blue), 0.08) 45%, transparent 72%),
+    radial-gradient(ellipse 1100px 720px at 88% -14%, rgba(var(--home-blue), 0.2) 0%, rgba(40, 110, 220, 0.08) 42%, transparent 74%);
+}
+
+.aso-home .home-scene-light::after {
+  content: "";
+  position: absolute;
+  left: 96%;
+  top: -4%;
+  width: 130%;
+  aspect-ratio: 10 / 9;
+  transform-origin: 0 50%;
+  transform: translateY(-50%) rotate(var(--scene-beam, 118deg));
+  background:
+    conic-gradient(from 90deg at 0% 50%,
+      rgba(var(--home-blue), 0.2) 0deg, rgba(var(--home-blue), 0.06) 11deg, transparent 22deg,
+      transparent 338deg, rgba(var(--home-blue), 0.06) 349deg, rgba(var(--home-blue), 0.2) 360deg);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, rgba(0, 0, 0, 0.4) 45%, transparent 90%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, rgba(0, 0, 0, 0.4) 45%, transparent 90%);
+}
+
+@media (min-width: 1024px) {
+  .aso-home .home-scene-light::after {
+    --scene-beam: 148deg;
+  }
+}
+
+/* Stage-plot ground, concentrated under the light. */
+.aso-home .home-scene-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(127, 211, 244, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(127, 211, 244, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 85% 0%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 85% 75% at 85% 0%, #000 0%, transparent 75%);
+}
+
+/* Dispersion rings, centred on the scene's upper-right corner. */
+.aso-home .home-scene-rings {
+  position: absolute;
+  z-index: -1;
+  width: 640px;
+  height: 640px;
+  top: -320px;
+  right: -320px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.aso-home .home-scene-rings svg {
+  transform-origin: 50% 50%;
+}
+
+@media (min-width: 1024px) {
+  .aso-home .home-scene-rings {
+    width: 980px;
+    height: 980px;
+    top: -490px;
+    right: -490px;
+    opacity: 0.55;
+  }
+}
+
+/* Scene seam: a signal trace along the top edge, brightest under the light. */
+.aso-home .home-scene-seam {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 56px;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.75;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 30%, #000 80%, rgba(0, 0, 0, 0.6) 100%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.2) 30%, #000 80%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.aso-home .home-scene-seam::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(127, 211, 244, 0.25) 50%, rgba(var(--home-ice), 0.65));
+}
+
+.aso-home .home-scene-seam svg,
+.aso-home .home-problem-waves svg {
+  display: block;
+  width: 200%;
+  height: 100%;
+}
+
+/* The problem: two traces drifting at different rates, in and out of step. */
+.aso-home .home-problem-waves {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 96px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.85;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.3) 30%, #000 78%);
+  mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.3) 30%, #000 78%);
+}
+
+.aso-home .home-problem-waves svg {
+  position: absolute;
+  inset: 0;
+}
+
+@media (min-width: 768px) {
+  .aso-home .home-problem-waves {
+    height: 140px;
+  }
+}
+
+/* ── HUD panels ─────────────────────────────────────────────────────────── */
+
+/* Dark glass, edge-lit from the upper-right, with reticle corners. Pointer
+   light (--mx/--my) and tilt (--rx/--ry) come from HudPointer. */
+.aso-home .hud-panel {
+  --hud-corner: rgba(127, 211, 244, 0.75);
+  position: relative;
+  isolation: isolate;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background:
+    linear-gradient(165deg, rgba(20, 52, 86, 0.88) 0%, rgba(10, 28, 50, 0.92) 45%, rgba(7, 19, 35, 0.95) 100%) padding-box,
+    linear-gradient(220deg, rgba(var(--home-ice), 0.62) 0%, rgba(127, 211, 244, 0.16) 30%, rgba(127, 211, 244, 0.07) 65%, rgba(var(--home-orange), 0.22) 100%) border-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 30px 60px -30px rgba(0, 0, 0, 0.9),
+    0 0 40px -18px rgba(var(--home-blue), 0.35);
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px));
+  transition: transform 260ms cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 260ms ease;
+}
+
+.aso-home .hud-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(380px circle at var(--mx, 92%) var(--my, 0%), rgba(var(--home-blue), 0.2), transparent 65%);
+  opacity: 0.7;
+  transition: opacity 300ms ease;
+}
+
+.aso-home .hud-panel::after {
+  --c: var(--hud-corner);
+  --l: 16px;
+  --w: 1.5px;
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--c), var(--c)) top left / var(--l) var(--w) no-repeat,
+    linear-gradient(var(--c), var(--c)) top left / var(--w) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / var(--l) var(--w) no-repeat,
+    linear-gradient(var(--c), var(--c)) top right / var(--w) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / var(--l) var(--w) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom left / var(--w) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / var(--l) var(--w) no-repeat,
+    linear-gradient(var(--c), var(--c)) bottom right / var(--w) var(--l) no-repeat;
+  opacity: 0.45;
+  transition: opacity 200ms ease, inset 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.aso-home .hud-panel:hover::before {
+  opacity: 1;
+}
+
+.aso-home .hud-panel:hover::after {
+  opacity: 0.8;
+}
+
+/* Interactive panels (links) select like a menu entry: lift, orange
+   reticle that opens outward, stronger glow. Keyboard focus matches hover. */
+.aso-home .hud-panel-interactive:hover,
+.aso-home .hud-panel-interactive:focus-visible {
+  --lift: -4px;
+  --hud-corner: rgb(var(--home-orange));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 36px 70px -30px rgba(0, 0, 0, 0.95),
+    0 0 60px -16px rgba(var(--home-blue), 0.5);
+}
+
+.aso-home .hud-panel-interactive:focus-visible::before {
+  opacity: 1;
+}
+
+.aso-home .hud-panel-interactive:hover::after,
+.aso-home .hud-panel-interactive:focus-visible::after {
+  opacity: 1;
+  inset: -7px;
+}
+
+/* Status-light label used for panel eyebrows and index readouts. Block-level
+   flex, so the label keeps its own line height (inline-flex would sit in a
+   taller anonymous line box and shift the layout). */
+.aso-home .hud-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.aso-home .hud-tag::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: rgb(var(--home-orange));
+  box-shadow: 0 0 10px rgba(var(--home-orange), 0.8);
+}
+
+/* ── Menu list (who it serves) ──────────────────────────────────────────── */
+
+.aso-home .home-menu-item {
+  position: relative;
+  border: 1px solid rgba(127, 211, 244, 0.08);
+  border-radius: 10px;
+  background: linear-gradient(90deg, rgba(127, 211, 244, 0.05), transparent 75%);
+  transition: background 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+.aso-home .home-menu-item::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: 22%;
+  bottom: 22%;
+  width: 2px;
+  border-radius: 2px;
+  background: rgb(var(--home-orange));
+  box-shadow: 0 0 12px rgba(var(--home-orange), 0.8);
+  transform: scaleY(0);
+  transition: transform 200ms ease;
+}
+
+.aso-home .home-menu-item:hover {
+  border-color: rgba(127, 211, 244, 0.24);
+  background: linear-gradient(90deg, rgba(var(--home-blue), 0.16), rgba(var(--home-blue), 0.02) 80%);
+  transform: translateX(4px);
+}
+
+.aso-home .home-menu-item:hover::before {
+  transform: scaleY(1);
+}
+
+/* ── Actions ────────────────────────────────────────────────────────────── */
+
+/* Primary: brand orange lit from the upper-right, with a specular top-right
+   edge and a sheen that crosses on hover. Navy text: white on this orange
+   is 2.6:1; navy is 5.3:1 at the darkest stop. */
+.aso-home .home-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: #071425;
+  font-weight: 600;
+  background: linear-gradient(205deg, #ffb574 0%, #ff8e35 24%, #ff7a1a 52%, #e8640c 100%);
+  box-shadow:
+    inset -1px 1px 0 rgba(255, 230, 205, 0.85),
+    inset 0 -2px 0 rgba(140, 45, 0, 0.35),
+    0 0 0 1px rgba(255, 150, 70, 0.45),
+    0 14px 32px -12px rgba(var(--home-orange), 0.85),
+    0 0 46px -14px rgba(var(--home-orange), 0.6);
+}
+
+.aso-home .home-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 650ms ease;
+}
+
+.aso-home .home-cta:hover {
+  box-shadow:
+    inset -1px 1px 0 rgba(255, 236, 215, 0.95),
+    inset 0 -2px 0 rgba(140, 45, 0, 0.35),
+    0 0 0 1px rgba(255, 160, 85, 0.6),
+    0 18px 38px -12px rgba(var(--home-orange), 0.95),
+    0 0 64px -12px rgba(var(--home-orange), 0.75);
+}
+
+.aso-home .home-cta:hover::after {
+  transform: translateX(120%);
+}
+
+/* Secondary: dark glass, edge-lit like the panels; orange edge on hover. */
+.aso-home .home-ghost {
+  color: #fff;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(8, 24, 43, 0.7), rgba(8, 24, 43, 0.7)) padding-box,
+    linear-gradient(220deg, rgba(var(--home-ice), 0.7), rgba(127, 211, 244, 0.18) 45%, rgba(127, 211, 244, 0.12)) border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: box-shadow 200ms ease, background 200ms ease;
+}
+
+.aso-home .home-ghost:hover {
+  background:
+    linear-gradient(rgba(16, 44, 76, 0.85), rgba(16, 44, 76, 0.85)) padding-box,
+    linear-gradient(220deg, rgb(var(--home-orange)), rgba(var(--home-orange), 0.3) 50%, rgba(127, 211, 244, 0.2)) border-box;
+  box-shadow: 0 0 30px -10px rgba(var(--home-blue), 0.6);
+}
+
+/* Keyboard focus: one clear ring across every homepage control. */
+.aso-home a:focus-visible {
+  outline: 2px solid #7fd3f4;
+  outline-offset: 4px;
+}
+
+.aso-home .hud-panel:focus-visible {
+  outline-offset: 9px;
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────────── */
+
+/* Below lg the photograph sits behind full-width copy; this extra veil
+   brings the eyebrow, lead, and secondary action to AA there. Desktop keeps
+   the photo untouched beside the copy. */
+.aso-home .home-hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(5, 13, 24, 0.5) 0%, rgba(5, 13, 24, 0.44) 55%, rgba(5, 13, 24, 0.2) 85%, rgba(5, 13, 24, 0) 100%);
+}
+
+@media (min-width: 1024px) {
+  .aso-home .home-hero-scrim {
+    display: none;
+  }
+}
+
+/* Scroll progress readout under the nav. */
+.aso-home .home-progress {
+  position: fixed;
+  inset: 64px 0 auto 0;
+  height: 2px;
+  z-index: 40;
+  pointer-events: none;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(var(--home-blue), 0.2), rgba(var(--home-blue), 0.95) 70%, rgb(var(--home-orange)));
+  box-shadow: 0 0 12px rgba(var(--home-blue), 0.7);
+}
+
+/* ── Motion ─────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .aso-home .home-wave-drift {
+    animation: home-wave-drift 40s linear infinite;
+    will-change: transform;
+  }
+
+  .aso-home .home-wave-drift-slow {
+    animation-duration: 53s;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Scene transition: the light comes up as a scene arrives, then eases. */
+    .aso-home .home-scene-light {
+      animation: home-scene-light linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    .aso-home .home-scene-rings svg {
+      animation: home-rings-turn linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    /* Layered reveals. Later layers start later and finish together. */
+    .aso-home .home-reveal {
+      animation: home-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+
+    .aso-home .home-reveal[data-layer="1"] {
+      animation-range: entry 15% entry 100%;
+    }
+
+    .aso-home .home-reveal[data-layer="2"] {
+      animation-range: entry 30% entry 100%;
+    }
+
+    .aso-home .home-progress {
+      opacity: 1;
+      animation: home-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
+@keyframes home-wave-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes home-scene-light {
+  0% { opacity: 0.35; }
+  40%, 60% { opacity: 1; }
+  100% { opacity: 0.55; }
+}
+
+@keyframes home-rings-turn {
+  from { transform: rotate(-10deg); }
+  to { transform: rotate(8deg); }
+}
+
+@keyframes home-reveal {
+  0% { opacity: 0; transform: translate3d(0, 40px, 0) scale(0.97); }
+  70% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes home-progress {
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aso-home .hud-panel,
+  .aso-home .hud-panel::before,
+  .aso-home .hud-panel::after,
+  .aso-home .home-menu-item,
+  .aso-home .home-menu-item::before,
+  .aso-home .home-cta::after,
+  .aso-home .home-ghost {
+    transition: none;
+  }
+
+  .aso-home .hud-panel-interactive:hover,
+  .aso-home .hud-panel-interactive:focus-visible {
+    --lift: 0px;
+  }
+
+  .aso-home .home-menu-item:hover {
+    transform: none;
+  }
+
+  .aso-home .home-cta::after {
+    display: none;
+  }
+}
