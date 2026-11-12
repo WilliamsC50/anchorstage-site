@@ -405,6 +405,74 @@
 
 /* ── Hero ───────────────────────────────────────────────────────────────── */
 
+/* Dimensional headline. The face is the heading's own text, untouched. Two
+   decorative copies are drawn behind it from data-text, with empty alt text
+   so assistive technology reads the heading once (browsers without CSS alt
+   text drop the declaration and show the plain heading):
+     ::before  extrusion toward the lower right, with a lit rim on the edges
+               facing the light (--rimx/--rimy)
+     ::after   projected shadow on the wall behind: the lettering scaled
+               about the light point (--lox/--loy, --ss), softened by --sb
+   HeroLight sets the variables from the light position; the defaults are the
+   resting light at the upper left, for the first paint. */
+.aso-home .home-title {
+  --lox: -1.2em;
+  --loy: -0.05em;
+  --ss: 1.04;
+  --sb: 0.2em;
+  --rimx: -1.1px;
+  --rimy: -0.45px;
+  --sop: 0.96;
+  position: relative;
+  isolation: isolate;
+  color: #f8fbff;
+}
+
+.aso-home .home-title::before,
+.aso-home .home-title::after {
+  content: attr(data-text) / "";
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  pointer-events: none;
+  user-select: none;
+}
+
+.aso-home .home-title::before {
+  z-index: -1;
+  /* Rim and bevel stay at least 3:1 darker than the face, so the letter
+     edges stay crisp against them. */
+  text-shadow:
+    var(--rimx) var(--rimy) 0 rgba(92, 140, 196, 0.88),
+    0.007em 0.01em 0 #6b88aa,
+    0.014em 0.02em 0 #557396,
+    0.021em 0.03em 0 #436287,
+    0.028em 0.04em 0 #334f71,
+    0.035em 0.05em 0 #253f5d,
+    0.042em 0.06em 0 #1a304a,
+    0.05em 0.07em 0.03em rgba(2, 8, 18, 0.85);
+}
+
+.aso-home .home-title::after {
+  z-index: -2;
+  transform-origin: var(--lox) var(--loy);
+  transform: scale(var(--ss));
+  opacity: var(--sop);
+  text-shadow:
+    0 0 calc(var(--sb) * 0.5) rgba(1, 6, 15, 0.62),
+    0 0 var(--sb) rgba(1, 6, 15, 0.5),
+    0 0 calc(var(--sb) * 2.2) rgba(1, 6, 15, 0.34);
+}
+
+/* Forced colours drop shadows and recolour text: the copies would become
+   duplicate text, so remove them. */
+@media (forced-colors: active) {
+  .aso-home .home-title::before,
+  .aso-home .home-title::after {
+    display: none;
+  }
+}
+
 /* Below lg the photograph sits behind full-width copy; this extra veil
    brings the eyebrow, lead, and secondary action to AA there. Desktop keeps
    the photo untouched beside the copy. */

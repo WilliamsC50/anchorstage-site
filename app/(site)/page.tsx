@@ -91,8 +91,8 @@ export default function Home() {
           sizes="(min-width: 1536px) 66vw, (min-width: 1280px) 62vw, (min-width: 1024px) 56vw, 100vw"
         />
 
-        {/* Upper-right stage light over the photograph, under the copy.
-            Pointer-reactive on fine pointers; static on touch and with
+        {/* Side light from the left, raking across the headline, under the
+            copy. Pointer-reactive on fine pointers; static on touch and with
             reduced motion. */}
         <HeroLight />
 
@@ -108,7 +108,14 @@ export default function Home() {
               </p>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.03] mb-7">
+            {/* Dimensional lettering: extrusion and projected shadow are drawn
+                from data-text by home.css, lit by HeroLight. The heading text
+                and its accessible name are unchanged. */}
+            <h1
+              data-hero-title=""
+              data-text="AnchorStage Ops"
+              className="home-title text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.03] mb-7"
+            >
               AnchorStage Ops
             </h1>
 
