@@ -86,6 +86,80 @@
   }
 }
 
+/* Signal rings (Scene 2): the same rings as layered, independently rotating
+   SVGs with traveling pulses. Larger and brighter than the static rings, and
+   still centred on the corner so the strongest geometry stays upper-right and
+   the rest runs off the scene's edges. --rings-size drives the pulse radii. */
+.aso-home .home-signal-rings {
+  --rings-size: 640px;
+  width: var(--rings-size);
+  height: var(--rings-size);
+  top: calc(var(--rings-size) / -2);
+  right: calc(var(--rings-size) / -2);
+  opacity: 0.42;
+}
+
+@media (min-width: 1024px) {
+  .aso-home .home-signal-rings {
+    --rings-size: 1100px;
+    opacity: 0.8;
+  }
+}
+
+.aso-home .home-signal-rings .sr-layer,
+.aso-home .home-signal-rings .sr-scale {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* A pulse: zero-size pivot at the ring centre, turned to its angle; its dots
+   sit out on the ring. Head first, then a tail that thins and fades. */
+.aso-home .sr-pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: rotate(var(--rest));
+  opacity: 0.85;
+}
+
+.aso-home .sr-dot {
+  --s: 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  border-radius: 50%;
+  background: rgb(176, 226, 255);
+  /* Out to the ring, then back along it behind the head. */
+  transform: rotate(calc(var(--k) * var(--dir) * -1.7deg)) translateX(calc(var(--rings-size) * var(--r)));
+}
+
+.aso-home .sr-dot:nth-child(1) {
+  --s: 5px;
+  box-shadow: 0 0 8px 2px rgba(var(--home-blue), 0.55), 0 0 2px rgba(220, 240, 255, 0.9);
+}
+.aso-home .sr-dot:nth-child(2) { --s: 3.5px; opacity: 0.55; }
+.aso-home .sr-dot:nth-child(3) { --s: 3px; opacity: 0.34; }
+.aso-home .sr-dot:nth-child(4) { --s: 2.5px; opacity: 0.2; }
+.aso-home .sr-dot:nth-child(5) { --s: 2px; opacity: 0.1; }
+
+/* Below lg the copy runs the full width under the ring corner, so every
+   pulse path would cross text. Only the innermost pulse stays: it passes
+   behind the large headline alone, never the body copy. */
+@media (max-width: 1023px) {
+  .aso-home .sr-pulse-1,
+  .aso-home .sr-pulse-2,
+  .aso-home .sr-pulse-3 {
+    display: none;
+  }
+}
+
 /* Scene seam: a signal trace along the top edge, brightest under the light. */
 .aso-home .home-scene-seam {
   position: absolute;
@@ -523,11 +597,39 @@
   .aso-home .home-wave-drift-slow {
     animation-duration: 53s;
   }
+
+  /* Signal rings: three ring layers turning independently, alternating
+     direction, 54-88 s per revolution; pulses orbit on their own periods
+     and fade on others, so passes vary in timing and strength. */
+  .aso-home .home-signal-rings .sr-layer {
+    transform-origin: 50% 50%;
+    will-change: transform;
+  }
+
+  .aso-home .sr-layer-0 {
+    animation: sr-turn 72s linear infinite;
+  }
+
+  .aso-home .sr-layer-1 {
+    animation: sr-turn-back 54s linear infinite;
+  }
+
+  .aso-home .sr-layer-2 {
+    animation: sr-turn 88s linear infinite;
+  }
+
+  .aso-home .sr-pulse {
+    opacity: 0;
+    will-change: transform, opacity;
+    animation:
+      sr-orbit var(--spin) linear var(--delay) infinite,
+      sr-fade var(--fade) ease-in-out var(--delay) infinite;
+  }
 }
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .aso-home .home-scene-rings svg {
+    .aso-home .home-scene-rings:not(.home-signal-rings) svg {
       animation: home-rings-turn linear both;
       animation-timeline: view();
       animation-range: cover 0% cover 100%;
@@ -544,6 +646,28 @@
 @keyframes home-wave-drift {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes sr-turn {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes sr-turn-back {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes sr-orbit {
+  from { transform: rotate(var(--rest)); }
+  to { transform: rotate(calc(var(--rest) + var(--dir) * 360deg)); }
+}
+
+@keyframes sr-fade {
+  0%, 100% { opacity: 0.1; }
+  14% { opacity: 0.9; }
+  38% { opacity: 0.85; }
+  52% { opacity: 0.2; }
+  68% { opacity: 0.75; }
+  84% { opacity: 0.45; }
 }
 
 @keyframes home-rings-turn {

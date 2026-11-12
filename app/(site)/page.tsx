@@ -142,7 +142,7 @@ export default function Home() {
       </section>
 
       {/* WHAT ASO IS — the two halves of the product, network first */}
-      <HomeScene tone="deep" seed={11} fromHero>
+      <HomeScene tone="deep" seed={11} rings="signal" fromHero>
         <div className="max-w-3xl mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             One Connected Industry.

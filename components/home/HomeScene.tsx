@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { SignalWave, SoundRings } from "./SoundGeometry";
+import { SignalRings, SignalWave, SoundRings } from "./SoundGeometry";
 
 interface HomeSceneProps {
   children: ReactNode;
@@ -7,8 +7,9 @@ interface HomeSceneProps {
   tone?: "deep" | "navy";
   /** Seed for this scene's procedural geometry. */
   seed: number;
-  /** Draw the dispersion rings in the upper-right corner. */
-  rings?: boolean;
+  /** Draw the dispersion rings in the upper-right corner: static, or
+   *  "signal" for the animated version with traveling pulses. */
+  rings?: boolean | "signal";
   /** Blend the top edge up into the hero's navy when scenes flow unstacked. */
   fromHero?: boolean;
   /** Extra decorative layer rendered behind the content. */
@@ -23,7 +24,8 @@ interface HomeSceneProps {
  *
  *   grid     the stage-plot ground used across ASO, at low contrast
  *   rings    procedural dispersion rings in the upper-right corner;
- *            scroll-linked rotation
+ *            scroll-linked rotation, or (rings="signal") independently
+ *            rotating ring layers with traveling pulses
  *   seam     a signal trace along the top edge, the panel's lit leading edge
  *   veil     darkens the scene as the next one covers it
  *
@@ -47,10 +49,16 @@ export default function HomeScene({
       } py-20 md:py-28 ${className}`}
     >
       <div aria-hidden="true" className="home-scene-grid" />
-      {rings && (
-        <div aria-hidden="true" className="home-scene-rings">
-          <SoundRings seed={seed} className="h-full w-full" />
+      {rings === "signal" ? (
+        <div aria-hidden="true" className="home-scene-rings home-signal-rings">
+          <SignalRings seed={seed} />
         </div>
+      ) : (
+        rings && (
+          <div aria-hidden="true" className="home-scene-rings">
+            <SoundRings seed={seed} className="h-full w-full" />
+          </div>
+        )
       )}
       <div aria-hidden="true" className="home-scene-seam">
         <SignalWave seed={seed * 7 + 3} traces={3} amplitude={0.5} className="home-wave-drift" />
