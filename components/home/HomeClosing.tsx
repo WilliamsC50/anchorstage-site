@@ -23,7 +23,7 @@ interface HomeClosingProps {
 export default function HomeClosing({ heading, body, primary, secondary }: HomeClosingProps) {
   return (
     <HomeScene tone="deep" seed={61}>
-      <div className="max-w-2xl home-reveal">
+      <div className="max-w-2xl">
         <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
           {heading}
         </h2>

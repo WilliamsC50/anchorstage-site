@@ -7,6 +7,7 @@ import PersonaIcon from "@/components/PersonaIcon";
 import HomeClosing from "@/components/home/HomeClosing";
 import HomeScene from "@/components/home/HomeScene";
 import HudPointer from "@/components/home/HudPointer";
+import SceneStack from "@/components/home/SceneStack";
 import { SignalWave } from "@/components/home/SoundGeometry";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
@@ -64,12 +65,14 @@ const CHANGES = [
 export default function Home() {
   return (
     <main className="aso-home">
-      {/* Homepage-only pointer lighting for HUD panels, and a scroll readout. */}
+      {/* Homepage-only: pointer lighting for HUD panels, scene stacking, and a
+          scroll readout. */}
       <HudPointer />
+      <SceneStack />
       <div aria-hidden="true" className="home-progress" />
 
-      {/* HERO */}
-      <section className="relative bg-aso-navy overflow-hidden">
+      {/* HERO — the first scene in the stack; the scenes below rise over it. */}
+      <section className="home-stack relative bg-aso-navy overflow-hidden">
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none aso-plot-grid" />
 
         {/* Hero media: full-bleed background below lg, flush-right band at lg
@@ -127,11 +130,13 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <div aria-hidden="true" className="home-stack-veil" />
       </section>
 
       {/* WHAT ASO IS — the two halves of the product, network first */}
       <HomeScene tone="deep" seed={11} fromHero>
-        <div className="max-w-3xl mb-14 home-reveal">
+        <div className="max-w-3xl mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             One Connected Industry.
             <br />
@@ -151,42 +156,40 @@ export default function Home() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {HALVES.map((half, i) => (
-            // Reveal wrapper: the panel's own transform carries tilt and lift.
-            <div key={half.href} className="flex home-reveal" data-layer={i}>
-              <Link
-                href={half.href}
-                className="group hud-panel hud-panel-interactive flex w-full flex-col p-7 md:p-8"
-              >
-                <span
-                  aria-hidden="true"
-                  className="absolute left-0 top-6 bottom-6 w-0.5 bg-aso-blue/30 transition-colors group-hover:bg-aso-orange"
-                />
+          {HALVES.map((half) => (
+            <Link
+              key={half.href}
+              href={half.href}
+              className="group hud-panel hud-panel-interactive flex w-full flex-col p-7 md:p-8"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute left-0 top-6 bottom-6 w-0.5 bg-aso-blue/30 transition-colors group-hover:bg-aso-orange"
+              />
 
-                <p className="hud-tag text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange mb-4">
-                  {half.label}
-                </p>
+              <p className="hud-tag text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange mb-4">
+                {half.label}
+              </p>
 
-                <h3 className="text-xl font-bold text-white tracking-tight mb-4 leading-snug">
-                  {half.headline}
-                </h3>
+              <h3 className="text-xl font-bold text-white tracking-tight mb-4 leading-snug">
+                {half.headline}
+              </h3>
 
-                <div className="flex-1 space-y-4 mb-7">
-                  {half.body.map((paragraph) => (
-                    <p key={paragraph} className="home-copy leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
+              <div className="flex-1 space-y-4 mb-7">
+                {half.body.map((paragraph) => (
+                  <p key={paragraph} className="home-copy leading-relaxed">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
 
-                <span className="inline-flex items-center gap-2 text-sm font-semibold text-aso-orange">
-                  {half.cta}
-                  <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-                    &rarr;
-                  </span>
+              <span className="inline-flex items-center gap-2 text-sm font-semibold text-aso-orange">
+                {half.cta}
+                <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
+                  &rarr;
                 </span>
-              </Link>
-            </div>
+              </span>
+            </Link>
           ))}
         </div>
       </HomeScene>
@@ -210,7 +213,7 @@ export default function Home() {
           </div>
         }
       >
-        <div className="grid md:grid-cols-[7rem_minmax(0,1fr)] md:gap-10 home-reveal">
+        <div className="grid md:grid-cols-[7rem_minmax(0,1fr)] md:gap-10">
           <p className="hidden md:block text-xs font-semibold uppercase tracking-[0.18em] text-aso-blue-light/80 pt-3">
             The problem
           </p>
@@ -234,7 +237,7 @@ export default function Home() {
 
       {/* WHAT ASO CHANGES — staggered floating panels */}
       <HomeScene tone="deep" seed={37}>
-        <div className="max-w-2xl mb-16 home-reveal">
+        <div className="max-w-2xl mb-16">
           <span aria-hidden="true" className="block h-px w-8 bg-aso-orange mb-6" />
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             What ASO changes
@@ -248,20 +251,17 @@ export default function Home() {
 
         <div className="grid gap-6 md:grid-cols-3 md:gap-5">
           {CHANGES.map((item, i) => (
-            // Reveal wrapper: the stagger offset and the panel transform stay
-            // on the inner panel.
-            <div key={item.title} className="home-reveal" data-layer={i}>
-              <div
-                className={`hud-panel h-full p-7 ${i === 1 ? "md:translate-y-7" : ""} ${
-                  i === 2 ? "md:translate-y-3" : ""
-                }`}
-              >
-                <p className="hud-tag font-mono text-xs text-aso-orange mb-5">{item.index}</p>
-                <h3 className="text-lg font-semibold text-white mb-3 leading-snug">
-                  {item.title}
-                </h3>
-                <p className="home-copy leading-relaxed">{item.body}</p>
-              </div>
+            <div
+              key={item.title}
+              className={`hud-panel h-full p-7 ${i === 1 ? "md:translate-y-7" : ""} ${
+                i === 2 ? "md:translate-y-3" : ""
+              }`}
+            >
+              <p className="hud-tag font-mono text-xs text-aso-orange mb-5">{item.index}</p>
+              <h3 className="text-lg font-semibold text-white mb-3 leading-snug">
+                {item.title}
+              </h3>
+              <p className="home-copy leading-relaxed">{item.body}</p>
             </div>
           ))}
         </div>
@@ -272,7 +272,7 @@ export default function Home() {
       {/* WHO IT SERVES — right-weighted list against a left-set heading */}
       <HomeScene tone="navy" seed={53}>
         <div className="grid lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-16">
-          <div className="mb-10 lg:mb-0 home-reveal">
+          <div className="mb-10 lg:mb-0">
             <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-5">
               Built for the people who make events happen
             </h2>
@@ -289,7 +289,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2 home-reveal" data-layer="1">
+          <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
             {PERSONAS.map((persona) => (
               <li
                 key={persona.slug}

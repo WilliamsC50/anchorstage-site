@@ -1,15 +1,14 @@
 /* ── Homepage visual system ─────────────────────────────────────────────────
-   A unified dark ground lit from the upper-right, HUD panels, procedural
-   signal geometry, and scroll-linked scene transitions.
+   A unified dark ground, HUD panels, procedural signal geometry, and scenes
+   that stack: each one rises over the one before it as the page scrolls.
 
    Scope: every rule sits under .aso-home (the homepage <main>), so nothing
    here reaches another route, even after client-side navigation keeps this
    stylesheet loaded.
 
-   Motion policy: scroll-linked effects run only where scroll timelines are
-   supported and motion is allowed. Everywhere else the static, fully
-   revealed page is the design, so no content ever depends on animation to
-   become visible. */
+   Motion policy: stacking (SceneStack) and scroll-linked effects run only
+   when motion is allowed. Without them the scenes flow one after another,
+   so no content ever depends on animation to become visible. */
 
 .aso-home {
   --home-base: #050d18;
@@ -47,42 +46,7 @@
   background: linear-gradient(180deg, #0c2742 0%, var(--home-deep) 280px);
 }
 
-/* Signature light: bloom and wash at the upper-right, plus a soft beam
-   thrown down and across the scene. */
-.aso-home .home-scene-light {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 560px 380px at 96% -6%, rgba(var(--home-ice), 0.22) 0%, rgba(var(--home-blue), 0.08) 45%, transparent 72%),
-    radial-gradient(ellipse 1100px 720px at 88% -14%, rgba(var(--home-blue), 0.2) 0%, rgba(40, 110, 220, 0.08) 42%, transparent 74%);
-}
-
-.aso-home .home-scene-light::after {
-  content: "";
-  position: absolute;
-  left: 96%;
-  top: -4%;
-  width: 130%;
-  aspect-ratio: 10 / 9;
-  transform-origin: 0 50%;
-  transform: translateY(-50%) rotate(var(--scene-beam, 118deg));
-  background:
-    conic-gradient(from 90deg at 0% 50%,
-      rgba(var(--home-blue), 0.2) 0deg, rgba(var(--home-blue), 0.06) 11deg, transparent 22deg,
-      transparent 338deg, rgba(var(--home-blue), 0.06) 349deg, rgba(var(--home-blue), 0.2) 360deg);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, rgba(0, 0, 0, 0.4) 45%, transparent 90%);
-  mask-image: linear-gradient(to right, transparent 0%, #000 8%, rgba(0, 0, 0, 0.4) 45%, transparent 90%);
-}
-
-@media (min-width: 1024px) {
-  .aso-home .home-scene-light::after {
-    --scene-beam: 148deg;
-  }
-}
-
-/* Stage-plot ground, concentrated under the light. */
+/* Stage-plot ground, concentrated toward the upper-right. */
 .aso-home .home-scene-grid {
   position: absolute;
   inset: 0;
@@ -171,6 +135,40 @@
   .aso-home .home-problem-waves {
     height: 140px;
   }
+}
+
+/* ── Scene stack ────────────────────────────────────────────────────────── */
+
+/* SceneStack adds .is-stacked and sets each scene's sticky top, transform,
+   top-corner radius, and veil opacity per frame. */
+.aso-home.is-stacked .home-stack {
+  position: sticky;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+/* Incoming panels cast their shadow up onto the scene they cover. */
+.aso-home.is-stacked .home-stack + .home-stack {
+  box-shadow:
+    0 -40px 80px -24px rgba(0, 0, 0, 0.85),
+    0 -1px 0 rgba(var(--home-ice), 0.14);
+}
+
+/* Stacked, the first scene is a panel over the hero, not a continuation of
+   it, so it keeps its own ground. */
+.aso-home.is-stacked .home-scene-from-hero {
+  background: var(--home-deep);
+}
+
+/* Darkens a scene as the next one covers it. Above the content; never
+   intercepts the pointer. */
+.aso-home .home-stack-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  background: #02060d;
+  opacity: 0;
 }
 
 /* ── HUD panels ─────────────────────────────────────────────────────────── */
@@ -428,32 +426,10 @@
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    /* Scene transition: the light comes up as a scene arrives, then eases. */
-    .aso-home .home-scene-light {
-      animation: home-scene-light linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 100%;
-    }
-
     .aso-home .home-scene-rings svg {
       animation: home-rings-turn linear both;
       animation-timeline: view();
       animation-range: cover 0% cover 100%;
-    }
-
-    /* Layered reveals. Later layers start later and finish together. */
-    .aso-home .home-reveal {
-      animation: home-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 100%;
-    }
-
-    .aso-home .home-reveal[data-layer="1"] {
-      animation-range: entry 15% entry 100%;
-    }
-
-    .aso-home .home-reveal[data-layer="2"] {
-      animation-range: entry 30% entry 100%;
     }
 
     .aso-home .home-progress {
@@ -469,21 +445,9 @@
   to { transform: translate3d(-50%, 0, 0); }
 }
 
-@keyframes home-scene-light {
-  0% { opacity: 0.35; }
-  40%, 60% { opacity: 1; }
-  100% { opacity: 0.55; }
-}
-
 @keyframes home-rings-turn {
   from { transform: rotate(-10deg); }
   to { transform: rotate(8deg); }
-}
-
-@keyframes home-reveal {
-  0% { opacity: 0; transform: translate3d(0, 40px, 0) scale(0.97); }
-  70% { opacity: 1; }
-  100% { opacity: 1; transform: none; }
 }
 
 @keyframes home-progress {
