@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-6 py-14 grid gap-10 md:grid-cols-3">
 
         <div>
-          <p className="font-semibold text-white">AnchorStage Operations</p>
+          <p className="font-semibold text-white">AnchorStage Ops</p>
           <p className="mt-3 text-sm leading-relaxed text-aso-blue-light/70 max-w-xs">
             A professional network and connected operations platform built for the
             live event industry.

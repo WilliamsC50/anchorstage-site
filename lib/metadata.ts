@@ -6,7 +6,7 @@ interface BuildMetadataInput {
 }
 
 export function buildMetadata({ title, description }: BuildMetadataInput): Metadata {
-  const fullTitle = `${title} | AnchorStage Operations`;
+  const fullTitle = `${title} | AnchorStage Ops`;
   return {
     title: fullTitle,
     description,

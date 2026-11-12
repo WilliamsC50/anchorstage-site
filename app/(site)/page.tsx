@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Button from "@/components/Button";
 import ClosingCta from "@/components/ClosingCta";
+import HeroLight from "@/components/HeroLight";
 import HeroMedia from "@/components/HeroMedia";
 import PersonaIcon from "@/components/PersonaIcon";
 import Section from "@/components/Section";
@@ -9,7 +10,7 @@ import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
 
 export const metadata: Metadata = {
-  title: "AnchorStage Operations | Connected Operations Platform for Live Events",
+  title: "AnchorStage Ops | Connected Operations Platform for Live Events",
   description:
     "A professional network and connected operations platform built for the live event industry. Run your events, gear, documents, and financial records in one place, and work with the organizations you already work with. Join free.",
 };
@@ -63,18 +64,10 @@ export default function Home() {
       {/* HERO */}
       <section className="relative bg-aso-navy overflow-hidden">
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none aso-plot-grid" />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse 820px 560px at 78% -12%, rgba(145, 205, 255, 0.20) 0%, rgba(70, 135, 200, 0.10) 32%, transparent 72%)",
-          }}
-        />
 
         {/* Hero media: full-bleed background below lg, flush-right band at lg
-            and up. z-[1] lifts it above the plot-grid and glow layers; the
-            copy below is z-10.
+            and up. z-[1] lifts it above the plot-grid layer; the stage light
+            is z-[2] and the copy below is z-10.
 
             The desktop width widens at larger breakpoints on purpose. The band
             is anchored to the viewport's right edge while the copy is centred
@@ -88,6 +81,11 @@ export default function Home() {
           sizes="(min-width: 1536px) 66vw, (min-width: 1280px) 62vw, (min-width: 1024px) 56vw, 100vw"
         />
 
+        {/* Upper-right stage light over the photograph, under the copy.
+            Pointer-reactive on fine pointers; static on touch and with
+            reduced motion. */}
+        <HeroLight />
+
         <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32">
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 mb-6">
@@ -98,7 +96,7 @@ export default function Home() {
             </div>
 
             <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.03] mb-7">
-              AnchorStage Operations
+              AnchorStage Ops
             </h1>
 
             <p className="text-lg md:text-xl text-white/70 leading-relaxed mb-10 max-w-2xl">
@@ -135,7 +133,7 @@ export default function Home() {
             event organizers already depend on one another to make every show happen.
           </p>
           <p className="text-lg text-gray-500 leading-relaxed">
-            AnchorStage Operations connects those relationships through a shared network
+            AnchorStage Ops connects those relationships through a shared network
             and gives every organization the tools to manage the work together.
           </p>
         </div>

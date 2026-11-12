@@ -21,14 +21,14 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: logoWordmarkPng,
   },
-  title: "AnchorStage Operations | Connected Operations Platform for Live Events",
+  title: "AnchorStage Ops | Connected Operations Platform for Live Events",
   description:
     "A professional network and connected operations platform built for the live event industry. Run your events, gear, documents, and financial records in one place.",
   openGraph: {
     type: "website",
     url: "https://anchorstageops.com",
-    siteName: "AnchorStage Operations",
-    title: "AnchorStage Operations | Connected Operations Platform for Live Events",
+    siteName: "AnchorStage Ops",
+    title: "AnchorStage Ops | Connected Operations Platform for Live Events",
     description:
       "A professional network and connected operations platform built for the live event industry.",
     images: [
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AnchorStage Operations | Connected Operations Platform for Live Events",
+    title: "AnchorStage Ops | Connected Operations Platform for Live Events",
     description:
       "A professional network and connected operations platform built for the live event industry.",
     images: [ogDefault.src],
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
 const applicationSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "AnchorStage Operations",
+  name: "AnchorStage Ops",
   url: "https://anchorstageops.com",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",

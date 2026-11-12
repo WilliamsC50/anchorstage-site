@@ -5,7 +5,7 @@ import { CONTACT_EMAIL } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How AnchorStage Operations collects, uses, and protects information on its operations platform and professional network for the live event industry.",
+    "How AnchorStage Ops collects, uses, and protects information on its operations platform and professional network for the live event industry.",
 };
 
 export default function PrivacyPage() {

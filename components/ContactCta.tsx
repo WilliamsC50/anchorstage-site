@@ -99,7 +99,7 @@ export default function ContactCta() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 font-medium text-aso-blue underline decoration-aso-blue/30 underline-offset-2 transition hover:decoration-aso-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-blue/50 focus-visible:ring-offset-2"
               >
-                AnchorStage Operations on Facebook
+                AnchorStage Ops on Facebook
                 <svg
                   viewBox="0 0 24 24"
                   className="h-3.5 w-3.5"

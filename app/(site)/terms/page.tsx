@@ -5,7 +5,7 @@ import { CONTACT_EMAIL } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "Terms of Service governing use of the AnchorStage Operations platform and professional network for the live event industry.",
+    "Terms of Service governing use of the AnchorStage Ops platform and professional network for the live event industry.",
 };
 
 export default function TermsPage() {

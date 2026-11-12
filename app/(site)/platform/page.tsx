@@ -40,7 +40,7 @@ export default function PlatformPage() {
       <PageHeader
         eyebrow="Platform"
         title="One operational foundation for your organization"
-        lead="AnchorStage Operations is a connected operations platform for live event work. Your organization gets one place where its events, records, and day to day operations live together."
+        lead="AnchorStage Ops is a connected operations platform for live event work. Your organization gets one place where its events, records, and day to day operations live together."
         media={
           // Product shot, not photography. fit="contain" keeps the laptop,
           // tablet, and phone whole at any size, and object-position right

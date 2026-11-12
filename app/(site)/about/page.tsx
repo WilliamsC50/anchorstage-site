@@ -12,7 +12,7 @@ import { AUTH_NAV } from "@/lib/nav";
 export const metadata: Metadata = buildMetadata({
   title: "About",
   description:
-    "Why AnchorStage Operations exists, who is building it, and where it is going. Built from years of real live event work in Central Florida, not from a pitch deck.",
+    "Why AnchorStage Ops exists, who is building it, and where it is going. Built from years of real live event work in Central Florida, not from a pitch deck.",
 });
 
 const PRINCIPLES = [
@@ -36,7 +36,7 @@ export default function AboutPage() {
       <PageHeader
         eyebrow="About"
         title="Why ASO exists"
-        lead="AnchorStage Operations was built from years of solving real operational problems in live events. Not from a pitch deck, and not from a software roadmap. Every part of it begins with the way professionals actually work."
+        lead="AnchorStage Ops was built from years of solving real operational problems in live events. Not from a pitch deck, and not from a software roadmap. Every part of it begins with the way professionals actually work."
         media={
           // Same treatment as the Home and Network heroes: photograph covering
           // the band, flush-right, blended into the navy by the shared fade.

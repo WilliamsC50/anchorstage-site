@@ -22,13 +22,13 @@ export default function Nav() {
         <Link href="/" className="flex items-center gap-3 shrink-0" onClick={() => setOpen(false)}>
           <Image
             src={logoWordmarkSvg}
-            alt="AnchorStage Operations"
+            alt="AnchorStage Ops"
             width={40}
             height={40}
             className="h-8 w-auto md:h-10 object-contain"
           />
           <span className="text-base font-bold tracking-tight hidden sm:block text-aso-navy">
-            AnchorStage Operations
+            AnchorStage Ops
           </span>
         </Link>
 
