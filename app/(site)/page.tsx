@@ -7,6 +7,7 @@ import PersonaIcon from "@/components/PersonaIcon";
 import HomeClosing from "@/components/home/HomeClosing";
 import HomeScene from "@/components/home/HomeScene";
 import HudPointer from "@/components/home/HudPointer";
+import ProblemField from "@/components/home/ProblemField";
 import SceneStack from "@/components/home/SceneStack";
 import { SignalWave } from "@/components/home/SoundGeometry";
 import { AUTH_NAV } from "@/lib/nav";
@@ -202,22 +203,26 @@ export default function Home() {
       </HomeScene>
 
       {/* THE PROBLEM — single column, wide measure, deliberately quiet. Two
-          signal traces drift in and out of step beneath it. */}
+          signal traces drift in and out of step beneath it, and a field of
+          operational fragments that never quite agree surrounds the copy. */}
       <HomeScene
         tone="navy"
         seed={23}
         rings={false}
         backdrop={
-          <div aria-hidden="true" className="home-problem-waves">
-            <SignalWave seed={101} traces={2} amplitude={0.62} className="home-wave-drift" />
-            <SignalWave
-              seed={101}
-              traces={1}
-              amplitude={0.62}
-              stroke="rgb(255, 122, 26)"
-              className="home-wave-drift home-wave-drift-slow"
-            />
-          </div>
+          <>
+            <div aria-hidden="true" className="home-problem-waves">
+              <SignalWave seed={101} traces={2} amplitude={0.62} className="home-wave-drift" />
+              <SignalWave
+                seed={101}
+                traces={1}
+                amplitude={0.62}
+                stroke="rgb(255, 122, 26)"
+                className="home-wave-drift home-wave-drift-slow"
+              />
+            </div>
+            <ProblemField />
+          </>
         }
       >
         <div className="grid md:grid-cols-[7rem_minmax(0,1fr)] md:gap-10">

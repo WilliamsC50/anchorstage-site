@@ -211,6 +211,311 @@
   }
 }
 
+/* ── Scene 3: operational fragments ─────────────────────────────────────────
+   Miniature windows (ProblemField) around the copy, connection lines that
+   stop short, occasional pulses, muted amber status lights. All text is
+   generated content with empty alt text. Base rules are the small-screen
+   layout (fragments cropped into the bands above and below the copy); lg
+   and up place them around the copy column. */
+.aso-home .home-problem-field {
+  --pf-line: 127, 211, 244;
+  --pf-amber: 226, 152, 64;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.aso-home .pf-t::before {
+  content: attr(data-t) / "";
+}
+
+/* Darker, quieter ground directly behind the copy. */
+.aso-home .pf-quiet {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 90% 34% at 50% 50%, rgba(4, 11, 21, 0.55), rgba(4, 11, 21, 0.25) 50%, transparent 78%);
+}
+
+.aso-home .pf-frag {
+  position: absolute;
+  width: var(--w, 240px);
+}
+
+.aso-home .pf-win {
+  padding: 8px 10px 7px;
+  border: 1px solid rgba(var(--pf-line), 0.2);
+  border-radius: 6px;
+  background: linear-gradient(160deg, rgba(16, 42, 70, 0.62), rgba(8, 22, 40, 0.55));
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  opacity: var(--o, 0.7);
+  transform: rotate(var(--tilt, 0deg)) scale(var(--depth, 1));
+}
+
+.aso-home .pf-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(var(--pf-line), 0.14);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+
+.aso-home .pf-title {
+  font-weight: 600;
+  color: rgba(186, 222, 245, 0.82);
+}
+
+.aso-home .pf-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  color: rgba(var(--pf-amber), 0.72);
+}
+
+.aso-home .pf-led {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(var(--pf-amber));
+  box-shadow: 0 0 6px rgba(var(--pf-amber), 0.5);
+  opacity: 0.6;
+}
+
+.aso-home .pf-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  height: 18px;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  color: rgba(165, 200, 228, 0.62);
+}
+
+.aso-home .pf-row + .pf-row {
+  border-top: 1px dashed rgba(var(--pf-line), 0.08);
+}
+
+.aso-home .pf-v {
+  display: flex;
+  gap: 6px;
+  color: rgba(205, 228, 245, 0.78);
+}
+
+.aso-home .pf-was {
+  color: rgba(165, 200, 228, 0.4);
+  text-decoration: line-through;
+}
+
+.aso-home .pf-warn {
+  color: rgba(var(--pf-amber), 0.86);
+}
+
+.aso-home .pf-bar {
+  display: block;
+  width: calc(var(--fill) * 46%);
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, rgba(var(--pf-line), 0.3), rgba(var(--pf-line), 0.1));
+}
+
+/* Small screens: header and two rows, cropped into the bands. */
+.aso-home .pf-win > .pf-row:nth-child(n + 4) {
+  display: none;
+}
+
+.aso-home .pf-sched { --w: 196px; --tilt: -2.5deg; --o: 0.58; left: -42px; top: 16px; }
+.aso-home .pf-crew { --w: 200px; --tilt: 3deg; --o: 0.62; right: -66px; top: 8px; }
+.aso-home .pf-gear { --w: 196px; --tilt: -2deg; --o: 0.58; right: -74px; bottom: 16px; }
+.aso-home .pf-event { --w: 200px; --tilt: 1.8deg; --o: 0.52; left: -46px; bottom: 30px; }
+.aso-home .pf-rev { display: none; }
+
+/* Drift and status timing per window: different periods, directions, and
+   phases, so nothing moves in step. */
+.aso-home .pf-sched { --dx: 8px; --dy: -6px; --dr: 0.5deg; --dur: 23s; --delay: -7s; --led: 9.1s; }
+.aso-home .pf-rev { --dx: -5px; --dy: 4px; --dr: -0.4deg; --dur: 31s; --delay: -19s; --led: 12.9s; }
+.aso-home .pf-crew { --dx: -7px; --dy: 7px; --dr: -0.6deg; --dur: 27s; --delay: -3s; --led: 7.3s; }
+.aso-home .pf-gear { --dx: 6px; --dy: 5px; --dr: 0.4deg; --dur: 37s; --delay: -23s; --led: 10.7s; }
+.aso-home .pf-event { --dx: 7px; --dy: -5px; --dr: 0.5deg; --dur: 29s; --delay: -11s; --led: 8.3s; }
+
+/* Connection lines: fine, fading toward where they should arrive. */
+.aso-home .pf-link {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(to right, rgba(var(--pf-line), 0.34), rgba(var(--pf-line), 0.2) 62%, transparent 92%);
+}
+
+.aso-home .pf-link-a { top: 62px; left: 156px; width: calc(100% - 300px); }
+
+.aso-home .pf-link-b,
+.aso-home .pf-link-c,
+.aso-home .pf-link-d {
+  display: none;
+}
+
+/* Where a link gives up: a small muted amber marker. */
+.aso-home .pf-break {
+  position: absolute;
+  top: -3px;
+  right: 10%;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(var(--pf-amber), 0.8);
+  opacity: 0.5;
+  transform: rotate(45deg);
+}
+
+/* Pulse: rides the link (its box is the link box, so a percentage
+   translate is a share of the link) and fades out before the break. */
+.aso-home .pf-pulse {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.aso-home .pf-dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 4px;
+  margin: -1.5px 0 0 -2px;
+  border-radius: 50%;
+  background: rgb(186, 228, 255);
+  box-shadow: 0 0 6px 1px rgba(var(--home-blue), 0.6);
+}
+
+.aso-home .pf-dot::before {
+  content: "";
+  position: absolute;
+  top: 1.5px;
+  right: 3px;
+  width: 30px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(150, 215, 255, 0.7));
+}
+
+@media (min-width: 1024px) {
+  .aso-home .pf-quiet {
+    background: radial-gradient(ellipse 700px 340px at calc(50% - 92px) 50%, rgba(4, 11, 21, 0.6), rgba(4, 11, 21, 0.28) 48%, transparent 76%);
+  }
+
+  .aso-home .pf-win > .pf-row:nth-child(n + 4) {
+    display: flex;
+  }
+
+  /* Around the copy column: beside it, and in the bands above and below.
+     Right-hand windows track the column (50% + offset) and crop at the
+     scene edge on narrower screens. */
+  .aso-home .pf-sched { --w: 250px; --tilt: -2.2deg; --o: 0.78; left: -28px; top: 40px; }
+  .aso-home .pf-rev { --w: 210px; --tilt: 1.6deg; --depth: 0.88; --o: 0.5; display: block; left: calc(50% + 30px); top: 26px; }
+  .aso-home .pf-crew { --w: 264px; --tilt: 2.4deg; --o: 0.8; right: auto; left: max(calc(50% + 410px), 984px); top: calc(50% - 190px); }
+  .aso-home .pf-gear { --w: 244px; --tilt: -1.4deg; --depth: 0.94; --o: 0.7; right: auto; bottom: auto; left: max(calc(50% + 452px), 1012px); top: calc(50% + 66px); }
+  .aso-home .pf-event { --w: 262px; --tilt: 1.8deg; --depth: 0.96; --o: 0.66; left: -34px; bottom: 46px; }
+
+  .aso-home .pf-link-a { top: 150px; left: 222px; width: calc(50% - 72px); }
+
+  /* Crew to gear: vertical, connected but broken midway. */
+  .aso-home .pf-link-b {
+    display: block;
+    left: calc(max(calc(50% + 410px), 984px) + 64px);
+    top: calc(50% - 34px);
+    width: 1px;
+    height: 96px;
+    background: linear-gradient(to bottom, rgba(var(--pf-line), 0.32) 0 36%, transparent 36% 62%, rgba(var(--pf-line), 0.26) 62% 100%);
+  }
+
+  .aso-home .pf-link-b .pf-break {
+    top: 47%;
+    right: auto;
+    left: -3px;
+  }
+
+  /* Event details toward gear, below the copy. */
+  .aso-home .pf-link-c {
+    display: block;
+    top: calc(100% - 160px);
+    left: 228px;
+    width: calc(50% + 102px);
+  }
+}
+
+/* Between lg and xl the copy column reaches close to the right edge, so the
+   right-hand windows move into the bands above and below it, and the link
+   between them (which would cross the copy) is dropped. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .aso-home .pf-crew { left: auto; right: -40px; top: 30px; }
+  .aso-home .pf-gear { left: auto; right: -54px; top: auto; bottom: 40px; }
+  .aso-home .pf-link-b { display: none; }
+}
+
+/* Left edge, schedule down toward event details: wide screens only, where
+   the copy column leaves room beside it. Fades out, then a faint retry. */
+@media (min-width: 1280px) {
+  .aso-home .pf-link-d {
+    display: block;
+    left: 70px;
+    top: 196px;
+    width: 1px;
+    height: calc(100% - 386px);
+    background: linear-gradient(to bottom, rgba(var(--pf-line), 0.32), rgba(var(--pf-line), 0.18) 40%, transparent 56%, transparent 70%, rgba(var(--pf-line), 0.12) 78%, transparent 100%);
+  }
+
+  .aso-home .pf-link-d .pf-break {
+    top: 55%;
+    right: auto;
+    left: -3px;
+  }
+
+  .aso-home .pf-link-d .pf-dot::before {
+    top: auto;
+    right: 1.5px;
+    bottom: 3px;
+    width: 1px;
+    height: 30px;
+    background: linear-gradient(to bottom, transparent, rgba(150, 215, 255, 0.7));
+  }
+}
+
+/* Short viewports leave little room above and below the copy: keep only
+   the windows beside it. */
+@media (min-width: 1024px) and (max-height: 700px) {
+  .aso-home .pf-sched,
+  .aso-home .pf-rev,
+  .aso-home .pf-event,
+  .aso-home .pf-link-a,
+  .aso-home .pf-link-c,
+  .aso-home .pf-link-d {
+    display: none;
+  }
+}
+
+/* Phones: the copy wraps tall, so the bands shrink with screen height.
+   Under 780 px keep only the top pair; under 700 px, none. */
+@media (max-width: 1023px) and (max-height: 779px) {
+  .aso-home .pf-gear,
+  .aso-home .pf-event {
+    display: none;
+  }
+}
+
+@media (max-width: 1023px) and (max-height: 699px) {
+  .aso-home .home-problem-field .pf-frag,
+  .aso-home .home-problem-field .pf-link {
+    display: none;
+  }
+}
+
 /* ── Scene stack ────────────────────────────────────────────────────────── */
 
 /* Scene frame: when motion is allowed, every scene fills at least the
@@ -618,6 +923,42 @@
     animation: sr-turn 88s linear infinite;
   }
 
+  /* Scene 3 fragments: slow independent drift, gentle status lights,
+     occasional pulses that die before they arrive. */
+  .aso-home .pf-frag {
+    animation: pf-drift var(--dur) ease-in-out var(--delay) infinite alternate;
+  }
+
+  .aso-home .pf-led {
+    animation: pf-led var(--led) ease-in-out var(--delay) infinite;
+  }
+
+  .aso-home .pf-break {
+    animation: pf-break 11s ease-in-out infinite;
+  }
+
+  .aso-home .pf-link-b .pf-break {
+    animation-duration: 8.6s;
+    animation-delay: -3s;
+  }
+
+  .aso-home .pf-link-d .pf-break {
+    animation-duration: 13.4s;
+    animation-delay: -6s;
+  }
+
+  .aso-home .pf-link-a .pf-pulse {
+    animation: pf-run-x 13s linear -2s infinite;
+  }
+
+  .aso-home .pf-link-c .pf-pulse {
+    animation: pf-run-x 17s linear -9s infinite;
+  }
+
+  .aso-home .pf-link-d .pf-pulse {
+    animation: pf-run-y 19s linear -5s infinite;
+  }
+
   .aso-home .sr-pulse {
     opacity: 0;
     will-change: transform, opacity;
@@ -646,6 +987,41 @@
 @keyframes home-wave-drift {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes pf-drift {
+  from { transform: translate3d(0, 0, 0) rotate(0deg); }
+  to { transform: translate3d(var(--dx), var(--dy), 0) rotate(var(--dr)); }
+}
+
+@keyframes pf-led {
+  0%, 100% { opacity: 0.35; }
+  38% { opacity: 0.85; }
+  52% { opacity: 0.5; }
+  70% { opacity: 0.75; }
+}
+
+@keyframes pf-break {
+  0%, 100% { opacity: 0.25; }
+  45% { opacity: 0.7; }
+  60% { opacity: 0.4; }
+}
+
+/* Across a link, fading out before its end; then idle until the next. */
+@keyframes pf-run-x {
+  0% { transform: translateX(0); opacity: 0; }
+  3% { opacity: 0.9; }
+  30% { transform: translateX(70%); opacity: 0.8; }
+  36% { transform: translateX(82%); opacity: 0; }
+  100% { transform: translateX(82%); opacity: 0; }
+}
+
+@keyframes pf-run-y {
+  0% { transform: translateY(0); opacity: 0; }
+  3% { opacity: 0.85; }
+  26% { transform: translateY(44%); opacity: 0.7; }
+  33% { transform: translateY(54%); opacity: 0; }
+  100% { transform: translateY(54%); opacity: 0; }
 }
 
 @keyframes sr-turn {
