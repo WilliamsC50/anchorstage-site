@@ -56,7 +56,7 @@ export default function HomeScene({
         <SignalWave seed={seed * 7 + 3} traces={3} amplitude={0.5} className="home-wave-drift" />
       </div>
       {backdrop}
-      <div className="relative max-w-6xl mx-auto px-6">{children}</div>
+      <div className="home-frame-content relative max-w-6xl mx-auto px-6">{children}</div>
       <div aria-hidden="true" className="home-stack-veil" />
     </section>
   );

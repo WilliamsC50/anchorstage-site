@@ -99,7 +99,7 @@ export default function Home() {
         {/* Below lg only: extra veil so copy over the photo reaches AA. */}
         <div aria-hidden="true" className="home-hero-scrim" />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32">
+        <div className="home-frame-content relative z-10 max-w-6xl mx-auto px-6 py-24 md:py-32">
           <div className="max-w-2xl">
             <div className="flex items-center gap-3 mb-6">
               <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />

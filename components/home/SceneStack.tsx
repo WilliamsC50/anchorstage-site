@@ -5,48 +5,62 @@ import { useEffect } from "react";
 /**
  * Homepage scene stacking.
  *
- * Every `.home-stack` section inside `.aso-home` becomes position: sticky, so
- * each scene scrolls up and over the one before it, which stays pinned behind
- * it. The overlap is real layout, so it reverses exactly when scrolling back
- * up, and scrolling itself is untouched: no snapping, no scroll hijacking.
+ * Every `.home-stack` section inside `.aso-home` is a full-frame panel: at
+ * least the viewport below the nav (home.css), content centred. This makes
+ * them position: sticky, so each panel scrolls up over the one before it,
+ * which stays pinned behind it until fully replaced. The overlap is real
+ * layout, so it reverses exactly when scrolling back up, and scrolling itself
+ * is untouched: no snapping, no scroll hijacking.
  *
- * Each scene pins at min(nav height, viewport - scene height). A scene
- * shorter than the viewport pins under the nav; a taller one keeps scrolling
- * until its last line is on screen and pins there, so no content is ever
- * covered before it has been seen.
+ * Each panel pins at min(nav height, viewport - panel height). A one-frame
+ * panel pins under the nav; a taller one keeps scrolling until its last line
+ * is on screen and pins there, so no content is covered before it is seen.
+ * Either way the pinned panel fills the frame exactly, so every transition
+ * is the same: the next panel travels one frame, from the bottom of the
+ * viewport to the nav, over a full-frame panel.
  *
- * On top of the layout, a per-frame pass (one rAF per scroll, arithmetic
- * only, no layout reads) gives each scene depth:
- *   incoming  starts slightly scaled down with rounded top corners and
- *             settles flat and full-width as it reaches the nav
- *   outgoing  recedes as it is covered: scales back, tilts away, darkens
+ * One progress value p per transition (eased, 0 to 1) drives both panels:
+ *   incoming  scales up from slightly small, pivoting on its top edge, and
+ *             its top corners square off as it reaches the nav
+ *   outgoing  recedes, hinged at the frame's top edge (under the nav): it
+ *             scales back, leans away, and darkens under its veil until the
+ *             incoming panel has replaced it
+ * Hinging the outgoing panel at the nav line keeps everything above the
+ * frame above it, so a tall panel never reveals off-frame content as it
+ * recedes.
  *
- * Keyboard focus: if focus lands on something a later scene is covering,
- * the page scrolls to where that scene is uncovered.
+ * Keyboard focus: if focus lands on something a later panel is covering,
+ * the page scrolls to where that panel is uncovered.
  *
- * Off under prefers-reduced-motion and without JS: the page is then the
- * normal flowing layout. Renders nothing.
+ * Off under prefers-reduced-motion and without JS: the page then flows.
+ * Renders nothing.
  */
 
 const NAV = 64;
-const PERSPECTIVE = 1400;
+const PERSPECTIVE = 1600;
 // Veil opacity above which a focused element counts as obscured.
 const FOCUS_MAX_VEIL = 0.02;
 
 interface Depth {
+  /** Incoming panel's scale deficit at the start of a transition. */
   inScale: number;
+  /** Incoming panel's top-corner radius at the start, px. */
   radius: number;
+  /** Outgoing panel's scale deficit once replaced. */
   outScale: number;
+  /** Outgoing panel's lean-back once replaced, deg. */
   outTilt: number;
-  outLift: number;
+  /** Outgoing panel's veil opacity once replaced. */
   veil: number;
 }
 
-const DESKTOP: Depth = { inScale: 0.08, radius: 28, outScale: 0.06, outTilt: 7, outLift: 28, veil: 0.7 };
-const MOBILE: Depth = { inScale: 0.05, radius: 20, outScale: 0.05, outTilt: 5, outLift: 16, veil: 0.65 };
+// One motion language at every size; small screens get proportionally less
+// scale so the side reveal stays a similar width in px.
+const DESKTOP: Depth = { inScale: 0.06, radius: 28, outScale: 0.08, outTilt: 6, veil: 0.85 };
+const MOBILE: Depth = { inScale: 0.06, radius: 22, outScale: 0.08, outTilt: 6, veil: 0.85 };
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
-const smooth = (t: number) => t * t * (3 - 2 * t);
+const ease = (t: number) => t * t * (3 - 2 * t);
 
 interface Scene {
   el: HTMLElement;
@@ -92,39 +106,34 @@ export default function SceneStack() {
       frame = 0;
       const sy = window.scrollY;
       const n = scenes.length;
+      const span = vh - NAV;
+      // Screen top of each panel, as sticky positioning places it.
       const tops = scenes.map((s) => Math.min(Math.max(s.top - sy, s.stick), mainEnd - sy - s.h));
+      // Transition progress of each panel: 0 as its top enters the viewport,
+      // 1 when it reaches the nav and has replaced the panel before it.
+      const progress = tops.map((top, i) => (i === 0 ? 1 : ease(clamp01((vh - top) / span))));
 
       for (let i = 0; i < n; i++) {
         const s = scenes[i];
         const top = tops[i];
-        const bottom = top + s.h;
-
-        // Incoming: 0 as the scene's top enters the viewport, 1 at the nav.
-        const enter = i === 0 ? 1 : smooth(clamp01((vh - top) / (vh - NAV)));
-
-        // Outgoing: share of this scene's visible area the next one covers.
-        let cover = 0;
-        if (i < n - 1) {
-          const visTop = Math.max(top, NAV);
-          const visBottom = Math.min(bottom, vh);
-          const visible = visBottom - visTop;
-          cover = visible > 1 ? clamp01((visBottom - tops[i + 1]) / visible) : 1;
-          cover = smooth(cover);
-        }
+        const enter = progress[i];
+        // A panel is pinned and filling the frame whenever the next one is
+        // in view, so the next panel's progress is this one's exit.
+        const cover = i < n - 1 ? progress[i + 1] : 0;
 
         let css = "";
         if (enter < 0.999 || cover > 0.001) {
           const cx = s.w / 2;
-          // Recede about the centre of what is still visible of this scene.
-          const oy = Math.min(Math.max((Math.max(top, NAV) + Math.min(bottom, vh)) / 2 - top, 0), s.h);
+          // Outgoing hinge: the frame's top edge, in the panel's own space.
+          const hinge = NAV - top;
           const sIn = 1 - depth.inScale * (1 - enter);
           const sOut = 1 - depth.outScale * cover;
-          // Outgoing scale and tilt pivot on (cx, oy); incoming scale pivots
-          // on the top edge so the panel's leading edge rises unbroken.
+          // Outgoing scale and lean pivot on (cx, hinge); incoming scale
+          // pivots on (cx, 0), the panel's leading edge.
           css =
-            `translate3d(${cx}px, ${(oy - depth.outLift * cover).toFixed(2)}px, 0) ` +
-            `perspective(${PERSPECTIVE}px) rotateX(${(depth.outTilt * cover).toFixed(3)}deg) ` +
-            `scale(${sOut.toFixed(4)}) translateY(${(-oy).toFixed(2)}px) ` +
+            `translate3d(${cx}px, ${hinge.toFixed(2)}px, 0) ` +
+            `perspective(${PERSPECTIVE}px) rotateX(${(-depth.outTilt * cover).toFixed(3)}deg) ` +
+            `scale(${sOut.toFixed(4)}) translateY(${(-hinge).toFixed(2)}px) ` +
             `scale(${sIn.toFixed(4)}) translateX(${-cx}px)`;
         }
         const r = i === 0 ? 0 : Math.round(depth.radius * (1 - enter));
@@ -147,7 +156,7 @@ export default function SceneStack() {
       schedule();
     };
 
-    // Focus that lands under a covering scene: scroll to where its own scene
+    // Focus that lands under a covering panel: scroll to where its own panel
     // is in natural flow (not pinned, so nothing overlaps it), with the
     // focused element as close to centre as that allows.
     const onFocus = (event: FocusEvent) => {
