@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import HeroLight from "@/components/HeroLight";
 import HeroMedia from "@/components/HeroMedia";
 import PersonaIcon from "@/components/PersonaIcon";
+import ConnectedPanels from "@/components/home/ConnectedPanels";
 import HomeClosing from "@/components/home/HomeClosing";
 import HomeScene from "@/components/home/HomeScene";
 import HudPointer from "@/components/home/HudPointer";
@@ -45,21 +46,22 @@ const HALVES = [
   },
 ];
 
+// Scene 4: what ASO is being built to connect. NETWORK leads into Scene 5.
 const CHANGES = [
   {
-    index: "01",
-    title: "One record per event",
-    body: "Everything about an event lives in one connected operating record instead of a dozen places that disagree with each other.",
+    label: "EVENTS",
+    title: "One event. One connected record.",
+    body: "Keep schedules, crew, equipment, documents, and event details together. Everyone works from the same information instead of chasing down different versions.",
   },
   {
-    index: "02",
-    title: "One organization that keeps the work",
-    body: "Events start and finish. Your organization keeps the gear, documents, financial records, and history that came out of them.",
+    label: "OPERATIONS",
+    title: "Your tools. Your workflow.",
+    body: "Connect the services you already use with workspaces built for live events. Manage your operation without having to replace everything that already works.",
   },
   {
-    index: "03",
-    title: "Partners on the same information",
-    body: "When another organization joins your event, they work from current information with the access you give them, not from a copy you emailed last week.",
+    label: "NETWORK",
+    title: "Work together. Stay in control.",
+    body: "Bring venues, production companies, freelancers, and partners into the same workflow. Share what they need while keeping control of your own information.",
   },
 ];
 
@@ -247,36 +249,21 @@ export default function Home() {
         </div>
       </HomeScene>
 
-      {/* WHAT ASO CHANGES — staggered floating panels */}
+      {/* BRING THE MOVING PARTS TOGETHER — staggered floating panels on
+          continuous signal routes, the resolution of the problem scene */}
       <HomeScene tone="deep" seed={37}>
         <div className="max-w-2xl mb-16">
           <span aria-hidden="true" className="block h-px w-8 bg-aso-orange mb-6" />
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
-            What ASO changes
+            Bring the moving parts together.
           </h2>
           <p className="text-lg home-copy leading-relaxed">
-            ASO puts the operational work and the working relationships in the same
-            place, so the information behind an event stays current for everyone who
-            needs it.
+            AnchorStage Ops is being built to bring event operations, organizations,
+            and the tools they already use into one connected workspace.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-3 md:gap-5">
-          {CHANGES.map((item, i) => (
-            <div
-              key={item.title}
-              className={`hud-panel h-full p-7 ${i === 1 ? "md:translate-y-7" : ""} ${
-                i === 2 ? "md:translate-y-3" : ""
-              }`}
-            >
-              <p className="hud-tag font-mono text-xs text-aso-orange mb-5">{item.index}</p>
-              <h3 className="text-lg font-semibold text-white mb-3 leading-snug">
-                {item.title}
-              </h3>
-              <p className="home-copy leading-relaxed">{item.body}</p>
-            </div>
-          ))}
-        </div>
+        <ConnectedPanels panels={CHANGES} />
         {/* Reclaims the space the staggered cards push down */}
         <div aria-hidden="true" className="hidden md:block h-7" />
       </HomeScene>

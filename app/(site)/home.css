@@ -516,6 +516,236 @@
   }
 }
 
+/* ── Scene 4: connected panels ──────────────────────────────────────────────
+   ConnectedPanels: continuous signal routes between the staggered panels,
+   pulses that relay EVENTS -> OPERATIONS -> NETWORK (and back), and border
+   ports that brighten as a pulse arrives. The answer to Scene 3: every route
+   is whole, and the movement is coordinated.
+
+   Signal timing, shared by each pulse and the port it arrives at. Every
+   pulse travels in the first 15% of its cycle; ports peak at 15%. The relay
+   legs share one 20 s cycle, each leaving shortly after the last arrives;
+   return signals run on their own cycles. */
+.aso-home .cs-grid {
+  --cs-line: 127, 211, 244;
+  --cs-route: rgba(var(--cs-line), 0.3);
+}
+
+.aso-home .cs-p-in, .aso-home .cs-port-e-in { --cs-dur: 20s; --cs-at: -2s; }
+.aso-home .cs-p-a, .aso-home .cs-port-o-fwd { --cs-dur: 20s; --cs-at: -18.4s; }
+.aso-home .cs-p-b, .aso-home .cs-port-n-fwd { --cs-dur: 20s; --cs-at: -14.8s; }
+.aso-home .cs-p-out { --cs-dur: 20s; --cs-at: -11.2s; }
+/* The outgoing port on NETWORK fires as its pulse leaves. */
+.aso-home .cs-port-n-out { --cs-dur: 20s; --cs-at: -8.1s; }
+.aso-home .cs-p-a-rev, .aso-home .cs-port-e-rev { --cs-dur: 25s; --cs-at: -17s; }
+.aso-home .cs-p-b-rev, .aso-home .cs-port-o-rev { --cs-dur: 22s; --cs-at: -6s; }
+
+.aso-home .cs-routes,
+.aso-home .cs-ports,
+.aso-home .cs-rail {
+  position: absolute;
+  pointer-events: none;
+}
+
+.aso-home .cs-routes {
+  --c: calc((100% - 40px) / 3);
+  inset: 0;
+  display: none;
+}
+
+.aso-home .cs-route {
+  position: absolute;
+}
+
+.aso-home .cs-route::before,
+.aso-home .cs-route::after,
+.aso-home .cs-rail::before {
+  content: "";
+  position: absolute;
+  border: 0 solid var(--cs-route);
+}
+
+/* A pulse: a box the size of its route, carrying a dot at its top-left
+   corner; percentage translates walk the dot along the route's edges. */
+.aso-home .cs-pulse {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.aso-home .cs-pulse::before {
+  content: "";
+  position: absolute;
+  left: -2.5px;
+  top: -2.5px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgb(205, 236, 255);
+  box-shadow: 0 0 8px 2px rgba(var(--home-blue), 0.6), 0 0 2px rgba(230, 245, 255, 0.9);
+}
+
+/* Ports: short stretches of a panel border that light on arrival. */
+.aso-home .cs-ports {
+  inset: -1px;
+}
+
+.aso-home .cs-port {
+  --len: 52px;
+  position: absolute;
+  opacity: 0;
+  background: linear-gradient(var(--dir, to right), transparent, rgba(215, 240, 255, 0.95) 50%, transparent);
+  box-shadow: 0 0 10px 1px rgba(var(--home-blue), 0.45);
+}
+
+.aso-home .cs-port-e-in,
+.aso-home .cs-port-n-out {
+  --dir: to bottom;
+  width: 1px;
+  height: var(--len);
+}
+
+.aso-home .cs-port-e-in { left: 0; top: calc(38% - var(--len) / 2); }
+.aso-home .cs-port-n-out { right: 0; top: calc(58% - var(--len) / 2); }
+
+.aso-home .cs-port-e-rev,
+.aso-home .cs-port-o-fwd,
+.aso-home .cs-port-o-rev,
+.aso-home .cs-port-n-fwd {
+  width: var(--len);
+  height: 1px;
+}
+
+.aso-home .cs-port-e-rev { bottom: 0; left: calc(62% - var(--len) / 2); }
+.aso-home .cs-port-o-fwd { bottom: 0; left: calc(38% - var(--len) / 2); }
+.aso-home .cs-port-o-rev { top: 0; left: calc(70% - var(--len) / 2); }
+.aso-home .cs-port-n-fwd { top: 0; left: calc(30% - var(--len) / 2); }
+
+/* Below md: the panels stack. A rail runs down the left gutter from each
+   panel's port to the next one; the NETWORK rail runs on out of the frame.
+   All ports sit on the left edge, beside the label. */
+.aso-home .cs-rail {
+  left: -14px;
+  top: 40px;
+  width: 13px;
+  /* Padding box plus both borders plus the 24 px gap: lands on the next
+     panel's port at the same 40 px. */
+  height: calc(100% + 26px);
+}
+
+.aso-home .cs-rail::before {
+  inset: 0;
+  border-width: 1px 0 1px 1px;
+  border-radius: 6px 0 0 6px;
+}
+
+.aso-home .cs-rail-out {
+  height: calc(100% + 160px);
+}
+
+.aso-home .cs-rail-out::before {
+  border-width: 1px 0 0 1px;
+  border-radius: 6px 0 0 0;
+}
+
+.aso-home .cs-port-e-in {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .aso-home .cs-port-e-rev,
+  .aso-home .cs-port-o-fwd,
+  .aso-home .cs-port-o-rev,
+  .aso-home .cs-port-n-fwd,
+  .aso-home .cs-port-n-out {
+    --dir: to bottom;
+    top: calc(40px - var(--len) / 2);
+    right: auto;
+    bottom: auto;
+    left: 0;
+    width: 1px;
+    height: var(--len);
+  }
+}
+
+/* md and up: three columns (20 px gaps), OPERATIONS 28 px and NETWORK 12 px
+   lower. --c is one column; heights are the shared panel height (100%). */
+@media (min-width: 768px) {
+  .aso-home .cs-rail {
+    display: none;
+  }
+
+  .aso-home .cs-routes,
+  .aso-home .cs-port-e-in {
+    display: block;
+  }
+
+  /* In from the left edge of the frame to EVENTS. */
+  .aso-home .cs-route-in {
+    top: 38%;
+    left: calc(50% - 50vw);
+    width: calc(50vw - 50%);
+    height: 1px;
+    background: linear-gradient(to right, rgba(var(--cs-line), 0.08), var(--cs-route) 45%);
+  }
+
+  /* NETWORK out to the right edge: toward the people in the next scene. */
+  .aso-home .cs-route-out {
+    top: calc(58% + 12px);
+    left: 100%;
+    width: calc(50vw - 50%);
+    height: 1px;
+    background: linear-gradient(to right, var(--cs-route) 55%, rgba(var(--cs-line), 0.08));
+  }
+
+  /* EVENTS to OPERATIONS, under the panels: down, across, up into the
+     lower edge of the lower panel. Ends run a few px under each panel. */
+  .aso-home .cs-route-a {
+    top: 100%;
+    left: calc(var(--c) * 0.62);
+    width: calc(var(--c) * 0.76 + 20px);
+    height: 56px;
+  }
+
+  .aso-home .cs-route-a::before {
+    inset: -4px 6px 0 0;
+    border-width: 0 0 1px 1px;
+    border-bottom-left-radius: 6px;
+  }
+
+  .aso-home .cs-route-a::after {
+    top: 24px;
+    right: 0;
+    bottom: 0;
+    width: 6px;
+    border-width: 0 1px 1px 0;
+    border-bottom-right-radius: 6px;
+  }
+
+  /* OPERATIONS to NETWORK, over the panels: up, across, down. */
+  .aso-home .cs-route-b {
+    top: -28px;
+    left: calc(var(--c) * 1.7 + 20px);
+    width: calc(var(--c) * 0.6 + 20px);
+    height: 56px;
+  }
+
+  .aso-home .cs-route-b::before {
+    inset: 0 6px -4px 0;
+    border-width: 1px 0 0 1px;
+    border-top-left-radius: 6px;
+  }
+
+  .aso-home .cs-route-b::after {
+    top: 0;
+    right: 0;
+    width: 6px;
+    height: 44px;
+    border-width: 1px 1px 0 0;
+    border-top-right-radius: 6px;
+  }
+}
+
 /* ── Scene stack ────────────────────────────────────────────────────────── */
 
 /* Scene frame: when motion is allowed, every scene fills at least the
@@ -959,6 +1189,29 @@
     animation: pf-run-y 19s linear -5s infinite;
   }
 
+  /* Scene 4 signals: one relay cycle plus return traffic; each port lights
+     as its pulse arrives. */
+  .aso-home .cs-pulse {
+    will-change: translate, opacity;
+    animation: var(--cs-run) var(--cs-dur) linear var(--cs-at) infinite;
+  }
+
+  .aso-home .cs-p-in { --cs-run: cs-in; }
+  .aso-home .cs-p-out { --cs-run: cs-out; }
+  .aso-home .cs-p-a { --cs-run: cs-a; }
+  .aso-home .cs-p-a-rev { --cs-run: cs-a-rev; }
+  .aso-home .cs-p-b { --cs-run: cs-b; }
+  .aso-home .cs-p-b-rev { --cs-run: cs-b-rev; }
+  .aso-home .cs-rail .cs-p-a,
+  .aso-home .cs-rail .cs-p-b { --cs-run: cs-rail; }
+  .aso-home .cs-rail .cs-p-a-rev,
+  .aso-home .cs-rail .cs-p-b-rev { --cs-run: cs-rail-rev; }
+  .aso-home .cs-rail .cs-p-out { --cs-run: cs-rail-out; }
+
+  .aso-home .cs-port {
+    animation: cs-port var(--cs-dur) linear var(--cs-at) infinite;
+  }
+
   .aso-home .sr-pulse {
     opacity: 0;
     will-change: transform, opacity;
@@ -1022,6 +1275,88 @@
   26% { transform: translateY(44%); opacity: 0.7; }
   33% { transform: translateY(54%); opacity: 0; }
   100% { transform: translateY(54%); opacity: 0; }
+}
+
+/* Scene 4 routes. Each pulse travels in the first 15% of its cycle (corner
+   times follow the leg lengths at 1440 px), fades on arrival, then rests. */
+@keyframes cs-in {
+  0% { translate: 0 0; opacity: 0; }
+  3% { opacity: 0.95; }
+  15% { translate: 100% 0; opacity: 0.95; }
+  15.8%, 100% { translate: 100% 0; opacity: 0; }
+}
+
+@keyframes cs-out {
+  0% { translate: 0 0; opacity: 0; }
+  0.8% { opacity: 0.95; }
+  9% { opacity: 0.8; }
+  15%, 100% { translate: 100% 0; opacity: 0; }
+}
+
+@keyframes cs-a {
+  0% { translate: 0 0; opacity: 0; }
+  0.8% { opacity: 0.95; }
+  2.25% { translate: 0 100%; }
+  13.88% { translate: 100% 100%; }
+  15% { translate: 100% 50%; opacity: 0.95; }
+  15.8%, 100% { translate: 100% 50%; opacity: 0; }
+}
+
+@keyframes cs-a-rev {
+  0% { translate: 100% 50%; opacity: 0; }
+  0.8% { opacity: 0.85; }
+  1.12% { translate: 100% 100%; }
+  12.75% { translate: 0 100%; }
+  15% { translate: 0 0; opacity: 0.85; }
+  15.8%, 100% { translate: 0 0; opacity: 0; }
+}
+
+@keyframes cs-b {
+  0% { translate: 0 100%; opacity: 0; }
+  0.8% { opacity: 0.95; }
+  2.55% { translate: 0 0; }
+  13.17% { translate: 100% 0; }
+  15% { translate: 100% 71.43%; opacity: 0.95; }
+  15.8%, 100% { translate: 100% 71.43%; opacity: 0; }
+}
+
+@keyframes cs-b-rev {
+  0% { translate: 100% 71.43%; opacity: 0; }
+  0.8% { opacity: 0.85; }
+  1.82% { translate: 100% 0; }
+  12.45% { translate: 0 0; }
+  15% { translate: 0 100%; opacity: 0.85; }
+  15.8%, 100% { translate: 0 100%; opacity: 0; }
+}
+
+@keyframes cs-rail {
+  0% { translate: 100% 0; opacity: 0; }
+  0.6% { translate: 0 0; opacity: 0.95; }
+  14.4% { translate: 0 100%; }
+  15% { translate: 100% 100%; opacity: 0.95; }
+  15.8%, 100% { translate: 100% 100%; opacity: 0; }
+}
+
+@keyframes cs-rail-rev {
+  0% { translate: 100% 100%; opacity: 0; }
+  0.6% { translate: 0 100%; opacity: 0.85; }
+  14.4% { translate: 0 0; }
+  15% { translate: 100% 0; opacity: 0.85; }
+  15.8%, 100% { translate: 100% 0; opacity: 0; }
+}
+
+@keyframes cs-rail-out {
+  0% { translate: 100% 0; opacity: 0; }
+  0.6% { translate: 0 0; opacity: 0.95; }
+  8% { opacity: 0.8; }
+  15%, 100% { translate: 0 100%; opacity: 0; }
+}
+
+/* A short flare along the border, then a natural fade. */
+@keyframes cs-port {
+  0%, 13.6% { opacity: 0; transform: scale(0.5); }
+  15.4% { opacity: 1; transform: scale(1); }
+  27%, 100% { opacity: 0; transform: scale(1.2); }
 }
 
 @keyframes sr-turn {
