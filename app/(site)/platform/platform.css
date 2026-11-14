@@ -2083,21 +2083,32 @@
 }
 
 /* ── Platform: Organizations ("Your organization owns its work") ─────────────
-   components/platform/PlatformOrganizations.tsx. One light section: four
-   numbered points beside one explanatory picture of two organization
-   workspaces. Blue marks membership (one person in both organizations, with
-   separate access); orange and dashed marks collaboration (a partner on one
-   event only). No network, dashboard, or animation. Every rule sits under
+   components/platform/PlatformOrganizations.tsx. One navy section: four
+   numbered points beside a picture of two white organization workspaces.
+   Alex Rivera keeps one identity in both (blue, marked 3); Event A appears
+   in both, owned by one and partnered by the other (orange, marked 4). No
+   legend, lines, dashboard, or animation. Every rule sits under
    .platform-orgs. */
 
 .platform-orgs {
-  --po-text: #4b5563;
+  --po-text: rgba(255, 255, 255, 0.78);
   --po-ink: #34495f;
-  --po-line: #d5e3ef;
+  --po-muted: #4b5563;
+  --po-line: #dbe6f0;
   --po-blue: #24719c;
   --po-blue-soft: #eaf5fc;
-  --po-orange-ink: #b94a0c;
-  --po-orange-line: #ef9e62;
+  --po-blue-ring: #93cbea;
+  --po-orange-ink: #a64510;
+  --po-orange-soft: #fff5ec;
+  --po-orange-line: #f2b483;
+}
+
+/* A soft stage-light wash, as on the site's other navy sections. */
+.platform-orgs .po-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 820px 560px at 80% 0%, rgba(145, 205, 255, 0.14) 0%, rgba(70, 135, 200, 0.07) 34%, transparent 72%);
 }
 
 .platform-orgs .po-head {
@@ -2118,34 +2129,41 @@
   margin-top: 2.25rem;
 }
 
-/* Number markers, shared by the picture and the points. */
+/* Number markers. On navy: white, with 3 in blue and 4 in orange; inside
+   the white panels the same 3 and 4 appear on Alex and Event A. */
 .platform-orgs .po-num {
-  display: grid;
+  display: inline-grid;
   flex: none;
   place-items: center;
   width: 1.375rem;
   height: 1.375rem;
   border-radius: 999px;
-  background: var(--aso-navy);
+  background: #fff;
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
-  color: #fff;
+  color: var(--aso-navy);
 }
 
 .platform-orgs .po-num-3 {
-  background: var(--po-blue);
+  background: #7fd3f4;
 }
 
 .platform-orgs .po-num-4 {
+  background: #ff9550;
+}
+
+.platform-orgs .po-ws .po-num-3 {
+  background: var(--po-blue);
+  color: #fff;
+}
+
+.platform-orgs .po-ws .po-num-4 {
   background: var(--po-orange-ink);
+  color: #fff;
 }
 
-.platform-orgs .po-num-blank {
-  visibility: hidden;
-}
-
-/* The picture: two workspaces, the second set back a little. */
+/* The picture: two white workspaces, the second set back a little. */
 .platform-orgs .po-model {
   grid-area: model;
   display: grid;
@@ -2154,26 +2172,26 @@
 }
 
 .platform-orgs .po-ws {
+  display: grid;
+  gap: 0.75rem;
   padding: 0.875rem 1rem 1rem;
-  border: 1px solid var(--po-line);
+  border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 16px;
   background: #fff;
-  box-shadow: 0 20px 44px -28px rgba(15, 47, 79, 0.4), 0 2px 6px -2px rgba(15, 47, 79, 0.06);
+  box-shadow: 0 28px 56px -30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(127, 211, 244, 0.12);
 }
 
 .platform-orgs .po-ws-other {
   margin-left: 1.25rem;
-  background: #fbfdff;
-  box-shadow: 0 14px 32px -26px rgba(15, 47, 79, 0.35);
+  background: #f7fafd;
 }
 
 .platform-orgs .po-ws-head {
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  margin-bottom: 0.25rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid #e6eef6;
+  border-bottom: 1px solid var(--po-line);
 }
 
 .platform-orgs .po-mono {
@@ -2199,23 +2217,13 @@
   color: var(--aso-navy);
 }
 
-.platform-orgs .po-ws-row {
-  display: grid;
-  grid-template-columns: 1.375rem minmax(0, 1fr);
-  gap: 0.625rem;
-  align-items: start;
-  padding-top: 0.75rem;
-}
-
-.platform-orgs .po-ws-row > .po-num {
-  margin-top: 0.1875rem;
-}
-
 .platform-orgs .po-records {
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  min-height: 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--po-ink);
 }
 
 .platform-orgs .po-files {
@@ -2224,25 +2232,20 @@
 }
 
 .platform-orgs .po-files span {
-  width: 1rem;
-  height: 1.25rem;
+  width: 0.875rem;
+  height: 1.125rem;
   border: 1px solid #c3d7e8;
   border-radius: 3px;
   background: linear-gradient(180deg, #eef5fb, #d9e8f4);
 }
 
-.platform-orgs .po-records-label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--po-ink);
-}
-
-.platform-orgs .po-people {
+/* Members. */
+.platform-orgs .po-members {
   display: grid;
   gap: 0.3125rem;
 }
 
-.platform-orgs .po-person {
+.platform-orgs .po-member {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
@@ -2253,17 +2256,31 @@
   line-height: 1.35;
 }
 
+.platform-orgs .po-member.is-alex {
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  background: var(--po-blue-soft);
+  box-shadow: inset 0 0 0 1px var(--po-blue-ring);
+}
+
 .platform-orgs .po-avatar {
   display: grid;
   place-items: center;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.625rem;
+  height: 1.625rem;
   border-radius: 999px;
   background: #e6eff7;
   color: #3a6587;
 }
 
-.platform-orgs .po-person-name {
+.platform-orgs .is-alex .po-avatar {
+  background: linear-gradient(160deg, #22688f, #174c6c);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.platform-orgs .po-member-name {
   font-weight: 600;
   color: var(--aso-navy);
 }
@@ -2271,113 +2288,53 @@
 .platform-orgs .po-access {
   font-size: 0.75rem;
   text-align: right;
-  color: var(--po-text);
+  color: var(--po-muted);
 }
 
-/* Membership: the same person, highlighted in blue in both organizations. */
-.platform-orgs .po-person.is-shared {
-  background: var(--po-blue-soft);
-  box-shadow: inset 0 0 0 1px #a9d3ec;
+.platform-orgs .is-alex .po-access {
+  font-weight: 600;
+  color: #1d4f70;
 }
 
-.platform-orgs .po-person.is-shared .po-avatar {
-  background: var(--po-blue);
-  color: #fff;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #7fc4e8;
-}
-
-.platform-orgs .po-person.is-shared .po-access {
-  color: #1f4f70;
-}
-
-/* Collaboration: a partner on one event, dashed orange. */
+/* Event A: orange, the same reference in both organizations. */
 .platform-orgs .po-event {
-  padding: 0.625rem 0.75rem 0.75rem;
-  border: 1.5px dashed var(--po-orange-line);
-  border-radius: 10px;
-  background: #fffaf5;
+  padding: 0.5rem 0.625rem;
+  border: 1px solid var(--po-orange-line);
+  border-left: 3px solid #e2731f;
+  border-radius: 8px;
+  background: var(--po-orange-soft);
+}
+
+.platform-orgs .po-event-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+  font-size: 0.8125rem;
+  line-height: 1.35;
 }
 
 .platform-orgs .po-event-name {
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--aso-navy);
 }
 
-.platform-orgs .po-partner {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.125rem 0.5rem;
+.platform-orgs .po-event-role {
+  color: #8a3c08;
+}
+
+.platform-orgs .po-event-line .po-num {
+  margin-left: auto;
+}
+
+.platform-orgs .po-event-access {
   margin-top: 0.25rem;
-  font-size: 0.8125rem;
-}
-
-.platform-orgs .po-partner-label {
-  color: #8a4200;
-}
-
-.platform-orgs .po-partner-org {
-  font-weight: 600;
-  color: var(--aso-navy);
-}
-
-.platform-orgs .po-scopes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
-  margin-top: 0.5rem;
-}
-
-.platform-orgs .po-scopes span {
-  padding: 0.0625rem 0.5rem;
-  border: 1px solid #f2c39c;
-  border-radius: 999px;
-  background: #fff;
   font-size: 0.75rem;
   font-weight: 600;
-  line-height: 1.5;
-  color: #8a4200;
+  color: #8a3c08;
 }
 
-/* Key: what blue and dashed orange mean. */
-.platform-orgs .po-key {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.25rem;
-  margin-top: 0.25rem;
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  color: var(--po-ink);
-}
-
-.platform-orgs .po-key-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.platform-orgs .po-key-member::before {
-  content: "";
-  flex: none;
-  width: 0.75rem;
-  height: 0.75rem;
-  border-radius: 999px;
-  background: var(--po-blue);
-  box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #7fc4e8;
-}
-
-.platform-orgs .po-key-partner::before {
-  content: "";
-  flex: none;
-  width: 1rem;
-  height: 0.75rem;
-  border: 1.5px dashed var(--po-orange-line);
-  border-radius: 3px;
-  background: #fffaf5;
-}
-
-/* The four points. */
+/* The four points, on navy. */
 .platform-orgs .po-points {
   grid-area: points;
   display: grid;
@@ -2398,7 +2355,7 @@
   font-size: 1.0625rem;
   font-weight: 600;
   line-height: 1.35;
-  color: var(--aso-navy);
+  color: #fff;
 }
 
 .platform-orgs .po-point-body {
