@@ -242,28 +242,34 @@ export default function GatewayMonument() {
       <div className="gw-monument">
         <svg viewBox="160 36 450 530" preserveAspectRatio="xMidYMax meet" focusable="false">
           <defs>
-            {/* Dark metal in the logo's tonal order, darkest to brightest:
-                cls-3 iron, cls-1 steel, cls-2 plate, and the logo's white
-                (the backing: the hidden figure, seams, and highlights) as
-                cool polished metal, clearly the brightest over its whole
-                height so the figure's legs stay separate. */}
-            <linearGradient id="gw-iron" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stopColor="#0b1522" />
-              <stop offset="1" stopColor="#04080e" />
+            {/* The logo's own colours as painted metal, each lit toward the
+                backlight (upper right) and shaded away from it (lower left)
+                around the brand value at its middle stop:
+                  cls-3 #06264c dark navy    -> gw-iron  (structure, shadow)
+                  cls-1 #275a87 medium blue  -> gw-steel
+                  cls-2 #5fa9c8 light blue   -> gw-plate
+                  white (negative space)     -> gw-polish, cool white
+                so the logo's three-tone hierarchy and its bright hidden
+                figure read through the lighting. */}
+            <linearGradient id="gw-iron" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#09305e" />
+              <stop offset="0.4" stopColor="#06264c" />
+              <stop offset="1" stopColor="#02132b" />
             </linearGradient>
             <linearGradient id="gw-steel" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#1c3049" />
-              <stop offset="1" stopColor="#0b1520" />
+              <stop offset="0" stopColor="#3271a6" />
+              <stop offset="0.45" stopColor="#275a87" />
+              <stop offset="1" stopColor="#1c4569" />
             </linearGradient>
             <linearGradient id="gw-plate" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#2a4563" />
-              <stop offset="0.6" stopColor="#18293e" />
-              <stop offset="1" stopColor="#0f1a29" />
+              <stop offset="0" stopColor="#7cc3df" />
+              <stop offset="0.45" stopColor="#5fa9c8" />
+              <stop offset="1" stopColor="#4689a9" />
             </linearGradient>
             <linearGradient id="gw-polish" gradientUnits="userSpaceOnUse" x1="470" y1="120" x2="300" y2="480">
-              <stop offset="0" stopColor="#6288ae" />
-              <stop offset="0.5" stopColor="#50759a" />
-              <stop offset="1" stopColor="#3f6183" />
+              <stop offset="0" stopColor="#f0f7fc" />
+              <stop offset="0.5" stopColor="#d6e7f2" />
+              <stop offset="1" stopColor="#b5cde0" />
             </linearGradient>
             {/* Light across the metal: the backlight's pool on the upper
                 right, a soft directional band, blue bounce from the horizon,
@@ -406,7 +412,7 @@ export default function GatewayMonument() {
                   key={i}
                   href="#gw-solid"
                   transform={`translate(${(-0.95 * i).toFixed(2)} ${(0.55 * i).toFixed(2)})`}
-                  fill={i > 6 ? "#020509" : i > 3 ? "#04080e" : "#060c15"}
+                  fill={i > 6 ? "#020c1c" : i > 3 ? "#03122a" : "#051a38"}
                 />
               ))}
               {/* Face: the brand artwork in metal. The logo's white first
