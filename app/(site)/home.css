@@ -1103,6 +1103,8 @@
 .aso-home .gw-ground,
 .aso-home .gw-haze,
 .aso-home .gw-far,
+.aso-home .gw-contours,
+.aso-home .gw-aura,
 .aso-home .gw-monument {
   position: absolute;
 }
@@ -1112,10 +1114,11 @@
 .aso-home .gw-sky {
   inset: 0;
   background:
-    radial-gradient(ellipse 58% 24% at var(--mx) var(--horizon), rgba(127, 196, 240, 0.2), transparent 70%),
-    radial-gradient(ellipse 30% 9% at calc(var(--mx) - 14%) var(--horizon), rgba(255, 138, 60, 0.11), transparent 72%),
-    radial-gradient(ellipse 80% 55% at 72% 18%, rgba(28, 64, 110, 0.28), transparent 72%),
-    linear-gradient(180deg, #02060d 0%, #051226 calc(var(--horizon) - 30%), #0b2340 calc(var(--horizon) - 0.5%), #040b16 var(--horizon), #010409 100%);
+    radial-gradient(ellipse 58% 24% at var(--mx) var(--horizon), rgba(127, 196, 240, 0.22), transparent 70%),
+    radial-gradient(ellipse 130% 34% at 50% var(--horizon), rgba(64, 132, 204, 0.2), rgba(64, 132, 204, 0.06) 55%, transparent 78%),
+    radial-gradient(ellipse 30% 9% at calc(var(--mx) - 14%) var(--horizon), rgba(255, 138, 60, 0.12), transparent 72%),
+    radial-gradient(ellipse 80% 55% at 72% 18%, rgba(28, 64, 110, 0.3), transparent 72%),
+    linear-gradient(180deg, #02070f 0%, #06152b calc(var(--horizon) - 30%), #0d2846 calc(var(--horizon) - 0.5%), #050d19 var(--horizon), #01040a 100%);
 }
 
 /* The horizon line itself, brightest where the monument stands. */
@@ -1143,6 +1146,45 @@
   width: 100%;
   bottom: calc(100% - var(--horizon));
   height: 2.6%;
+}
+
+/* Horizon contours: SignalWave traces (as in the scene seam) along the
+   horizon, fading toward the sides, drifting slowly (motion block). */
+.aso-home .gw-contours {
+  left: 0;
+  right: 0;
+  bottom: calc(100% - var(--horizon) - 1%);
+  height: 15%;
+  overflow: hidden;
+  opacity: 0.4;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent), linear-gradient(180deg, transparent, #000 40%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent), linear-gradient(180deg, transparent, #000 40%);
+  mask-composite: intersect;
+}
+
+.aso-home .gw-contours svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 200%;
+  height: 100%;
+}
+
+.aso-home .gw-contours svg + svg {
+  inset: 18% 0 auto 0;
+  height: 70%;
+  opacity: 0.7;
+}
+
+/* A soft field of light around the monument, above the horizon. */
+.aso-home .gw-aura {
+  left: var(--mx);
+  bottom: calc(100% - var(--horizon));
+  width: calc(min(var(--mh), var(--mh-cap)) * 1.25);
+  height: calc(min(var(--mh), var(--mh-cap)) * 1.05);
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 50% 50% at 50% 62%, rgba(78, 150, 220, 0.14), rgba(78, 150, 220, 0.05) 50%, transparent 72%);
 }
 
 /* The monument: standing on the horizon, turned slightly toward the copy,
@@ -1210,6 +1252,18 @@
 @media (min-width: 1280px) and (min-aspect-ratio: 1 / 1) {
   .aso-home .gw-env {
     --mx: 70%;
+  }
+}
+
+/* Slow drift for the horizon contours (the seam drifts at 40 s). */
+@media (prefers-reduced-motion: no-preference) {
+  .aso-home .gw-contours .gw-drift {
+    animation-duration: 96s;
+  }
+
+  .aso-home .gw-contours .gw-drift-slow {
+    animation-duration: 140s;
+    animation-direction: reverse;
   }
 }
 

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { ANCHOR_BACKING_D } from "./anchorBacking";
+import { SignalWave } from "./SoundGeometry";
 
 /**
  * Scene 6 backdrop: the AnchorStage Ops anchor as a dark-metal monument
@@ -14,10 +15,18 @@ import { ANCHOR_BACKING_D } from "./anchorBacking";
  * shading becomes the monument's facets and reflections. ANCHOR_BACKING_D
  * fills the logo's interior white regions so it reads as one solid object.
  *
- * Depth: stacked offset copies of the silhouette form its thickness, an SVG
- * filter adds a restrained blue rim from the upper right, and the base fades
- * into the horizon haze. Everything is static (no animation, no pointer
- * tracking), server-rendered, decorative, and never takes the pointer.
+ * The logo's white is its negative space, and inside the shank it forms a
+ * hidden figure: a torso under the stock and two legs whose feet run along
+ * the seam above the arms. It renders as the brightest metal over its whole
+ * height, so the legs stay distinct from the plates beside them.
+ *
+ * Depth: stacked offset copies of the silhouette form its thickness; each
+ * plate gets a lit edge, reflected blue on its lower edge, and a short cast
+ * shadow; an SVG filter adds a restrained blue rim from the upper right; the
+ * base fades into the horizon haze. The monument itself is static (no
+ * animation, no pointer tracking). The only motion in the environment is
+ * two slow horizon contours, off under reduced motion. Server-rendered,
+ * decorative, and never takes the pointer.
  */
 
 interface LogoPath {
@@ -80,33 +89,90 @@ export default function GatewayMonument() {
       </svg>
       <div className="gw-ground" />
 
+      {/* Horizon contours: the same signal traces as the scene's top seam,
+          drifting slowly along the horizon behind the monument. */}
+      <div className="gw-contours">
+        <SignalWave seed={613} traces={2} amplitude={0.34} className="home-wave-drift gw-drift" />
+        <SignalWave seed={641} traces={1} amplitude={0.5} className="home-wave-drift gw-drift-slow" />
+      </div>
+
+      {/* Atmosphere lit around the monument. */}
+      <div className="gw-aura" />
+
       <div className="gw-monument">
         <svg viewBox="160 36 450 530" preserveAspectRatio="xMidYMax meet" focusable="false">
           <defs>
-            {/* Dark metal: the logo's tones, darkest to brightest. */}
+            {/* Dark metal in the logo's tonal order, darkest to brightest:
+                cls-3 iron, cls-1 steel, cls-2 plate, and the logo's white
+                (the backing: the hidden figure, seams, and highlights) as
+                polished metal. Polish stays clearly the brightest over its
+                whole height, as white does in the logo, so the figure's
+                legs stay separate from the plates around them. */}
             <linearGradient id="gw-iron" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stopColor="#0b1522" />
               <stop offset="1" stopColor="#04080e" />
             </linearGradient>
             <linearGradient id="gw-steel" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#1f3550" />
-              <stop offset="1" stopColor="#0c1622" />
+              <stop offset="0" stopColor="#1c3049" />
+              <stop offset="1" stopColor="#0b1520" />
             </linearGradient>
             <linearGradient id="gw-plate" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#2e4b6c" />
-              <stop offset="0.6" stopColor="#1a2c42" />
-              <stop offset="1" stopColor="#101c2b" />
+              <stop offset="0" stopColor="#2a4563" />
+              <stop offset="0.6" stopColor="#18293e" />
+              <stop offset="1" stopColor="#0f1a29" />
             </linearGradient>
-            <linearGradient id="gw-polish" x1="1" y1="0" x2="0.2" y2="1">
-              <stop offset="0" stopColor="#4d7499" />
-              <stop offset="0.45" stopColor="#253c56" />
-              <stop offset="1" stopColor="#0f1a28" />
+            <linearGradient id="gw-polish" gradientUnits="userSpaceOnUse" x1="470" y1="120" x2="300" y2="480">
+              <stop offset="0" stopColor="#5a7fa3" />
+              <stop offset="0.5" stopColor="#4b6e91" />
+              <stop offset="1" stopColor="#3a5a79" />
             </linearGradient>
-            {/* The base dissolves into the horizon haze. */}
+            {/* Light on the metal: a soft directional band from the upper
+                right, and blue reflected up from the horizon onto the crown. */}
+            <linearGradient id="gw-sheen" gradientUnits="userSpaceOnUse" x1="560" y1="60" x2="250" y2="520">
+              <stop offset="0.2" stopColor="#bfe2ff" stopOpacity="0" />
+              <stop offset="0.36" stopColor="#bfe2ff" stopOpacity="0.13" />
+              <stop offset="0.44" stopColor="#bfe2ff" stopOpacity="0.04" />
+              <stop offset="0.6" stopColor="#bfe2ff" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="gw-bounce" gradientUnits="userSpaceOnUse" x1="0" y1="560" x2="0" y2="330">
+              <stop offset="0" stopColor="#4ea8ff" stopOpacity="0.2" />
+              <stop offset="1" stopColor="#4ea8ff" stopOpacity="0" />
+            </linearGradient>
+            <clipPath id="gw-clip">
+              <use href="#gw-back" />
+              <use href="#gw-dark" />
+              <use href="#gw-mid" />
+              <use href="#gw-light" />
+            </clipPath>
+            {/* Each plate: a lit upper-right edge, blue reflected light on
+                its lower-left edge, and a short shadow cast onto the layer
+                beneath, so the pieces separate structurally. */}
+            <filter id="gw-bevel" x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="1.4" result="sblur" />
+              <feOffset in="sblur" dx="-1.3" dy="1.6" result="soff" />
+              <feFlood floodColor="#01040a" floodOpacity="0.6" />
+              <feComposite in2="soff" operator="in" result="shadow" />
+              <feOffset in="SourceAlpha" dx="-0.9" dy="0.9" result="lshift" />
+              <feComposite in="SourceAlpha" in2="lshift" operator="out" result="ledge" />
+              <feFlood floodColor="#c4e6ff" floodOpacity="0.32" />
+              <feComposite in2="ledge" operator="in" result="lit" />
+              <feOffset in="SourceAlpha" dx="0.9" dy="-0.9" result="bshift" />
+              <feComposite in="SourceAlpha" in2="bshift" operator="out" result="bedge" />
+              <feFlood floodColor="#3f86c8" floodOpacity="0.28" />
+              <feComposite in2="bedge" operator="in" result="bounce" />
+              <feMerge>
+                <feMergeNode in="shadow" />
+                <feMergeNode in="SourceGraphic" />
+                <feMergeNode in="lit" />
+                <feMergeNode in="bounce" />
+              </feMerge>
+            </filter>
+            {/* The base dissolves into the horizon haze, below the figure's
+                feet so the legs keep their full contrast. */}
             <linearGradient id="gw-fade-g" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stopColor="#fff" />
-              <stop offset="0.72" stopColor="#fff" />
-              <stop offset="1" stopColor="#fff" stopOpacity="0.28" />
+              <stop offset="0.82" stopColor="#fff" />
+              <stop offset="1" stopColor="#fff" stopOpacity="0.3" />
             </linearGradient>
             <mask id="gw-fade" maskUnits="userSpaceOnUse" x="160" y="36" width="450" height="530">
               <rect x="160" y="36" width="450" height="530" fill="url(#gw-fade-g)" />
@@ -165,12 +231,18 @@ export default function GatewayMonument() {
                   fill={i > 6 ? "#020509" : i > 3 ? "#04080e" : "#060c15"}
                 />
               ))}
-              {/* Face: the brand artwork in metal. White highlights first
-                  (the backing), then the logo's tones in their own order. */}
+              {/* Face: the brand artwork in metal. The logo's white first
+                  (the backing, including the hidden figure), then its tones
+                  in their own order, each plate lit and casting onto the
+                  layer beneath. */}
               <use href="#gw-back" fill="url(#gw-polish)" />
-              <use href="#gw-dark" fill="url(#gw-iron)" />
-              <use href="#gw-mid" fill="url(#gw-steel)" />
-              <use href="#gw-light" fill="url(#gw-plate)" />
+              <use href="#gw-dark" fill="url(#gw-iron)" filter="url(#gw-bevel)" />
+              <use href="#gw-mid" fill="url(#gw-steel)" filter="url(#gw-bevel)" />
+              <use href="#gw-light" fill="url(#gw-plate)" filter="url(#gw-bevel)" />
+              <g clipPath="url(#gw-clip)">
+                <rect x="160" y="36" width="450" height="530" fill="url(#gw-sheen)" />
+                <rect x="160" y="36" width="450" height="530" fill="url(#gw-bounce)" />
+              </g>
             </g>
           </g>
         </svg>
