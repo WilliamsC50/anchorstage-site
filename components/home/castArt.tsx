@@ -263,39 +263,43 @@ const FIGURES: Record<PersonaSlug, { crop: string; art: ReactNode }> = {
     ),
   },
 
-  // Performing artist: electric guitar on a strap, mid-chord, wide stance.
+  // Performing artist: acoustic guitar on a strap, held across the body
+  // and played right-handed: strumming hand over the sound hole, fretting
+  // hand on the neck, which rises to the player's left.
   musicians: {
-    crop: "24 62 336 224",
+    crop: "-50 108 500 333",
     art: (
       <>
-        <path
-          fill={BODY}
-          d={
-            stance("wide") +
-            jacket(0, 462) +
-            head() +
-            oval([198, 120], 37, 40) +
-            seg([170, 130], [162, 210], 28, 12) +
-            seg([228, 130], [238, 210], 26, 12) +
-            arm(SHOULDER_L, [86, 320], [106, 336], [112, 340]) +
-            arm(SHOULDER_R, [300, 340], [242, 434], [234, 440])
-          }
-        />
-        <path d="M142 214C176 302 238 388 282 486" fill="none" stroke="#132740" strokeWidth="10" />
-        {/* Guitar: neck, headstock, offset body with orange binding. */}
-        <path fill={GEAR} d={seg([182, 424], [64, 286], 16, 12) + seg([64, 286], [42, 258], 21, 15)} />
-        <g transform="rotate(-36 224 458) translate(224 458) scale(1.25) translate(-224 -458)">
+        <path fill={BODY} d={stance("wide") + jacket(0, 462) + head()} />
+        {/* Strap from the neck heel over the left shoulder. */}
+        <path d="M228 360C244 300 260 254 276 214" fill="none" stroke="#132740" strokeWidth="9" />
+        {/* Acoustic guitar, drawn along its own axis (neck toward +x):
+            lower bout, waist, upper bout, sound hole and rosette, bridge,
+            strings, neck, and a headstock with tuning pegs. */}
+        <g transform="translate(160 404) rotate(-30) scale(0.86)">
           <path
             fill={GEAR}
             stroke={ORANGE}
-            strokeOpacity="0.6"
-            strokeWidth="1.6"
-            d="M168 452C162 418 188 410 204 420C214 404 238 398 246 412C262 400 286 414 282 438C296 452 292 486 270 494C250 502 232 488 218 496C198 506 170 490 168 452Z"
+            strokeOpacity="0.5"
+            strokeWidth="1.8"
+            d="M-108 0C-108 -42 -80 -68 -40 -68C-14 -68 -8 -45 6 -45C18 -45 22 -53 46 -53C78 -53 98 -36 98 0C98 36 78 53 46 53C22 53 18 45 6 45C-8 45 -14 68 -40 68C-80 68 -108 42 -108 0Z"
           />
-          <path d="M190 446H270M190 456H270" fill="none" stroke="#8ccaf2" strokeOpacity="0.22" strokeWidth="1.2" />
-          <path fill="#0b1726" d="M206 432h10v40h-10zM238 432h10v40h-10z" />
+          <path fill={GEAR} d="M92 -10L262 -8L262 8L92 10ZM260 -11L302 -14Q310 -14 310 -7L310 7Q310 14 302 14L260 11Z" />
+          <path fill={GEAR} d={dot([272, -15], 3.5) + dot([286, -16], 3.5) + dot([300, -17], 3.5) + dot([272, 15], 3.5) + dot([286, 16], 3.5) + dot([300, 17], 3.5)} />
+          <circle cx="34" cy="0" r="22" fill="none" stroke="#8ccaf2" strokeOpacity="0.28" strokeWidth="2.5" />
+          <circle cx="34" cy="0" r="16" fill="#02060c" />
+          <path fill="#0b1726" stroke="#8ccaf2" strokeOpacity="0.2" d={box([-56, 0], 10, 38, 0, 2)} />
+          <path d="M-56 -6H262M-56 -2H262M-56 2H262M-56 6H262M260 -9V9" fill="none" stroke="#8ccaf2" strokeOpacity="0.2" strokeWidth="0.9" />
         </g>
-        <path fill={BODY} d={dot([234, 440], 15) + dot([112, 340], 15)} />
+        {/* Arms over the guitar: fretting hand under the neck, strumming
+            forearm resting on the upper edge of the lower bout. */}
+        <path
+          fill={BODY}
+          d={
+            arm(SHOULDER_R, [316, 334], [296, 342], [289, 339], 14) +
+            arm(SHOULDER_L, [92, 360], [158, 400], [166, 401])
+          }
+        />
       </>
     ),
   },
