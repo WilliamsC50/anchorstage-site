@@ -1,33 +1,39 @@
 /**
  * Platform: "The Connected Operating Record".
  *
- * A static example of operational control when a plan changes: one show's
- * load-in moves from 8:00 AM to 7:00 AM, updated once, and three views that
- * read the event show the current time when they are opened. Below it, what
- * is true today, and a clearly separate, quieter "Future direction" panel.
+ * A static example of change visibility: one show's load-in moves from
+ * 8:00 AM to 7:00 AM. The change card carries the Event Activity entry that
+ * records it, and a blue line joins it to the three views that show the
+ * current time when opened. Below, the supporting message, the intended next
+ * step (worded as intent, not as a feature), and the verified distinctions.
  * No interaction, no animation, no live data.
  *
- * Verified against the application (DESIGN-13E.2, 13E.3):
+ * Verified against the application (DESIGN-13E.2, 13E.3, 13E.4):
  *   Today
  *   - Load-in time belongs to each show (event_instance.load_in_time).
+ *   - Editing show timing on the event (updateInstanceTiming) records an
+ *     Event Activity entry titled "Event timing changed", category "Event",
+ *     with the previous and current values (expanded: Previous -> Current).
+ *     It is shown in the Activity timeline on the event page (latest 50) to
+ *     those who can open the event; "Event" entries are not finance-gated.
+ *     Recording is best-effort and covers supported changes only: it is not a
+ *     complete audit trail. It sends nothing to anyone.
  *   - Production Brief page and PDF are built from current timing on every
  *     request; a PDF already downloaded or printed is a fixed copy.
  *   - Crew sheet link: read-only, current when reopened, revocable.
  *   - Collaborators see the event only when their access includes event
  *     details (least privilege by default).
  *   - Issued quotes and invoices keep the revision that was sent.
- *   Not built (Future direction only)
- *   - Working out which documents or people a change affects; reviewing,
- *     approving, and sending updated communications; redistributing briefs,
- *     links, or packages; scheduled reminders or timed distribution.
- *     (Foundations exist: the event activity log records timing changes with
- *     before and after values; issued documents can be emailed; crew calls
- *     send notices; a Deliverables ZIP bundles documents.)
- * Never claim real-time sync, automatic notifications, self-updating PDFs,
- * universal access, a release date, or that ASO sends anything on its own.
+ *   Not built (stated only as the intended next step)
+ *   - Identifying affected documents or people, preparing revised documents
+ *     for a change, coordinating or scheduling communications.
+ * Never claim real-time sync, notifications, automatic delivery, self-updating
+ * PDFs, universal access, a complete audit trail, or a release date.
  *
  * Styling: app/(site)/platform/platform.css under .platform-record.
  */
+
+import type { ReactNode } from "react";
 
 const ICON = {
   width: 16,
@@ -41,17 +47,10 @@ const ICON = {
   "aria-hidden": true,
 };
 
-const TODAY = [
-  "Clients, venues, gear, packages, and your crew roster are kept once and linked to each event. Crew assignments keep event-specific details.",
-  "Each person sees what their role, permissions, or shared link allows.",
-  "Issued quotes and invoices keep the revision that was sent.",
-];
-
-const FUTURE = [
-  "See which documents and people a change may affect",
-  "Review and approve updated communications",
-  "Reissue or redistribute documents, links, and packages",
-  "Schedule reminders and distribution at chosen intervals before a show",
+const FACTS = [
+  "Organization records are referenced on each event, not recreated. Crew assignments keep event-specific details.",
+  "Permissions decide who can see what.",
+  "Issued quotes and invoices keep the revision that was sent. PDFs already downloaded or printed don't update themselves.",
 ];
 
 /** Skeleton lines: suggest a real view's content without inventing data. */
@@ -69,6 +68,58 @@ const LoadIn = () => (
     <span className="pr-loadin-time">7:00 AM</span>
   </span>
 );
+
+interface View {
+  name: string;
+  kind: "doc" | "phone" | "screen";
+  when: string;
+  icon: ReactNode;
+  chip?: string;
+  lead?: number[];
+  tail: number[];
+}
+
+const VIEWS: View[] = [
+  {
+    name: "Production Brief",
+    kind: "doc",
+    when: "Opened or downloaded again",
+    lead: [70, 52],
+    tail: [60],
+    icon: (
+      <svg {...ICON}>
+        <path d="M7 3.5h7l4 4v13H7Z" />
+        <path d="M14 3.5v4h4" />
+      </svg>
+    ),
+  },
+  {
+    name: "Crew Sheet",
+    kind: "phone",
+    when: "Read-only link you can revoke",
+    chip: "Read-only link",
+    tail: [66],
+    icon: (
+      <svg {...ICON}>
+        <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1" />
+        <path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" />
+      </svg>
+    ),
+  },
+  {
+    name: "Collaborator View",
+    kind: "screen",
+    when: "Where their access allows",
+    chip: "Partner access: event details",
+    tail: [48],
+    icon: (
+      <svg {...ICON}>
+        <circle cx="9" cy="9" r="3" />
+        <path d="M3.5 19c.8-3 2.9-4.5 5.5-4.5s4.7 1.5 5.5 4.5M15.5 6.5a3 3 0 0 1 0 5.5M17.5 14.8c1.5.6 2.5 2 3 4.2" />
+      </svg>
+    ),
+  },
+];
 
 export default function PlatformRecord() {
   return (
@@ -93,7 +144,7 @@ export default function PlatformRecord() {
             </p>
           </div>
 
-          {/* The one change. */}
+          {/* The change, and the Event Activity entry that records it. */}
           <div className="pr-change" role="group" aria-labelledby="pr-change-title">
             <div className="pr-change-head">
               <p id="pr-change-title" className="pr-change-title">
@@ -115,89 +166,72 @@ export default function PlatformRecord() {
                 <span className="sr-only">After: </span>7:00 AM
               </span>
             </p>
-            <p className="pr-change-note">Updated once, on the show&apos;s schedule.</p>
+
+            <div className="pr-activity">
+              <p className="pr-activity-label">
+                <svg {...ICON} width={13} height={13}>
+                  <circle cx="12" cy="12" r="8.5" />
+                  <path d="M12 7.5V12l3 2" />
+                </svg>
+                Event Activity
+              </p>
+              <p className="pr-activity-row">
+                <span className="pr-activity-title">Event timing changed</span>
+                <span className="pr-activity-pill">Event</span>
+              </p>
+              <p className="pr-activity-diff">
+                Load-in: <s>8:00 AM</s>
+                <span aria-hidden="true"> → </span>
+                <span className="sr-only"> to </span>
+                <b>7:00 AM</b>
+              </p>
+            </div>
           </div>
 
-          {/* The views that read it, joined to the change by a blue line. */}
-          <ul className="pr-views" aria-label="Connected views, available today">
-            <li className="pr-view">
-              <div className="pr-mock pr-mock-doc">
-                <span className="pr-mock-head">
-                  <svg {...ICON}>
-                    <path d="M7 3.5h7l4 4v13H7Z" />
-                    <path d="M14 3.5v4h4" />
-                  </svg>
-                  Production Brief
-                </span>
-                <Bars widths={[70, 52]} />
-                <LoadIn />
-                <Bars widths={[60]} tail />
-              </div>
-              <p className="pr-view-when">Current when opened or downloaded again.</p>
-            </li>
-
-            <li className="pr-view">
-              <div className="pr-mock pr-mock-phone">
-                <span aria-hidden="true" className="pr-notch" />
-                <span className="pr-mock-head">
-                  <svg {...ICON}>
-                    <path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1" />
-                    <path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" />
-                  </svg>
-                  Crew Sheet
-                </span>
-                <span className="pr-chip">Read-only link</span>
-                <LoadIn />
-                <Bars widths={[66]} tail />
-              </div>
-              <p className="pr-view-when">Current when the link is reopened. Read-only, and you can revoke it.</p>
-            </li>
-
-            <li className="pr-view">
-              <div className="pr-mock pr-mock-screen">
-                <span aria-hidden="true" className="pr-winbar" />
-                <span className="pr-mock-head">
-                  <svg {...ICON}>
-                    <circle cx="9" cy="9" r="3" />
-                    <path d="M3.5 19c.8-3 2.9-4.5 5.5-4.5s4.7 1.5 5.5 4.5M15.5 6.5a3 3 0 0 1 0 5.5M17.5 14.8c1.5.6 2.5 2 3 4.2" />
-                  </svg>
-                  Collaborator View
-                </span>
-                <span className="pr-chip">Partner access: event details</span>
-                <LoadIn />
-                <Bars widths={[48]} tail />
-              </div>
-              <p className="pr-view-when">Current when opened, for partners whose access includes event details.</p>
-            </li>
+          {/* Where the current time is available, joined to the change by a blue line. */}
+          <ul className="pr-views" aria-label="Where the updated load-in appears">
+            {VIEWS.map((view) => (
+              <li key={view.name} className="pr-view">
+                <div className={`pr-mock pr-mock-${view.kind}`}>
+                  {view.kind === "phone" && <span aria-hidden="true" className="pr-notch" />}
+                  {view.kind === "screen" && <span aria-hidden="true" className="pr-winbar" />}
+                  <span className="pr-mock-head">
+                    {view.icon}
+                    {view.name}
+                  </span>
+                  {view.chip && <span className="pr-chip">{view.chip}</span>}
+                  {view.lead && <Bars widths={view.lead} />}
+                  <LoadIn />
+                  <Bars widths={view.tail} tail />
+                </div>
+                <p className="pr-view-when">{view.when}</p>
+              </li>
+            ))}
           </ul>
         </div>
 
-        <p className="pr-copies">PDFs already downloaded and printed copies don&apos;t update themselves.</p>
-
         <div className="pr-bottom">
-          <div className="pr-today">
-            <p className="pr-label">How it works today</p>
+          <div className="pr-message">
+            <h3 className="pr-message-title">Keep the right people working from the right information</h3>
+            <p>
+              When plans change, ASO helps keep the details connected. Event activity records supported changes, while
+              production briefs, crew sheets, and authorized views reflect the current plan when opened.
+            </p>
+            <p className="pr-next">
+              <span className="pr-next-tag">Planned</span>
+              The next step is making those changes easier to act on: identifying affected information, preparing
+              revised documents, and coordinating communications with the people who need them.
+            </p>
+          </div>
+
+          <div className="pr-facts">
+            <p className="pr-label">How it works</p>
             <ul>
-              {TODAY.map((line) => (
+              {FACTS.map((line) => (
                 <li key={line}>{line}</li>
               ))}
             </ul>
           </div>
-
-          <aside className="pr-future" aria-labelledby="pr-future-title">
-            <p className="pr-label pr-label-future">Future direction</p>
-            <h3 id="pr-future-title" className="pr-future-title">
-              Know what changed. Coordinate what happens next.
-            </h3>
-            <ul>
-              {FUTURE.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-            <p className="pr-future-note">
-              Planned, not yet available. You decide what needs updating, who receives it, what is sent, and when.
-            </p>
-          </aside>
         </div>
       </div>
     </section>

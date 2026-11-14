@@ -917,21 +917,24 @@
 
 /* ── Platform: "The Connected Operating Record" ─────────────────────────────
    components/platform/PlatformRecord.tsx. A static example: one load-in
-   change on the show, joined by a blue line to the three views that read it,
-   then what is true today and a quieter, separate "Future direction". No
-   interaction and no animation. Every rule sits under .platform-record.
+   change, the Event Activity entry that records it, and a blue line to the
+   three views that show the current time. Then the supporting message and
+   the verified distinctions. No interaction and no animation. Every rule
+   sits under .platform-record.
 
-   Connectors: on phones a bus runs down the left of the stacked views. From
-   768px the views sit in three equal columns and a bus runs across above
-   them; from 1024px the change card sits over the third column, so its line
-   drops straight into the Collaborator View. --pr-gap is the space between
-   the change card and the views, which the connector lines span. */
+   Connectors: the three views always sit side by side, with a bus across
+   their tops from the first view's centre to the last one's. The change
+   card's line drops onto the bus: from its centre below 1024px, and from
+   1024px, where the card sits over the third column, straight down into the
+   Collaborator View. --pr-gap is the space the lines span; --pr-col-gap is
+   the gap between the views. */
 
 .platform-record {
   --pr-line: rgba(127, 211, 244, 0.5);
   --pr-text: rgba(255, 255, 255, 0.76);
   --pr-orange: #ff7a1a;
-  --pr-gap: 1.75rem;
+  --pr-gap: 2rem;
+  --pr-col-gap: 0.625rem;
 }
 
 /* Top-right stage-light wash, as on the site's other navy sections. */
@@ -962,8 +965,8 @@
 }
 
 .platform-record .pr-tagline {
-  margin-top: 0.625rem;
-  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  font-size: 1.1875rem;
   font-weight: 600;
   line-height: 1.4;
   color: #a8dcff;
@@ -971,7 +974,7 @@
 
 .platform-record .pr-intro {
   max-width: 38rem;
-  margin-top: 0.625rem;
+  margin-top: 0.5rem;
   font-size: 1rem;
   line-height: 1.6;
   color: var(--pr-text);
@@ -979,13 +982,13 @@
 
 .platform-record .pr-grid {
   display: grid;
-  row-gap: var(--pr-gap);
 }
 
 /* The one change: the only orange-framed element in the section. */
 .platform-record .pr-change {
   position: relative;
-  padding: 1.125rem 1.25rem 1.25rem;
+  margin-top: 1.5rem;
+  padding: 1rem 1.125rem 1.125rem;
   border: 1px solid rgba(255, 122, 26, 0.6);
   border-radius: 16px;
   background: linear-gradient(180deg, rgba(22, 62, 102, 0.95) 0%, rgba(10, 33, 55, 0.96) 100%);
@@ -1020,7 +1023,7 @@
 }
 
 .platform-record .pr-change-key {
-  margin-top: 0.875rem;
+  margin-top: 0.625rem;
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--pr-text);
@@ -1030,7 +1033,6 @@
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  margin-top: 0.125rem;
 }
 
 .platform-record .pr-old,
@@ -1060,27 +1062,96 @@
   color: var(--pr-orange);
 }
 
-.platform-record .pr-change-note {
-  margin-top: 0.625rem;
-  font-size: 0.875rem;
-  color: var(--pr-text);
+/* Event Activity: a light entry, like the one on the event page, recording
+   the change. Blue edge for the "Event" category. */
+.platform-record .pr-activity {
+  margin-top: 0.875rem;
+  padding: 0.5rem 0.75rem 0.5625rem;
+  border: 1px solid #d6e2ee;
+  border-left: 3px solid #6aaee8;
+  border-radius: 10px;
+  background: #f4f8fc;
+  color: #0b2540;
 }
 
-/* The views. Phones: stacked, with the bus down their left. */
+.platform-record .pr-activity-label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #445b72;
+}
+
+.platform-record .pr-activity-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.platform-record .pr-activity-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.platform-record .pr-activity-pill {
+  padding: 0.0625rem 0.375rem;
+  border-radius: 4px;
+  background: #dceafa;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1b4a80;
+}
+
+.platform-record .pr-activity-diff {
+  margin-top: 0.125rem;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  color: #3a536b;
+}
+
+.platform-record .pr-activity-diff s {
+  text-decoration-color: rgba(58, 83, 107, 0.7);
+}
+
+.platform-record .pr-activity-diff b {
+  font-weight: 700;
+  color: #a13f00;
+}
+
+/* The views, side by side at every width, with the bus across their tops. */
 .platform-record .pr-views {
   position: relative;
   display: grid;
-  gap: 1rem;
-  padding-left: 1.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--pr-col-gap);
+  margin-top: var(--pr-gap);
+}
+
+.platform-record .pr-views::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--pr-gap) / -2);
+  left: calc((100% - 2 * var(--pr-col-gap)) / 6 - 1px);
+  right: calc((100% - 2 * var(--pr-col-gap)) / 6 - 1px);
+  height: 2px;
+  background: var(--pr-line);
 }
 
 .platform-record .pr-change::after {
   content: "";
   position: absolute;
-  left: calc(0.75rem - 1px);
+  left: calc(50% - 1px);
   top: 100%;
   width: 2px;
-  height: calc(var(--pr-gap) + 1px);
+  height: calc(var(--pr-gap) / 2 + 1px);
   background: var(--pr-line);
 }
 
@@ -1088,65 +1159,52 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
+  text-align: center;
 }
 
 .platform-record .pr-view::before {
   content: "";
   position: absolute;
-  left: calc(-1rem - 1px);
-  top: -0.5rem;
-  bottom: -0.5rem;
+  left: calc(50% - 1px);
+  top: calc(var(--pr-gap) / -2);
   width: 2px;
-  background: var(--pr-line);
-}
-
-.platform-record .pr-view:first-child::before {
-  top: -1px;
-}
-
-.platform-record .pr-view:last-child::before {
-  bottom: auto;
-  height: calc(0.5rem + 1.5rem + 1px);
-}
-
-.platform-record .pr-view::after {
-  content: "";
-  position: absolute;
-  left: -1rem;
-  top: 1.5rem;
-  width: 1rem;
-  height: 2px;
+  height: calc(var(--pr-gap) / 2);
   background: var(--pr-line);
 }
 
 .platform-record .pr-view-when {
-  font-size: 0.875rem;
-  line-height: 1.5;
+  font-size: 0.8125rem;
+  line-height: 1.4;
   color: var(--pr-text);
 }
 
 /* Mock views: a document, a phone, and an app window, so each reads as what
-   it is. Skeleton bars stand in for content without inventing any. */
+   it is. Skeleton bars stand in for content without inventing any. On phones
+   they are compact: name, then the load-in stacked, no icon or chip. */
 .platform-record .pr-mock {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.4375rem;
   width: 100%;
-  padding: 0.875rem 1rem 1rem;
+  min-height: 8.375rem;
+  padding: 0.625rem 0.5rem 0.75rem;
+  text-align: left;
 }
 
 .platform-record .pr-mock-head {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .platform-record .pr-mock-head svg {
+  display: none;
   flex: none;
 }
 
@@ -1169,10 +1227,10 @@
 
 .platform-record .pr-loadin {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 0.5rem;
-  padding: 0.3125rem 0.5rem;
+  flex-direction: column;
+  gap: 0.0625rem;
+  margin-top: auto;
+  padding: 0.25rem 0.375rem;
   border-left: 2px solid var(--pr-orange);
   border-radius: 3px;
   background: rgba(255, 122, 26, 0.12);
@@ -1205,11 +1263,10 @@
 
 /* Production Brief: a sheet of paper with a folded corner. */
 .platform-record .pr-mock-doc {
-  max-width: 17rem;
   border-radius: 3px;
   background: #edf3f9;
   color: #0b2540;
-  clip-path: polygon(0 0, calc(100% - 1.125rem) 0, 100% 1.125rem, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, calc(100% - 1rem) 0, 100% 1rem, 100% 100%, 0 100%);
 }
 
 .platform-record .pr-mock-doc::before {
@@ -1217,9 +1274,13 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 1.125rem;
-  height: 1.125rem;
+  width: 1rem;
+  height: 1rem;
   background: linear-gradient(to bottom left, transparent 50%, #b9cde0 50%);
+}
+
+.platform-record .pr-mock-doc .pr-mock-head {
+  padding-right: 0.75rem;
 }
 
 .platform-record .pr-mock-doc .pr-mock-head svg {
@@ -1244,19 +1305,18 @@
 
 /* Crew Sheet: a phone, opened from a link. */
 .platform-record .pr-mock-phone {
-  max-width: 12.5rem;
-  padding-top: 1.375rem;
+  padding-top: 1.25rem;
   border: 1.5px solid rgba(168, 220, 255, 0.45);
-  border-radius: 20px;
+  border-radius: 16px;
   background: linear-gradient(180deg, #123456 0%, #0b2440 100%);
   color: #fff;
 }
 
 .platform-record .pr-notch {
   position: absolute;
-  top: 0.5rem;
+  top: 0.4375rem;
   left: 50%;
-  width: 2.25rem;
+  width: 2rem;
   height: 4px;
   border-radius: 999px;
   background: rgba(168, 220, 255, 0.4);
@@ -1270,7 +1330,7 @@
 
 /* Collaborator View: an app window. */
 .platform-record .pr-mock-screen {
-  padding-top: 2.125rem;
+  padding-top: 1.875rem;
   border: 1px solid rgba(127, 211, 244, 0.32);
   border-radius: 10px;
   background: linear-gradient(180deg, rgba(25, 66, 106, 0.9) 0%, rgba(13, 40, 66, 0.92) 100%);
@@ -1281,36 +1341,67 @@
 .platform-record .pr-winbar {
   position: absolute;
   inset: 0 0 auto;
-  height: 1.375rem;
+  height: 1.25rem;
   border-bottom: 1px solid rgba(127, 211, 244, 0.2);
   background:
-    radial-gradient(circle at 0.75rem 50%, rgba(255, 255, 255, 0.38) 0 3px, transparent 3.5px),
-    radial-gradient(circle at 1.375rem 50%, rgba(255, 255, 255, 0.38) 0 3px, transparent 3.5px),
-    radial-gradient(circle at 2rem 50%, rgba(255, 255, 255, 0.38) 0 3px, transparent 3.5px),
+    radial-gradient(circle at 0.625rem 50%, rgba(255, 255, 255, 0.38) 0 2.5px, transparent 3px),
+    radial-gradient(circle at 1.125rem 50%, rgba(255, 255, 255, 0.38) 0 2.5px, transparent 3px),
+    radial-gradient(circle at 1.625rem 50%, rgba(255, 255, 255, 0.38) 0 2.5px, transparent 3px),
     rgba(255, 255, 255, 0.05);
 }
 
-/* Fixed copies, said plainly. */
-.platform-record .pr-copies {
-  margin-top: 1.5rem;
-  padding-left: 0.75rem;
-  border-left: 2px solid rgba(127, 211, 244, 0.5);
-  font-size: 0.9375rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.84);
-}
-
-/* Today, then the future direction: separate, quieter, dashed. */
+/* The supporting message and the verified distinctions. */
 .platform-record .pr-bottom {
   display: grid;
   gap: 1.5rem;
-  margin-top: 1.75rem;
+  margin-top: 2rem;
   padding-top: 1.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
+.platform-record .pr-message-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+.platform-record .pr-message p {
+  max-width: 42rem;
+  margin-top: 0.625rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--pr-text);
+}
+
+/* The intended next step: set apart, plainly marked as planned. */
+.platform-record .pr-message .pr-next {
+  margin-top: 0.875rem;
+  padding-left: 0.875rem;
+  border-left: 2px dashed rgba(168, 220, 255, 0.4);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.platform-record .pr-next-tag {
+  display: inline-block;
+  margin-right: 0.5rem;
+  padding: 0 0.4375rem;
+  border: 1px dashed rgba(168, 220, 255, 0.55);
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  vertical-align: 0.0625rem;
+  color: #b8e3ff;
+}
+
 .platform-record .pr-label {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.625rem;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -1318,85 +1409,39 @@
   color: #a8dcff;
 }
 
-.platform-record .pr-today ul {
+.platform-record .pr-facts ul {
   display: grid;
-  gap: 0.625rem;
+  gap: 0.5rem;
 }
 
-.platform-record .pr-today li {
+.platform-record .pr-facts li {
   position: relative;
-  padding-left: 1.25rem;
-  font-size: 0.9375rem;
+  padding-left: 1.125rem;
+  font-size: 0.875rem;
   line-height: 1.55;
   color: var(--pr-text);
 }
 
-.platform-record .pr-today li::before {
+.platform-record .pr-facts li::before {
   content: "";
   position: absolute;
   left: 0;
   top: 0.72em;
-  width: 0.625rem;
+  width: 0.5rem;
   height: 2px;
   background: #7fd3f4;
 }
 
-.platform-record .pr-future {
-  padding: 1.125rem 1.25rem 1.25rem;
-  border: 1px dashed rgba(168, 220, 255, 0.34);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.025);
-}
-
-.platform-record .pr-label-future {
-  margin-bottom: 0.5rem;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.platform-record .pr-future-title {
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.4;
-  color: #fff;
-}
-
-.platform-record .pr-future ul {
-  display: grid;
-  gap: 0.375rem;
-  margin-top: 0.625rem;
-}
-
-.platform-record .pr-future li {
-  position: relative;
-  padding-left: 1.125rem;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--pr-text);
-}
-
-.platform-record .pr-future li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.5em;
-  width: 0.4375rem;
-  height: 0.4375rem;
-  border: 1.5px solid rgba(168, 220, 255, 0.6);
-  border-radius: 999px;
-}
-
-.platform-record .pr-future-note {
-  margin-top: 0.75rem;
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.68);
-}
-
-/* md: three views side by side, the bus across their tops, and the change
-   card centred above it. */
+/* md: full view mocks with icons, chips, and a single load-in row; the
+   change card centred above the bus. */
 @media (min-width: 768px) {
   .platform-record {
     --pr-gap: 2.5rem;
+    --pr-col-gap: 1rem;
+  }
+
+  .platform-record .pr-tagline {
+    font-size: 1.25rem;
   }
 
   .platform-record .pr-intro {
@@ -1406,53 +1451,22 @@
   .platform-record .pr-change {
     justify-self: center;
     width: 100%;
-    max-width: 22rem;
-  }
-
-  .platform-record .pr-change::after {
-    left: calc(50% - 1px);
-    height: calc(var(--pr-gap) / 2 + 1px);
-  }
-
-  .platform-record .pr-views {
-    --pr-col-gap: 1rem;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--pr-col-gap);
-    padding-left: 0;
-  }
-
-  /* The bus: from the first view's centre to the last one's. */
-  .platform-record .pr-views::before {
-    content: "";
-    position: absolute;
-    top: calc(var(--pr-gap) / -2);
-    left: calc((100% - 2 * var(--pr-col-gap)) / 6 - 1px);
-    right: calc((100% - 2 * var(--pr-col-gap)) / 6 - 1px);
-    height: 2px;
-    background: var(--pr-line);
-  }
-
-  .platform-record .pr-view {
-    align-items: center;
-    text-align: center;
-  }
-
-  .platform-record .pr-view::before,
-  .platform-record .pr-view:first-child::before,
-  .platform-record .pr-view:last-child::before {
-    left: calc(50% - 1px);
-    top: calc(var(--pr-gap) / -2);
-    bottom: auto;
-    height: calc(var(--pr-gap) / 2);
-  }
-
-  .platform-record .pr-view::after {
-    display: none;
+    max-width: 24rem;
+    margin-top: 2rem;
   }
 
   .platform-record .pr-mock {
-    min-height: 9.25rem;
-    text-align: left;
+    gap: 0.5rem;
+    min-height: 8.75rem;
+    padding: 0.875rem 1rem 1rem;
+  }
+
+  .platform-record .pr-mock-head {
+    font-size: 0.875rem;
+  }
+
+  .platform-record .pr-mock-head svg {
+    display: block;
   }
 
   .platform-record .pr-chip,
@@ -1460,47 +1474,69 @@
     display: flex;
   }
 
+  .platform-record .pr-loadin {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0;
+    padding: 0.3125rem 0.5rem;
+  }
+
   .platform-record .pr-mock-doc {
     max-width: 14rem;
+    clip-path: polygon(0 0, calc(100% - 1.125rem) 0, 100% 1.125rem, 100% 100%, 0 100%);
+  }
+
+  .platform-record .pr-mock-doc::before {
+    width: 1.125rem;
+    height: 1.125rem;
   }
 
   .platform-record .pr-mock-phone {
     max-width: 11.5rem;
+    padding-top: 1.375rem;
+    border-radius: 20px;
+  }
+
+  .platform-record .pr-notch {
+    top: 0.5rem;
+    width: 2.25rem;
   }
 
   .platform-record .pr-mock-screen {
     max-width: 17rem;
+    padding-top: 2.125rem;
+  }
+
+  .platform-record .pr-winbar {
+    height: 1.375rem;
+    background:
+      radial-gradient(circle at 0.75rem 50%, rgba(255, 255, 255, 0.38) 0 3px, transparent 3.5px),
+      radial-gradient(circle at 1.375rem 50%, rgba(255, 255, 255, 0.38) 0 3px, transparent 3.5px),
+      radial-gradient(circle at 2rem 50%, rgba(255, 255, 255, 0.38) 0 3px, transparent 3.5px),
+      rgba(255, 255, 255, 0.05);
   }
 
   .platform-record .pr-view-when {
-    max-width: 17rem;
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
   }
 
-  .platform-record .pr-copies {
-    margin-top: 1.5rem;
-    padding-left: 0;
-    border-left: 0;
-    text-align: center;
-  }
-
-  .platform-record .pr-copies::before {
-    content: "";
-    display: inline-block;
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-right: 0.625rem;
-    border-radius: 999px;
-    background: rgba(127, 211, 244, 0.7);
-    vertical-align: 0.0625rem;
+  .platform-record .pr-message-title {
+    font-size: 1.375rem;
   }
 }
 
 /* lg: the heading over the first two columns and the change card over the
-   third, so its line drops straight down into the Collaborator View. */
+   third, so its line drops straight down into the Collaborator View; the
+   message under the first two columns and the distinctions under the third. */
 @media (min-width: 1024px) {
-  .platform-record .pr-grid {
+  .platform-record {
     --pr-col-gap: 1.5rem;
+  }
+
+  .platform-record .pr-grid,
+  .platform-record .pr-bottom {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: var(--pr-col-gap);
   }
@@ -1514,18 +1550,20 @@
     grid-column: 3;
     justify-self: stretch;
     max-width: none;
-    align-self: end;
+    margin-top: 0;
   }
 
   .platform-record .pr-views {
-    --pr-col-gap: 1.5rem;
     grid-column: 1 / -1;
   }
 
-  .platform-record .pr-bottom {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-    column-gap: 3.5rem;
-    align-items: start;
+  .platform-record .pr-message {
+    grid-column: 1 / 3;
+    padding-right: 2.5rem;
+  }
+
+  .platform-record .pr-facts {
+    grid-column: 3;
   }
 }
 
