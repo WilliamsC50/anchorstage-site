@@ -243,46 +243,48 @@ export default function GatewayMonument() {
         <svg viewBox="160 36 450 530" preserveAspectRatio="xMidYMax meet" focusable="false">
           <defs>
             {/* The logo's own colours as painted metal, each lit toward the
-                backlight (upper right) and shaded away from it (lower left)
-                around the brand value at its middle stop:
+                backlight (upper right) and shaded away from it (lower left).
+                The middle stop is the brand value dimmed for the night scene
+                (sRGB x0.85, about 30% less luminance), so the hues and the
+                three-tone hierarchy stay the logo's:
                   cls-3 #06264c dark navy    -> gw-iron  (structure, shadow)
                   cls-1 #275a87 medium blue  -> gw-steel
                   cls-2 #5fa9c8 light blue   -> gw-plate
-                  white (negative space)     -> gw-polish, cool white
-                so the logo's three-tone hierarchy and its bright hidden
-                figure read through the lighting. */}
+                  white (negative space)     -> gw-polish, cool silver-blue,
+                                                still the brightest, so the
+                                                hidden figure stays distinct */}
             <linearGradient id="gw-iron" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#09305e" />
-              <stop offset="0.4" stopColor="#06264c" />
-              <stop offset="1" stopColor="#02132b" />
+              <stop offset="0" stopColor="#08294f" />
+              <stop offset="0.4" stopColor="#052040" />
+              <stop offset="1" stopColor="#021025" />
             </linearGradient>
             <linearGradient id="gw-steel" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#3271a6" />
-              <stop offset="0.45" stopColor="#275a87" />
-              <stop offset="1" stopColor="#1c4569" />
+              <stop offset="0" stopColor="#2a608d" />
+              <stop offset="0.45" stopColor="#214d73" />
+              <stop offset="1" stopColor="#183b59" />
             </linearGradient>
             <linearGradient id="gw-plate" x1="1" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#7cc3df" />
-              <stop offset="0.45" stopColor="#5fa9c8" />
-              <stop offset="1" stopColor="#4689a9" />
+              <stop offset="0" stopColor="#62a0b9" />
+              <stop offset="0.45" stopColor="#4a86a0" />
+              <stop offset="1" stopColor="#376c86" />
             </linearGradient>
             <linearGradient id="gw-polish" gradientUnits="userSpaceOnUse" x1="470" y1="120" x2="300" y2="480">
-              <stop offset="0" stopColor="#f0f7fc" />
-              <stop offset="0.5" stopColor="#d6e7f2" />
-              <stop offset="1" stopColor="#b5cde0" />
+              <stop offset="0" stopColor="#c2d5e3" />
+              <stop offset="0.5" stopColor="#a5bccf" />
+              <stop offset="1" stopColor="#8aa2b9" />
             </linearGradient>
             {/* Light across the metal: the backlight's pool on the upper
                 right, a soft directional band, blue bounce from the horizon,
                 deeper shadow low in the crown, and the warm horizon light's
                 tint on the lower left. */}
             <radialGradient id="gw-pool" gradientUnits="userSpaceOnUse" cx="540" cy="190" r="270">
-              <stop offset="0" stopColor="#4ea8ff" stopOpacity="0.2" />
+              <stop offset="0" stopColor="#4ea8ff" stopOpacity="0.15" />
               <stop offset="1" stopColor="#4ea8ff" stopOpacity="0" />
             </radialGradient>
             <linearGradient id="gw-sheen" gradientUnits="userSpaceOnUse" x1="560" y1="60" x2="250" y2="520">
               <stop offset="0.2" stopColor="#d6ecff" stopOpacity="0" />
-              <stop offset="0.36" stopColor="#d6ecff" stopOpacity="0.12" />
-              <stop offset="0.44" stopColor="#d6ecff" stopOpacity="0.035" />
+              <stop offset="0.36" stopColor="#d6ecff" stopOpacity="0.09" />
+              <stop offset="0.44" stopColor="#d6ecff" stopOpacity="0.025" />
               <stop offset="0.6" stopColor="#d6ecff" stopOpacity="0" />
             </linearGradient>
             <linearGradient id="gw-bounce" gradientUnits="userSpaceOnUse" x1="0" y1="560" x2="0" y2="330">
@@ -290,7 +292,7 @@ export default function GatewayMonument() {
               <stop offset="1" stopColor="#4ea8ff" stopOpacity="0" />
             </linearGradient>
             <radialGradient id="gw-occlude" gradientUnits="userSpaceOnUse" cx="420" cy="560" r="170">
-              <stop offset="0" stopColor="#02060d" stopOpacity="0.32" />
+              <stop offset="0" stopColor="#02060d" stopOpacity="0.36" />
               <stop offset="1" stopColor="#02060d" stopOpacity="0" />
             </radialGradient>
             <radialGradient id="gw-warm-tint" gradientUnits="userSpaceOnUse" cx="235" cy="470" r="150">
@@ -312,16 +314,22 @@ export default function GatewayMonument() {
               <use href="#gw-light" />
             </clipPath>
             {/* Each plate: a cool lit upper-right edge, blue reflected
-                light on its lower-left edge, and a short shadow cast onto
-                the layer beneath, so the pieces separate structurally. */}
+                light on its lower-left edge, a short shadow cast onto the
+                layer beneath, and a thin dark seam all round where it meets
+                that layer, so the pieces (and the hidden figure between
+                them) separate structurally, not by brightness alone. */}
             <filter id="gw-bevel" x="-5%" y="-5%" width="110%" height="110%" colorInterpolationFilters="sRGB">
               <feGaussianBlur in="SourceAlpha" stdDeviation="1.4" result="sblur" />
               <feOffset in="sblur" dx="-1.3" dy="1.6" result="soff" />
               <feFlood floodColor="#01040a" floodOpacity="0.62" />
               <feComposite in2="soff" operator="in" result="shadow" />
+              <feMorphology in="SourceAlpha" operator="dilate" radius="0.9" result="grow" />
+              <feComposite in="grow" in2="SourceAlpha" operator="out" result="ring" />
+              <feFlood floodColor="#020a18" floodOpacity="0.5" />
+              <feComposite in2="ring" operator="in" result="seam" />
               <feOffset in="SourceAlpha" dx="-0.9" dy="0.9" result="lshift" />
               <feComposite in="SourceAlpha" in2="lshift" operator="out" result="ledge" />
-              <feFlood floodColor="#d6ecff" floodOpacity="0.34" />
+              <feFlood floodColor="#d6ecff" floodOpacity="0.28" />
               <feComposite in2="ledge" operator="in" result="lit" />
               <feOffset in="SourceAlpha" dx="0.9" dy="-0.9" result="bshift" />
               <feComposite in="SourceAlpha" in2="bshift" operator="out" result="bedge" />
@@ -329,6 +337,7 @@ export default function GatewayMonument() {
               <feComposite in2="bedge" operator="in" result="bounce" />
               <feMerge>
                 <feMergeNode in="shadow" />
+                <feMergeNode in="seam" />
                 <feMergeNode in="SourceGraphic" />
                 <feMergeNode in="lit" />
                 <feMergeNode in="bounce" />
