@@ -1,0 +1,344 @@
+/* ── Platform hero ──────────────────────────────────────────────────────────
+   The architecture model (components/platform). Every rule sits under
+   .platform-hero, so nothing reaches another route even after client-side
+   navigation keeps this stylesheet loaded.
+
+   Motion: signal travels along the conduits into the record and the record's
+   layers light in turn as it arrives. The foundation never moves: it is the
+   part that persists. With reduced motion everything holds still. */
+
+.platform-hero {
+  background: #071528;
+}
+
+.platform-hero-env {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 78%, rgba(64, 140, 230, 0.2), transparent 70%),
+    linear-gradient(180deg, #0b223d 0%, #081a30 55%, #06142a 100%);
+}
+
+@media (min-width: 1024px) {
+  .platform-hero-env {
+    background:
+      radial-gradient(ellipse 48% 75% at 74% 50%, rgba(64, 140, 230, 0.22), transparent 70%),
+      linear-gradient(180deg, #0b223d 0%, #081a30 55%, #06142a 100%);
+  }
+}
+
+.platform-hero-lead {
+  color: rgba(255, 255, 255, 0.74);
+}
+
+/* The model's space. Below lg it sits beneath the copy; at lg it takes the
+   right column and runs a little past the container toward the edge. */
+.platform-hero-stage {
+  position: relative;
+  width: 100%;
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+/* Phones: the model narrows so the Workstation labels, which sit outboard
+   of the modules, stay on screen. */
+@media (max-width: 639px) {
+  .platform-hero-stage {
+    width: 82%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .platform-hero-stage {
+    max-width: none;
+    margin-right: -1.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .platform-hero-stage {
+    margin-right: -3.5rem;
+  }
+}
+
+/* ── Model: environment ─────────────────────────────────────────────────── */
+
+.platform-hero .pf-floor line {
+  stroke: rgba(127, 211, 244, 0.11);
+  stroke-width: 1;
+}
+
+.platform-hero .pf-pool {
+  fill: #01060f;
+  opacity: 0.7;
+}
+
+/* ── Model: organization ────────────────────────────────────────────────── */
+
+.platform-hero .pf-plinth-edge {
+  fill: none;
+  stroke: rgba(127, 211, 244, 0.2);
+  stroke-width: 1;
+}
+
+.platform-hero .pf-grid line {
+  stroke: rgba(127, 211, 244, 0.11);
+  stroke-width: 0.8;
+}
+
+/* Rim light along the foundation's top edges. */
+.platform-hero .pf-found-edge {
+  fill: none;
+  stroke: rgba(143, 208, 255, 0.55);
+  stroke-width: 1.2;
+}
+
+.platform-hero .pf-inlay {
+  fill: none;
+  stroke: #ff7a1a;
+  stroke-opacity: 0.8;
+  stroke-width: 1.2;
+}
+
+.platform-hero .pf-near-edge {
+  stroke: rgba(196, 230, 255, 0.6);
+  stroke-width: 1;
+}
+
+.platform-hero .pf-shadow polygon {
+  fill: #020a16;
+  opacity: 0.6;
+}
+
+/* ── Model: workstations and conduits ───────────────────────────────────── */
+
+.platform-hero .pf-module-edge {
+  fill: none;
+  stroke: rgba(143, 208, 255, 0.6);
+  stroke-width: 1;
+}
+
+.platform-hero .pf-module-panel {
+  fill: rgba(78, 168, 255, 0.13);
+  stroke: rgba(143, 208, 255, 0.35);
+  stroke-width: 0.8;
+}
+
+.platform-hero .pf-conduit-line {
+  fill: none;
+  stroke: rgba(78, 168, 255, 0.55);
+  stroke-width: 1.4;
+}
+
+.platform-hero .pf-conduit-twin {
+  fill: none;
+  stroke: rgba(78, 168, 255, 0.22);
+  stroke-width: 1;
+}
+
+.platform-hero .pf-junction-dot {
+  fill: #ff7a1a;
+}
+
+/* A short bright dash runs from each Workstation in to the record. */
+.platform-hero .pf-pulse {
+  fill: none;
+  stroke: #d6eeff;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 7 200;
+  stroke-dashoffset: 7;
+  opacity: 0;
+  animation: pf-flow 5.2s linear infinite;
+  animation-delay: calc(var(--i) * 1.3s);
+}
+
+@keyframes pf-flow {
+  0% {
+    stroke-dashoffset: 7;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+}
+
+/* ── Model: Connected Operating Record ──────────────────────────────────── */
+
+.platform-hero .pf-strata line {
+  stroke: rgba(200, 235, 255, 0.16);
+  stroke-width: 0.8;
+}
+
+.platform-hero .pf-plate-edge {
+  fill: none;
+  stroke: #8fd0ff;
+  stroke-width: 1.1;
+  stroke-opacity: 0.55;
+  animation: pf-layer 5.2s ease-in-out infinite;
+  animation-delay: calc(var(--layer) * 0.45s);
+}
+
+@keyframes pf-layer {
+  0%,
+  20%,
+  52%,
+  100% {
+    stroke-opacity: 0.55;
+  }
+  34% {
+    stroke-opacity: 1;
+  }
+}
+
+.platform-hero .pf-core-glow {
+  fill: #9fd6ff;
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  animation: pf-breathe 5.2s ease-in-out infinite;
+}
+
+@keyframes pf-breathe {
+  0%,
+  100% {
+    opacity: 0.34;
+  }
+  50% {
+    opacity: 0.58;
+  }
+}
+
+/* ── Labels ─────────────────────────────────────────────────────────────── */
+
+.platform-hero .pf-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.platform-hero .pf-label {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d4e9fb;
+}
+
+.platform-hero .pf-label-record {
+  transform: translate(-50%, calc(-100% - 10px));
+  color: #e4f4ff;
+}
+
+.platform-hero .pf-label-org {
+  transform: translate(-50%, 14px);
+  color: #ffa660;
+}
+
+/* Layer labels carry a quiet dark backing: they sit beside lit plate and
+   module edges, which would otherwise show through behind the lettering. */
+.platform-hero .pf-label-layer {
+  transform: translate(14px, -50%);
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: rgba(6, 18, 34, 0.86);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(212, 233, 251, 0.88);
+}
+
+.platform-hero .pf-label-layer::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 10px;
+  height: 1px;
+  background: rgba(143, 208, 255, 0.55);
+}
+
+.platform-hero .pf-label-ws {
+  left: var(--x);
+  top: var(--y);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transform: translate(calc(-100% - 8px), -50%);
+  padding: 5px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(127, 211, 244, 0.28);
+  background: rgba(6, 18, 34, 0.82);
+  box-shadow: 0 6px 18px -8px rgba(0, 0, 0, 0.8);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: #eaf5ff;
+}
+
+.platform-hero .pf-label-ws-right {
+  transform: translate(8px, -50%);
+}
+
+.platform-hero .pf-label-ws svg {
+  color: #7fd3f4;
+}
+
+@media (max-width: 639px) {
+  .platform-hero .pf-label {
+    font-size: 10px;
+  }
+
+  .platform-hero .pf-label-layer {
+    display: none;
+  }
+
+  .platform-hero .pf-label-ws {
+    gap: 4px;
+    padding: 4px 6px;
+    font-size: 11px;
+  }
+
+  .platform-hero .pf-label-ws {
+    left: var(--x-compact);
+    top: var(--y-compact);
+    transform: translate(calc(-100% - 4px), -50%);
+  }
+
+  .platform-hero .pf-label-ws-right {
+    transform: translate(4px, -50%);
+  }
+}
+
+/* The narrowest phones: names only, so the right-hand labels clear each other. */
+@media (max-width: 359px) {
+  .platform-hero .pf-label-ws svg {
+    display: none;
+  }
+
+  .platform-hero .pf-label-ws {
+    padding: 3px 5px;
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .platform-hero .pf-pulse {
+    display: none;
+  }
+
+  .platform-hero .pf-plate-edge,
+  .platform-hero .pf-core-glow {
+    animation: none;
+  }
+}

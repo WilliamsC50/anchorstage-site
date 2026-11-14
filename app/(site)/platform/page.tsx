@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import ClosingCta from "@/components/ClosingCta";
-import HeroMedia from "@/components/HeroMedia";
-import PageHeader from "@/components/PageHeader";
 import Section from "@/components/Section";
 import WorkstationIcon from "@/components/WorkstationIcon";
+import PlatformHero from "@/components/platform/PlatformHero";
 import { INTAKE_REGISTER_URL } from "@/lib/constants";
-import { platformHero } from "@/lib/images";
 import { buildMetadata } from "@/lib/metadata";
 import { WORKSTATIONS } from "@/lib/workstations";
+import "./platform.css";
 
 export const metadata: Metadata = buildMetadata({
   title: "Platform",
@@ -37,27 +36,7 @@ const ORGANIZATION_POINTS = [
 export default function PlatformPage() {
   return (
     <main className="bg-white">
-      <PageHeader
-        eyebrow="Platform"
-        title="One operational foundation for your organization"
-        lead="AnchorStage Ops is a connected operations platform for live event work. Your organization gets one place where its events, records, and day to day operations live together."
-        media={
-          // Product shot, not photography. fit="contain" keeps the laptop,
-          // tablet, and phone whole at any size, and object-position right
-          // seats the tablet against the band's right edge on desktop. The PNG
-          // is transparent, so the devices and their shadows float directly on
-          // the hero's navy. No desktop fade — nothing must dim the screens.
-          // Below lg the shared full-bleed layer and its navy scrim apply, so
-          // the devices sit behind the copy without cropping.
-          <HeroMedia
-            className="absolute inset-0 z-[1] lg:left-auto lg:w-[52%] xl:w-[56%] 2xl:w-[58%]"
-            fit="contain"
-            image={platformHero}
-            objectPosition="right"
-            sizes="(min-width: 1536px) 58vw, (min-width: 1280px) 56vw, (min-width: 1024px) 52vw, 100vw"
-          />
-        }
-      />
+      <PlatformHero />
 
       {/* ORGANIZATIONS — heading left, points right, orange tick per point */}
       <Section background="bg" plot>
