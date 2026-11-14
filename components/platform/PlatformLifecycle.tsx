@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 
 /**
- * Platform: "From Intake to Invoice — and Beyond".
+ * Platform: "From Intake to Invoice".
  *
  * Five stages of work an organization controls on ASO, shown as a connected
  * run of stations. Every stage is visible at once (number, name, summary);
@@ -56,9 +56,9 @@ const STAGES: Stage[] = [
     id: "intake",
     name: "Intake & Planning",
     control: "Control how new work enters your organization and becomes a planned event.",
-    summary: "Collect requests on your own request page and turn the right ones into planned, quoted events.",
+    summary: "Take in requests and turn the right ones into quoted events.",
     body: [
-      "Every organization gets its own request page carrying its name and logo, so new work arrives in a consistent format instead of scattered across texts and emails. Review requests, maintain client and venue information, and create events when work is confirmed. Start individual events or recurring series, and prepare numbered quotes.",
+      "Every organization gets its own request page with its name and logo, so new work arrives in one consistent format instead of scattered across texts and emails. Review requests, keep client and venue details on file, create single events or recurring series, and prepare numbered quotes.",
     ],
     manageLabel: "What you can manage",
     manage: ["Branded request page", "Reusable client and venue records", "Individual and recurring events", "Numbered quotes and PDFs"],
@@ -73,9 +73,9 @@ const STAGES: Stage[] = [
     id: "production",
     name: "Build the Production",
     control: "Control staffing, equipment assignments, and production resources.",
-    summary: "Staff the show and assign the gear, starting from the people and inventory you already have.",
+    summary: "Staff the show and assign gear from what you already have.",
     body: [
-      "Define the roles an event needs and assign people from your private crew roster. Create crew calls that people can respond to through a link without needing an account. Track confirmed assignments, allocate individual equipment and inventory packages, and identify where resources are committed.",
+      "Fill the roles an event needs from your private crew roster, or post a crew call that people can answer through a link without an account. Assign individual gear and packages from your inventory and see where each one is committed.",
     ],
     manageLabel: "What you can manage",
     manage: ["Private crew roster", "Crew calls without required accounts", "Gear and package assignments", "Event-specific resource commitments"],
@@ -90,9 +90,9 @@ const STAGES: Stage[] = [
     id: "prepare",
     name: "Prepare & Share",
     control: "Maintain visibility over event readiness and control who receives operational information.",
-    summary: "Catch what's missing before show day, then share the plan with the people who need it.",
+    summary: "Catch gaps before show day and share the plan with the right people.",
     body: [
-      "Use readiness checks to identify details that need attention. Generate production briefs and packing lists for review, printing, or PDF export. Share a read-only crew sheet through a revocable private link, and give authorized participants access to the information appropriate to their responsibilities.",
+      "Readiness checks flag details that still need attention. Review, print, or save production briefs and packing lists as PDFs. Share a read-only crew sheet through a private link you can revoke, and give authorized participants access suited to their responsibilities.",
     ],
     manageLabel: "What you can manage",
     manage: ["Event readiness checks", "Production briefs and packing lists", "Revocable crew-sheet links", "Permission-controlled access"],
@@ -108,9 +108,9 @@ const STAGES: Stage[] = [
     id: "invoice",
     name: "Invoice & Close Out",
     control: "Maintain control over the financial side of completed and ongoing work.",
-    summary: "Invoice the job, record what's been paid, and keep track of what you owe crew and partners.",
+    summary: "Invoice the job and track what's paid and what you owe.",
     body: [
-      "Issue numbered invoices from the event and record deposits and client payments as they arrive. Track crew and partner payouts until they're marked paid. Financials brings together income, expenses, outstanding amounts, and projected profit across events and reporting periods.",
+      "Issue numbered invoices from the event, record deposits and client payments as they arrive, and track crew and partner payouts until they're marked paid. Financials brings income, expenses, outstanding amounts, and projected profit together across events and reporting periods.",
     ],
     manageLabel: "What you can manage",
     manage: ["Numbered invoices and PDFs", "Manually recorded deposits and payments", "Crew and partner payout tracking", "Financial reporting across events"],
@@ -125,10 +125,10 @@ const STAGES: Stage[] = [
     id: "beyond",
     name: "Build on Every Event",
     control: "Retain organized records that support future work and better business decisions.",
-    summary: "Keep the operational history you've built and put it to work on future events, campaigns, and opportunities.",
+    summary: "Put your event history to work on what comes next.",
     body: [
-      "Completed events remain part of your organization's history, including clients, venues, crew, documents, and financial information. Reference previous work when preparing future jobs.",
-      "The Marketing Workstation supports campaign planning, creative production, approval, distribution, and tracking. Campaign clicks can be recorded, while requests and bookings are tracked for links leading to the organization's ASO request page.",
+      "Completed events stay in your organization's history, with their clients, venues, crew, documents, and financials ready to reference on the next job.",
+      "The Marketing Workstation covers campaign planning, creative production, approval, distribution, and tracking. Clicks are recorded for campaign links, and requests and bookings are tracked for links that lead to your ASO request page.",
     ],
     manageLabel: "Available today",
     manage: [
@@ -138,8 +138,7 @@ const STAGES: Stage[] = [
       "Campaign click, request, and booking tracking, within their supported scope",
     ],
     ahead: [
-      "We're building toward business intelligence that connects operational, financial, marketing, audience, and sponsorship information where reliable data is available.",
-      "The goal is to help organizations distinguish verified records, user-provided figures, and estimates so they can make more informed business decisions and develop stronger client pitches, marketing strategies, and sponsorship proposals.",
+      "We're building toward business intelligence that connects operational, financial, marketing, audience, and sponsorship information where reliable data exists. It will keep verified records, user-provided figures, and estimates clearly apart, to support better business decisions, client pitches, marketing strategies, and sponsorship proposals.",
     ],
     icon: (
       <svg {...ICON}>
@@ -180,31 +179,22 @@ export default function PlatformLifecycle() {
     <section className="platform-lifecycle relative overflow-hidden bg-aso-bg" aria-labelledby="pl-title">
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none aso-plot-grid-light" />
 
-      <div className="relative max-w-6xl mx-auto px-6 pt-20 md:pt-28">
-        <div className="max-w-3xl">
-          <h2 id="pl-title" className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
-            From Intake to Invoice — and Beyond
+      <div className="relative max-w-6xl mx-auto px-6 pt-14 md:pt-16 lg:pt-14">
+        <div className="pl-head">
+          <h2 id="pl-title" className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-4">
+            From Intake to Invoice
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed">
-            Keep control of your operations from the first request through the final invoice. Bring the people,
-            gear, documents, and financial details of each event together, using the tools your work actually
-            needs. And when the job is done, the records remain yours to build on.
-          </p>
-          <p className="pl-note">
-            ASO supports the way your organization works. These stages show what&apos;s available, not a sequence
-            you have to follow.
+          <p className="pl-intro">
+            Keep control of each event from the first request to the final invoice, with its people, gear,
+            documents, and finances in one place. Use the stages your work needs, in any order, and keep the records
+            long after the job is done.
           </p>
         </div>
 
         <div className="pl-flow" style={{ ["--sel" as string]: selected }}>
-          <p className="pl-hint" id="pl-hint">
-            Choose a stage to see what you control there.
-          </p>
-
           <div
             role="tablist"
             aria-label="Event lifecycle stages"
-            aria-describedby="pl-hint"
             className="pl-track"
             onKeyDown={onKeyDown}
           >
