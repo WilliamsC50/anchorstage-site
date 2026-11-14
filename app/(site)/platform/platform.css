@@ -458,7 +458,7 @@
   }
 }
 
-/* ── Platform lifecycle: "From Intake to Invoice — and Beyond" ───────────────
+/* ── Platform lifecycle: "From Intake to Invoice" ───────────────────────────
    components/platform/PlatformLifecycle.tsx. Five stations on one run (a
    vertical list below lg, a horizontal run from lg) and the chosen stage's
    detail panel. Every rule sits under .platform-lifecycle. Motion is limited
@@ -726,45 +726,15 @@
   background: var(--pl-orange);
 }
 
-/* Looking ahead: future direction, deliberately quieter than what exists. */
-.platform-lifecycle .pl-ahead {
-  margin-top: 0.875rem;
-  padding: 0.875rem 1rem;
-  border: 1px dashed rgba(15, 47, 79, 0.24);
-  border-radius: 12px;
-}
-
-.platform-lifecycle .pl-ahead-label {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--pl-navy);
-}
-
-.platform-lifecycle .pl-ahead-tag {
-  padding: 0.125rem 0.5rem;
-  border: 1px solid rgba(15, 47, 79, 0.25);
-  border-radius: 999px;
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--pl-muted);
-}
-
-.platform-lifecycle .pl-ahead p:not(.pl-ahead-label) {
+/* A short clarification under the explanation (Stage 04): readable, but set
+   quieter than the explanation it qualifies. */
+.platform-lifecycle .pl-note {
+  margin-top: 0.75rem;
+  padding-left: 0.75rem;
+  border-left: 2px solid rgba(15, 47, 79, 0.16);
   font-size: 0.875rem;
-  line-height: 1.6;
+  line-height: 1.55;
   color: var(--pl-muted);
-}
-
-.platform-lifecycle .pl-ahead p:not(.pl-ahead-label) + p {
-  margin-top: 0.5rem;
 }
 
 /* Hand-off into the Connected Operating Record: the line runs on to the
@@ -911,9 +881,9 @@
   }
 
   /* Stages 01-04 share one height, so moving between them never shifts the
-     page. Stage 05 carries extra content (Looking ahead) and only takes space
-     while it is chosen, so it does not leave the main stages padded out. */
-  .platform-lifecycle .pl-panel.has-ahead:not(.is-active) {
+     page. Stage 05 is the longest and only takes its extra room while it is
+     chosen, so it does not leave the other stages padded out. */
+  .platform-lifecycle .pl-panel.is-beyond:not(.is-active) {
     display: none;
   }
 

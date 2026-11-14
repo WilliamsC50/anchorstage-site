@@ -14,13 +14,16 @@ import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
  *
  * WAI-ARIA tabs: arrow keys, Home, and End move between stages (automatic
  * activation). Inactive panels are hidden and inert. On desktop, Stages 01-04
- * keep one shared height so moving between them never shifts the page; Stage
- * 05 adds its Looking ahead content only while it is chosen.
+ * share one height so moving between them never shifts the page; Stage 05,
+ * the longest, takes its extra room only while it is chosen.
  *
  * Every claim is verified against the application (DESIGN-13D.1/13D.2). Keep
  * it that way: no real-time updates, no payment processing or payout
- * transfers, no unrestricted partner access, and the Stage 05 "Looking ahead"
- * text is future direction, kept visibly secondary.
+ * transfers (ASO records payments; it does not collect or move money), no
+ * unrestricted partner access, and campaign tracking stated within its scope
+ * (clicks on campaign links; requests and bookings only through the
+ * organization's ASO request page). The section describes what organizations
+ * can manage today, not future direction.
  *
  * Styling: app/(site)/platform/platform.css under .platform-lifecycle.
  */
@@ -36,7 +39,8 @@ interface Stage {
   manage: string[];
   icon: ReactNode;
   link?: { label: string; href: string };
-  ahead?: string[];
+  /** A short clarification under the explanation, set quieter than it. */
+  note?: string;
 }
 
 const ICON = {
@@ -112,6 +116,7 @@ const STAGES: Stage[] = [
     body: [
       "Issue numbered invoices from the event, record deposits and client payments as they arrive, and track crew and partner payouts until they're marked paid. Financials brings income, expenses, outstanding amounts, and projected profit together across events and reporting periods.",
     ],
+    note: "ASO organizes financial records but does not currently collect, process, or transfer payments. Your organization controls which financial information it records.",
     manageLabel: "What you can manage",
     manage: ["Numbered invoices and PDFs", "Manually recorded deposits and payments", "Crew and partner payout tracking", "Financial reporting across events"],
     icon: (
@@ -124,21 +129,18 @@ const STAGES: Stage[] = [
   {
     id: "beyond",
     name: "Build on Every Event",
-    control: "Retain organized records that support future work and better business decisions.",
-    summary: "Put your event history to work on what comes next.",
+    control: "Turn completed work into a stronger starting point for the next opportunity.",
+    summary: "Use what you've already built to win, quote, and prepare the next job.",
     body: [
-      "Completed events stay in your organization's history, with their clients, venues, crew, documents, and financials ready to reference on the next job.",
-      "The Marketing Workstation covers campaign planning, creative production, approval, distribution, and tracking. Clicks are recorded for campaign links, and requests and bookings are tracked for links that lead to your ASO request page.",
+      "Every completed event leaves useful information behind. Revisit client and venue details, previous production plans, crew assignments, equipment needs, and financial records when preparing new work. Build on those records instead of starting from scratch.",
+      "The Marketing Workstation provides tools to create and manage campaigns that can generate new requests and bookings, helping turn past work into future opportunities.",
     ],
-    manageLabel: "Available today",
+    manageLabel: "What you can manage",
     manage: [
-      "Event, client, and venue history",
-      "Retained production and financial records",
+      "Event and client history",
+      "Previous production and financial records",
       "Marketing campaigns and creative assets",
-      "Campaign click, request, and booking tracking, within their supported scope",
-    ],
-    ahead: [
-      "We're building toward business intelligence that connects operational, financial, marketing, audience, and sponsorship information where reliable data exists. It will keep verified records, user-provided figures, and estimates clearly apart, to support better business decisions, client pitches, marketing strategies, and sponsorship proposals.",
+      "Campaign clicks and ASO request-page conversions",
     ],
     icon: (
       <svg {...ICON}>
@@ -186,8 +188,8 @@ export default function PlatformLifecycle() {
           </h2>
           <p className="pl-intro">
             Keep control of each event from the first request to the final invoice, with its people, gear,
-            documents, and finances in one place. Use the stages your work needs, in any order, and keep the records
-            long after the job is done.
+            documents, and finances in one place. Manage the work your way, with the information and tools you need
+            at every step.
           </p>
         </div>
 
@@ -240,7 +242,7 @@ export default function PlatformLifecycle() {
                   aria-labelledby={`pl-tab-${stage.id}`}
                   tabIndex={active ? 0 : -1}
                   inert={!active}
-                  className={`pl-panel ${active ? "is-active" : ""} ${stage.ahead ? "has-ahead" : ""}`}
+                  className={`pl-panel ${active ? "is-active" : ""} ${i === STAGES.length - 1 ? "is-beyond" : ""}`}
                 >
                   <div className="pl-panel-main">
                     <div className="pl-panel-copy">
@@ -254,6 +256,7 @@ export default function PlatformLifecycle() {
                           {paragraph}
                         </p>
                       ))}
+                      {stage.note && <p className="pl-note">{stage.note}</p>}
                       {stage.link && (
                         <Link href={stage.link.href} className="pl-link">
                           {stage.link.label}
@@ -271,18 +274,6 @@ export default function PlatformLifecycle() {
                           ))}
                         </ul>
                       </div>
-
-                      {/* Future direction: below what exists, and quieter. */}
-                      {stage.ahead && (
-                        <aside className="pl-ahead" aria-label="Looking ahead: future direction">
-                          <p className="pl-ahead-label">
-                            Looking ahead <span className="pl-ahead-tag">Future direction</span>
-                          </p>
-                          {stage.ahead.map((paragraph) => (
-                            <p key={paragraph.slice(0, 24)}>{paragraph}</p>
-                          ))}
-                        </aside>
-                      )}
                     </div>
                   </div>
                 </div>
