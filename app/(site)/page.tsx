@@ -123,15 +123,17 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Dimensional lettering: extrusion and projected shadow are drawn
-                from data-text by home.css, lit by HeroLight. The heading text
-                and its accessible name are unchanged. */}
+            {/* Dimensional lettering, lit by HeroLight: home.css draws the
+                projected shadow from data-text and the white extrusion from
+                data-extrude; "Ops" is brand orange with its own extrusion.
+                The heading text and its accessible name are unchanged. */}
             <h1
               data-hero-title=""
               data-text="AnchorStage Ops"
+              data-extrude="AnchorStage"
               className="home-title text-5xl md:text-7xl font-bold text-white tracking-tight leading-[1.03] mb-7"
             >
-              AnchorStage Ops
+              AnchorStage <span className="home-title-ops">Ops</span>
             </h1>
 
             <p className="text-lg md:text-xl text-white/90 leading-relaxed mb-10 max-w-2xl">

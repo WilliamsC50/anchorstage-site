@@ -1733,6 +1733,9 @@
 }
 
 .aso-home .home-title::before {
+  /* "AnchorStage" only: "Ops" carries its own orange extrusion (below). The
+     shorter copy lays out exactly like the start of the heading. */
+  content: attr(data-extrude) / "";
   z-index: -1;
   /* Rim and bevel stay at least 3:1 darker than the face, so the letter
      edges stay crisp against them. */
@@ -1756,6 +1759,28 @@
     0 0 calc(var(--sb) * 0.5) rgba(1, 6, 15, 0.62),
     0 0 var(--sb) rgba(1, 6, 15, 0.5),
     0 0 calc(var(--sb) * 2.2) rgba(1, 6, 15, 0.34);
+}
+
+/* "Ops" in brand orange. Its extrusion is the same depth and offsets as the
+   white lettering's, drawn as its own text-shadow so it sits exactly under
+   the glyphs: a warm highlight on the edges facing the light (it follows
+   --rimx/--rimy like the white rim), then burnt orange stepping down into
+   the dark on the shadow side, and the same contact shadow. The face is the
+   brand orange itself. Orange is darker than the white face, so a soft
+   occlusion halo deepens the ground right around it, keeping the lettering
+   at large-text contrast where the light and the photograph sit behind it. */
+.aso-home .home-title-ops {
+  color: #ff7a1a;
+  text-shadow:
+    var(--rimx) var(--rimy) 0 rgba(255, 196, 140, 0.92),
+    0.007em 0.01em 0 #c4520a,
+    0.014em 0.02em 0 #a54408,
+    0.021em 0.03em 0 #863707,
+    0.028em 0.04em 0 #682b09,
+    0.035em 0.05em 0 #4c210c,
+    0.042em 0.06em 0 #33190f,
+    0.05em 0.07em 0.03em rgba(2, 8, 18, 0.85),
+    0 0 0.16em rgba(2, 8, 18, 0.55);
 }
 
 /* Forced colours drop shadows and recolour text: the copies would become
