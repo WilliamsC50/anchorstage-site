@@ -2271,17 +2271,10 @@
   color: var(--po-ink);
 }
 
-.platform-orgs .po-files {
-  display: flex;
-  gap: 3px;
-}
-
-.platform-orgs .po-files span {
-  width: 0.875rem;
-  height: 1.125rem;
-  border: 1px solid #c3d7e8;
-  border-radius: 3px;
-  background: linear-gradient(180deg, #eef5fb, #d9e8f4);
+/* The organization's records: one folder, in the site's stroke-icon style. */
+.platform-orgs .po-folder {
+  flex: none;
+  color: #3a6587;
 }
 
 /* Members. */

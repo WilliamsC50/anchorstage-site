@@ -96,11 +96,21 @@ const Member = ({ name, access, alex = false }: { name: string; access: string; 
 
 const Records = ({ label }: { label: string }) => (
   <p className="po-records">
-    <span aria-hidden="true" className="po-files">
-      <span />
-      <span />
-      <span />
-    </span>
+    <svg
+      aria-hidden="true"
+      className="po-folder"
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M3.5 7.5A1.5 1.5 0 0 1 5 6h4.2l1.8 2H19a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 19 19H5a1.5 1.5 0 0 1-1.5-1.5Z" />
+      <path d="M3.5 11h17" />
+    </svg>
     {label}
   </p>
 );
@@ -174,7 +184,7 @@ export default function PlatformOrganizations() {
                 </span>
                 <span className="po-ws-title">
                   <span className="po-ws-name">Northstar Production</span>
-                  <span className="po-ws-sub">Separate organization</span>
+                  <span className="po-ws-sub">Collaborating organization</span>
                 </span>
               </div>
 
