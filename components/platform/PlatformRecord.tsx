@@ -4,8 +4,8 @@
  * A static example of change visibility: one show's load-in moves from
  * 8:00 AM to 7:00 AM. The change card carries the Event Activity entry that
  * records it, and a blue line joins it to the three views that show the
- * current time when opened. Below, the supporting message, the intended next
- * step (worded as intent, not as a feature), and the verified distinctions.
+ * current time when opened. Below, one closing message: what ASO does today,
+ * then the intended direction, worded as a goal rather than a feature.
  * No interaction, no animation, no live data.
  *
  * Verified against the application (DESIGN-13E.2, 13E.3, 13E.4):
@@ -46,12 +46,6 @@ const ICON = {
   strokeLinejoin: "round" as const,
   "aria-hidden": true,
 };
-
-const FACTS = [
-  "Organization records are referenced on each event, not recreated. Crew assignments keep event-specific details.",
-  "Permissions decide who can see what.",
-  "Issued quotes and invoices keep the revision that was sent. PDFs already downloaded or printed don't update themselves.",
-];
 
 /** Skeleton lines: suggest a real view's content without inventing data. */
 const Bars = ({ widths, tail = false }: { widths: number[]; tail?: boolean }) => (
@@ -132,7 +126,7 @@ export default function PlatformRecord() {
           <div className="pr-head">
             <div className="flex items-center gap-3 mb-3">
               <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
-              <p className="pr-eyebrow text-xs font-semibold uppercase tracking-[0.18em]">The center of the platform</p>
+              <p className="pr-eyebrow text-xs font-semibold uppercase tracking-[0.18em]">Connected by design</p>
             </div>
             <h2 id="pr-title" className="text-3xl md:text-4xl font-bold text-white tracking-tight">
               The Connected Operating Record
@@ -212,25 +206,16 @@ export default function PlatformRecord() {
 
         <div className="pr-bottom">
           <div className="pr-message">
-            <h3 className="pr-message-title">Keep the right people working from the right information</h3>
+            <h3 className="pr-message-title">Stay in control when plans change.</h3>
             <p>
-              When plans change, ASO helps keep the details connected. Event activity records supported changes, while
-              production briefs, crew sheets, and authorized views reflect the current plan when opened.
+              A last-minute schedule change shouldn&apos;t leave your crew working from outdated information. ASO keeps
+              event details connected, records supported changes, and makes the current plan available to the people
+              you&apos;ve authorized.
             </p>
-            <p className="pr-next">
-              <span className="pr-next-tag">Planned</span>
-              The next step is making those changes easier to act on: identifying affected information, preparing
-              revised documents, and coordinating communications with the people who need them.
+            <p>
+              As we expand these tools, the goal is to make coordinating updates just as straightforward: review what
+              changed, prepare the right information, and decide who needs it and when.
             </p>
-          </div>
-
-          <div className="pr-facts">
-            <p className="pr-label">How it works</p>
-            <ul>
-              {FACTS.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
           </div>
         </div>
       </div>

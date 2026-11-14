@@ -918,8 +918,7 @@
 /* ── Platform: "The Connected Operating Record" ─────────────────────────────
    components/platform/PlatformRecord.tsx. A static example: one load-in
    change, the Event Activity entry that records it, and a blue line to the
-   three views that show the current time. Then the supporting message and
-   the verified distinctions. No interaction and no animation. Every rule
+   three views that show the current time. Then one closing message. No interaction and no animation. Every rule
    sits under .platform-record.
 
    Connectors: the three views always sit side by side, with a bus across
@@ -1350,13 +1349,15 @@
     rgba(255, 255, 255, 0.05);
 }
 
-/* The supporting message and the verified distinctions. */
+/* The closing message: one focused text column. */
 .platform-record .pr-bottom {
-  display: grid;
-  gap: 1.5rem;
   margin-top: 2rem;
   padding-top: 1.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.platform-record .pr-message {
+  max-width: 44rem;
 }
 
 .platform-record .pr-message-title {
@@ -1368,68 +1369,10 @@
 }
 
 .platform-record .pr-message p {
-  max-width: 42rem;
   margin-top: 0.625rem;
   font-size: 1rem;
   line-height: 1.6;
   color: var(--pr-text);
-}
-
-/* The intended next step: set apart, plainly marked as planned. */
-.platform-record .pr-message .pr-next {
-  margin-top: 0.875rem;
-  padding-left: 0.875rem;
-  border-left: 2px dashed rgba(168, 220, 255, 0.4);
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.74);
-}
-
-.platform-record .pr-next-tag {
-  display: inline-block;
-  margin-right: 0.5rem;
-  padding: 0 0.4375rem;
-  border: 1px dashed rgba(168, 220, 255, 0.55);
-  border-radius: 999px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  line-height: 1.6;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  vertical-align: 0.0625rem;
-  color: #b8e3ff;
-}
-
-.platform-record .pr-label {
-  margin-bottom: 0.625rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #a8dcff;
-}
-
-.platform-record .pr-facts ul {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.platform-record .pr-facts li {
-  position: relative;
-  padding-left: 1.125rem;
-  font-size: 0.875rem;
-  line-height: 1.55;
-  color: var(--pr-text);
-}
-
-.platform-record .pr-facts li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 0.5rem;
-  height: 2px;
-  background: #7fd3f4;
 }
 
 /* md: full view mocks with icons, chips, and a single load-in row; the
@@ -1528,15 +1471,13 @@
 }
 
 /* lg: the heading over the first two columns and the change card over the
-   third, so its line drops straight down into the Collaborator View; the
-   message under the first two columns and the distinctions under the third. */
+   third, so its line drops straight down into the Collaborator View. */
 @media (min-width: 1024px) {
   .platform-record {
     --pr-col-gap: 1.5rem;
   }
 
-  .platform-record .pr-grid,
-  .platform-record .pr-bottom {
+  .platform-record .pr-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: var(--pr-col-gap);
   }
@@ -1555,15 +1496,6 @@
 
   .platform-record .pr-views {
     grid-column: 1 / -1;
-  }
-
-  .platform-record .pr-message {
-    grid-column: 1 / 3;
-    padding-right: 2.5rem;
-  }
-
-  .platform-record .pr-facts {
-    grid-column: 3;
   }
 }
 
