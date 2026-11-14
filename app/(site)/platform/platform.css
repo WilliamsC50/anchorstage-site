@@ -2217,10 +2217,22 @@
   background: #3a6587;
 }
 
+.platform-orgs .po-ws-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
 .platform-orgs .po-ws-name {
   font-size: 0.9375rem;
   font-weight: 700;
   color: var(--aso-navy);
+}
+
+.platform-orgs .po-ws-sub {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #556678;
 }
 
 /* A block of a workspace panel: marker gutter, then content. */
@@ -2352,8 +2364,27 @@
   color: var(--aso-navy);
 }
 
-.platform-orgs .po-event-role {
-  color: #8a3c08;
+/* Owner and partner: one filled, one outlined, both in the event's orange. */
+.platform-orgs .po-badge {
+  white-space: nowrap;
+  padding: 0.125rem 0.6875rem;
+  border: 1px solid var(--po-orange-ink);
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.platform-orgs .po-badge-owner {
+  background: var(--po-orange-ink);
+  color: #fff;
+}
+
+.platform-orgs .po-badge-partner {
+  background: #fff;
+  color: var(--po-orange-ink);
 }
 
 .platform-orgs .po-event-partner {
@@ -2392,6 +2423,12 @@
   margin-top: 0.1875rem;
 }
 
+/* A little more air where the points move from your own team (2) to
+   belonging to several organizations (3). */
+.platform-orgs .po-point-3 {
+  margin-top: 0.5rem;
+}
+
 .platform-orgs .po-point-title {
   font-size: 1.0625rem;
   font-weight: 600;
@@ -2420,6 +2457,11 @@
     column-gap: 2.5rem;
     row-gap: 1.75rem;
   }
+
+  /* Tablet: points 3 and 4 already start a new row. */
+  .platform-orgs .po-point-3 {
+    margin-top: 0;
+  }
 }
 
 /* lg: the points on the left, the picture on the right. */
@@ -2435,5 +2477,9 @@
   .platform-orgs .po-points {
     grid-template-columns: minmax(0, 1fr);
     row-gap: 1.625rem;
+  }
+
+  .platform-orgs .po-point-3 {
+    margin-top: 0.75rem;
   }
 }

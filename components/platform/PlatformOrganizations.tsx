@@ -23,8 +23,10 @@
  *   - One person can belong to several organizations, with a separate role
  *     in each; one membership grants nothing in another.
  *   - Collaboration is per event, with organizations already on ASO: the
- *     event's organization adds the partner (default: view event details and
- *     message) and decides what else it can see or do. Partner organizations
+ *     event's organization adds the partner directly ("Add Collaborator"; no
+ *     invitation or acceptance step, so the copy says "added", not
+ *     "invited"), with default access to view event details and message, and
+ *     decides what else it can see or do. Partner organizations
  *     are not members of the owner's organization; each keeps its own
  *     records, and the partner sees the event among the events it takes part
  *     in.
@@ -125,14 +127,17 @@ export default function PlatformOrganizations() {
           <figure
             className="po-model"
             role="img"
-            aria-label="Example with fictional names. Your Organization keeps its own events and records. Its members are you, the owner, with full control; a team member who views the work; and Alex Rivera, who manages the work. Your Organization owns Event A and has Northstar Production as its event partner, with access to the event details and messages only. Northstar Production keeps its own events and records. Alex Rivera is also a member there, with access to view the work only. Event A is shared with Northstar as a partner; it is not one of Northstar's own events."
+            aria-label="Example with fictional names, showing two separate organizations. Your Organization keeps its own events and records. Its members are you, the owner, with full control; a team member who views the work; and Alex Rivera, who manages the work. Your Organization owns Event A and has Northstar Production as its event partner, with access to the event details and messages only. Northstar Production keeps its own events and records. Alex Rivera is also a member there, with access to view the work only. Event A is shared with Northstar as a partner; it is not one of Northstar's own events."
           >
             <div className="po-ws">
               <div className="po-ws-head">
                 <span aria-hidden="true" className="po-mono">
                   Y
                 </span>
-                <span className="po-ws-name">Your Organization</span>
+                <span className="po-ws-title">
+                  <span className="po-ws-name">Your Organization</span>
+                  <span className="po-ws-sub">Your workspace</span>
+                </span>
               </div>
 
               <Row n={1}>
@@ -149,16 +154,15 @@ export default function PlatformOrganizations() {
               </Row>
 
               <Row n={4}>
-                <p className="po-label">Event partner</p>
                 <div className="po-event">
                   <p className="po-event-line">
                     <span className="po-event-name">Event A</span>
-                    <span className="po-event-role">Owned by Your Organization</span>
+                    <span className="po-badge po-badge-owner">Event owner</span>
                   </p>
                   <p className="po-event-partner">
-                    Partner: <strong>Northstar Production</strong>
+                    You added <strong>Northstar Production</strong> as a partner.
                   </p>
-                  <p className="po-event-access">You control: Event details · Messages</p>
+                  <p className="po-event-access">You control their access: Event details · Messages</p>
                 </div>
               </Row>
             </div>
@@ -168,7 +172,10 @@ export default function PlatformOrganizations() {
                 <span aria-hidden="true" className="po-mono po-mono-other">
                   N
                 </span>
-                <span className="po-ws-name">Northstar Production</span>
+                <span className="po-ws-title">
+                  <span className="po-ws-name">Northstar Production</span>
+                  <span className="po-ws-sub">Separate organization</span>
+                </span>
               </div>
 
               <Row>
@@ -183,13 +190,12 @@ export default function PlatformOrganizations() {
               </Row>
 
               <Row n={4}>
-                <p className="po-label">Shared with Northstar</p>
                 <div className="po-event">
                   <p className="po-event-line">
                     <span className="po-event-name">Event A</span>
-                    <span className="po-event-role">Partner access</span>
+                    <span className="po-badge po-badge-partner">Event partner</span>
                   </p>
-                  <p className="po-event-access">Event details · Messages</p>
+                  <p className="po-event-partner">Shared with Northstar. Event details and messages.</p>
                 </div>
               </Row>
             </div>
@@ -198,7 +204,7 @@ export default function PlatformOrganizations() {
           {/* The four points. */}
           <ol className="po-points">
             {POINTS.map((point) => (
-              <li key={point.n} className="po-point">
+              <li key={point.n} className={`po-point po-point-${point.n}`}>
                 <Marker n={point.n} />
                 <div>
                   <h3 className="po-point-title">{point.title}</h3>
