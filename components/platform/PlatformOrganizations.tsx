@@ -4,8 +4,8 @@ import type { ReactNode } from "react";
  * Platform: "Built around your organization".
  *
  * Typography-led. What an organization is, that the work belongs to it, the
- * three ways organizations work on ASO, and why an organization would join.
- * Ends on the closing line that leads into the Join ASO call to action.
+ * three ways organizations work on ASO, and a closing statement (why build
+ * your operation here) that leads into the Join ASO call to action.
  * No cards, no illustration, no interaction.
  *
  * Verified against the application (DESIGN-13G.1):
@@ -79,13 +79,6 @@ const WAYS: { id: string; title: string; body: string; icon: ReactNode }[] = [
   },
 ];
 
-const REASONS = [
-  "Start each new event with the clients, venues, gear, and crew you already have on file.",
-  "Build on past events instead of starting from scratch.",
-  "Keep the work organized as you add people, events, and partners.",
-  "Decide who can see and manage your organization's information.",
-];
-
 export default function PlatformOrganizations() {
   return (
     <section className="platform-orgs relative overflow-hidden bg-aso-bg" aria-labelledby="po-title">
@@ -130,17 +123,15 @@ export default function PlatformOrganizations() {
           ))}
         </ul>
 
-        {/* Why join, then the line that leads into the call to action. */}
-        <div className="po-why">
-          <h3 className="po-why-title">Why organizations run on ASO</h3>
-          <ul className="po-reasons">
-            {REASONS.map((reason) => (
-              <li key={reason}>{reason}</li>
-            ))}
-          </ul>
+        {/* The culmination, leading into the call to action. */}
+        <div className="po-next">
+          <h3 className="po-next-title">Build an operation that&apos;s ready for what&apos;s next.</h3>
+          <p className="po-next-body">
+            Your organization brings your events, people, resources, and experience together, so every job builds on
+            the work you&apos;ve already done. Start new events from what&apos;s already on file, and keep it all
+            together as you grow.
+          </p>
         </div>
-
-        <p className="po-close">Events are what an organization does. The organization is what remains.</p>
       </div>
     </section>
   );
