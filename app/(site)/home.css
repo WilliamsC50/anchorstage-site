@@ -1468,6 +1468,17 @@
   background: var(--home-deep);
 }
 
+/* In-page link targets (SceneLink): land below the 64 px sticky header,
+   and take focus without an outline (the scene is not a control; focus
+   only moves the keyboard starting point there). */
+.aso-home .home-stack[id] {
+  scroll-margin-top: 64px;
+}
+
+.aso-home .home-stack[id]:focus {
+  outline: none;
+}
+
 /* Darkens a scene as the next one covers it. Above the content; never
    intercepts the pointer. */
 .aso-home .home-stack-veil {

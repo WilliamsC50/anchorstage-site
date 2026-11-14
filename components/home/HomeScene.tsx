@@ -14,6 +14,8 @@ interface HomeSceneProps {
   fromHero?: boolean;
   /** Extra decorative layer rendered behind the content. */
   backdrop?: ReactNode;
+  /** Makes the scene an in-page link target (#id; see SceneLink). */
+  id?: string;
   className?: string;
 }
 
@@ -40,10 +42,13 @@ export default function HomeScene({
   rings = true,
   fromHero = false,
   backdrop,
+  id,
   className = "",
 }: HomeSceneProps) {
   return (
     <section
+      id={id}
+      tabIndex={id ? -1 : undefined}
       className={`home-stack home-scene ${tone === "navy" ? "home-scene-navy" : ""} ${
         fromHero ? "home-scene-from-hero" : ""
       } py-20 md:py-28 ${className}`}

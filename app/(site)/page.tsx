@@ -10,6 +10,7 @@ import HomeClosing from "@/components/home/HomeClosing";
 import HomeScene from "@/components/home/HomeScene";
 import HudPointer from "@/components/home/HudPointer";
 import ProblemField from "@/components/home/ProblemField";
+import SceneLink from "@/components/home/SceneLink";
 import SceneStack from "@/components/home/SceneStack";
 import { SignalWave } from "@/components/home/SoundGeometry";
 import { AUTH_NAV } from "@/lib/nav";
@@ -142,12 +143,12 @@ export default function Home() {
               <Button href={AUTH_NAV.join.href} className="home-cta">
                 {AUTH_NAV.join.label}
               </Button>
-              <Link
-                href="/platform"
+              <SceneLink
+                target="connected"
                 className="home-ghost inline-block border border-white/25 text-white px-8 py-3.5 rounded-lg font-medium transition hover:border-aso-orange hover:bg-white/5"
               >
                 See how it works
-              </Link>
+              </SceneLink>
             </div>
           </div>
         </div>
@@ -156,7 +157,7 @@ export default function Home() {
       </section>
 
       {/* WHAT ASO IS — the two halves of the product, network first */}
-      <HomeScene tone="deep" seed={11} rings="signal" fromHero>
+      <HomeScene id="connected" tone="deep" seed={11} rings="signal" fromHero>
         <div className="max-w-3xl mb-14">
           <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
             One Connected Industry.
