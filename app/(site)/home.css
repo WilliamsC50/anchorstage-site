@@ -1071,14 +1071,16 @@
 }
 
 /* ── Scene 6: the gateway ───────────────────────────────────────────────────
-   GatewayMonument behind the closing invitation: an open night horizon, the
-   anchor as a dark-metal monument rising from it, haze at its base. Static:
-   no animation, no pointer tracking. The environment sits under the scene
-   seam (z -2); the stage-plot grid is not used here, so the scene reads as
-   open ground rather than another stage.
+   GatewayMonument behind the closing invitation: the anchor as a dark-metal
+   monument in a vast architectural space, lit by one broad electric-blue
+   light behind it, with a small warm counter-light on the horizon. The
+   environment sits under the scene seam (z -2); the stage-plot grid is not
+   used here.
      --horizon   height of the horizon line in the scene
      --mx        where the monument stands across the scene
-     --mh        monument height, as a share of the scene */
+     --mh        monument height, as a share of the scene (--mh-cap caps it
+                 in stacked layouts); --m is the resulting height, and the
+                 architecture and its light traces are sized from it */
 .aso-home .home-gateway {
   background: #02060d;
 }
@@ -1092,6 +1094,7 @@
   --mx: 50%;
   --mh: 44%;
   --mh-cap: 38vh;
+  --m: min(var(--mh), var(--mh-cap));
   position: absolute;
   inset: 0;
   z-index: -2;
@@ -1100,43 +1103,89 @@
 }
 
 .aso-home .gw-sky,
+.aso-home .gw-arch,
+.aso-home .gw-trace-box,
 .aso-home .gw-ground,
+.aso-home .gw-reflect,
 .aso-home .gw-haze,
 .aso-home .gw-far,
 .aso-home .gw-contours,
-.aso-home .gw-aura,
+.aso-home .gw-near,
 .aso-home .gw-monument {
   position: absolute;
 }
 
-/* Night sky down to a lit horizon; cooler high atmosphere, a faint warm
-   glow low on the horizon beside the monument. */
+/* Deep navy sky down to a broad, diffused blue horizon; the warm accent
+   low on the horizon left of the monument. No hard horizon stripe. */
 .aso-home .gw-sky {
   inset: 0;
   background:
-    radial-gradient(ellipse 58% 24% at var(--mx) var(--horizon), rgba(127, 196, 240, 0.22), transparent 70%),
-    radial-gradient(ellipse 130% 34% at 50% var(--horizon), rgba(64, 132, 204, 0.2), rgba(64, 132, 204, 0.06) 55%, transparent 78%),
-    radial-gradient(ellipse 30% 9% at calc(var(--mx) - 14%) var(--horizon), rgba(255, 138, 60, 0.12), transparent 72%),
-    radial-gradient(ellipse 80% 55% at 72% 18%, rgba(28, 64, 110, 0.3), transparent 72%),
-    linear-gradient(180deg, #02070f 0%, #06152b calc(var(--horizon) - 30%), #0d2846 calc(var(--horizon) - 0.5%), #050d19 var(--horizon), #01040a 100%);
+    radial-gradient(ellipse 70% 34% at var(--mx) var(--horizon), rgba(78, 168, 255, 0.26), rgba(78, 168, 255, 0.08) 50%, transparent 76%),
+    radial-gradient(ellipse 140% 40% at 50% var(--horizon), rgba(52, 120, 196, 0.2), rgba(52, 120, 196, 0.05) 55%, transparent 80%),
+    radial-gradient(ellipse 26% 9% at calc(var(--mx) - 17%) var(--horizon), rgba(255, 122, 26, 0.16), transparent 72%),
+    radial-gradient(ellipse 80% 55% at 74% 16%, rgba(20, 58, 108, 0.3), transparent 72%),
+    linear-gradient(180deg, #02070f 0%, #061529 calc(var(--horizon) - 32%), #0c2747 calc(var(--horizon) - 1%), #071628 var(--horizon), #01040a 100%);
 }
 
-/* The horizon line itself, brightest where the monument stands. */
+/* The horizon as a soft band of light, brightest where the monument
+   stands, rather than a line. */
 .aso-home .gw-sky::after {
   content: "";
   position: absolute;
-  inset: var(--horizon) 0 auto 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(169, 221, 255, 0.28) 25%, rgba(190, 230, 255, 0.7) var(--mx), rgba(169, 221, 255, 0.28) 85%, transparent);
-  box-shadow: 0 0 16px 2px rgba(78, 168, 255, 0.3);
+  inset: calc(var(--horizon) - 1.2%) 0 auto 0;
+  height: 2.4%;
+  background:
+    radial-gradient(ellipse 34% 50% at var(--mx) 50%, rgba(150, 215, 255, 0.28), transparent 75%),
+    linear-gradient(180deg, transparent, rgba(78, 168, 255, 0.12) 50%, transparent);
 }
 
-/* Ground below the horizon: dark, catching a little of the sky. */
+/* Architecture (and its light traces, in the same box): 2.2 x 1.6 monument
+   heights, its bottom on the horizon, centred on the monument. Fades out
+   toward the copy on the left and toward its top. */
+.aso-home .gw-arch,
+.aso-home .gw-trace-box {
+  left: var(--mx);
+  bottom: calc(100% - var(--horizon));
+  height: calc(var(--m) * 1.6);
+  aspect-ratio: 2200 / 1000;
+  transform: translateX(-50%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 12%, rgba(0, 0, 0, 0.3) 30%, #000 44%), linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.45) 30%, #000 56%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 12%, rgba(0, 0, 0, 0.3) 30%, #000 44%), linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.45) 30%, #000 56%);
+  mask-composite: intersect;
+}
+
+.aso-home .gw-arch {
+  display: block;
+}
+
+/* Ground: a pool of the backlight in front of the monument, a little of
+   the warm accent, then darkness. */
 .aso-home .gw-ground {
   inset: var(--horizon) 0 0 0;
   background:
-    radial-gradient(ellipse 50% 60% at var(--mx) 0%, rgba(52, 104, 160, 0.18), transparent 70%),
-    linear-gradient(180deg, rgba(14, 36, 62, 0.45), transparent 70%);
+    radial-gradient(ellipse 34% 60% at var(--mx) 0%, rgba(78, 168, 255, 0.24), rgba(78, 168, 255, 0.06) 55%, transparent 78%),
+    radial-gradient(ellipse 18% 40% at calc(var(--mx) - 17%) 0%, rgba(255, 122, 26, 0.1), transparent 72%),
+    linear-gradient(180deg, rgba(14, 40, 70, 0.5), transparent 75%);
+}
+
+/* The monument's reflection on the ground: its own silhouette, mirrored at
+   the base, squashed, and faded. */
+.aso-home .gw-reflect {
+  left: var(--mx);
+  top: calc(var(--horizon) + 1.5%);
+  height: var(--m);
+  aspect-ratio: 450 / 530;
+  transform: translateX(-50%) perspective(1800px) rotateY(-14deg) scaleY(-0.4);
+  transform-origin: 50% 0;
+  opacity: 0.32;
+  -webkit-mask-image: linear-gradient(0deg, #000, transparent 50%);
+  mask-image: linear-gradient(0deg, #000, transparent 50%);
+}
+
+.aso-home .gw-reflect svg,
+.aso-home .gw-arch {
+  overflow: visible;
 }
 
 /* The far ridge sits on the horizon line (its lights are 1.6 units in a
@@ -1156,7 +1205,7 @@
   bottom: calc(100% - var(--horizon) - 1%);
   height: 15%;
   overflow: hidden;
-  opacity: 0.4;
+  opacity: 0.45;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent), linear-gradient(180deg, transparent, #000 40%);
   -webkit-mask-composite: source-in;
   mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent), linear-gradient(180deg, transparent, #000 40%);
@@ -1177,14 +1226,71 @@
   opacity: 0.7;
 }
 
-/* A soft field of light around the monument, above the horizon. */
-.aso-home .gw-aura {
-  left: var(--mx);
-  bottom: calc(100% - var(--horizon));
-  width: calc(min(var(--mh), var(--mh-cap)) * 1.25);
-  height: calc(min(var(--mh), var(--mh-cap)) * 1.05);
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse 50% 50% at 50% 62%, rgba(78, 150, 220, 0.14), rgba(78, 150, 220, 0.05) 50%, transparent 72%);
+/* Light traces: a rail (positioned and rotated, in architecture units for
+   the far and mid ones), a run the size of the rail that the motion block
+   translates along it, and the glint at the run's leading edge. Hidden
+   until animated, so reduced motion shows none. */
+.aso-home .gw-trace {
+  position: absolute;
+  height: 0;
+  transform-origin: 0 50%;
+}
+
+.aso-home .gw-run {
+  position: absolute;
+  inset: -2px 0;
+  opacity: 0;
+}
+
+.aso-home .gw-run i {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: var(--glint, 10%);
+  height: var(--th, 1.5px);
+  margin-top: calc(var(--th, 1.5px) / -2);
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(78, 168, 255, 0.55) 55%, rgba(205, 236, 255, 0.95) 90%, transparent);
+  box-shadow: 0 0 8px rgba(78, 168, 255, 0.55);
+}
+
+/* Far: thin and faint; mid: brighter; near: thickest and brightest. */
+.aso-home .gw-trace-f1,
+.aso-home .gw-trace-f2 {
+  --glint: 12%;
+  --th: 1.2px;
+}
+
+.aso-home .gw-trace-m1,
+.aso-home .gw-trace-m2 {
+  --glint: 9%;
+  --th: 1.6px;
+}
+
+.aso-home .gw-near {
+  inset: 0;
+}
+
+.aso-home .gw-trace-n1,
+.aso-home .gw-trace-n2 {
+  left: 0;
+  width: 100%;
+  --glint: 10%;
+  --th: 2px;
+}
+
+.aso-home .gw-trace-n1 {
+  top: calc(var(--horizon) + 2.6%);
+}
+
+.aso-home .gw-trace-n2 {
+  top: calc(var(--horizon) + 6%);
+  --glint: 7%;
+}
+
+.aso-home .gw-trace-n2 .gw-run i {
+  background: linear-gradient(90deg, transparent, rgba(255, 122, 26, 0.5) 55%, rgba(255, 190, 130, 0.95) 90%, transparent);
+  box-shadow: 0 0 8px rgba(255, 122, 26, 0.55);
 }
 
 /* The monument: standing on the horizon, turned slightly toward the copy,
@@ -1193,26 +1299,30 @@
   left: var(--mx);
   bottom: calc(100% - var(--horizon) - 1.5%);
   /* Stacked layouts cap it to the room left below the copy. */
-  height: min(var(--mh), var(--mh-cap));
+  height: var(--m);
   aspect-ratio: 450 / 530;
   transform: translateX(-50%) perspective(1800px) rotateY(-14deg) rotateX(5deg);
   transform-origin: 50% 100%;
 }
 
-.aso-home .gw-monument svg {
+.aso-home .gw-monument svg,
+.aso-home .gw-reflect svg {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+.aso-home .gw-monument svg {
   overflow: visible;
 }
 
-/* Haze across the base, in front of the monument. */
+/* Haze across the base, in front of the monument, lit by the backlight. */
 .aso-home .gw-haze {
   inset: calc(var(--horizon) - 9%) 0 auto 0;
   height: 16%;
   background:
-    radial-gradient(ellipse 40% 50% at var(--mx) 55%, rgba(110, 160, 210, 0.16), transparent 72%),
-    linear-gradient(180deg, transparent, rgba(8, 22, 40, 0.5) 55%, transparent);
+    radial-gradient(ellipse 40% 50% at var(--mx) 55%, rgba(110, 175, 235, 0.2), transparent 72%),
+    linear-gradient(180deg, transparent, rgba(8, 22, 40, 0.45) 55%, transparent);
 }
 
 /* Copy above the environment; below lg it leads, and .gw-room leaves the
@@ -1255,7 +1365,9 @@
   }
 }
 
-/* Slow drift for the horizon contours (the seam drifts at 40 s). */
+/* Motion: slow horizon contours (the seam drifts at 40 s) and the light
+   traces, each on its own period and phase. Transform and opacity only;
+   the monument never moves. */
 @media (prefers-reduced-motion: no-preference) {
   .aso-home .gw-contours .gw-drift {
     animation-duration: 96s;
@@ -1265,6 +1377,40 @@
     animation-duration: 140s;
     animation-direction: reverse;
   }
+
+  .aso-home .gw-run {
+    will-change: transform, opacity;
+    animation: gw-run var(--dur) linear var(--at) infinite;
+  }
+
+  .aso-home .gw-trace-f1 { --dur: 22s; --at: -4s; --peak: 0.5; }
+  .aso-home .gw-trace-f2 { --dur: 29s; --at: -17s; --peak: 0.45; }
+  .aso-home .gw-trace-m1 { --dur: 16s; --at: -9s; --peak: 0.8; }
+  .aso-home .gw-trace-m2 { --dur: 21s; --at: -2s; --peak: 0.6; }
+  .aso-home .gw-trace-n1 { --dur: 13s; --at: -6s; --peak: 0.85; }
+
+  /* The warm trace: occasional, right to left, then a long rest. */
+  .aso-home .gw-trace-n2 .gw-run {
+    --dur: 27s;
+    --at: -12s;
+    --peak: 0.8;
+    animation-name: gw-run-rest;
+    animation-direction: reverse;
+  }
+}
+
+@keyframes gw-run {
+  0% { transform: translateX(-12%); opacity: 0; }
+  12% { opacity: var(--peak); }
+  82% { opacity: var(--peak); }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes gw-run-rest {
+  0%, 58% { transform: translateX(-12%); opacity: 0; }
+  64% { opacity: var(--peak); }
+  94% { opacity: var(--peak); }
+  100% { transform: translateX(100%); opacity: 0; }
 }
 
 /* Forced colours: keep the copy and action; drop the painted environment. */
