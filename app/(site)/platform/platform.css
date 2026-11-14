@@ -2083,11 +2083,12 @@
 }
 
 /* ── Platform: "Built around your organization" ──────────────────────────────
-   components/platform/PlatformOrganizations.tsx. Typography-led: what an
-   organization is and that the work belongs to it, three ways organizations
-   work, and a closing statement that leads into the call to action. Light
-   grid ground, no cards or illustration. Every rule sits under
-   .platform-orgs. */
+   components/platform/PlatformOrganizations.tsx. A light-to-dark
+   progression: a light, typography-led opening (what an organization is,
+   that the work belongs to it, three ways organizations work), then a dark,
+   lit closing band (a horizon of light, a receding stage floor, and the
+   section's largest statement) that leads into the call to action. No cards,
+   dashboard, network, or animation. Every rule sits under .platform-orgs. */
 
 .platform-orgs {
   --po-text: #4b5563;
@@ -2183,40 +2184,86 @@
   color: var(--po-text);
 }
 
-/* The culmination: a full-width rule that starts in orange, then a larger
-   statement than anything above it, leading into the call to action. */
-.platform-orgs .po-next {
-  position: relative;
-  margin-top: 2.75rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--po-rule);
+/* The dark close: deep navy lit from above, with a horizon of light along
+   its top edge and a stage floor receding into the dark. */
+.platform-orgs .po-dark {
+  background:
+    radial-gradient(ellipse 1100px 460px at 28% -10%, rgba(78, 168, 209, 0.24) 0%, rgba(40, 100, 160, 0.1) 40%, transparent 72%),
+    linear-gradient(180deg, #0d2a47 0%, #081a30 60%, #071528 100%);
+  color: #fff;
 }
 
-.platform-orgs .po-next::before {
+.platform-orgs .po-dark::before {
   content: "";
   position: absolute;
-  top: -2px;
+  z-index: 1;
+  top: 0;
   left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(127, 211, 244, 0.55) 18%, rgba(220, 242, 255, 0.95) 34%, rgba(127, 211, 244, 0.55) 52%, transparent 82%);
+  box-shadow: 0 0 22px 2px rgba(127, 211, 244, 0.4);
+}
+
+.platform-orgs .po-floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 72%;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(127, 211, 244, 0.24) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(127, 211, 244, 0.24) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: center bottom;
+  transform: perspective(560px) rotateX(58deg);
+  transform-origin: center bottom;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.55) 35%, transparent 80%);
+  mask-image: linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.55) 35%, transparent 80%);
+}
+
+/* A faint warm light where the statement lands. */
+.platform-orgs .po-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 520px 260px at 22% 62%, rgba(255, 122, 26, 0.08) 0%, transparent 70%);
+}
+
+.platform-orgs .po-dark-inner {
+  padding-top: 4rem;
+  padding-bottom: 4.5rem;
+}
+
+.platform-orgs .po-mark {
+  display: block;
   width: 3rem;
   height: 3px;
+  margin-bottom: 1.5rem;
   background: var(--aso-orange);
 }
 
-.platform-orgs .po-next-title {
-  max-width: 20ch;
-  font-size: 1.875rem;
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: var(--aso-navy);
+.platform-orgs .po-climax-title {
+  max-width: 17ch;
+  font-size: 2.125rem;
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.06), 0 2px 0 rgba(0, 0, 0, 0.3), 0 18px 44px rgba(0, 0, 0, 0.5);
 }
 
-.platform-orgs .po-next-body {
-  max-width: 38rem;
-  margin-top: 0.875rem;
+.platform-orgs .po-climax-accent {
+  color: #ff9550;
+}
+
+.platform-orgs .po-climax-body {
+  max-width: 40rem;
+  margin-top: 1.25rem;
   font-size: 1.0625rem;
   line-height: 1.65;
-  color: #34495f;
+  color: rgba(255, 255, 255, 0.82);
 }
 
 @media (min-width: 768px) {
@@ -2238,30 +2285,26 @@
     margin-bottom: 0.625rem;
   }
 
-  .platform-orgs .po-next {
-    margin-top: 3.25rem;
-    padding-top: 2.5rem;
+  .platform-orgs .po-dark-inner {
+    padding-top: 5rem;
+    padding-bottom: 5.5rem;
   }
 
-  .platform-orgs .po-next-title {
-    font-size: 2.25rem;
+  .platform-orgs .po-climax-title {
+    font-size: 3rem;
   }
 
-  .platform-orgs .po-next-body {
-    font-size: 1.125rem;
+  .platform-orgs .po-climax-body {
+    font-size: 1.1875rem;
   }
 }
 
-/* lg: the top and the closing statement share one two-column rhythm. */
+/* lg: the opening in two columns; the statement and its copy side by side
+   on the same rhythm. */
 @media (min-width: 1024px) {
-  .platform-orgs .po-top,
-  .platform-orgs .po-next {
-    display: grid;
+  .platform-orgs .po-top {
     grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
     column-gap: 4rem;
-  }
-
-  .platform-orgs .po-top {
     align-items: end;
   }
 
@@ -2270,15 +2313,22 @@
     column-gap: 2.75rem;
   }
 
-  .platform-orgs .po-next {
-    align-items: center;
+  .platform-orgs .po-dark-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    column-gap: 4rem;
+    align-items: end;
   }
 
-  .platform-orgs .po-next-title {
-    font-size: 2.5rem;
+  .platform-orgs .po-mark {
+    grid-column: 1 / -1;
   }
 
-  .platform-orgs .po-next-body {
+  .platform-orgs .po-climax-title {
+    font-size: 3.5rem;
+  }
+
+  .platform-orgs .po-climax-body {
     margin-top: 0;
   }
 }

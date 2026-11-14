@@ -3,10 +3,13 @@ import type { ReactNode } from "react";
 /**
  * Platform: "Built around your organization".
  *
- * Typography-led. What an organization is, that the work belongs to it, the
- * three ways organizations work on ASO, and a closing statement (why build
- * your operation here) that leads into the Join ASO call to action.
- * No cards, no illustration, no interaction.
+ * A light-to-dark progression. The light opening explains what an
+ * organization is, that the work belongs to it, and the three ways
+ * organizations work on ASO. The section then steps down into a dark,
+ * lit band (a horizon of light and a receding stage floor) for the closing
+ * statement, which leads into the white Join ASO call to action and so
+ * breaks the long run of light sections at the end of the page.
+ * No cards, no dashboard, no network, no animation.
  *
  * Verified against the application (DESIGN-13G.1):
  *   - Every new account gets its own organization, with that person in
@@ -20,6 +23,8 @@ import type { ReactNode } from "react";
  *     owning organization adds a partner, which starts with view and message
  *     access, and the owner decides what else it can see or do and can remove
  *     it. Each organization keeps its own records.
+ *   - Clients, venues, the gear catalog, and the crew roster are reused
+ *     across events; past events stay available when preparing new work.
  * Copy is written for open registration (founder direction, DESIGN-13G.2).
  * Do not describe the pilot's manual onboarding, internal role names, or
  * database terms; do not claim plan or tier parity statements.
@@ -56,7 +61,7 @@ const WAYS: { id: string; title: string; body: string; icon: ReactNode }[] = [
   {
     id: "team",
     title: "With your team",
-    body: "Bring people into the same organization to work from the same events and records. Roles and permissions decide what each person can see and manage.",
+    body: "Bring people into the same organization. Roles and permissions decide what each person can see and manage.",
     icon: (
       <svg {...ICON}>
         <circle cx="9" cy="8.5" r="3" />
@@ -68,7 +73,7 @@ const WAYS: { id: string; title: string; body: string; icon: ReactNode }[] = [
   {
     id: "partners",
     title: "With other organizations",
-    body: "When an event calls for it, add another organization on ASO to that event. You choose what they can see and do there, and your organization's records stay yours.",
+    body: "When an event calls for it, add another organization on ASO to that event and choose what they can see and do there. Your records stay yours.",
     icon: (
       <svg {...ICON}>
         <rect x="2.5" y="7" width="8" height="10" rx="1.5" />
@@ -81,55 +86,63 @@ const WAYS: { id: string; title: string; body: string; icon: ReactNode }[] = [
 
 export default function PlatformOrganizations() {
   return (
-    <section className="platform-orgs relative overflow-hidden bg-aso-bg" aria-labelledby="po-title">
-      <div aria-hidden="true" className="absolute inset-0 pointer-events-none aso-plot-grid-light" />
+    <section className="platform-orgs relative" aria-labelledby="po-title">
+      {/* Understanding: the light opening. */}
+      <div className="po-light relative overflow-hidden bg-aso-bg">
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none aso-plot-grid-light" />
 
-      <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-20">
-        {/* What an organization is, and why the work belongs to it. */}
-        <div className="po-top">
-          <div className="po-head">
-            <h2 id="po-title" className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight">
-              Built around your organization
-            </h2>
-            <p className="po-intro">
-              Whether you&apos;re an independent professional or a company with a full crew, your organization is your
-              home on ASO. It&apos;s where your events, people, resources, and records belong, and where you decide who
-              can work with them.
-            </p>
+        <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-14 md:pt-20 md:pb-16">
+          <div className="po-top">
+            <div className="po-head">
+              <h2 id="po-title" className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight">
+                Built around your organization
+              </h2>
+              <p className="po-intro">
+                Whether you&apos;re an independent professional or a company with a full crew, your organization is
+                your home on ASO: where your events, people, resources, and records belong.
+              </p>
+            </div>
+
+            <div className="po-own">
+              <h3 className="po-own-title">The work belongs to your organization</h3>
+              <p className="po-own-body">
+                Not to any one person&apos;s account. As people and projects change, your organization keeps what it
+                has built.
+              </p>
+              <ul className="po-owned" aria-label="What your organization keeps">
+                {OWNED.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
           </div>
 
-          <div className="po-own">
-            <h3 className="po-own-title">The work belongs to your organization</h3>
-            <p className="po-own-body">
-              Not to any one person&apos;s account. As people come and go and projects start and finish, your
-              organization keeps what it has built.
-            </p>
-            <ul className="po-owned" aria-label="What your organization keeps">
-              {OWNED.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
+          <ul className="po-ways" aria-label="How organizations work on ASO">
+            {WAYS.map((way) => (
+              <li key={way.id} className="po-way">
+                <span className="po-way-icon">{way.icon}</span>
+                <h3 className="po-way-title">{way.title}</h3>
+                <p className="po-way-body">{way.body}</p>
+              </li>
+            ))}
+          </ul>
         </div>
+      </div>
 
-        {/* Three ways organizations work. */}
-        <ul className="po-ways" aria-label="How organizations work on ASO">
-          {WAYS.map((way) => (
-            <li key={way.id} className="po-way">
-              <span className="po-way-icon">{way.icon}</span>
-              <h3 className="po-way-title">{way.title}</h3>
-              <p className="po-way-body">{way.body}</p>
-            </li>
-          ))}
-        </ul>
+      {/* Ambition: the dark, lit close, leading into the call to action. */}
+      <div className="po-dark relative overflow-hidden">
+        <div aria-hidden="true" className="po-floor" />
+        <div aria-hidden="true" className="po-glow" />
 
-        {/* The culmination, leading into the call to action. */}
-        <div className="po-next">
-          <h3 className="po-next-title">Build an operation that&apos;s ready for what&apos;s next.</h3>
-          <p className="po-next-body">
-            Your organization brings your events, people, resources, and experience together, so every job builds on
-            the work you&apos;ve already done. Start new events from what&apos;s already on file, and keep it all
-            together as you grow.
+        <div className="po-dark-inner relative max-w-6xl mx-auto px-6">
+          <span aria-hidden="true" className="po-mark" />
+          <h3 className="po-climax-title">
+            Build an operation that&apos;s ready for <span className="po-climax-accent">what&apos;s next.</span>
+          </h3>
+          <p className="po-climax-body">
+            Your work belongs to your organization. Start each event from the clients, venues, gear, and crew already
+            on file, carry what you&apos;ve built from one event into the next, and grow your team and partnerships
+            without rebuilding from scratch.
           </p>
         </div>
       </div>
