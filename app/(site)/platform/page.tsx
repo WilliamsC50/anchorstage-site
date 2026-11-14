@@ -4,6 +4,7 @@ import Section from "@/components/Section";
 import WorkstationIcon from "@/components/WorkstationIcon";
 import PlatformHero from "@/components/platform/PlatformHero";
 import PlatformLifecycle from "@/components/platform/PlatformLifecycle";
+import PlatformRecord from "@/components/platform/PlatformRecord";
 import { INTAKE_REGISTER_URL } from "@/lib/constants";
 import { buildMetadata } from "@/lib/metadata";
 import { WORKSTATIONS } from "@/lib/workstations";
@@ -42,30 +43,8 @@ export default function PlatformPage() {
       {/* EVENT LIFECYCLE — leads into the Connected Operating Record below */}
       <PlatformLifecycle />
 
-      {/* CONNECTED OPERATING RECORD */}
-      <Section background="navy" plot>
-        <div className="max-w-3xl">
-          <div className="flex items-center gap-3 mb-5">
-            <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange">
-              The center of the platform
-            </p>
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
-            The Connected Operating Record
-          </h2>
-          <p className="text-lg text-white/70 leading-relaxed mb-5">
-            Each event on ASO is one connected operating record. The client, the venue,
-            the crew, the gear, the documents, and the money are all part of the same
-            record rather than separate files that have to be kept in step by hand.
-          </p>
-          <p className="text-lg text-white/70 leading-relaxed">
-            That is what makes the rest of the platform work. When something changes on
-            an event, it changes for everyone working on it, because they are all
-            looking at the same record instead of their own copy of it.
-          </p>
-        </div>
-      </Section>
+      {/* CONNECTED OPERATING RECORD — a static before-and-after example */}
+      <PlatformRecord />
 
       {/* WORKSTATIONS */}
       <Section background="bg" plot>

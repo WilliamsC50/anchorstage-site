@@ -132,7 +132,7 @@ const STAGES: Stage[] = [
     control: "Turn completed work into a stronger starting point for the next opportunity.",
     summary: "Use what you've already built to win, quote, and prepare the next job.",
     body: [
-      "Every completed event leaves useful information behind. Revisit client and venue details, previous production plans, crew assignments, equipment needs, and financial records when preparing new work. Build on those records instead of starting from scratch.",
+      "Every completed event leaves useful information behind. Revisit client and venue details, previous production plans, crew assignments, gear needs, and financial records when preparing new work. Build on those records instead of starting from scratch.",
       "The Marketing Workstation provides tools to create and manage campaigns that can generate new requests and bookings, helping turn past work into future opportunities.",
     ],
     manageLabel: "What you can manage",

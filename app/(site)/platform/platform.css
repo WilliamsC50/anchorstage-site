@@ -914,3 +914,378 @@
     transition: none;
   }
 }
+
+/* ── Platform: "The Connected Operating Record" ─────────────────────────────
+   components/platform/PlatformRecord.tsx. A static before-and-after example:
+   one load-in change on the show, and the views that read it. No interaction
+   and no animation. Every rule sits under .platform-record. */
+
+.platform-record {
+  --pr-line: rgba(127, 211, 244, 0.42);
+  --pr-text: rgba(255, 255, 255, 0.74);
+  --pr-orange: #ff7a1a;
+}
+
+/* Top-right stage-light wash, as on the site's other navy sections. */
+.platform-record .pr-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 760px 540px at 82% -8%, rgba(145, 205, 255, 0.16) 0%, rgba(70, 135, 200, 0.09) 30%, transparent 72%);
+}
+
+/* The lifecycle's closing line carries on into this section and fades. */
+.platform-record::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 3rem;
+  background: linear-gradient(to bottom, rgba(127, 211, 244, 0.55), rgba(127, 211, 244, 0));
+}
+
+.platform-record .pr-head {
+  max-width: 48rem;
+}
+
+/* A slightly lighter tint of the brand orange for this small eyebrow: on this
+   navy, with the grid and stage-light wash behind it, brand orange measures
+   just under AA at its brightest background pixels. */
+.platform-record .pr-eyebrow {
+  color: #ff8c40;
+}
+
+.platform-record .pr-tagline {
+  margin-top: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #a8dcff;
+}
+
+.platform-record .pr-intro {
+  margin-top: 0.75rem;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--pr-text);
+}
+
+/* The example. */
+.platform-record .pr-demo {
+  margin-top: 2.5rem;
+}
+
+.platform-record .pr-demo-caption {
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pr-text);
+}
+
+.platform-record .pr-demo-grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.platform-record .pr-record {
+  position: relative;
+  padding: 1.25rem;
+  border: 1px solid rgba(127, 211, 244, 0.28);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(22, 62, 102, 0.92) 0%, rgba(10, 33, 55, 0.94) 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 24px 50px -28px rgba(0, 0, 0, 0.75);
+}
+
+.platform-record .pr-record-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.platform-record .pr-record-title {
+  font-weight: 600;
+  color: #fff;
+}
+
+.platform-record .pr-tag {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.platform-record .pr-change {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.625rem;
+  margin-top: 1rem;
+}
+
+.platform-record .pr-cell {
+  padding: 0.75rem 0.875rem;
+  border-radius: 12px;
+}
+
+.platform-record .pr-before {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.platform-record .pr-after {
+  border: 1px solid rgba(255, 122, 26, 0.6);
+  background: rgba(255, 122, 26, 0.1);
+  box-shadow: 0 0 0 4px rgba(255, 122, 26, 0.08);
+}
+
+.platform-record .pr-cell-label {
+  margin-bottom: 0.375rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pr-text);
+}
+
+.platform-record .pr-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 0.5rem;
+}
+
+.platform-record .pr-key {
+  font-size: 0.8125rem;
+  color: var(--pr-text);
+}
+
+.platform-record .pr-old,
+.platform-record .pr-new {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.platform-record .pr-old {
+  color: rgba(255, 255, 255, 0.62);
+  text-decoration: line-through;
+  text-decoration-color: rgba(255, 255, 255, 0.55);
+}
+
+.platform-record .pr-new {
+  color: #ffb27a;
+}
+
+.platform-record .pr-arrow {
+  display: grid;
+  place-items: center;
+  color: var(--pr-orange);
+}
+
+.platform-record .pr-record-note {
+  margin-top: 0.875rem;
+  font-size: 0.875rem;
+  color: var(--pr-text);
+}
+
+/* The views that read the event, joined to it by a blue bus line. Below lg
+   the bus runs down the left of the stacked views. */
+.platform-record .pr-views {
+  position: relative;
+  display: grid;
+  gap: 0.75rem;
+  padding-left: 1.75rem;
+}
+
+.platform-record .pr-record::after {
+  content: "";
+  position: absolute;
+  left: calc(0.75rem - 1px);
+  top: 100%;
+  width: 2px;
+  height: 1.25rem;
+  background: var(--pr-line);
+}
+
+.platform-record .pr-view {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.25rem 0.875rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid rgba(127, 211, 244, 0.22);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Bus segment beside each view, and the stub into it. */
+.platform-record .pr-view::before {
+  content: "";
+  position: absolute;
+  left: calc(-1rem - 1px);
+  top: -0.375rem;
+  bottom: -0.375rem;
+  width: 2px;
+  background: var(--pr-line);
+}
+
+.platform-record .pr-view:first-child::before {
+  top: -1px;
+}
+
+.platform-record .pr-view:last-child::before {
+  bottom: 50%;
+}
+
+.platform-record .pr-view::after {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: 50%;
+  width: 1rem;
+  height: 2px;
+  background: var(--pr-line);
+}
+
+.platform-record .pr-view-icon {
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(127, 211, 244, 0.12);
+  color: #a8dcff;
+}
+
+.platform-record .pr-view-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.platform-record .pr-view-when {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--pr-text);
+}
+
+.platform-record .pr-view-time {
+  grid-column: 2;
+  font-size: 1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+}
+
+.platform-record .pr-view-time .pr-key {
+  margin-right: 0.25rem;
+  font-weight: 500;
+}
+
+/* Three short principles, not a card grid. */
+.platform-record .pr-principles {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.platform-record .pr-principle-title {
+  margin-bottom: 0.375rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.platform-record .pr-principle-title::before {
+  content: "";
+  display: block;
+  width: 1.5rem;
+  height: 2px;
+  margin-bottom: 0.75rem;
+  background: var(--pr-orange);
+}
+
+.platform-record .pr-principle-body {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--pr-text);
+}
+
+@media (min-width: 768px) {
+  .platform-record .pr-principles {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* lg: the record on the left, its views on the right, joined across the
+   gap. */
+@media (min-width: 1024px) {
+  .platform-record .pr-demo-grid {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: center;
+    column-gap: 4rem;
+  }
+
+  .platform-record .pr-record {
+    padding: 1.5rem;
+  }
+
+  .platform-record .pr-old,
+  .platform-record .pr-new {
+    font-size: 1.5rem;
+  }
+
+  .platform-record .pr-record::after {
+    left: 100%;
+    top: 50%;
+    width: 2rem;
+    height: 2px;
+  }
+
+  .platform-record .pr-views {
+    padding-left: 0;
+  }
+
+  .platform-record .pr-view {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.875rem;
+  }
+
+  .platform-record .pr-view-icon {
+    grid-row: auto;
+  }
+
+  .platform-record .pr-view-time {
+    grid-column: auto;
+    white-space: nowrap;
+  }
+
+  .platform-record .pr-view::before {
+    left: calc(-2rem - 1px);
+  }
+
+  .platform-record .pr-view:first-child::before {
+    top: 50%;
+  }
+
+  .platform-record .pr-view::after {
+    left: -2rem;
+    width: 2rem;
+  }
+}
