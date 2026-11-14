@@ -2,7 +2,8 @@
  * Platform: "The Connected Operating Record".
  *
  * A static example of change visibility: one show's load-in moves from
- * 8:00 AM to 7:00 AM. The change card carries the Event Activity entry that
+ * 8:00 AM to 7:00 AM, edited in the Event Workstation's Setup area
+ * (Setup > Schedule / Timing, EventScheduleSection -> updateInstanceTiming). The change card carries the Event Activity entry that
  * records it, and a blue line joins it to the three views that show the
  * current time when opened. Below, one closing message: what ASO does today,
  * then the intended direction, worded as a goal rather than a feature.
@@ -141,8 +142,13 @@ export default function PlatformRecord() {
           {/* The change, and the Event Activity entry that records it. */}
           <div className="pr-change" role="group" aria-labelledby="pr-change-title">
             <div className="pr-change-head">
-              <p id="pr-change-title" className="pr-change-title">
-                Show schedule
+              <p id="pr-change-title" className="pr-change-path">
+                Event Workstation
+                <span aria-hidden="true" className="pr-path-sep">
+                  ›
+                </span>
+                <span className="sr-only">, </span>
+                Setup
               </p>
               <span className="pr-tag">Illustrative example</span>
             </div>
@@ -203,6 +209,11 @@ export default function PlatformRecord() {
             ))}
           </ul>
         </div>
+
+        <p className="pr-copies">
+          Changing the event doesn&apos;t change files already downloaded or printed. Production Briefs and other
+          supported views use the current information when regenerated or reopened.
+        </p>
 
         <div className="pr-bottom">
           <div className="pr-message">

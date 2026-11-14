@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import ClosingCta from "@/components/ClosingCta";
 import Section from "@/components/Section";
-import WorkstationIcon from "@/components/WorkstationIcon";
 import PlatformHero from "@/components/platform/PlatformHero";
 import PlatformLifecycle from "@/components/platform/PlatformLifecycle";
 import PlatformRecord from "@/components/platform/PlatformRecord";
+import PlatformTools from "@/components/platform/PlatformTools";
 import { INTAKE_REGISTER_URL } from "@/lib/constants";
 import { buildMetadata } from "@/lib/metadata";
-import { WORKSTATIONS } from "@/lib/workstations";
 import "./platform.css";
 
 export const metadata: Metadata = buildMetadata({
@@ -46,48 +45,8 @@ export default function PlatformPage() {
       {/* CONNECTED OPERATING RECORD — a static before-and-after example */}
       <PlatformRecord />
 
-      {/* WORKSTATIONS */}
-      <Section background="bg" plot>
-        <div className="max-w-2xl mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-6">
-            Purpose-built Workstations
-          </h2>
-          <p className="text-lg text-gray-500 leading-relaxed">
-            Different work needs different tools, but it does not need different
-            information. ASO uses purpose-built Workstations for the different parts of
-            running live events. As the platform grows, new Workstations work from the
-            same Connected Operating Record.
-          </p>
-        </div>
-
-        {/* Offset pairs so the set reads as placed panels, not a grid */}
-        <div className="grid gap-5 sm:grid-cols-2">
-          {WORKSTATIONS.map((workstation, i) => (
-            <div
-              key={workstation.slug}
-              className={`group relative aso-panel aso-panel-lift overflow-hidden rounded-xl border border-aso-blue/12 bg-white p-7 ${
-                i % 2 === 1 ? "sm:translate-y-6" : ""
-              }`}
-            >
-              {/* Road-case edge: hairline that lights up on hover */}
-              <span
-                aria-hidden="true"
-                className="absolute left-0 top-0 h-full w-0.5 bg-aso-blue/20 transition-colors group-hover:bg-aso-orange"
-              />
-              <div className="flex items-center gap-3 mb-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-aso-bg text-aso-blue transition-colors group-hover:text-aso-orange">
-                  <WorkstationIcon slug={workstation.slug} className="h-5 w-5" />
-                </span>
-                <h3 className="text-lg font-semibold text-aso-navy">
-                  {workstation.name}
-                </h3>
-              </div>
-              <p className="text-gray-500 leading-relaxed">{workstation.tagline}</p>
-            </div>
-          ))}
-        </div>
-        <div aria-hidden="true" className="hidden sm:block h-6" />
-      </Section>
+      {/* THE EVENT WORKSTATION AND THE TOOLS AROUND IT */}
+      <PlatformTools />
 
       {/* ORGANIZATIONS — heading left, points right, orange tick per point.
           Moved, unchanged, after the Workstations (DESIGN-13D.3) so the
