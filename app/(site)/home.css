@@ -1070,6 +1070,156 @@
   }
 }
 
+/* ── Scene 6: the gateway ───────────────────────────────────────────────────
+   GatewayMonument behind the closing invitation: an open night horizon, the
+   anchor as a dark-metal monument rising from it, haze at its base. Static:
+   no animation, no pointer tracking. The environment sits under the scene
+   seam (z -2); the stage-plot grid is not used here, so the scene reads as
+   open ground rather than another stage.
+     --horizon   height of the horizon line in the scene
+     --mx        where the monument stands across the scene
+     --mh        monument height, as a share of the scene */
+.aso-home .home-gateway {
+  background: #02060d;
+}
+
+.aso-home .home-gateway .home-scene-grid {
+  display: none;
+}
+
+.aso-home .gw-env {
+  --horizon: 90%;
+  --mx: 50%;
+  --mh: 44%;
+  --mh-cap: 38vh;
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aso-home .gw-sky,
+.aso-home .gw-ground,
+.aso-home .gw-haze,
+.aso-home .gw-far,
+.aso-home .gw-monument {
+  position: absolute;
+}
+
+/* Night sky down to a lit horizon; cooler high atmosphere, a faint warm
+   glow low on the horizon beside the monument. */
+.aso-home .gw-sky {
+  inset: 0;
+  background:
+    radial-gradient(ellipse 58% 24% at var(--mx) var(--horizon), rgba(127, 196, 240, 0.2), transparent 70%),
+    radial-gradient(ellipse 30% 9% at calc(var(--mx) - 14%) var(--horizon), rgba(255, 138, 60, 0.11), transparent 72%),
+    radial-gradient(ellipse 80% 55% at 72% 18%, rgba(28, 64, 110, 0.28), transparent 72%),
+    linear-gradient(180deg, #02060d 0%, #051226 calc(var(--horizon) - 30%), #0b2340 calc(var(--horizon) - 0.5%), #040b16 var(--horizon), #010409 100%);
+}
+
+/* The horizon line itself, brightest where the monument stands. */
+.aso-home .gw-sky::after {
+  content: "";
+  position: absolute;
+  inset: var(--horizon) 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(169, 221, 255, 0.28) 25%, rgba(190, 230, 255, 0.7) var(--mx), rgba(169, 221, 255, 0.28) 85%, transparent);
+  box-shadow: 0 0 16px 2px rgba(78, 168, 255, 0.3);
+}
+
+/* Ground below the horizon: dark, catching a little of the sky. */
+.aso-home .gw-ground {
+  inset: var(--horizon) 0 0 0;
+  background:
+    radial-gradient(ellipse 50% 60% at var(--mx) 0%, rgba(52, 104, 160, 0.18), transparent 70%),
+    linear-gradient(180deg, rgba(14, 36, 62, 0.45), transparent 70%);
+}
+
+/* The far ridge sits on the horizon line (its lights are 1.6 units in a
+   stretched viewBox: tiny on screen at any width). */
+.aso-home .gw-far {
+  left: 0;
+  width: 100%;
+  bottom: calc(100% - var(--horizon));
+  height: 2.6%;
+}
+
+/* The monument: standing on the horizon, turned slightly toward the copy,
+   seen from a little below. */
+.aso-home .gw-monument {
+  left: var(--mx);
+  bottom: calc(100% - var(--horizon) - 1.5%);
+  /* Stacked layouts cap it to the room left below the copy. */
+  height: min(var(--mh), var(--mh-cap));
+  aspect-ratio: 450 / 530;
+  transform: translateX(-50%) perspective(1800px) rotateY(-14deg) rotateX(5deg);
+  transform-origin: 50% 100%;
+}
+
+.aso-home .gw-monument svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Haze across the base, in front of the monument. */
+.aso-home .gw-haze {
+  inset: calc(var(--horizon) - 9%) 0 auto 0;
+  height: 16%;
+  background:
+    radial-gradient(ellipse 40% 50% at var(--mx) 55%, rgba(110, 160, 210, 0.16), transparent 72%),
+    linear-gradient(180deg, transparent, rgba(8, 22, 40, 0.5) 55%, transparent);
+}
+
+/* Copy above the environment; below lg it leads, and .gw-room leaves the
+   lower part of the scene to the monument. */
+.aso-home .gw-copy {
+  position: relative;
+}
+
+.aso-home .gw-room {
+  height: clamp(15rem, 40vh, 24rem);
+}
+
+@media (min-width: 768px) {
+  .aso-home .gw-env {
+    --mh: 48%;
+    --mh-cap: 42vh;
+  }
+}
+
+/* lg landscape: copy on the left, the monument dominant on the right,
+   most of the scene's height, its ring clear of the top seam. Tall portrait
+   screens (tablets) keep the stacked layout, so it never sits behind the
+   copy. */
+@media (min-width: 1024px) and (min-aspect-ratio: 1 / 1) {
+  .aso-home .gw-env {
+    --horizon: 84%;
+    --mx: 76%;
+    --mh: 80%;
+    --mh-cap: 100%;
+  }
+
+  .aso-home .gw-room {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) and (min-aspect-ratio: 1 / 1) {
+  .aso-home .gw-env {
+    --mx: 70%;
+  }
+}
+
+/* Forced colours: keep the copy and action; drop the painted environment. */
+@media (forced-colors: active) {
+  .aso-home .gw-env {
+    display: none;
+  }
+}
+
 /* ── Scene stack ────────────────────────────────────────────────────────── */
 
 /* Scene frame: when motion is allowed, every scene fills at least the

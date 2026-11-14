@@ -312,12 +312,12 @@ export default function Home() {
         />
       </HomeScene>
 
-      {/* CTA */}
+      {/* THE GATEWAY — the closing invitation in front of the anchor monument */}
       <HomeClosing
-        heading="Keep exploring ASO"
-        body="Learn how the network connects the live event industry, then see how the platform keeps the work organized."
-        primary={{ label: "Explore the Network", href: "/network" }}
-        secondary={{ label: "Explore the Platform", href: "/platform" }}
+        eyebrow="AnchorStage Ops"
+        heading="Bring it all together."
+        body="Your people. Your tools. Your operation. One place to move forward."
+        primary={{ label: "Join AnchorStage Ops", href: AUTH_NAV.join.href }}
       />
     </main>
   );

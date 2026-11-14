@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import GatewayMonument from "./GatewayMonument";
 import HomeScene from "./HomeScene";
 
 interface CtaAction {
@@ -7,37 +8,39 @@ interface CtaAction {
 }
 
 interface HomeClosingProps {
+  eyebrow: string;
   heading: string;
   body: string;
   primary: CtaAction;
-  secondary: CtaAction;
 }
 
 /**
- * The homepage's closing call to action, on the dark scene ground.
+ * Scene 6, the gateway: the homepage's closing invitation, in front of the
+ * AnchorStage Ops anchor rising as a monument from the horizon
+ * (GatewayMonument). One action only.
  *
- * Same structure, copy slots, and actions as the shared ClosingCta, which
- * stays unchanged for every other page. The secondary action uses the
- * navy-surface outline variant because this ground is dark.
+ * Desktop (lg, landscape): copy on the left, the monument dominant on the
+ * right. Otherwise (phones, tablets, tall portrait screens) the copy leads
+ * and the monument stands in the room left below it (.gw-room), so it never
+ * sits behind the text.
  */
-export default function HomeClosing({ heading, body, primary, secondary }: HomeClosingProps) {
+export default function HomeClosing({ eyebrow, heading, body, primary }: HomeClosingProps) {
   return (
-    <HomeScene tone="deep" seed={61}>
-      <div className="max-w-2xl">
-        <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
+    <HomeScene tone="deep" seed={61} rings={false} backdrop={<GatewayMonument />} className="home-gateway">
+      <div className="gw-copy max-w-xl">
+        <div className="flex items-center gap-3 mb-6">
+          <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange">{eyebrow}</p>
+        </div>
+        <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight leading-[1.05] mb-6">
           {heading}
         </h2>
-        <p className="text-lg home-copy leading-relaxed mb-10">{body}</p>
-
-        <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:items-center">
-          <Button href={primary.href} variant="primary" className="home-cta">
-            {primary.label}
-          </Button>
-          <Button href={secondary.href} variant="outline" className="home-ghost">
-            {secondary.label}
-          </Button>
-        </div>
+        <p className="text-lg md:text-xl home-copy leading-relaxed mb-10 max-w-lg">{body}</p>
+        <Button href={primary.href} variant="primary" className="home-cta">
+          {primary.label}
+        </Button>
       </div>
+      <div aria-hidden="true" className="gw-room" />
     </HomeScene>
   );
 }
