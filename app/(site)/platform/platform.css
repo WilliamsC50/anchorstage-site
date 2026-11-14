@@ -2081,3 +2081,228 @@
     column-gap: 2.5rem;
   }
 }
+
+/* ── Platform: "Built around your organization" ──────────────────────────────
+   components/platform/PlatformOrganizations.tsx. Typography-led: what an
+   organization is and that the work belongs to it, three ways organizations
+   work, why join, and the closing line into the call to action. Light grid
+   ground, no cards or illustration. Every rule sits under .platform-orgs. */
+
+.platform-orgs {
+  --po-text: #4b5563;
+  --po-rule: #d6e3ef;
+}
+
+.platform-orgs .po-top {
+  display: grid;
+  gap: 2rem;
+}
+
+.platform-orgs .po-intro {
+  max-width: 40rem;
+  margin-top: 0.875rem;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: var(--po-text);
+}
+
+/* Ownership: an orange-ruled statement and what the organization keeps. */
+.platform-orgs .po-own {
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--aso-orange);
+}
+
+.platform-orgs .po-own-title {
+  font-size: 1.1875rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--aso-navy);
+}
+
+.platform-orgs .po-own-body {
+  margin-top: 0.375rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--po-text);
+}
+
+.platform-orgs .po-owned {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 0.875rem;
+}
+
+.platform-orgs .po-owned li {
+  padding: 0.125rem 0.625rem;
+  border: 1px solid #cddff0;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--aso-navy);
+}
+
+/* Three ways organizations work: ruled columns, not cards. */
+.platform-orgs .po-ways {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 2.75rem;
+}
+
+/* Phones: the icon sits beside the title. */
+.platform-orgs .po-way {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.625rem;
+  align-items: center;
+  padding-top: 1.125rem;
+  border-top: 1px solid var(--po-rule);
+}
+
+.platform-orgs .po-way-icon {
+  display: block;
+  color: #2f86b5;
+}
+
+.platform-orgs .po-way-body {
+  grid-column: 1 / -1;
+}
+
+.platform-orgs .po-way-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--aso-navy);
+}
+
+.platform-orgs .po-way-body {
+  margin-top: 0.375rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--po-text);
+}
+
+/* Why join: a short checked list. */
+.platform-orgs .po-why {
+  margin-top: 2.75rem;
+}
+
+.platform-orgs .po-why-title {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a64510;
+}
+
+.platform-orgs .po-why-title::before {
+  content: "";
+  width: 1.25rem;
+  height: 2px;
+  background: var(--aso-orange);
+}
+
+.platform-orgs .po-reasons {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.platform-orgs .po-reasons li {
+  position: relative;
+  padding-left: 1.625rem;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: #1f3a56;
+}
+
+.platform-orgs .po-reasons li::before {
+  content: "";
+  position: absolute;
+  left: 0.125rem;
+  top: 0.38em;
+  width: 0.75rem;
+  height: 0.4375rem;
+  border-bottom: 2px solid #2f86b5;
+  border-left: 2px solid #2f86b5;
+  transform: rotate(-45deg);
+}
+
+/* The closing line, leading into the call to action. */
+.platform-orgs .po-close {
+  max-width: 48rem;
+  margin-top: 2.5rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid var(--aso-orange);
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  color: var(--aso-navy);
+}
+
+@media (min-width: 768px) {
+  .platform-orgs .po-intro {
+    font-size: 1.125rem;
+  }
+
+  .platform-orgs .po-ways {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 2.25rem;
+  }
+
+  .platform-orgs .po-way {
+    display: block;
+  }
+
+  .platform-orgs .po-way-icon {
+    margin-bottom: 0.625rem;
+  }
+
+  .platform-orgs .po-reasons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2.5rem;
+    row-gap: 0.75rem;
+  }
+
+  .platform-orgs .po-close {
+    padding-left: 1.5rem;
+    font-size: 1.25rem;
+  }
+}
+
+/* lg: what an organization is beside why the work belongs to it. */
+@media (min-width: 1024px) {
+  .platform-orgs .po-top {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    column-gap: 4rem;
+    align-items: end;
+  }
+
+  .platform-orgs .po-ways {
+    margin-top: 3rem;
+    column-gap: 2.75rem;
+  }
+
+  /* The same three columns as the ways above: label, then two of reasons. */
+  .platform-orgs .po-why {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 2.75rem;
+    align-items: start;
+  }
+
+  .platform-orgs .po-reasons {
+    grid-column: 2 / 4;
+    column-gap: 2.75rem;
+  }
+
+  .platform-orgs .po-why-title {
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+  }
+}

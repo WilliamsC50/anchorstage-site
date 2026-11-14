@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import ClosingCta from "@/components/ClosingCta";
-import Section from "@/components/Section";
 import PlatformHero from "@/components/platform/PlatformHero";
 import PlatformLifecycle from "@/components/platform/PlatformLifecycle";
+import PlatformOrganizations from "@/components/platform/PlatformOrganizations";
 import PlatformRecord from "@/components/platform/PlatformRecord";
 import PlatformTools from "@/components/platform/PlatformTools";
 import { INTAKE_REGISTER_URL } from "@/lib/constants";
@@ -14,25 +14,6 @@ export const metadata: Metadata = buildMetadata({
   description:
     "How the ASO connected operations platform works. Organizations own the work, each event is one connected operating record, and purpose-built Workstations operate on the same information.",
 });
-
-const ORGANIZATION_POINTS = [
-  {
-    title: "Every member operates through an organization",
-    body: "Your organization is how you and your work are represented on ASO. It might be one professional or a company with a full crew.",
-  },
-  {
-    title: "A one-person organization is complete",
-    body: "Working independently gets you the same platform as a large operation. Nothing is held back until you add other people.",
-  },
-  {
-    title: "The organization keeps the work",
-    body: "Events start and finish. The events, gear, documents, financial records, media, and history stay with the organization that did the work.",
-  },
-  {
-    title: "Collaboration is optional",
-    body: "You can bring in an organization you already work with when a job calls for it. Until then, nothing about the platform waits on anyone else.",
-  },
-];
 
 export default function PlatformPage() {
   return (
@@ -48,40 +29,8 @@ export default function PlatformPage() {
       {/* THE EVENT WORKSTATION AND THE TOOLS AROUND IT */}
       <PlatformTools />
 
-      {/* ORGANIZATIONS — heading left, points right, orange tick per point.
-          Moved, unchanged, after the Workstations (DESIGN-13D.3) so the
-          lifecycle leads straight into the record. */}
-      <Section background="bg" plot>
-        <div className="grid lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-16">
-          <div className="mb-12 lg:mb-0">
-            <h2 className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight mb-5">
-              Organizations
-            </h2>
-            <p className="text-gray-500 leading-relaxed">
-              The organization is the root of the platform. It is what owns the work, and
-              it is what keeps the work after each event is over.
-            </p>
-          </div>
-
-          <div className="grid gap-x-10 gap-y-9 sm:grid-cols-2">
-            {ORGANIZATION_POINTS.map((point) => (
-              <div key={point.title}>
-                <span aria-hidden="true" className="block h-px w-8 bg-aso-orange mb-4" />
-                <h3 className="text-base font-semibold text-aso-navy mb-2.5 leading-snug">
-                  {point.title}
-                </h3>
-                <p className="text-gray-500 leading-relaxed">{point.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-16 max-w-3xl border-l-2 border-aso-orange pl-6">
-          <p className="text-xl text-aso-navy leading-relaxed">
-            Events are what an organization does. The organization is what remains.
-          </p>
-        </div>
-      </Section>
+      {/* ORGANIZATIONS: built around your organization, leading into the call to action */}
+      <PlatformOrganizations />
 
       {/* CTA */}
       <ClosingCta
