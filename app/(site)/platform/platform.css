@@ -175,9 +175,24 @@
 
 /* ── Model: other organizations ─────────────────────────────────────────── */
 
-/* Subdued and blue only: the orange stays this organization's. */
-.platform-hero .pf-other {
-  opacity: 0.58;
+/* Subdued and blue only: the orange stays this organization's. Atmospheric
+   depth: the further away, the fainter. */
+.platform-hero .pf-other-nine {
+  opacity: 0.6;
+}
+
+.platform-hero .pf-other-ten {
+  opacity: 0.48;
+}
+
+.platform-hero .pf-other-eleven {
+  opacity: 0.38;
+}
+
+/* Contact shadow on the shared floor. */
+.platform-hero .pf-other-shadow {
+  fill: #01060f;
+  opacity: 0.75;
 }
 
 .platform-hero .pf-other-edge {
@@ -242,32 +257,24 @@
   }
 }
 
-/* Which of them show: both from 1280px; below that only the nearer one, as
-   the further one would crowd the copy and labels. At 1024-1279px the nearer
-   one is set further back (a-compact), clear of the copy column. None on
-   phones. */
-.platform-hero .pf-other-a-compact {
-  display: none;
-}
-
+/* Which of them show. From 1280px, all three. Narrower, the scene keeps its
+   scale and sheds organizations instead: the 9 o'clock one first (it would
+   sit behind the heading), then the 11 o'clock one below 1100px (its link
+   would crowd the Signage label). Phones show none. */
 @media (max-width: 1279px) {
-  .platform-hero .pf-other-b {
+  .platform-hero .pf-other-nine {
     display: none;
   }
 }
 
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .platform-hero .pf-other-a {
+@media (max-width: 1099px) {
+  .platform-hero .pf-other-eleven {
     display: none;
-  }
-
-  .platform-hero .pf-other-a-compact {
-    display: inline;
   }
 }
 
 @media (max-width: 639px) {
-  .platform-hero .pf-other-a {
+  .platform-hero .pf-other-ten {
     display: none;
   }
 }

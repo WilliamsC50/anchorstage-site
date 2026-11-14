@@ -39,13 +39,19 @@ const OTHER_FILL: Record<"plinth" | "foundation" | "core" | "plate", Record<Face
   plate: { top: "rgba(60, 125, 195, 0.4)", left: "rgba(70, 140, 210, 0.45)", right: "rgba(40, 95, 160, 0.5)" },
 };
 
-type Other = (typeof MODEL.otherOrganizations)["a"];
+type Other = (typeof MODEL.otherOrganizations)["nine"];
+const OTHERS = [
+  { id: "eleven", delay: "-14.67s" },
+  { id: "ten", delay: "-7.33s" },
+  { id: "nine", delay: "0s" },
+] as const;
 
 /** Another organization in the distance, with its link to this one. The link
  *  carries a restrained pulse, inbound then outbound, every 11 seconds. */
 function OtherOrganization({ o, id, delay }: { o: Other; id: string; delay: string }) {
   return (
     <g className={`pf-other pf-other-${id}`}>
+      <polygon points={o.shadow} className="pf-other-shadow" filter="url(#pf-soft)" />
       <path d={o.link} className="pf-other-link" />
       <path d={o.link} pathLength={100} className="pf-other-pulse" style={{ animationDelay: delay }} />
       {o.parts.map((p, i) => (
@@ -120,6 +126,21 @@ export default function PlatformArchitecture() {
           </radialGradient>
           <mask id="pf-floor-mask" maskUnits="userSpaceOnUse" x="-2000" y="-2000" width="4000" height="4000">
             <ellipse cx={MODEL.ground[0]} cy={MODEL.ground[1] + 40} rx="430" ry="170" fill="url(#pf-floor-fade)" />
+            {/* The ground the other organizations stand on. */}
+            <ellipse
+              cx={MODEL.otherOrganizations.ten.ground[0]} cy={MODEL.otherOrganizations.ten.ground[1] + 10}
+              rx="330" ry="120" fill="url(#pf-floor-fade)" opacity="0.8"
+            />
+          </mask>
+          {/* Toward the copy column (left of the view box) the scenery fades
+              almost away, so nothing detailed or bright sits behind the
+              lettering. */}
+          <linearGradient id="pf-copy-fade-ramp" gradientUnits="userSpaceOnUse" x1={MODEL.left - 100} y1="0" x2={MODEL.left - 20} y2="0">
+            <stop offset="0" stopColor="#fff" stopOpacity="0.1" />
+            <stop offset="1" stopColor="#fff" stopOpacity="1" />
+          </linearGradient>
+          <mask id="pf-copy-fade" maskUnits="userSpaceOnUse" x="-4000" y="-4000" width="8000" height="8000">
+            <rect x="-4000" y="-4000" width="8000" height="8000" fill="url(#pf-copy-fade-ramp)" />
           </mask>
 
           {/* Plinth and foundation: heavy navy masses, top lit from behind. */}
@@ -208,20 +229,24 @@ export default function PlatformArchitecture() {
         </defs>
 
         {/* Environment: floor grid fading out, and the backlight behind the record. */}
-        <g mask="url(#pf-floor-mask)" className="pf-floor">
-          {MODEL.floor.map((l, i) => (
-            <line key={i} {...l} />
-          ))}
+        <g mask="url(#pf-copy-fade)">
+          <g mask="url(#pf-floor-mask)" className="pf-floor">
+            {MODEL.floor.map((l, i) => (
+              <line key={i} {...l} />
+            ))}
+          </g>
         </g>
         <ellipse cx={MODEL.light[0]} cy={MODEL.light[1]} rx="260" ry="210" fill="url(#pf-backlight)" />
         {/* A soft shaft of light rising behind the record. */}
         <ellipse cx={MODEL.light[0]} cy={MODEL.light[1] - 60} rx="44" ry="190" fill="url(#pf-shaft)" filter="url(#pf-soft)" className="pf-shaft" />
         <ellipse cx={MODEL.ground[0]} cy={MODEL.ground[1] + 52} rx="250" ry="58" className="pf-pool" filter="url(#pf-soft)" />
 
-        {/* Other organizations, in the distance behind this one. */}
-        <OtherOrganization o={MODEL.otherOrganizations.b} id="b" delay="-5.5s" />
-        <OtherOrganization o={MODEL.otherOrganizations.a} id="a" delay="0s" />
-        <OtherOrganization o={MODEL.otherOrganizations.aCompact} id="a-compact" delay="0s" />
+        {/* Other organizations, in an arc around the upper left, furthest first. */}
+        <g mask="url(#pf-copy-fade)">
+          {OTHERS.map(({ id, delay }) => (
+            <OtherOrganization key={id} o={MODEL.otherOrganizations[id]} id={id} delay={delay} />
+          ))}
+        </g>
 
         {/* Organization: plinth, foundation, etched plot grid, orange inlay. */}
         <Solid box={MODEL.plinth} fill="plinth" />
@@ -235,8 +260,8 @@ export default function PlatformArchitecture() {
         <polygon points={MODEL.foundation.top} className="pf-found-edge" />
         <polygon points={MODEL.inlay} className="pf-inlay" />
         {/* Where the other organizations' links meet this foundation. */}
-        {(["b", "a", "a-compact"] as const).map((id) => {
-          const o = MODEL.otherOrganizations[id === "a-compact" ? "aCompact" : id];
+        {OTHERS.map(({ id }) => {
+          const o = MODEL.otherOrganizations[id];
           return <circle key={id} cx={o.point[0]} cy={o.point[1]} r="2" className={`pf-other-point pf-other-${id}`} />;
         })}
         <line

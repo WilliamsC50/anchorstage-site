@@ -150,11 +150,12 @@ for (let g = -FOUND + 20; g < FOUND; g += 20) {
 const INSET = FOUND - 7;
 const inlay = str(pts([[-INSET, -INSET, 0], [INSET, -INSET, 0], [INSET, INSET, 0], [-INSET, INSET, 0]]));
 
-// Environment floor around the model, below the plinth.
+// Environment floor around the model, below the plinth. It reaches back
+// under the other organizations so they stand on the same ground.
 const floor: ReturnType<typeof line>[] = [];
-for (let g = -300; g <= 300; g += 30) {
-  floor.push(line([g, -300, PLINTH_Z], [g, 230, PLINTH_Z]));
-  floor.push(line([-300, g, PLINTH_Z], [230, g, PLINTH_Z]));
+for (let g = -840; g <= 300; g += 30) {
+  if (g <= 230) floor.push(line([g, -840, PLINTH_Z], [g, 230, PLINTH_Z]));
+  floor.push(line([-840, g, PLINTH_Z], [230, g, PLINTH_Z]));
 }
 
 // Contact shadows on the foundation (footprints, drawn blurred).
@@ -235,18 +236,26 @@ const recordDepth = depth([0, 0, 30]);
 
 // ── Other organizations ──────────────────────────────────────────────────
 //
-// Smaller organizations set back in the distance, behind and to the left of
-// this one (the right side is the label column). Each is a scaled copy of an
-// organization (plinth, foundation, core, and a two-layer record) so it reads
-// as its own organization, never as a Workstation. A faint link runs from its
-// foundation to this organization's foundation edge. Positions are given in
-// camera terms: how far back from this organization, and how far across the
-// screen (negative is left).
+// Three smaller organizations in a loose arc around the upper left of this
+// one, from about 9 o'clock to 11 (the right side is the label column, and a
+// link from 12 o'clock would have to cross the record or the Signage label).
+// Each is a scaled copy of an organization (plinth, foundation, core, and a
+// two-layer record) so it reads as its own organization, never as a
+// Workstation. Distance shows through perspective, scale, and opacity: the
+// 9 o'clock one is nearest; the 11 o'clock one is furthest and smallest. A
+// faint link runs from each to a point on this organization's foundation
+// that is always in view. Positions are in camera terms: how far back from
+// this organization, and how far across the screen (negative is left).
 
 const BACK = norm([FWD[0], FWD[1], 0]);
 const ACROSS = norm([RIGHT[0], RIGHT[1], 0]);
 
-function otherOrganization(back: number, across: number, k: number) {
+// Where the links meet this foundation: its left corner, and a point along
+// its left edge just in front of it. Both are clear of the modules and record.
+const CORNER: V3 = [FOUND, -FOUND, 0];
+const LEFT_EDGE: V3 = [FOUND, -FOUND + 20, 0];
+
+function otherOrganization(back: number, across: number, k: number, to: V3) {
   const cx = BACK[0] * back + ACROSS[0] * across;
   const cy = BACK[1] * back + ACROSS[1] * across;
   // Scaled about the floor, so it stands on the same ground plane.
@@ -261,31 +270,26 @@ function otherOrganization(back: number, across: number, k: number) {
     { kind: "plate", box: b(PLATE, PLATES[1][0], PLATES[1][1]) },
     { kind: "core", box: b(CORE, PLATES[1][1], PLATES[1][1] + 7) },
   ];
-  // Link: from this organization's foundation edge, facing ours, to our
-  // foundation's left corner. That corner is the nearest point of our
-  // foundation that is always in view: the edges facing these organizations
-  // sit behind the Signage module and the record, and a link meeting them
-  // would show through the record's glass as if it joined the record.
-  const to = LINK_POINT;
+  // Link: from this organization's foundation edge, facing ours, to a point
+  // on our foundation that is always in view (the edges facing these
+  // organizations sit behind the Signage module and the record, and a link
+  // meeting them would show through the record's glass).
   const d = norm([to[0] - cx, to[1] - cy, 0]);
   const m = Math.max(Math.abs(d[0]), Math.abs(d[1]));
   const from: V3 = [cx + (d[0] / m) * FOUND * k, cy + (d[1] / m) * FOUND * k, zs(0)];
-  return { parts, link: path([from, to]), point: project(to) };
+  // Ground contact: a soft shadow on the floor under it.
+  const g = PLINTH * k * 1.25;
+  const shadow = str(pts([[cx - g, cy - g, PLINTH_Z], [cx + g, cy - g, PLINTH_Z], [cx + g, cy + g, PLINTH_Z], [cx - g, cy + g, PLINTH_Z]]));
+  return { parts, shadow, link: path([from, to]), point: project(to), ground: project([cx, cy, PLINTH_Z]) };
 }
 
-const LINK_POINT: V3 = [FOUND, -FOUND, 0];
-
-// a: the nearer one. b: further back, to the right of a, so its link comes
-// down between a and the Signage label without touching either; it shows
-// from 1280px only. aCompact: a, set further back and right for
-// 1024-1279px, where the copy column reaches closer to the model (CSS shows
-// it there in place of a). All stay right of the copy column. Positions were
-// chosen by measuring copy, label, edge, and mutual clearance (organizations
-// and links) at every width each one shows.
+// Positions were chosen by measuring clock position, copy, label, and edge
+// clearance, mutual spacing, and link routing (no link crosses a label, a
+// Workstation, the record, or another organization).
 const otherOrganizations = {
-  a: otherOrganization(360, -250, 0.3),
-  b: otherOrganization(700, -240, 0.26),
-  aCompact: otherOrganization(420, -230, 0.3),
+  nine: otherOrganization(180, -260, 0.34, LEFT_EDGE),
+  ten: otherOrganization(440, -280, 0.26, CORNER),
+  eleven: otherOrganization(800, -270, 0.24, CORNER),
 };
 
 // Label anchors: the organization at the foundation's front corner, the
@@ -314,6 +318,8 @@ const pct = ([x, y]: V2) => ({ left: `${r1(((x - minX) / W) * 100)}%`, top: `${r
 
 export const MODEL = {
   viewBox: `${r1(minX)} ${r1(minY)} ${r1(W)} ${r1(H)}`,
+  /** The view box's left edge: the copy column ends just beyond it. */
+  left: r1(minX),
   aspect: `${r1(W)} / ${r1(H)}`,
   floor,
   plinth,
