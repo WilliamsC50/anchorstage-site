@@ -746,6 +746,330 @@
   }
 }
 
+/* ── Scene 5: character select ──────────────────────────────────────────────
+   CastSelect on a persistent stage (castArt). Layers, back to front: the
+   scene-wide environment (haze, truss, deck), the stage light under the
+   featured character, the six figures (one visible), then the roster and
+   the role plate. Selecting a role changes only the figure and the plate;
+   nothing here moves on its own. --cast-spot is where the character stands
+   across the scene, so the environment converges on it. */
+.aso-home .cast {
+  --cast-spot: 50%;
+  display: grid;
+  grid-template-areas: "intro" "stage" "roster" "plate";
+  row-gap: 1.25rem;
+}
+
+.aso-home .cast-intro { grid-area: intro; }
+.aso-home .cast-roster { grid-area: roster; }
+.aso-home .cast-plate { grid-area: plate; }
+
+.aso-home .cast-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Environment (HomeScene backdrop): behind everything, never interactive. */
+.aso-home .cast-env {
+  --cast-spot: 50%;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aso-home .cast-env-haze {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 46% 40% at var(--cast-spot) 58%, rgba(78, 168, 255, 0.16), transparent 70%),
+    radial-gradient(ellipse 70% 30% at var(--cast-spot) 78%, rgba(127, 211, 244, 0.08), transparent 75%),
+    linear-gradient(180deg, rgba(2, 6, 13, 0.55) 0%, transparent 28%, transparent 70%, rgba(2, 6, 13, 0.6) 100%);
+}
+
+.aso-home .cast-env-truss {
+  position: absolute;
+  inset: 0 0 auto 0;
+  width: 100%;
+  height: 110px;
+  opacity: 0.9;
+}
+
+.aso-home .cast-env-floor {
+  position: absolute;
+  left: calc(var(--cast-spot) - 100%);
+  bottom: 0;
+  width: 200%;
+  height: 44%;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 45%);
+  mask-image: linear-gradient(180deg, transparent, #000 45%);
+}
+
+/* Stage: a fixed box the featured figure fills; feet on its bottom edge. */
+.aso-home .cast-stage {
+  grid-area: stage;
+  position: relative;
+  height: clamp(19rem, 44vh, 23rem);
+  pointer-events: none;
+}
+
+.aso-home .cast-light,
+.aso-home .cast-figure {
+  position: absolute;
+  inset: 0;
+}
+
+.aso-home .cast-glow {
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  width: 70%;
+  max-width: 420px;
+  height: 80%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse 50% 50% at 50% 45%, rgba(78, 168, 255, 0.24), rgba(78, 168, 255, 0.06) 55%, transparent 72%);
+}
+
+/* Two soft beams from the rig, crossing on the character. The outer span
+   softens, the inner one shapes (filter applies before clipping). */
+.aso-home .cast-beam {
+  position: absolute;
+  top: 0;
+  bottom: 4%;
+  width: 46%;
+  max-width: 320px;
+  filter: blur(6px);
+  opacity: 0.8;
+}
+
+.aso-home .cast-beam i {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(169, 221, 255, 0.16), rgba(127, 196, 240, 0.05) 70%, transparent);
+}
+
+.aso-home .cast-beam-l { left: 8%; }
+.aso-home .cast-beam-l i { clip-path: polygon(0 0, 14% 0, 92% 100%, 46% 100%); }
+.aso-home .cast-beam-r { right: 8%; }
+.aso-home .cast-beam-r i { clip-path: polygon(86% 0, 100% 0, 54% 100%, 8% 100%); }
+
+.aso-home .cast-mark {
+  position: absolute;
+  left: 50%;
+  bottom: -14px;
+  width: 92%;
+  max-width: 520px;
+  height: 80px;
+  transform: translateX(-50%);
+}
+
+/* A height scale beside the character: stage-plot ticks, no labels. */
+.aso-home .cast-scale {
+  position: absolute;
+  right: 6%;
+  top: 6%;
+  bottom: 4%;
+  width: 10px;
+  border-right: 1px solid rgba(127, 211, 244, 0.16);
+  background: repeating-linear-gradient(180deg, rgba(127, 211, 244, 0.22) 0 1px, transparent 1px 24px) right / 6px 100% no-repeat;
+}
+
+/* Featured figure: one visible; the others wait, hidden, in the same box.
+   Crossfade in with a slight rise; out faster. */
+.aso-home .cast-figure {
+  opacity: 0;
+  visibility: hidden;
+  transform: translate3d(0, 8px, 0) scale(0.985);
+  transform-origin: 50% 100%;
+  transition: opacity 220ms ease, transform 300ms ease, visibility 0s linear 300ms;
+}
+
+.aso-home .cast-figure.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 380ms ease 60ms, transform 520ms cubic-bezier(0.2, 0.7, 0.2, 1) 60ms, visibility 0s;
+}
+
+.aso-home .cast-figure svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Roster: six portrait tiles. */
+.aso-home .cast-roster {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.aso-home .cast-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+  padding: 5px 5px 8px;
+  border: 1px solid rgba(127, 211, 244, 0.14);
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(16, 40, 68, 0.6), rgba(7, 18, 33, 0.85));
+  color: var(--home-copy);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 160ms ease, box-shadow 160ms ease, color 160ms ease;
+}
+
+.aso-home .cast-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 6px;
+  background:
+    radial-gradient(ellipse 70% 90% at 62% 28%, rgba(78, 168, 255, 0.26), transparent 70%),
+    #050d18;
+}
+
+.aso-home .cast-thumb svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.72;
+  transition: opacity 160ms ease;
+}
+
+.aso-home .cast-name {
+  padding-inline: 3px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.aso-home .cast-tab:hover {
+  border-color: rgba(127, 211, 244, 0.42);
+  color: #fff;
+}
+
+.aso-home .cast-tab:hover .cast-thumb svg,
+.aso-home .cast-tab[aria-selected="true"] .cast-thumb svg {
+  opacity: 1;
+}
+
+/* Selected: orange edge, underline light, white name. */
+.aso-home .cast-tab[aria-selected="true"] {
+  border-color: rgba(var(--home-orange), 0.85);
+  box-shadow: 0 0 0 1px rgba(var(--home-orange), 0.35), 0 12px 30px -14px rgba(var(--home-orange), 0.65);
+  color: #fff;
+}
+
+.aso-home .cast-tab[aria-selected="true"] .cast-thumb::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 2px;
+  background: rgb(var(--home-orange));
+  box-shadow: 0 0 10px rgba(var(--home-orange), 0.8);
+}
+
+.aso-home .cast-tab:focus-visible,
+.aso-home .cast-plate:focus-visible {
+  outline: 2px solid #7fd3f4;
+  outline-offset: 3px;
+}
+
+/* Plate: every role's text is laid out in one cell, so the plate is always
+   as tall as the longest and selecting never reflows the scene. */
+.aso-home .cast-plate {
+  display: grid;
+  padding: 1.5rem;
+}
+
+.aso-home .cast-plate-body {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 160ms ease, visibility 0s linear 160ms;
+}
+
+.aso-home .cast-plate-body.is-active {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 320ms ease 80ms, visibility 0s;
+}
+
+@media (min-width: 768px) {
+  .aso-home .cast-stage {
+    height: clamp(24rem, 52vh, 30rem);
+  }
+
+  .aso-home .cast-roster {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+/* lg: character on the right over the roster; intro and plate on the
+   left. The character stands about two-thirds across the scene. */
+@media (min-width: 1024px) {
+  .aso-home .cast,
+  .aso-home .cast-env {
+    --cast-spot: 66%;
+  }
+
+  .aso-home .cast {
+    grid-template-columns: minmax(0, 23rem) minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "intro stage"
+      "plate stage"
+      "plate roster";
+    column-gap: 3.5rem;
+    row-gap: 1.25rem;
+  }
+
+  .aso-home .cast-plate {
+    align-self: end;
+  }
+
+  .aso-home .cast-stage {
+    height: auto;
+    min-height: clamp(24rem, 56vh, 34rem);
+  }
+
+  .aso-home .cast-beam {
+    top: -6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aso-home .cast-figure,
+  .aso-home .cast-figure.is-active,
+  .aso-home .cast-plate-body,
+  .aso-home .cast-plate-body.is-active,
+  .aso-home .cast-tab,
+  .aso-home .cast-thumb svg {
+    transition: none;
+  }
+
+  .aso-home .cast-figure {
+    transform: none;
+  }
+}
+
+/* Forced colours: keep the roster and text; drop the painted stage. */
+@media (forced-colors: active) {
+  .aso-home .cast-env,
+  .aso-home .cast-light {
+    display: none;
+  }
+
+  .aso-home .cast-tab[aria-selected="true"] {
+    outline: 2px solid Highlight;
+  }
+}
+
 /* ── Scene stack ────────────────────────────────────────────────────────── */
 
 /* Scene frame: when motion is allowed, every scene fills at least the

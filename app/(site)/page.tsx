@@ -3,7 +3,8 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import HeroLight from "@/components/HeroLight";
 import HeroMedia from "@/components/HeroMedia";
-import PersonaIcon from "@/components/PersonaIcon";
+import CastSelect, { type CastRole } from "@/components/home/CastSelect";
+import { CastDefs, CastEnvironment, CastLight, figureCrop } from "@/components/home/castArt";
 import ConnectedPanels from "@/components/home/ConnectedPanels";
 import HomeClosing from "@/components/home/HomeClosing";
 import HomeScene from "@/components/home/HomeScene";
@@ -64,6 +65,16 @@ const CHANGES = [
     body: "Bring venues, production companies, freelancers, and partners into the same workflow. Share what they need while keeping control of your own information.",
   },
 ];
+
+// Scene 5 roster: the six audiences, in canonical order, with their
+// existing descriptions.
+const CAST_ROLES: CastRole[] = PERSONAS.map((p) => ({
+  slug: p.slug,
+  name: p.name,
+  examples: p.examples,
+  whoTheyAre: p.whoTheyAre,
+  crop: figureCrop(p.slug),
+}));
 
 export default function Home() {
   return (
@@ -268,40 +279,37 @@ export default function Home() {
         <div aria-hidden="true" className="hidden md:block h-7" />
       </HomeScene>
 
-      {/* WHO IT SERVES — right-weighted list against a left-set heading */}
-      <HomeScene tone="navy" seed={53}>
-        <div className="grid lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-16">
-          <div className="mb-10 lg:mb-0">
-            <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-5">
-              Built for the people who make events happen
-            </h2>
-            <p className="home-copy leading-relaxed mb-6">
-              Whether you work alone or run a company with a full crew, you operate
-              through your own organization on ASO.
-            </p>
-            <Link
-              href="/who-its-for"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-aso-orange hover:gap-3 transition-all"
-            >
-              See how ASO fits your work
-              <span aria-hidden="true">&rarr;</span>
-            </Link>
-          </div>
-
-          <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
-            {PERSONAS.map((persona) => (
-              <li
-                key={persona.slug}
-                className="group home-menu-item flex items-center gap-4 py-3 px-4 -mx-1"
+      {/* WHO IT SERVES — a character select: six roles on one persistent
+          stage. Choosing a role changes only the featured character and its
+          description (CastSelect); the environment never changes. */}
+      <HomeScene tone="navy" seed={53} rings={false} backdrop={<CastEnvironment />}>
+        <CastSelect
+          labelledBy="cast-heading"
+          roles={CAST_ROLES}
+          defs={<CastDefs />}
+          light={<CastLight />}
+          intro={
+            <>
+              <h2
+                id="cast-heading"
+                className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-5"
               >
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-white/10 text-aso-blue-light ring-1 ring-aso-blue-light/15 transition group-hover:bg-white/15 group-hover:text-aso-orange group-hover:ring-aso-orange/40">
-                  <PersonaIcon slug={persona.slug} className="h-6 w-6" />
-                </span>
-                <span className="font-medium text-white">{persona.name}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+                Built for the people who make events happen
+              </h2>
+              <p className="home-copy leading-relaxed mb-6">
+                Whether you work alone or run a company with a full crew, you operate
+                through your own organization on ASO.
+              </p>
+              <Link
+                href="/who-its-for"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-aso-orange hover:gap-3 transition-all"
+              >
+                See how ASO fits your work
+                <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </>
+          }
+        />
       </HomeScene>
 
       {/* CTA */}
