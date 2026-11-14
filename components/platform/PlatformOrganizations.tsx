@@ -1,149 +1,193 @@
-import type { ReactNode } from "react";
-
 /**
- * Platform: "Built around your organization".
+ * Platform: Organizations. Who owns the work, and how people and
+ * organizations take part.
  *
- * A light-to-dark progression. The light opening explains what an
- * organization is, that the work belongs to it, and the three ways
- * organizations work on ASO. The section then steps down into a dark,
- * lit band (a horizon of light and a receding stage floor) for the closing
- * statement, which leads into the white Join ASO call to action and so
- * breaks the long run of light sections at the end of the page.
- * No cards, no dashboard, no network, no animation.
+ * One section, one identity: four plain-language points beside a single
+ * explanatory picture of two organization workspaces. Numbered markers tie
+ * each point to the part of the picture it describes:
+ *   1  the organization's records (ownership),
+ *   2  its members and their access (on your own or with a team),
+ *   3  one person who belongs to both organizations with different access
+ *      in each (blue: membership),
+ *   4  a partner organization on one event, with event-only access
+ *      (orange, dashed: collaboration).
+ * No lines between the panels, no network, no dashboard, no animation.
  *
- * Verified against the application (DESIGN-13G.1):
- *   - Every new account gets its own organization, with that person in
- *     charge of it. Roles carry no plans, tiers, or size limits.
- *   - Events, clients, venues, gear and packages, the crew roster,
- *     documents, and financial records belong to the organization, not to a
- *     user account; they stay when a person's membership ends.
- *   - People in one organization have roles that decide what they can view
- *     and manage. A person can belong to more than one organization.
+ * Verified against the application (DESIGN-13G.1, 13G.5):
+ *   - Every account starts with its own organization; roles carry no plans
+ *     or tiers.
+ *   - Events, clients, venues, gear, the crew roster, documents, and
+ *     financial records belong to the organization, not a user account, and
+ *     stay when a membership ends.
+ *   - Roles are scoped to one organization: full control (owner), managing
+ *     day-to-day work (admin), viewing the work (member).
+ *   - One person can belong to several organizations, with a separate role
+ *     in each; pages that act for an organization ask which one, so their
+ *     records are not merged.
  *   - Collaboration is per event, with organizations already on ASO: the
- *     owning organization adds a partner, which starts with view and message
- *     access, and the owner decides what else it can see or do and can remove
- *     it. Each organization keeps its own records.
- *   - Clients, venues, the gear catalog, and the crew roster are reused
- *     across events; past events stay available when preparing new work.
- * Copy is written for open registration (founder direction, DESIGN-13G.2).
- * Do not describe the pilot's manual onboarding, internal role names, or
- * database terms; do not claim plan or tier parity statements.
+ *     event's organization adds the partner (default: view event details and
+ *     message) and decides what else it can see or do. Each organization
+ *     keeps its own records.
+ * Do not describe pilot onboarding, self-service member management, internal
+ * role names, database terms, or tiers.
  *
  * Styling: app/(site)/platform/platform.css under .platform-orgs.
  */
 
-const ICON = {
-  width: 20,
-  height: 20,
-  viewBox: "0 0 24 24",
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.7,
-  strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
-  "aria-hidden": true,
-};
-
-const OWNED = ["Events", "Clients", "Venues", "Gear", "Crew roster", "Documents", "Financial records"];
-
-const WAYS: { id: string; title: string; body: string; icon: ReactNode }[] = [
+const POINTS = [
   {
-    id: "solo",
-    title: "On your own",
-    body: "Run your whole operation from your own organization. Every account starts with one, so you don't need a team to use ASO.",
-    icon: (
-      <svg {...ICON}>
-        <circle cx="12" cy="8" r="3.5" />
-        <path d="M5 20c.9-3.6 3.6-5.5 7-5.5s6.1 1.9 7 5.5" />
-      </svg>
-    ),
+    n: 1,
+    title: "It owns the work",
+    body: "Events, clients, venues, gear, documents, and financial records belong to the organization, not to any one member's account. They stay with it as projects and people change.",
   },
   {
-    id: "team",
-    title: "With your team",
-    body: "Bring people into the same organization. Roles and permissions decide what each person can see and manage.",
-    icon: (
-      <svg {...ICON}>
-        <circle cx="9" cy="8.5" r="3" />
-        <path d="M3.5 19.5c.8-3 2.9-4.5 5.5-4.5s4.7 1.5 5.5 4.5" />
-        <path d="M15.5 6a3 3 0 0 1 0 5.6M17.5 15.3c1.5.6 2.5 2 3 4.2" />
-      </svg>
-    ),
+    n: 2,
+    title: "On your own or with a team",
+    body: "Run your organization by yourself, or work in it with others. Each member's role decides what they can view and manage.",
   },
   {
-    id: "partners",
-    title: "With other organizations",
-    body: "When an event calls for it, add another organization on ASO to that event and choose what they can see and do there. Your records stay yours.",
-    icon: (
-      <svg {...ICON}>
-        <rect x="2.5" y="7" width="8" height="10" rx="1.5" />
-        <rect x="13.5" y="7" width="8" height="10" rx="1.5" />
-        <path d="M10.5 12h3" />
-      </svg>
-    ),
+    n: 3,
+    title: "One person, more than one organization",
+    body: "Freelancers and production professionals can belong to several organizations. In each, they work with the access that organization gives them, and each organization's records stay its own.",
+  },
+  {
+    n: 4,
+    title: "Partners on a specific event",
+    body: "An organization can bring another organization on ASO onto one of its events. The event's organization decides what the partner can see and do there. Neither gets the other's records.",
   },
 ];
 
+const Marker = ({ n }: { n: number }) => (
+  <span aria-hidden="true" className={`po-num po-num-${n}`}>
+    {n}
+  </span>
+);
+
+const Person = ({ label, access, shared = false }: { label: string; access: string; shared?: boolean }) => (
+  <li className={shared ? "po-person is-shared" : "po-person"}>
+    <span aria-hidden="true" className="po-avatar">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round">
+        <circle cx="12" cy="8.5" r="3.5" />
+        <path d="M5.5 20c.8-3.4 3.3-5.2 6.5-5.2s5.7 1.8 6.5 5.2" />
+      </svg>
+    </span>
+    <span className="po-person-name">{label}</span>
+    <span className="po-access">{access}</span>
+  </li>
+);
+
+const Records = ({ label }: { label: string }) => (
+  <div className="po-records">
+    <span aria-hidden="true" className="po-files">
+      <span />
+      <span />
+      <span />
+    </span>
+    <span className="po-records-label">{label}</span>
+  </div>
+);
+
 export default function PlatformOrganizations() {
   return (
-    <section className="platform-orgs relative" aria-labelledby="po-title">
-      {/* Understanding: the light opening. */}
-      <div className="po-light relative overflow-hidden bg-aso-bg">
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none aso-plot-grid-light" />
+    <section className="platform-orgs relative overflow-hidden bg-aso-bg" aria-labelledby="po-title">
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none aso-plot-grid-light" />
 
-        <div className="relative max-w-6xl mx-auto px-6 pt-16 pb-14 md:pt-20 md:pb-16">
-          <div className="po-top">
-            <div className="po-head">
-              <h2 id="po-title" className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight">
-                Built around your organization
-              </h2>
-              <p className="po-intro">
-                Whether you&apos;re an independent professional or a company with a full crew, your organization is
-                your home on ASO: where your events, people, resources, and records belong.
-              </p>
+      <div className="relative max-w-6xl mx-auto px-6 py-16 md:py-20">
+        <div className="po-head">
+          <h2 id="po-title" className="text-3xl md:text-4xl font-bold text-aso-navy tracking-tight">
+            Your organization owns its work
+          </h2>
+          <p className="po-intro">
+            Your organization is your workspace on ASO. It&apos;s where your events, resources, and records belong,
+            whether you&apos;re working independently or running a team.
+          </p>
+        </div>
+
+        <div className="po-body">
+          {/* The picture: two organization workspaces. */}
+          <figure
+            className="po-model"
+            role="img"
+            aria-label="Example: your organization holds its own records and members with different access. One freelancer belongs to your organization and to another organization, with separate access in each. The other organization is a partner on one of your events, with access to that event only."
+          >
+            <div className="po-ws po-ws-yours">
+              <div className="po-ws-head">
+                <span aria-hidden="true" className="po-mono">
+                  Y
+                </span>
+                <span className="po-ws-name">Your organization</span>
+              </div>
+
+              <div className="po-ws-row">
+                <Marker n={1} />
+                <Records label="Your events and records" />
+              </div>
+
+              <div className="po-ws-row">
+                <Marker n={2} />
+                <ul className="po-people">
+                  <Person label="You" access="Full control" />
+                  <Person label="Team member" access="Manages day-to-day work" />
+                  <Person label="Freelancer" access="Manages day-to-day work" shared />
+                </ul>
+              </div>
+
+              <div className="po-ws-row">
+                <Marker n={4} />
+                <div className="po-event">
+                  <p className="po-event-name">One of your events</p>
+                  <p className="po-partner">
+                    <span className="po-partner-label">Partner on this event</span>
+                    <span className="po-partner-org">Another organization</span>
+                  </p>
+                  <p className="po-scopes">
+                    <span>Event details</span>
+                    <span>Messages</span>
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="po-own">
-              <h3 className="po-own-title">The work belongs to your organization</h3>
-              <p className="po-own-body">
-                Not to any one person&apos;s account. As people and projects change, your organization keeps what it
-                has built.
-              </p>
-              <ul className="po-owned" aria-label="What your organization keeps">
-                {OWNED.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+            <div className="po-ws po-ws-other">
+              <div className="po-ws-head">
+                <span aria-hidden="true" className="po-mono po-mono-other">
+                  A
+                </span>
+                <span className="po-ws-name">Another organization</span>
+              </div>
 
-          <ul className="po-ways" aria-label="How organizations work on ASO">
-            {WAYS.map((way) => (
-              <li key={way.id} className="po-way">
-                <span className="po-way-icon">{way.icon}</span>
-                <h3 className="po-way-title">{way.title}</h3>
-                <p className="po-way-body">{way.body}</p>
+              <div className="po-ws-row">
+                <span aria-hidden="true" className="po-num po-num-blank" />
+                <Records label="Its own events and records" />
+              </div>
+
+              <div className="po-ws-row">
+                <Marker n={3} />
+                <ul className="po-people">
+                  <Person label="Freelancer" access="Views the work" shared />
+                  <Person label="Their team" access="Their own roles" />
+                </ul>
+              </div>
+            </div>
+
+            <figcaption className="po-key">
+              <span className="po-key-item po-key-member">Same person, separate access in each organization</span>
+              <span className="po-key-item po-key-partner">Access to one event only</span>
+            </figcaption>
+          </figure>
+
+          {/* The four points, numbered to match the picture. */}
+          <ol className="po-points">
+            {POINTS.map((point) => (
+              <li key={point.n} className={`po-point po-point-${point.n}`}>
+                <Marker n={point.n} />
+                <div>
+                  <h3 className="po-point-title">{point.title}</h3>
+                  <p className="po-point-body">{point.body}</p>
+                </div>
               </li>
             ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Ambition: the dark, lit close, leading into the call to action. */}
-      <div className="po-dark relative overflow-hidden">
-        <div aria-hidden="true" className="po-floor" />
-        <div aria-hidden="true" className="po-glow" />
-
-        <div className="po-dark-inner relative max-w-6xl mx-auto px-6">
-          <span aria-hidden="true" className="po-mark" />
-          <h3 className="po-climax-title">
-            Build an operation that&apos;s ready for <span className="po-climax-accent">what&apos;s next.</span>
-          </h3>
-          <p className="po-climax-body">
-            Your work belongs to your organization. Start each event from the clients, venues, gear, and crew already
-            on file, carry what you&apos;ve built from one event into the next, and grow your team and partnerships
-            without rebuilding from scratch.
-          </p>
+          </ol>
         </div>
       </div>
     </section>
