@@ -4,8 +4,10 @@ import { MODEL, type Box, type FaceKind } from "./architecture";
 
 /**
  * The Platform hero's architecture model: the organization as the
- * foundation, the Connected Operating Record layered on its core, and the
- * Workstations joined to the record along the floor. Geometry comes from
+ * foundation, the Connected Operating Record layered on its core, the
+ * Workstations joined along the floor (to the record, or for Signage to the
+ * organization itself), and other organizations linked to this one in the
+ * distance. Geometry comes from
  * architecture.ts (projected at build time); styling and motion live in
  * app/(site)/platform/platform.css under .platform-hero.
  *
@@ -14,8 +16,9 @@ import { MODEL, type Box, type FaceKind } from "./architecture";
  * names is already in the page copy.
  */
 
-// Record layers, top to bottom, in the words of the page's own copy.
-const LAYERS = ["Client · Venue", "Crew · Gear", "Documents · Money"];
+// Record layers, top to bottom, in the platform's own terms (the Event
+// Workstation's parties, Crew, Gear, Documents, and Financials).
+const LAYERS = ["Client · Venue", "Crew · Gear", "Documents · Financials"];
 
 const NAMES = Object.fromEntries(WORKSTATIONS.map((w) => [w.slug, w.name]));
 
@@ -26,6 +29,36 @@ const FILL: Record<string, Record<FaceKind, string>> = {
   core: { top: "#a9dbff", left: "url(#pf-core-l)", right: "url(#pf-core-r)" },
   module: { top: "url(#pf-mod-top)", left: "url(#pf-mod-l)", right: "url(#pf-mod-r)" },
 };
+
+// Other organizations: the same materials, flattened and cooler, with a
+// muted core so nothing in them competes with this organization's spine.
+const OTHER_FILL: Record<"plinth" | "foundation" | "core" | "plate", Record<FaceKind, string>> = {
+  plinth: { top: "#0a1b30", left: "#08172a", right: "#050f1c" },
+  foundation: { top: "#12345a", left: "#0f2945", right: "#0a1d34" },
+  core: { top: "#8cc6f0", left: "#5a9fd8", right: "#3a7ab8" },
+  plate: { top: "rgba(60, 125, 195, 0.4)", left: "rgba(70, 140, 210, 0.45)", right: "rgba(40, 95, 160, 0.5)" },
+};
+
+type Other = (typeof MODEL.otherOrganizations)["a"];
+
+/** Another organization in the distance, with its link to this one. The link
+ *  carries a restrained pulse, inbound then outbound, every 11 seconds. */
+function OtherOrganization({ o, id, delay }: { o: Other; id: string; delay: string }) {
+  return (
+    <g className={`pf-other pf-other-${id}`}>
+      <path d={o.link} className="pf-other-link" />
+      <path d={o.link} pathLength={100} className="pf-other-pulse" style={{ animationDelay: delay }} />
+      {o.parts.map((p, i) => (
+        <g key={i}>
+          {p.box.faces.map((f) => (
+            <polygon key={f.kind} points={f.points} fill={OTHER_FILL[p.kind][f.kind]} />
+          ))}
+          {(p.kind === "foundation" || p.kind === "plate") && <polygon points={p.box.top} className="pf-other-edge" />}
+        </g>
+      ))}
+    </g>
+  );
+}
 
 function Solid({ box, fill, className }: { box: Box; fill: keyof typeof FILL; className?: string }) {
   return (
@@ -66,7 +99,7 @@ export default function PlatformArchitecture() {
       className="pf-model relative w-full"
       style={{ aspectRatio: MODEL.aspect }}
       role="img"
-      aria-label="Diagram: the organization is the foundation. The Connected Operating Record is layered on it, and the Event, Inventory, Marketing, and Signage Workstations are connected to the record."
+      aria-label="Diagram: the organization is the foundation. The Connected Operating Record is layered on it. The Event, Inventory, and Marketing Workstations are connected to the record, and the Signage Workstation to the organization. Other organizations connect with the organization."
     >
       <svg viewBox={MODEL.viewBox} className="absolute inset-0 h-full w-full overflow-visible" aria-hidden="true" focusable="false">
         <defs>
@@ -185,6 +218,11 @@ export default function PlatformArchitecture() {
         <ellipse cx={MODEL.light[0]} cy={MODEL.light[1] - 60} rx="44" ry="190" fill="url(#pf-shaft)" filter="url(#pf-soft)" className="pf-shaft" />
         <ellipse cx={MODEL.ground[0]} cy={MODEL.ground[1] + 52} rx="250" ry="58" className="pf-pool" filter="url(#pf-soft)" />
 
+        {/* Other organizations, in the distance behind this one. */}
+        <OtherOrganization o={MODEL.otherOrganizations.b} id="b" delay="-5.5s" />
+        <OtherOrganization o={MODEL.otherOrganizations.a} id="a" delay="0s" />
+        <OtherOrganization o={MODEL.otherOrganizations.aCompact} id="a-compact" delay="0s" />
+
         {/* Organization: plinth, foundation, etched plot grid, orange inlay. */}
         <Solid box={MODEL.plinth} fill="plinth" />
         <polygon points={MODEL.plinth.top} className="pf-plinth-edge" />
@@ -196,6 +234,11 @@ export default function PlatformArchitecture() {
         </g>
         <polygon points={MODEL.foundation.top} className="pf-found-edge" />
         <polygon points={MODEL.inlay} className="pf-inlay" />
+        {/* Where the other organizations' links meet this foundation. */}
+        {(["b", "a", "a-compact"] as const).map((id) => {
+          const o = MODEL.otherOrganizations[id === "a-compact" ? "aCompact" : id];
+          return <circle key={id} cx={o.point[0]} cy={o.point[1]} r="2" className={`pf-other-point pf-other-${id}`} />;
+        })}
         <line
           x1={MODEL.foundation.nearEdge[0][0]} y1={MODEL.foundation.nearEdge[0][1]}
           x2={MODEL.foundation.nearEdge[1][0]} y2={MODEL.foundation.nearEdge[1][1]}
@@ -277,7 +320,7 @@ export default function PlatformArchitecture() {
         {labels.modules.map((m) => (
           <span
             key={m.slug}
-            className={`pf-label pf-label-ws pf-label-ws-${m.side}`}
+            className={`pf-label pf-label-ws pf-label-ws-${m.side} pf-label-ws-${m.slug}`}
             style={{
               ["--x" as string]: m.wide.left,
               ["--y" as string]: m.wide.top,

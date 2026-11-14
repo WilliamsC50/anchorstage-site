@@ -49,10 +49,12 @@
   }
 }
 
+/* 1024-1279px: no overhang, so the widest layer label keeps clear of the
+   viewport edge. */
 @media (min-width: 1024px) {
   .platform-hero-stage {
     max-width: none;
-    margin-right: -1.5rem;
+    margin-right: 0;
   }
 }
 
@@ -168,6 +170,105 @@
   100% {
     stroke-dashoffset: -100;
     opacity: 0;
+  }
+}
+
+/* ── Model: other organizations ─────────────────────────────────────────── */
+
+/* Subdued and blue only: the orange stays this organization's. */
+.platform-hero .pf-other {
+  opacity: 0.58;
+}
+
+.platform-hero .pf-other-edge {
+  fill: none;
+  stroke: rgba(143, 208, 255, 0.55);
+  stroke-width: 0.9;
+}
+
+.platform-hero .pf-other-link {
+  fill: none;
+  stroke: rgba(127, 211, 244, 0.55);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.platform-hero .pf-other-point {
+  fill: #7fd3f4;
+  opacity: 0.8;
+}
+
+/* One pulse every 11 seconds, alternating direction: in toward this
+   organization, then out toward the other. */
+.platform-hero .pf-other-pulse {
+  fill: none;
+  stroke: #bfe6ff;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 5 200;
+  stroke-dashoffset: 5;
+  opacity: 0;
+  animation: pf-other-flow 22s linear infinite;
+}
+
+@keyframes pf-other-flow {
+  0% {
+    stroke-dashoffset: 5;
+    opacity: 0;
+  }
+  3%,
+  17% {
+    opacity: 0.9;
+  }
+  20% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+  50% {
+    stroke-dashoffset: -100;
+    opacity: 0;
+  }
+  53%,
+  67% {
+    opacity: 0.9;
+  }
+  70% {
+    stroke-dashoffset: 5;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 5;
+    opacity: 0;
+  }
+}
+
+/* Which of them show: both from 1280px; below that only the nearer one, as
+   the further one would crowd the copy and labels. At 1024-1279px the nearer
+   one is set further back (a-compact), clear of the copy column. None on
+   phones. */
+.platform-hero .pf-other-a-compact {
+  display: none;
+}
+
+@media (max-width: 1279px) {
+  .platform-hero .pf-other-b {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .platform-hero .pf-other-a {
+    display: none;
+  }
+
+  .platform-hero .pf-other-a-compact {
+    display: inline;
+  }
+}
+
+@media (max-width: 639px) {
+  .platform-hero .pf-other-a {
+    display: none;
   }
 }
 
@@ -317,6 +418,12 @@
   .platform-hero .pf-label-ws-right {
     transform: translate(4px, -50%);
   }
+
+  /* Lifted a little so the Signage conduit, which runs along the module's
+     foot to the inlay, keeps clear of it. */
+  .platform-hero .pf-label-ws-signage {
+    transform: translate(calc(-100% - 4px), calc(-50% - 6px));
+  }
 }
 
 /* The narrowest phones: names only, so the right-hand labels clear each other. */
@@ -333,7 +440,8 @@
 /* ── Reduced motion ─────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
-  .platform-hero .pf-pulse {
+  .platform-hero .pf-pulse,
+  .platform-hero .pf-other-pulse {
     display: none;
   }
 

@@ -125,11 +125,15 @@ const MOD = 15; // module half-size
 const MOD_H = 14;
 const MOD_R = 63; // module distance from the centre
 
+// Where each Workstation's conduit goes. Event, Inventory, and Marketing work
+// from event information, so they feed the record. Signage belongs to the
+// organization (its screens are the organization's, not an event's), so its
+// conduit runs to the organization's boundary inlay instead.
 export const WORKSTATION_SLOTS = [
-  { slug: "event", at: [MOD_R, 0] },
-  { slug: "inventory", at: [0, MOD_R] },
-  { slug: "marketing", at: [-MOD_R, 0] },
-  { slug: "signage", at: [0, -MOD_R] },
+  { slug: "event", at: [MOD_R, 0], to: "record" },
+  { slug: "inventory", at: [0, MOD_R], to: "record" },
+  { slug: "marketing", at: [-MOD_R, 0], to: "record" },
+  { slug: "signage", at: [0, -MOD_R], to: "organization" },
 ] as const;
 
 const plinth = box(0, 0, PLINTH, PLINTH, PLINTH_Z, FOUND_Z - 2);
@@ -175,17 +179,31 @@ const strata = PLATES.map(([, t]) => {
 });
 
 // Workstations, conduits, and junctions.
-const modules = WORKSTATION_SLOTS.map(({ slug, at: [mx, my] }) => {
-  const dir: V3 = [Math.sign(mx), Math.sign(my), 0];
-  const start: V3 = [mx - dir[0] * MOD, my - dir[1] * MOD, 0.1];
-  // The conduit runs along the floor, under the plates, into the record's
-  // core: every Workstation feeds the same spine.
-  const end: V3 = [dir[0] * (CORE + 1.5), dir[1] * (CORE + 1.5), 0.1];
-  // Twin conduit, offset sideways.
-  const side: V3 = [-dir[1] * 3.5, dir[0] * 3.5, 0];
+const modules = WORKSTATION_SLOTS.map(({ slug, at: [mx, my], to }) => {
+  const out: V3 = [Math.sign(mx), Math.sign(my), 0];
+  let start: V3, end: V3, dir: V3;
+  if (to === "record") {
+    // Along the floor, under the plates, into the record's core.
+    dir = [-out[0], -out[1], 0];
+    start = [mx - out[0] * MOD, my - out[1] * MOD, 0.1];
+    end = [out[0] * (CORE + 1.5), out[1] * (CORE + 1.5), 0.1];
+  } else {
+    // Away from the record, to the boundary inlay. The module stands on the
+    // inlay's back edge, so the conduit runs along its camera-facing foot,
+    // outward (away from the record), and meets the inlay where it emerges
+    // at the module's back corner.
+    dir = [out[0], out[1], 0];
+    start = [mx + MOD + 3, my + MOD - 4, 0.1];
+    end = [mx + MOD + 3, -INSET, 0.1];
+  }
+  // Twin conduit, offset sideways (for record conduits, on the same side as
+  // before the Signage reroute).
+  const across = to === "record" ? out : dir;
+  const side: V3 = [-across[1] * 3.5, across[0] * 3.5, 0];
   const d = depth([mx, my, MOD_H / 2]);
   return {
     slug,
+    to,
     depth: d,
     front: depth(end) <= depth([0, 0, 0]),
     box: box(mx, my, MOD, MOD, 0, MOD_H),
@@ -198,9 +216,9 @@ const modules = WORKSTATION_SLOTS.map(({ slug, at: [mx, my] }) => {
     ]),
     junction: project(end),
     // Labels sit outboard of each module, on the side away from the record,
-    // anchored at the module's outermost corner: at the top for the modules
-    // in front, at the base for the two behind the record, which keeps
-    // theirs clear of the record's layer labels.
+    // anchored at the module's outermost corner: at the top, except for a
+    // module behind the record on the right, whose label sits at its base to
+    // keep clear of the record's layer labels in that column.
     ...(() => {
       const side: "left" | "right" = project([mx, my, 0])[0] < project([0, 0, 0])[0] ? "left" : "right";
       // On phones the layer labels are hidden, so every label can use the top.
@@ -209,11 +227,66 @@ const modules = WORKSTATION_SLOTS.map(({ slug, at: [mx, my] }) => {
         return project(cs.reduce((a, b) => ((project(b)[0] < project(a)[0]) === (side === "left") ? b : a)));
       };
       const behind = d > depth([0, 0, MOD_H / 2]);
-      return { side, label: outer(behind ? 0 : MOD_H), labelCompact: outer(MOD_H) };
+      return { side, label: outer(behind && side === "right" ? 0 : MOD_H), labelCompact: outer(MOD_H) };
     })(),
   };
 });
 const recordDepth = depth([0, 0, 30]);
+
+// ── Other organizations ──────────────────────────────────────────────────
+//
+// Smaller organizations set back in the distance, behind and to the left of
+// this one (the right side is the label column). Each is a scaled copy of an
+// organization (plinth, foundation, core, and a two-layer record) so it reads
+// as its own organization, never as a Workstation. A faint link runs from its
+// foundation to this organization's foundation edge. Positions are given in
+// camera terms: how far back from this organization, and how far across the
+// screen (negative is left).
+
+const BACK = norm([FWD[0], FWD[1], 0]);
+const ACROSS = norm([RIGHT[0], RIGHT[1], 0]);
+
+function otherOrganization(back: number, across: number, k: number) {
+  const cx = BACK[0] * back + ACROSS[0] * across;
+  const cy = BACK[1] * back + ACROSS[1] * across;
+  // Scaled about the floor, so it stands on the same ground plane.
+  const zs = (zz: number) => PLINTH_Z + (zz - PLINTH_Z) * k;
+  const b = (h: number, z0: number, z1: number) => box(cx, cy, h * k, h * k, zs(z0), zs(z1));
+  const parts: { kind: "plinth" | "foundation" | "core" | "plate"; box: Box }[] = [
+    { kind: "plinth", box: b(PLINTH, PLINTH_Z, FOUND_Z - 2) },
+    { kind: "foundation", box: b(FOUND, FOUND_Z, 0) },
+    { kind: "core", box: b(CORE, 0, PLATES[0][0]) },
+    { kind: "plate", box: b(PLATE, PLATES[0][0], PLATES[0][1]) },
+    { kind: "core", box: b(CORE, PLATES[0][1], PLATES[1][0]) },
+    { kind: "plate", box: b(PLATE, PLATES[1][0], PLATES[1][1]) },
+    { kind: "core", box: b(CORE, PLATES[1][1], PLATES[1][1] + 7) },
+  ];
+  // Link: from this organization's foundation edge, facing ours, to our
+  // foundation's left corner. That corner is the nearest point of our
+  // foundation that is always in view: the edges facing these organizations
+  // sit behind the Signage module and the record, and a link meeting them
+  // would show through the record's glass as if it joined the record.
+  const to = LINK_POINT;
+  const d = norm([to[0] - cx, to[1] - cy, 0]);
+  const m = Math.max(Math.abs(d[0]), Math.abs(d[1]));
+  const from: V3 = [cx + (d[0] / m) * FOUND * k, cy + (d[1] / m) * FOUND * k, zs(0)];
+  return { parts, link: path([from, to]), point: project(to) };
+}
+
+const LINK_POINT: V3 = [FOUND, -FOUND, 0];
+
+// a: the nearer one. b: further back, to the right of a, so its link comes
+// down between a and the Signage label without touching either; it shows
+// from 1280px only. aCompact: a, set further back and right for
+// 1024-1279px, where the copy column reaches closer to the model (CSS shows
+// it there in place of a). All stay right of the copy column. Positions were
+// chosen by measuring copy, label, edge, and mutual clearance (organizations
+// and links) at every width each one shows.
+const otherOrganizations = {
+  a: otherOrganization(360, -250, 0.3),
+  b: otherOrganization(700, -240, 0.26),
+  aCompact: otherOrganization(420, -230, 0.3),
+};
 
 // Label anchors: the organization at the foundation's front corner, the
 // record above its top plate, each layer at its plate's right corner.
@@ -254,6 +327,7 @@ export const MODEL = {
   modulesBehind: modules.filter((m) => m.depth > recordDepth).sort((a, b) => b.depth - a.depth),
   modulesFront: modules.filter((m) => m.depth <= recordDepth).sort((a, b) => b.depth - a.depth),
   modules,
+  otherOrganizations,
   light: project([0, 0, 40]),
   ground: project([0, 0, 0]),
   labels: {
