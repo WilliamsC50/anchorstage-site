@@ -36,7 +36,7 @@ import WorkstationIcon from "@/components/WorkstationIcon";
  *     sessions, notices, slideshows, and open-mic sign-up lists, live.
  *   - Integrations: a one-time export of an event to Google Calendar (not a
  *     sync); imports of clients, venues, and crew roster from a CSV file or
- *     Google Sheets.
+ *     Google Sheets. Nothing else (Drive, OneDrive, and so on) is live yet.
  * Never claim inventory creates quotes, payment processing, automatic
  * handoffs, calendar sync, or a fixed workflow.
  *
@@ -302,12 +302,34 @@ export default function PlatformTools() {
         </div>
 
         <div className="pt-foot">
-          <p>
-            <span className="pt-foot-label">Integrations</span>
-            Export an event to Google Calendar, and import clients, venues, and your crew roster from a CSV file or
-            Google Sheets.
-          </p>
-          <p>
+          {/* Integrations: what works today, and why it helps. */}
+          <div className="pt-int">
+            <span aria-hidden="true" className="pt-int-icon">
+              <svg {...ICON}>
+                <path d="M9 3.5v4M15 3.5v4" />
+                <path d="M6.5 7.5h11V11a5.5 5.5 0 0 1-11 0Z" />
+                <path d="M12 16.5v4" />
+              </svg>
+            </span>
+            <div className="pt-int-text">
+              <h3 className="pt-int-title">Works with tools you already use</h3>
+              <p className="pt-int-body">
+                Bring the client, venue, and crew information you already keep into ASO from a CSV file or Google
+                Sheets instead of retyping it, and export an event to Google Calendar when you need it there.
+              </p>
+              <ul className="pt-int-list" aria-label="Integrations available today">
+                <li>
+                  <span className="pt-int-dir">Import</span>
+                  CSV files · Google Sheets
+                </li>
+                <li>
+                  <span className="pt-int-dir">Export</span>
+                  Google Calendar
+                </li>
+              </ul>
+            </div>
+          </div>
+          <p className="pt-access">
             <span className="pt-foot-label">Access</span>
             Your organization decides who uses each tool. Each person sees what their role allows.
           </p>

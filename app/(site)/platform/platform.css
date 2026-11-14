@@ -1897,9 +1897,9 @@
 /* Integrations and access, each said once. */
 .platform-tools .pt-foot {
   display: grid;
-  gap: 0.625rem;
+  gap: 1.25rem;
   margin-top: 2.25rem;
-  padding-top: 1.25rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--pt-line);
 }
 
@@ -1907,6 +1907,73 @@
   font-size: 0.875rem;
   line-height: 1.55;
   color: var(--pt-text);
+}
+
+/* Integrations: a navy plug mark, a short benefit, and what connects today. */
+.platform-tools .pt-int {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.875rem;
+  align-items: start;
+}
+
+.platform-tools .pt-int-icon {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 10px;
+  background: var(--aso-navy);
+  color: #7fd3f4;
+}
+
+.platform-tools .pt-int-title {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--aso-navy);
+}
+
+.platform-tools .pt-foot .pt-int-body {
+  margin-top: 0.25rem;
+  font-size: 0.9375rem;
+}
+
+.platform-tools .pt-int-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.625rem;
+}
+
+.platform-tools .pt-int-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.1875rem 0.625rem 0.1875rem 0.25rem;
+  border: 1px solid #c9dfee;
+  border-radius: 999px;
+  background: #f3f9fd;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--aso-navy);
+}
+
+.platform-tools .pt-int-dir {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  line-height: 1.4;
+  border-radius: 999px;
+  background: var(--aso-navy);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.platform-tools .pt-access {
+  align-self: center;
 }
 
 .platform-tools .pt-foot-label {
@@ -2010,7 +2077,7 @@
   }
 
   .platform-tools .pt-foot {
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 2.1fr) minmax(0, 1fr);
     column-gap: 2.5rem;
   }
 }

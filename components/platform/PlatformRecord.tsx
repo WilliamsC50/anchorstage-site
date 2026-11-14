@@ -132,7 +132,7 @@ export default function PlatformRecord() {
             <h2 id="pr-title" className="text-3xl md:text-4xl font-bold text-white tracking-tight">
               The Connected Operating Record
             </h2>
-            <p className="pr-tagline">One record per event. Linked, not copied.</p>
+            <p className="pr-tagline">Every event record. Connected across your entire operation.</p>
             <p className="pr-intro">
               Each event keeps its operational information in one place, linked to the clients, venues, crew, and gear
               your organization already maintains.
