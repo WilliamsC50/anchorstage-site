@@ -2085,9 +2085,10 @@
 /* ── Platform: Organizations ("Your organization owns its work") ─────────────
    components/platform/PlatformOrganizations.tsx. One navy section: four
    numbered points beside a picture of two white organization workspaces.
-   Alex Rivera keeps one identity in both (blue, marked 3); Event A appears
-   in both, owned by one and partnered by the other (orange, marked 4). No
-   legend, lines, dashboard, or animation. Every rule sits under
+   Markers 1, 2, and 4 sit in a left gutter beside what they describe; Alex
+   Rivera keeps one identity in both panels (blue, marked 3); Event A is
+   owned in one and shared with the other as a partner (orange, marked 4).
+   No legend, lines, dashboard, or animation. Every rule sits under
    .platform-orgs. */
 
 .platform-orgs {
@@ -2153,6 +2154,11 @@
   background: #ff9550;
 }
 
+.platform-orgs .po-ws .po-num {
+  background: var(--aso-navy);
+  color: #fff;
+}
+
 .platform-orgs .po-ws .po-num-3 {
   background: var(--po-blue);
   color: #fff;
@@ -2173,7 +2179,7 @@
 
 .platform-orgs .po-ws {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.625rem;
   padding: 0.875rem 1rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 16px;
@@ -2190,7 +2196,7 @@
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  padding-bottom: 0.75rem;
+  padding-bottom: 0.625rem;
   border-bottom: 1px solid var(--po-line);
 }
 
@@ -2217,10 +2223,37 @@
   color: var(--aso-navy);
 }
 
+/* A block of a workspace panel: marker gutter, then content. */
+.platform-orgs .po-row {
+  display: grid;
+  grid-template-columns: 1.375rem minmax(0, 1fr);
+  gap: 0.625rem;
+  align-items: start;
+}
+
+.platform-orgs .po-row > .po-num {
+  margin-top: 0.125rem;
+}
+
+.platform-orgs .po-gutter {
+  width: 1.375rem;
+}
+
+.platform-orgs .po-label {
+  margin-bottom: 0.3125rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #556678;
+}
+
 .platform-orgs .po-records {
   display: flex;
   align-items: center;
   gap: 0.625rem;
+  min-height: 1.5rem;
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--po-ink);
@@ -2323,8 +2356,16 @@
   color: #8a3c08;
 }
 
-.platform-orgs .po-event-line .po-num {
-  margin-left: auto;
+.platform-orgs .po-event-partner {
+  margin-top: 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--po-ink);
+}
+
+.platform-orgs .po-event-partner strong {
+  font-weight: 600;
+  color: var(--aso-navy);
 }
 
 .platform-orgs .po-event-access {

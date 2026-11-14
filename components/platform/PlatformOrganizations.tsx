@@ -5,56 +5,57 @@
  * One navy section: four numbered points beside one picture of two
  * organization workspaces, using clearly fictional example names (founder
  * supplied, DESIGN-13G.6): "Your Organization", the freelancer "Alex Rivera",
- * and "Northstar Production". The picture shows:
- *   - each organization with its own records and members;
- *   - Alex in both organizations with the same identity but different access
- *     (blue, marked 3: membership);
- *   - "Event A", owned by Your Organization, with Northstar on it as a
- *     partner with event-only access (orange, marked 4: collaboration).
- * No lines between the panels, no legend, no network, no dashboard, no
- * animation.
+ * and "Northstar Production". Each point's number appears in the picture
+ * beside what it describes (3 and 4 in both panels):
+ *   1  Your Organization's events and records,
+ *   2  its members (you as owner, a team member, Alex),
+ *   3  Alex, a member of both organizations with different access (blue),
+ *   4  Event A, owned by Your Organization, with Northstar as an event
+ *      partner (orange); Northstar sees it as shared, separate from its own.
+ * No legend, lines, dashboard, or animation.
  *
  * Verified against the application (DESIGN-13G.1, 13G.5, 13G.6):
- *   - Every account starts with its own organization; roles carry no plans
- *     or tiers.
  *   - Events, clients, venues, gear, the crew roster, documents, and
  *     financial records belong to the organization, not a user account, and
  *     stay when a membership ends.
  *   - Roles are scoped to one organization: full control (owner), managing
- *     day-to-day work (admin), viewing the work (member).
+ *     the work (admin: every operational area), viewing the work (member).
  *   - One person can belong to several organizations, with a separate role
- *     in each; pages that act for an organization ask which one, so records
- *     are not merged and one membership grants nothing in the other.
+ *     in each; one membership grants nothing in another.
  *   - Collaboration is per event, with organizations already on ASO: the
  *     event's organization adds the partner (default: view event details and
- *     message) and decides what else it can see or do. The partner sees the
- *     event among the events it takes part in; each keeps its own records.
- * Do not describe pilot onboarding, self-service member management, internal
- * role names, database terms, or tiers.
+ *     message) and decides what else it can see or do. Partner organizations
+ *     are not members of the owner's organization; each keeps its own
+ *     records, and the partner sees the event among the events it takes part
+ *     in.
+ * Do not describe pilot onboarding or how members are added, self-service
+ * member management, internal role names, database terms, or tiers.
  *
  * Styling: app/(site)/platform/platform.css under .platform-orgs.
  */
 
+import type { ReactNode } from "react";
+
 const POINTS = [
   {
     n: 1,
-    title: "It owns the work",
-    body: "Events, clients, venues, gear, documents, and financial records belong to the organization, not to any one member's account. They stay with it as projects and people change.",
+    title: "Your records stay together",
+    body: "Your events, clients, venues, gear, documents, and financial records remain with your organization as projects finish and people come and go.",
   },
   {
     n: 2,
-    title: "On your own or with a team",
-    body: "Run your organization by yourself, or work in it with others. Each member's role decides what they can view and manage.",
+    title: "Build your own team",
+    body: "Work independently or add members to your organization. Each member works within your organization's workspace, with access based on their role.",
   },
   {
     n: 3,
     title: "One person, more than one organization",
-    body: "Freelancers and production professionals, like Alex in the example, can belong to several organizations. In each, they work with the access that organization gives them, and each organization's records stay its own.",
+    body: "Freelancers and production professionals, like Alex in the example, can belong to several organizations independently. Each organization sets their access, and access in one doesn't carry over to another.",
   },
   {
     n: 4,
-    title: "Partners on a specific event",
-    body: "An organization can bring another organization on ASO onto one of its events, like Northstar on Event A. The event's organization decides what the partner can see and do there. Neither gets the other's records.",
+    title: "Collaborate with another organization",
+    body: "Bring another ASO organization into a specific event without adding its people to your team. You control what the partner can access, and each organization keeps its own records.",
   },
 ];
 
@@ -62,6 +63,14 @@ const Marker = ({ n }: { n: number }) => (
   <span aria-hidden="true" className={`po-num po-num-${n}`}>
     {n}
   </span>
+);
+
+/** One block of a workspace panel: an optional marker in the left gutter. */
+const Row = ({ n, children }: { n?: number; children: ReactNode }) => (
+  <div className="po-row">
+    {n ? <Marker n={n} /> : <span aria-hidden="true" className="po-gutter" />}
+    <div className="po-row-body">{children}</div>
+  </div>
 );
 
 const PersonIcon = () => (
@@ -94,18 +103,6 @@ const Records = ({ label }: { label: string }) => (
   </p>
 );
 
-/** Event A as each organization sees it. */
-const EventA = ({ role, access }: { role: string; access?: string }) => (
-  <div className="po-event">
-    <p className="po-event-line">
-      <span className="po-event-name">Event A</span>
-      <span className="po-event-role">{role}</span>
-      <Marker n={4} />
-    </p>
-    {access && <p className="po-event-access">{access}</p>}
-  </div>
-);
-
 export default function PlatformOrganizations() {
   return (
     <section className="platform-orgs relative overflow-hidden bg-aso-navy" aria-labelledby="po-title">
@@ -128,7 +125,7 @@ export default function PlatformOrganizations() {
           <figure
             className="po-model"
             role="img"
-            aria-label="Example with fictional names. Your Organization has its own events and records; its members are you with full control, a team member who views the work, and Alex Rivera, who manages day-to-day work. Northstar Production has its own events and records; Alex Rivera is also a member there, with access to view the work only. Event A is owned by Your Organization; Northstar Production takes part in it as a partner, with access to the event details and messages only."
+            aria-label="Example with fictional names. Your Organization keeps its own events and records. Its members are you, the owner, with full control; a team member who views the work; and Alex Rivera, who manages the work. Your Organization owns Event A and has Northstar Production as its event partner, with access to the event details and messages only. Northstar Production keeps its own events and records. Alex Rivera is also a member there, with access to view the work only. Event A is shared with Northstar as a partner; it is not one of Northstar's own events."
           >
             <div className="po-ws">
               <div className="po-ws-head">
@@ -137,13 +134,33 @@ export default function PlatformOrganizations() {
                 </span>
                 <span className="po-ws-name">Your Organization</span>
               </div>
-              <Records label="Your events and records" />
-              <ul className="po-members">
-                <Member name="You" access="Full control" />
-                <Member name="Team member" access="Views the work" />
-                <Member name="Alex Rivera" access="Manages day-to-day work" alex />
-              </ul>
-              <EventA role="Owned by your organization" />
+
+              <Row n={1}>
+                <Records label="Your events and records" />
+              </Row>
+
+              <Row n={2}>
+                <p className="po-label">Members</p>
+                <ul className="po-members">
+                  <Member name="You" access="Owner · Full control" />
+                  <Member name="Team member" access="Views the work" />
+                  <Member name="Alex Rivera" access="Manages the work" alex />
+                </ul>
+              </Row>
+
+              <Row n={4}>
+                <p className="po-label">Event partner</p>
+                <div className="po-event">
+                  <p className="po-event-line">
+                    <span className="po-event-name">Event A</span>
+                    <span className="po-event-role">Owned by Your Organization</span>
+                  </p>
+                  <p className="po-event-partner">
+                    Partner: <strong>Northstar Production</strong>
+                  </p>
+                  <p className="po-event-access">You control: Event details · Messages</p>
+                </div>
+              </Row>
             </div>
 
             <div className="po-ws po-ws-other">
@@ -153,11 +170,28 @@ export default function PlatformOrganizations() {
                 </span>
                 <span className="po-ws-name">Northstar Production</span>
               </div>
-              <Records label="Northstar's own events and records" />
-              <ul className="po-members">
-                <Member name="Alex Rivera" access="Views the work" alex />
-              </ul>
-              <EventA role="Partner access" access="Event details · Messages" />
+
+              <Row>
+                <Records label="Northstar's own events and records" />
+              </Row>
+
+              <Row>
+                <p className="po-label">Members</p>
+                <ul className="po-members">
+                  <Member name="Alex Rivera" access="Views the work" alex />
+                </ul>
+              </Row>
+
+              <Row n={4}>
+                <p className="po-label">Shared with Northstar</p>
+                <div className="po-event">
+                  <p className="po-event-line">
+                    <span className="po-event-name">Event A</span>
+                    <span className="po-event-role">Partner access</span>
+                  </p>
+                  <p className="po-event-access">Event details · Messages</p>
+                </div>
+              </Row>
             </div>
           </figure>
 
