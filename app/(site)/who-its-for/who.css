@@ -1,6 +1,7 @@
 /* Who It's For styles (DESIGN-15A.3, refined in DESIGN-15A.4; full-viewport
    proof of concept). Loaded only by app/(site)/who-its-for/page.tsx; every
-   rule is scoped to .who-stage. Motion: beam sweeps, haze drift, LED-wall
+   rule is scoped to .who-stage (the showcase) or .who-bridge (the short
+   bridge after it, DESIGN-15B.2). Motion: beam sweeps, haze drift, LED-wall
    glow, equipment indicators, the technician's breath and glance, the master
    meters, card lifts, and profession entrances. All of it stops under
    prefers-reduced-motion. */
@@ -1592,4 +1593,82 @@
   94% {
     transform: translate(1px, -2px);
   }
+}
+
+/* ── The bridge after the showcase (DESIGN-15B.2) ─────────────────────── */
+
+/* Continues the stage's dark: it starts at the showcase's own background,
+   lifts a little toward navy under a faint wash of stage light, and ends on
+   a lit stage edge where the page turns to the closing section. Static:
+   nothing here moves. */
+.who-bridge {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #020712 0%, #061226 58%, #0a1a31 100%);
+  padding: clamp(3.75rem, 9vw, 6.5rem) 1.5rem clamp(4.25rem, 10vw, 7.25rem);
+  text-align: center;
+}
+
+.who-bridge .wb-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, #020712 0, rgba(2, 7, 18, 0) 110px),
+    radial-gradient(ellipse 820px 400px at 50% -12%, rgba(127, 184, 230, 0.13) 0%, rgba(78, 168, 209, 0.05) 42%, transparent 72%),
+    radial-gradient(ellipse 38% 46% at 50% 108%, rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0.05) 40%, transparent 72%);
+}
+
+/* The stage edge: a hairline, orange at its centre, fading to the sides. */
+.who-bridge .wb-edge {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 122, 26, 0.22) 22%, #ff7a1a 50%, rgba(255, 122, 26, 0.22) 78%, transparent 100%);
+  box-shadow: 0 -6px 22px rgba(255, 122, 26, 0.28);
+}
+
+.who-bridge .wb-inner {
+  position: relative;
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.who-bridge .wb-rule {
+  display: block;
+  width: 2rem;
+  height: 1px;
+  margin: 0 auto 1.75rem;
+  background: #ff7a1a;
+}
+
+.who-bridge .wb-title {
+  font-size: clamp(2rem, 5.2vw, 3.75rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.76);
+  text-wrap: balance;
+}
+
+/* Each sentence wraps as a unit; the last one carries the line. */
+.who-bridge .wb-part {
+  display: inline-block;
+  text-wrap: balance;
+}
+
+.who-bridge .wb-part-strong {
+  color: #fff;
+}
+
+.who-bridge .wb-body {
+  max-width: 38rem;
+  margin: 1.5rem auto 0;
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.78);
+  text-wrap: pretty;
 }

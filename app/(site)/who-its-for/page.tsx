@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ClosingCta from "@/components/ClosingCta";
-import Section from "@/components/Section";
+import WhoBridge from "@/components/who/WhoBridge";
 import WhoShowcase, { type ShowcaseRole } from "@/components/who/WhoShowcase";
 import { buildMetadata } from "@/lib/metadata";
 import { AUTH_NAV } from "@/lib/nav";
@@ -12,8 +12,9 @@ import "./who.css";
  *
  * The full-viewport interactive stage (DESIGN-15A.3) replaces the photo hero (whose montage carried
  * invented names printed into the image) and the six persona cards. All six
- * scenes are built (the Rental scene in DESIGN-15A.12, for review). "What
- * everyone shares" and the shared closing are unchanged.
+ * scenes are built (the Rental scene in DESIGN-15A.12). A short bridge
+ * (components/who/WhoBridge.tsx, DESIGN-15B.2) replaces "What everyone
+ * shares"; the shared closing is unchanged until DESIGN-15B.3.
  *
  * Persona descriptions are read from lib/personas.ts and not modified (the
  * homepage also uses them).
@@ -298,28 +299,11 @@ export default function WhoItsForPage() {
     <main className="bg-white">
       <WhoShowcase roles={ROLES} />
 
-      {/* WHAT EVERYONE SHARES (unchanged) */}
-      <Section background="navy" plot>
-        <div className="max-w-3xl">
-          <span aria-hidden="true" className="block h-px w-8 bg-aso-orange mb-6" />
-          <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">
-            What everyone shares
-          </h2>
-          <p className="text-lg text-white/70 leading-relaxed mb-4">
-            Six kinds of work, one thing in common. Everyone here operates through their
-            own organization, on their own terms. ASO does not fold you into one larger
-            company or ask you to work the way someone else does.
-          </p>
-          <p className="text-lg text-white/70 leading-relaxed">
-            You get value from the first day, before anyone else you know has joined. As
-            more of the industry comes on, independent organizations start working
-            together on a shared network without giving up what makes each of them their
-            own.
-          </p>
-        </div>
-      </Section>
+      {/* BRIDGE: brings the six stories together (DESIGN-15B.2; replaces
+          "What everyone shares"). */}
+      <WhoBridge />
 
-      {/* CTA (shared, unchanged) */}
+      {/* CTA (shared, unchanged; redesigned separately in DESIGN-15B.3) */}
       <ClosingCta
         heading="Join free"
         body="Create your organization and start running your work through it. Membership is free, and you can begin on your own today."

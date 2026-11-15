@@ -194,7 +194,9 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
             </span>
             <span className="wv-tab-name">{role.name}</span>
             <span className="wv-tab-desc">{role.tagline}</span>
-            <span className="wv-tab-status">{role.ready ? "Scene ready" : "In development"}</span>
+            {/* No status on finished scenes (DESIGN-15B.2); a role not yet
+                ready would still say so. */}
+            {!role.ready && <span className="wv-tab-status">In development</span>}
           </button>
         ))}
       </div>
