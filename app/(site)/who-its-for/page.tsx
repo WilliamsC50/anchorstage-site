@@ -8,12 +8,13 @@ import { PERSONAS } from "@/lib/personas";
 import "./who.css";
 
 /*
- * Who It's For (DESIGN-15A.2 to 15A.7: cinematic visual proof of concept, local only).
+ * Who It's For (DESIGN-15A.2 to 15A.8: cinematic visual proof of concept, local only).
  *
  * The full-viewport interactive stage (DESIGN-15A.3) replaces the photo hero (whose montage carried
- * invented names printed into the image) and the six persona cards. Four
+ * invented names printed into the image) and the six persona cards. Five
  * scenes are finished (Freelancers & Technicians, Production Companies,
- * Venues, Event Organizers & Producers); the other two show an empty stage and their existing approved description,
+ * Venues, Event Organizers & Producers, Musicians & Touring Acts); Rental
+ * Warehouses & Providers shows an empty stage and its existing approved description,
  * marked "Scene in development". "What everyone shares" and the shared
  * closing are unchanged.
  *
@@ -186,7 +187,49 @@ const ROLES: ShowcaseRole[] = [
     },
     summary: who("event-organizers"),
   },
-  { slug: "musicians", name: "Musicians & Touring Acts", tagline: "Running the shows they organize", setting: "a performance and touring stage", ready: false, summary: who("musicians") },
+  /*
+   * Musicians & Touring Acts copy (DESIGN-15A.8; scene: a touring guitarist
+   * at soundcheck). The "With AnchorStage Ops" line only names things
+   * verified live in anchorstage-intake (read-only; docs/operations
+   * event-lifecycle and issued-documents, the event Setup notes, the public
+   * request page app/(intake)/request/[orgSlug], and the Platform page
+   * notes): each show is an event record linked to its venue; event timing
+   * (call, load-in, doors, show end, strike); the event's technical notes;
+   * requests arriving through the organization's own request page; numbered
+   * quotes and invoices drafted from the event.
+   * Not claimed (not live): public artist discovery, tour booking or routing,
+   * ticketing integrations, music distribution, automatic technical-rider
+   * generation, self-service collaboration with independent organizations
+   * (today an ASO admin sets that up), guaranteed gigs, payment processing
+   * (payments are recorded by hand). "The people you work with again" in
+   * the recognition copy is the musician's own goal, not a feature (standing
+   * connections between organizations are launch-dependent; see the Network
+   * page notes).
+   * The side panel lists responsibilities touring acts manage, as examples;
+   * it is titled as such and makes no feature claims.
+   */
+  {
+    slug: "musicians",
+    name: "Musicians & Touring Acts",
+    tagline: "Running the shows they organize",
+    setting: "soundcheck on the stage",
+    ready: true,
+    headline: "Your music. Your shows. Your operation.",
+    recognition:
+      "Every show brings a different venue, promoter, and production team. Keep your dates and stage needs straight so you can focus on the performance and the people you work with again.",
+    value:
+      "Keep each show's venue, load-in and show times, and technical notes in one record, take requests through your own request page, and send numbered quotes and invoices from the same show.",
+    aside: {
+      title: "Touring responsibilities",
+      groups: [
+        { group: "Shows", items: ["Schedules", "Set preparation", "Soundcheck"] },
+        { group: "Touring", items: ["Travel logistics", "Venue coordination", "Load-in details"] },
+        { group: "Technical", items: ["Stage requirements", "Backline", "Monitor needs"] },
+        { group: "Business", items: ["Promoters", "Booking contacts", "Payments"] },
+      ],
+    },
+    summary: who("musicians"),
+  },
   { slug: "rental-providers", name: "Rental Warehouses & Providers", tagline: "Inventory that supplies partners", setting: "an equipment warehouse and loading area", ready: false, summary: who("rental-providers") },
 ];
 

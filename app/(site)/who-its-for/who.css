@@ -518,6 +518,60 @@
   transform-origin: 50% 100%;
 }
 
+/* ── Musician scene: taking the rig live for soundcheck ────────────────── */
+
+.who-stage .mu-spot,
+.who-stage .mu-amp-glow,
+.who-stage .mu-pilot-glow,
+.who-stage .mu-thumb-up {
+  opacity: 0;
+}
+
+.who-stage .is-live .mu-spot,
+.who-stage .is-live .mu-thumb-up {
+  opacity: 1;
+}
+
+.who-stage .is-live .mu-thumb-down {
+  opacity: 0;
+}
+
+.who-stage .is-live .mu-amp-glow {
+  opacity: 0.32;
+}
+
+.who-stage .is-live .mu-pilot-glow {
+  opacity: 0.55;
+}
+
+.who-stage .is-live .mu-pilot,
+.who-stage .is-live .mu-led {
+  fill: #ff3b2a;
+}
+
+.who-stage .is-live .mu-led-b {
+  fill: #7fd3f4;
+}
+
+.who-stage .is-live .mu-tune-screen,
+.who-stage .is-live .mu-tuner,
+.who-stage .is-live .mu-pack-led {
+  fill: #3ddc84;
+}
+
+.who-stage .mu-head,
+.who-stage .mu-tune {
+  transform-box: fill-box;
+}
+
+.who-stage .mu-head {
+  transform-origin: 50% 100%;
+}
+
+.who-stage .mu-tune {
+  transform-origin: 20% 80%;
+}
+
 /* The outgoing profession during a switch (motion only; see below). */
 .who-stage .wv-scene.is-leaving {
   display: none;
@@ -959,6 +1013,47 @@
     animation: pr-talk 2.6s ease-in-out infinite;
   }
 
+  /* Musicians: the rig comes live in a short sequence (pedal LEDs, the amp
+     warming, the spot, then the tech's thumbs-up). The guitarist tilts
+     while listening and turns the tuning peg. */
+  .who-stage .mu-spot {
+    transition: opacity 600ms ease 150ms;
+  }
+
+  .who-stage .mu-amp-glow {
+    transition: opacity 900ms ease 100ms;
+  }
+
+  .who-stage .mu-pilot-glow,
+  .who-stage .mu-pilot,
+  .who-stage .mu-led,
+  .who-stage .mu-led-b,
+  .who-stage .mu-tune-screen,
+  .who-stage .mu-tuner,
+  .who-stage .mu-pack-led {
+    transition:
+      opacity 200ms ease,
+      fill 200ms ease;
+  }
+
+  .who-stage .mu-thumb-up,
+  .who-stage .mu-thumb-down {
+    transition: opacity 260ms ease;
+  }
+
+  .who-stage .is-live .mu-thumb-up,
+  .who-stage .is-live .mu-thumb-down {
+    transition-delay: 750ms;
+  }
+
+  .who-stage .mu-head {
+    animation: mu-listen 7s ease-in-out infinite;
+  }
+
+  .who-stage .mu-tune {
+    animation: mu-turn 2.8s ease-in-out infinite;
+  }
+
   /* The technician: a slow breath and an occasional glance at the desk. */
   .who-stage .ws-breathe {
     animation: ws-breathe 4.8s ease-in-out infinite alternate;
@@ -1081,6 +1176,28 @@
   56%,
   78% {
     transform: translate(-1.4px, -1.3px);
+  }
+}
+
+/* Listening while tuning: a small tilt toward the headstock and back. */
+@keyframes mu-listen {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  40%,
+  70% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes mu-turn {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-6deg);
   }
 }
 

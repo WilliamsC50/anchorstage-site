@@ -1,8 +1,8 @@
 import type { CSSProperties, ReactNode } from "react";
 
 /**
- * Who It's For: the Event Organizers & Producers scene's set (DESIGN-15A.7).
- * Decorative; drawn in the stage's 1600 x 900 space, in front of the
+ * Who It's For: the Event Organizers & Producers scene's set (DESIGN-15A.7;
+ * staffer and wayfinding sign refined in DESIGN-15A.8). Decorative; drawn in the stage's 1600 x 900 space, in front of the
  * permanent stage.
  *
  * OrganizerLighting  the same room before doors: an empty, polished event
@@ -11,7 +11,7 @@ import type { CSSProperties, ReactNode } from "react";
  *                    the show rig dimmed slightly. Background unchanged.
  * CheckInDesk        guest registration: a skirted desk ("Registration",
  *                    "Check-in"), badge trays, a check-in staffer in an
- *                    event tee, and the desk's run-of-show screen showing the
+ *                    event polo with a STAFF credential, and the desk's run-of-show screen showing the
  *                    "Doors" cue (Standby, or Open once doors are called).
  *                    When doors open the staffer holds out a badge.
  * Guests             three guests waiting at the rope line (one with a
@@ -19,8 +19,9 @@ import type { CSSProperties, ReactNode } from "react";
  *                    registration, one after another.
  * RopeLine           chrome stanchions and a velvet rope; when doors open
  *                    the rope is unhooked and hangs from the near post.
- * WayfindingSign     an A-frame floor sign: Registration, Main Hall,
- *                    Sessions (generic; no invented names).
+ * WayfindingSign     a freestanding conference wayfinding sign: a wide
+ *                    framed panel on two posts (Registration, Main Hall,
+ *                    Sessions; generic, no invented names).
  *
  * State: OrganizerScene puts .is-open on a parent group; the changes are
  * CSS (who.css, .og-*), instant under reduced motion. `open` is passed only
@@ -60,51 +61,98 @@ export function OrganizerLighting() {
   );
 }
 
-/** The check-in staffer: body behind the desk. */
+/** The check-in staffer (a supporting character, drawn with less detail
+ *  than the producer): body behind the desk. An event polo, a navy lanyard
+ *  with a STAFF credential, short curls faded at the sides; leaning in with
+ *  one forearm on the desk, looking toward the guests. */
 function StafferBody() {
   return (
     <g>
-      {/* Event tee. */}
-      <path d="M520 600 Q540 592 560 600 L566 640 L562 680 L518 680 L514 640 Z" fill="#c9622a" />
-      <path d="M520 600 Q512 620 514 640" stroke="#7fb8e6" strokeWidth="1" fill="none" opacity="0.4" />
-      <path d="M533 598 Q540 604 547 598" stroke="#9c4a1d" strokeWidth="2" fill="none" />
-      <text x="540" y="626" textAnchor="middle" fontSize="6.5" fontWeight="800" fill="#fff" letterSpacing="0.8" fontFamily={SANS}>
+      <defs>
+        <linearGradient id="og-polo" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#a24c1c" />
+          <stop offset="0.55" stopColor="#c95f26" />
+          <stop offset="1" stopColor="#da7434" />
+        </linearGradient>
+        <linearGradient id="og-staff-skin" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#8e5c3d" />
+          <stop offset="0.55" stopColor="#ab7550" />
+          <stop offset="1" stopColor="#bf8a63" />
+        </linearGradient>
+      </defs>
+      {/* Resting arm: short sleeve, forearm along the desk to the trays. */}
+      <path d="M512 610 L522 613 L517 640 L506 636 Z" fill="url(#og-staff-skin)" />
+      <path d="M506 632 L517 637 L501 662 L490 659 Z" fill="url(#og-staff-skin)" />
+      <path d="M488 655 Q481 659 485 665 L498 665 Q503 662 499 657 Z" fill="#a06c48" />
+      <path d="M519 602 L509 611 L505 630 L516 634 L521 616 Z" fill="url(#og-polo)" />
+      {/* Event polo: collar, placket, folds, rim light. */}
+      <path d="M519 602 Q528 595 540 594 Q552 595 561 602 L566 616 L563 666 L517 666 L514 616 Z" fill="url(#og-polo)" />
+      <path d="M538.5 600 h3.2 v15 h-3.2 z" fill="#9e4719" />
+      <circle cx="540.1" cy="605" r="0.8" fill="#f4e3d6" />
+      <circle cx="540.1" cy="610.5" r="0.8" fill="#f4e3d6" />
+      <path d="M531 596 L540 601 L535 608 Z M549 596 L540 601 L545 608 Z" fill="#b8561f" stroke="#8e3f15" strokeWidth="0.6" />
+      <path d="M524 628 Q531 637 527 654 M557 626 Q550 640 555 657 M530 618 Q540 623 550 618" stroke="#8e3f15" strokeWidth="1" fill="none" opacity="0.55" />
+      <path d="M514 616 L517 664" stroke="#7fb8e6" strokeWidth="1" opacity="0.4" />
+      <path d="M566 616 L563 664" stroke="#ffcf9e" strokeWidth="1" opacity="0.4" />
+      {/* Lanyard and STAFF credential. */}
+      <path d="M534 598 L541 637 M546 598 L543 637" stroke="#12304d" strokeWidth="1.8" fill="none" />
+      <rect x="534" y="635" width="17" height="22" rx="1.6" fill="#f4f7fa" />
+      <rect x="534" y="635" width="17" height="7" rx="1.6" fill="#12304d" />
+      <text x="542.5" y="640.6" textAnchor="middle" fontSize="4" fontWeight="800" fill="#fff" letterSpacing="0.3" fontFamily={SANS}>
         STAFF
       </text>
-      {/* Resting arm on the desk. */}
-      <path d="M520 606 L508 640 L520 664" stroke="#c9622a" strokeWidth="8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M512 634 L520 664" stroke="#b07a55" strokeWidth="6.5" fill="none" strokeLinecap="round" />
-      {/* Neck and head: short curls, glasses-free, friendly. */}
-      <rect x="535.5" y="584" width="9" height="14" fill="#a26f4c" />
-      <ellipse cx="540" cy="573" rx="12.5" ry="14.5" fill="#b8835e" />
-      <path d="M527 572 Q526 556 540 555 Q554 556 553 572 Q548 562 540 562 Q531 562 527 572 Z" fill="#2a1b12" />
+      <rect x="536.5" y="644.5" width="5" height="6" fill="#b6c3d1" />
+      <path d="M543.5 646 h5 M543.5 649 h4" stroke="#8a97a6" strokeWidth="1" />
+      {/* Neck and head. */}
+      <path d="M535 583 L545 583 L546 597 L534 597 Z" fill="url(#og-staff-skin)" />
+      <path d="M535 589 Q540 593 545 589 L545 592 Q540 596 535 592 Z" fill="#5e3a26" opacity="0.4" />
+      <ellipse cx="527.6" cy="574" rx="2.1" ry="3.5" fill="#9a6644" />
+      <ellipse cx="552.4" cy="574" rx="2.1" ry="3.5" fill="#b58059" />
+      <path d="M527.5 572 Q527.5 588 540 590.5 Q552.5 588 552.5 572 Q552.5 557 540 557 Q527.5 557 527.5 572 Z" fill="url(#og-staff-skin)" />
+      <path d="M529 577 Q531 587 539 590 Q533 583 532.5 575 Z" fill="#5e3a26" opacity="0.3" />
+      {/* Short curls on top, faded at the sides. */}
+      <path d="M527.4 571 Q525 553 540 551.5 Q555 553 552.6 571 Q551 562 545 560.2 Q540 559.4 535 560.2 Q529 562 527.4 571 Z" fill="#1e140e" />
       {[
-        [530, 561],
-        [536, 556],
-        [544, 556],
-        [550, 561],
+        [531, 557],
+        [536, 553.6],
+        [541.5, 552.6],
+        [547, 554],
+        [551, 558],
       ].map(([cx, cy]) => (
-        <circle key={cx} cx={cx} cy={cy} r="3.4" fill="#2a1b12" />
+        <circle key={cx} cx={cx} cy={cy} r="2.6" fill="#1e140e" />
       ))}
-      <circle cx="536" cy="575" r="1.2" fill="#1a110c" />
-      <circle cx="546" cy="575" r="1.2" fill="#1a110c" />
-      <path d="M536 582 Q541 585 546 582" stroke="#6b3a2a" strokeWidth="1.1" fill="none" strokeLinecap="round" />
+      <path d="M533 555 q2 -1.5 4 0 M541 553.5 q2 -1.5 4 0" stroke="#4a3528" strokeWidth="0.8" fill="none" />
+      <path d="M528 566 L528.6 572 M552 566 L551.4 572" stroke="#3a2a1f" strokeWidth="1.6" opacity="0.5" />
+      {/* Face, looking toward the guests. */}
+      <path d="M532 567.8 Q535 566.2 538 567.2 M542 567.2 Q545 566.2 548 567.8" stroke="#1e140e" strokeWidth="1.3" fill="none" strokeLinecap="round" />
+      <ellipse cx="535.2" cy="572.3" rx="2.1" ry="1.45" fill="#f1e6da" />
+      <ellipse cx="545.2" cy="572.3" rx="2.1" ry="1.45" fill="#f1e6da" />
+      <circle cx="536" cy="572.4" r="1.05" fill="#1a110c" />
+      <circle cx="546" cy="572.4" r="1.05" fill="#1a110c" />
+      <path d="M540.6 574 L541.8 579 L539.2 579.6" stroke="#6e4630" strokeWidth="0.9" fill="none" strokeLinecap="round" />
+      <path d="M535.8 583 Q540.6 586.4 545.4 583" stroke="#5e3020" strokeWidth="1.1" fill="none" strokeLinecap="round" />
+      <ellipse cx="546" cy="565" rx="4" ry="1.4" fill="#d8a882" opacity="0.35" />
+      <path d="M552.5 570 Q552 584 544 589" stroke="#ffcf9e" strokeWidth="0.9" fill="none" opacity="0.45" />
     </g>
   );
 }
 
-/** The staffer's badge arm, over the desk: rests, then holds out a badge. */
+/** The staffer's badge arm, over the desk: rests, then holds out a badge
+ *  (rotates about the shoulder, see .og-badge-arm in who.css). */
 export function StafferBadgeArm() {
   return (
     <g className="og-badge-arm">
-      <path d="M560 606 L574 636 L592 652" stroke="#c9622a" strokeWidth="8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M571 630 L592 652" stroke="#b07a55" strokeWidth="6.5" fill="none" strokeLinecap="round" />
-      <circle cx="594" cy="653" r="3.6" fill="#b8835e" />
+      <path d="M561 627 L571 624 L578 638 L568 643 Z" fill="url(#og-staff-skin)" />
+      <path d="M568 640 L577 635 L593 646 L588 654 Z" fill="url(#og-staff-skin)" />
+      <path d="M556 600 L566 606 L571 627 L561 631 L556 612 Z" fill="url(#og-polo)" />
+      <path d="M566 607 L571 626" stroke="#ffcf9e" strokeWidth="0.9" opacity="0.4" />
       <g className="og-badge">
         <path d="M596 640 L594 652" stroke="#ff7a1a" strokeWidth="1.4" />
         <rect x="594" y="648" width="13" height="17" rx="1.5" fill="#f4f7fa" />
         <rect x="594" y="648" width="13" height="4.5" rx="1.5" fill="#4ea8d1" />
       </g>
+      <path d="M587 646 Q595 642 599 648 Q601 655 594 657 Q587 657 586.5 651 Z" fill="#b8835e" />
+      <path d="M592 648.5 q3.5 -0.5 5 2" stroke="#8e5c3d" strokeWidth="0.8" fill="none" />
     </g>
   );
 }
@@ -279,36 +327,67 @@ export function RopeLine() {
   );
 }
 
-/** An A-frame wayfinding sign on the floor. */
+/** A freestanding conference wayfinding sign: a wide framed panel on two
+ *  posts and a weighted base. Generic labels; no invented names. */
 export function WayfindingSign() {
-  const rows: [string, string, number][] = [
-    ["←", "Registration", 726],
-    ["→", "Main Hall", 756],
-    ["↑", "Sessions", 786],
+  const rows: { dir: "left" | "right" | "up"; label: string; sub: string; y: number; tone: string }[] = [
+    { dir: "left", label: "Registration", sub: "Check-in & badges", y: 676, tone: "#ff7a1a" },
+    { dir: "right", label: "Main Hall", sub: "Welcome 6:30 PM", y: 712, tone: "#3a8fc0" },
+    { dir: "up", label: "Sessions", sub: "Rooms A–D", y: 748, tone: "#3a8fc0" },
   ];
+  const arrow = (dir: string, x: number, y: number) =>
+    dir === "left"
+      ? `M${x + 15} ${y + 10} h-10 m4.2 -4.2 l-4.2 4.2 l4.2 4.2`
+      : dir === "right"
+        ? `M${x + 5} ${y + 10} h10 m-4.2 -4.2 l4.2 4.2 l-4.2 4.2`
+        : `M${x + 10} ${y + 15} v-10 m-4.2 4.2 l4.2 -4.2 l4.2 4.2`;
   return (
     <g>
-      <ellipse cx="1310" cy="864" rx="66" ry="6" fill="#000" opacity="0.5" />
-      {/* Back leg, then the front panel. */}
-      <path d="M1286 690 L1270 862 L1278 862 L1292 694 Z" fill="#3a4452" />
-      <path d="M1264 862 L1276 682 L1344 682 L1356 862 Z" fill="#c9d2dc" />
-      <path d="M1268 856 L1279 688 L1341 688 L1352 856 Z" fill="#10243c" />
-      <rect x="1284" y="698" width="20" height="2.5" fill="#ff7a1a" />
-      {rows.map(([arrow, label, y]) => (
-        <g key={label}>
-          <text x="1284" y={y} fontSize="11" fontWeight="700" fill="#ffb27a" fontFamily={SANS}>
-            {arrow}
-          </text>
-          <text x="1298" y={y - 1} fontSize="7.5" fontWeight="600" fill="#fff" fontFamily={SANS}>
-            {label}
-          </text>
-          <path d={`M1284 ${y + 9} h56`} stroke="#2c4a6c" strokeWidth="1" />
+      <defs>
+        <linearGradient id="og-alu" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#6c7682" />
+          <stop offset="0.45" stopColor="#c9d2dc" />
+          <stop offset="1" stopColor="#7b8693" />
+        </linearGradient>
+        <linearGradient id="og-panel" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#12294a" />
+          <stop offset="1" stopColor="#0c1c33" />
+        </linearGradient>
+      </defs>
+      <ellipse cx="1310" cy="866" rx="92" ry="6" fill="#000" opacity="0.5" />
+      {/* Weighted base and two posts. */}
+      {[1252, 1368].map((px) => (
+        <g key={px}>
+          <rect x={px - 3} y="780" width="6" height="80" fill="url(#og-alu)" />
+          <rect x={px - 18} y="857" width="36" height="7" rx="3" fill="url(#og-alu)" />
         </g>
       ))}
-      <text x="1284" y="826" fontSize="6.5" fill="#a8dcff" fontFamily={SANS}>
-        Doors 6:00 PM
+      {/* Framed panel. */}
+      <rect x="1234" y="644" width="152" height="140" rx="4" fill="url(#og-alu)" />
+      <rect x="1239" y="649" width="142" height="130" fill="url(#og-panel)" />
+      <rect x="1239" y="649" width="142" height="20" fill="#0a1628" />
+      <rect x="1239" y="669" width="142" height="2.5" fill="#ff7a1a" />
+      <text x="1248" y="663" fontSize="9.5" fontWeight="800" fill="#fff" letterSpacing="2" fontFamily={SANS}>
+        WELCOME
       </text>
-      <path d="M1276 682 L1344 682" stroke="#eef2f6" strokeWidth="1.5" opacity="0.6" />
+      <text x="1372" y="663" textAnchor="end" fontSize="7" fill="#a8dcff" fontFamily={SANS}>
+        Level 1
+      </text>
+      {rows.map(({ dir, label, sub, y, tone }, i) => (
+        <g key={label}>
+          <rect x="1247" y={y + 2} width="20" height="20" rx="4" fill={tone} />
+          <path d={arrow(dir, 1247, y + 2)} stroke="#fff" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          <text x="1275" y={y + 12} fontSize="10.5" fontWeight="700" fill="#fff" fontFamily={SANS}>
+            {label}
+          </text>
+          <text x="1275" y={y + 21} fontSize="6.5" fill="#a8dcff" fontFamily={SANS}>
+            {sub}
+          </text>
+          {i < rows.length - 1 && <path d={`M1247 ${y + 30} h126`} stroke="#25476b" strokeWidth="1" />}
+        </g>
+      ))}
+      <path d="M1234 645 h152" stroke="#eef2f6" strokeWidth="1.2" opacity="0.6" />
+      <path d="M1386 650 V780" stroke="#ffcf9e" strokeWidth="1" opacity="0.3" />
     </g>
   );
 }
