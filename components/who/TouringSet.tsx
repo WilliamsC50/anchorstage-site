@@ -1,6 +1,6 @@
 /**
  * Who It's For: the Musicians & Touring Acts scene's set (DESIGN-15A.8;
- * polished in DESIGN-15A.9). Decorative; drawn in the stage's 1600 x 900
+ * polished in DESIGN-15A.9 to 15A.11). Decorative; drawn in the stage's 1600 x 900
  * space, in front of the permanent stage.
  *
  * TouringLighting  the same room at soundcheck, seen from the stage: black
@@ -8,17 +8,21 @@
  *                  other scenes), the show rig dimmed slightly, and a warm
  *                  spot that comes up on the guitarist when the rig is live.
  * GuitarTech       stage left: a guitar stand with two spare guitars (a blue
- *                  offset electric and a dreadnought acoustic), the guitar
- *                  tech kneeling at an open accessory case, reaching in;
- *                  once the rig is live the tech closes the case and looks
- *                  up toward the guitarist (DESIGN-15A.10; no hand signal).
- * GuitarAmp        a combo amp with a mic on a short stand at its grille;
- *                  the pilot light and the tubes glow when it is live.
+ *                  offset electric and a dreadnought acoustic), an open
+ *                  accessory case, and the guitar tech kneeling beside the
+ *                  amp holding the pedalboard's unplugged output cable. When
+ *                  the visitor starts soundcheck the tech reaches over and
+ *                  plugs it into the amp's input jack; only then does the rig
+ *                  come live (DESIGN-15A.11). Stopping unplugs it again.
+ * GuitarAmp        a combo amp with a 1/4" input jack, knobs, and a mic on a
+ *                  short stand at its grille; the pilot light and the tubes
+ *                  glow when it is live. Drawn before GuitarTech so the
+ *                  tech's arm and plug pass in front of it.
  * VocalMic         the vocal mic stand, beside the guitarist.
  * Pedalboard       right in front of the guitarist's feet (foreground):
  *                  tuner, overdrive, delay, and boost pedals; the tuner and
- *                  two pedal LEDs light when the rig is live. Cable run to
- *                  the amp.
+ *                  two pedal LEDs light when the rig is live. Its output
+ *                  cable runs along the deck to the tech (GuitarTech).
  * WedgeAndSetlist  a monitor wedge labelled on gaffer tape, and the set list
  *                  taped to the deck beside it (generic; no song titles).
  *
@@ -217,54 +221,77 @@ export function GuitarTech() {
       <SpareElectric />
       <SpareAcoustic />
 
-      {/* Accessory case: open with string packs and a winder (standby), or
-          closed once the rig is live. */}
-      <g className="mu-case-open">
+      {/* Open accessory case (a static prop): string packs and a winder. */}
+      <g transform="translate(-70 0)">
         <path d="M596 758 L644 758 L648 744 L600 744 Z" fill="#20252c" />
         <path d="M598 756 L642 756 L645 747 L601 747 Z" fill="#2a2f37" />
-      </g>
-      <rect x="594" y="770" width="54" height="22" rx="3" fill="#15181d" />
-      <rect x="598" y="764" width="46" height="9" fill="#2a2f37" />
-      <g className="mu-case-open">
+        <rect x="594" y="770" width="54" height="22" rx="3" fill="#15181d" />
+        <rect x="598" y="764" width="46" height="9" fill="#2a2f37" />
         {[602, 612, 622].map((sx, i) => (
           <rect key={sx} x={sx} y="762" width="8" height="6" rx="1" fill={["#ff7a1a", "#4ea8d1", "#e8edf3"][i]} />
         ))}
         <path d="M632 764 l8 -4" stroke="#c9d2dc" strokeWidth="2" strokeLinecap="round" />
       </g>
-      <g className="mu-case-closed">
-        <path d="M592 760 L650 760 Q652 760 652 762.5 L652 772 L590 772 L590 762.5 Q590 760 592 760 Z" fill="#23282f" />
-        <path d="M592 760.6 h58" stroke="#4a525d" strokeWidth="0.9" />
-        <rect x="598" y="768" width="5" height="5" rx="1" fill="#8a96a3" />
-        <rect x="639" y="768" width="5" height="5" rx="1" fill="#8a96a3" />
-        <path d="M613 760 q8 -6 16 0" stroke="#3a3f47" strokeWidth="2.2" fill="none" />
+
+      {/* The tech, kneeling beside the amp: one knee up, one down. */}
+      <g transform="translate(36 0)">
+        <g strokeLinecap="round" strokeLinejoin="round" fill="none">
+          <path d="M572 742 L578 786" stroke="#1f232a" strokeWidth="11" />
+          <path d="M556 742 L548 760 L548 788" stroke="#252a32" strokeWidth="11" />
+        </g>
+        <ellipse cx="547" cy="790" rx="8" ry="3" fill="#0a0c10" />
+        <ellipse cx="583" cy="789" rx="9" ry="3" fill="#0a0c10" />
+        <path d="M552 700 Q568 694 584 700 L582 746 L554 746 Z" fill="#1b1e24" />
+        <path d="M552 702 Q549 724 554 744" stroke="#7fb8e6" strokeWidth="1" fill="none" opacity="0.45" />
+        <path d="M584 702 Q586 724 582 744" stroke="#ffcf9e" strokeWidth="1" fill="none" opacity="0.4" />
+        {/* Resting arm on the raised knee. */}
+        <path d="M553 704 L545 730 L550 752" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="550" cy="754" r="3.4" fill="#c99a7a" />
+        {/* Head: short dark bob; turns toward the jack while plugging in. */}
+        <rect x="564" y="686" width="8" height="10" fill="#b8866a" />
+        <g className="mu-tech-head">
+          <ellipse cx="568" cy="679" rx="10" ry="12" fill="#c99a7a" />
+          <path d="M557 684 Q554 664 568 663 Q583 664 580 684 L578 686 Q578 672 569 671 Q561 672 559 686 Z" fill="#1a1410" />
+          <circle cx="571" cy="680" r="1.1" fill="#1a110c" />
+          <circle cx="577" cy="680" r="1.1" fill="#1a110c" />
+          <path d="M570 687 Q573.5 689 577 687" stroke="#6b3a2a" strokeWidth="1" fill="none" strokeLinecap="round" />
+        </g>
       </g>
-      {/* The tech, kneeling: one knee up, one down; black tee and work pants. */}
-      <g strokeLinecap="round" strokeLinejoin="round" fill="none">
-        <path d="M572 742 L578 786" stroke="#1f232a" strokeWidth="11" />
-        <path d="M556 742 L548 760 L548 788" stroke="#252a32" strokeWidth="11" />
+
+      {/* The pedalboard's output cable: from the board along the deck in
+          front of the amp to the plug in the tech's hand (hanging free on
+          standby, from the jack once plugged in). */}
+      <g fill="none" stroke="#0b0d10" strokeWidth="2.6" strokeLinecap="round">
+        <path className="mu-cable-standby" d="M634.4 735.5 Q630 752 636 770 Q644 790 690 806 Q740 824 800 828 L884 828" />
+        <path className="mu-cable-live" d="M654 704.6 Q647 712 646 728 Q645 754 652 772 Q660 792 690 806 Q740 824 800 828 L884 828" />
       </g>
-      <ellipse cx="547" cy="790" rx="8" ry="3" fill="#0a0c10" />
-      <ellipse cx="583" cy="789" rx="9" ry="3" fill="#0a0c10" />
-      <path d="M552 700 Q568 694 584 700 L582 746 L554 746 Z" fill="#1b1e24" />
-      <path d="M552 702 Q549 724 554 744" stroke="#7fb8e6" strokeWidth="1" fill="none" opacity="0.45" />
-      <path d="M584 702 Q586 724 582 744" stroke="#ffcf9e" strokeWidth="1" fill="none" opacity="0.4" />
-      {/* Resting arm on the raised knee. */}
-      <path d="M553 704 L545 730 L550 752" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="550" cy="754" r="3.4" fill="#c99a7a" />
-      {/* Head: short dark bob, turned toward the guitarist; looks up at him
-          once the rig is live. */}
-      <rect x="564" y="686" width="8" height="10" fill="#b8866a" />
-      <g className="mu-tech-head">
-        <ellipse cx="568" cy="679" rx="10" ry="12" fill="#c99a7a" />
-        <path d="M557 684 Q554 664 568 663 Q583 664 580 684 L578 686 Q578 672 569 671 Q561 672 559 686 Z" fill="#1a1410" />
-        <circle cx="571" cy="680" r="1.1" fill="#1a110c" />
-        <circle cx="577" cy="680" r="1.1" fill="#1a110c" />
-        <path d="M570 687 Q573.5 689 577 687" stroke="#6b3a2a" strokeWidth="1" fill="none" strokeLinecap="round" />
+
+      {/* Working arm, drawn in the plugged-in pose: shoulder to hand, the
+          1/4" plug's tip in the amp's input jack. On standby the whole arm is
+          rotated down about the shoulder (who.css, .mu-tech-arm), holding the
+          unplugged cable by the knee. */}
+      <g className="mu-tech-arm">
+        <path d="M619 704 L635 709 L650 705.4" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        {/* 1/4" plug: dark strain relief in the hand, chrome barrel, tip. */}
+        <rect x="652" y="702.6" width="5" height="4" rx="1.4" fill="#2a2f37" />
+        <rect x="656.4" y="701.9" width="7.6" height="5.4" rx="1.4" fill="#c9d2dc" stroke="#5d6773" strokeWidth="0.6" />
+        <path d="M657.2 703.1 h6" stroke="#fff" strokeWidth="0.8" opacity="0.7" />
+        <rect x="664" y="703.3" width="5" height="2.6" rx="1" fill="#e8edf3" stroke="#6c7682" strokeWidth="0.4" />
+        <circle cx="652.6" cy="705" r="3.8" fill="#c99a7a" />
       </g>
-      {/* Working arm: reaching into the case; once the rig is live the lid
-          is closed under the same hand. */}
-      <path d="M583 704 L598 724 L608 756" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="609" cy="758.5" r="3.6" fill="#c99a7a" />
+      {/* The amp's input jack again, over the plug: once plugged in, the tip
+          disappears into it. Identical to the jack in GuitarAmp. */}
+      <InputJack />
+    </g>
+  );
+}
+
+/** The amp's 1/4" input jack: a chrome nut around a dark socket. */
+function InputJack() {
+  return (
+    <g>
+      <circle cx="669" cy="704.5" r="3.7" fill="#d7dee6" stroke="#6c7682" strokeWidth="0.7" />
+      <circle cx="669" cy="704.5" r="1.6" fill="#0b0d10" />
     </g>
   );
 }
@@ -285,14 +312,15 @@ export function GuitarAmp() {
       ].map(([cx, cy]) => (
         <rect key={`${cx}-${cy}`} x={cx - 4} y={cy - 4} width="8" height="8" rx="2" fill="#8a96a3" />
       ))}
-      {/* Control panel: knobs and the pilot jewel. */}
+      {/* Control panel: the input jack, knobs, standby switch, pilot jewel. */}
       <rect x="662" y="697" width="128" height="15" rx="2" fill="#c9b48a" />
-      {[676, 688, 700, 712, 724, 736, 748].map((kx) => (
+      <InputJack />
+      {[684, 695, 706, 717, 728, 739, 750].map((kx) => (
         <circle key={kx} cx={kx} cy="704.5" r="3.1" fill="#15110e" />
       ))}
-      <rect x="760" y="700" width="3" height="9" rx="1" fill="#3a3f47" />
-      <circle className="mu-pilot-glow" cx="778" cy="704.5" r="9" fill="#ff3b2a" />
-      <circle className="mu-pilot" cx="778" cy="704.5" r="3.4" fill="#4a1410" />
+      <rect x="763" y="700" width="3" height="9" rx="1" fill="#3a3f47" />
+      <circle className="mu-pilot-glow" cx="780" cy="704.5" r="9" fill="#ff3b2a" />
+      <circle className="mu-pilot" cx="780" cy="704.5" r="3.4" fill="#4a1410" />
       {/* Grille cloth and a blank badge. */}
       <rect x="662" y="716" width="128" height="78" rx="3" fill="#2a2a30" />
       <path
@@ -344,8 +372,6 @@ export function Pedalboard() {
   return (
     <g className="mu-board">
       <ellipse cx="950" cy="836" rx="84" ry="5" fill="#000" opacity="0.55" />
-      {/* Cable run from the board to the amp. */}
-      <path d="M884 826 Q850 830 826 816 Q806 806 798 798" stroke="#0b0d10" strokeWidth="2.6" fill="none" strokeLinecap="round" />
       <path d="M878 834 L1022 834 L1014 808 L886 808 Z" fill="#1a1d22" />
       <rect x="878" y="830" width="144" height="6" rx="1" fill="#0e1014" />
       {pedals.map(({ x, c, kind }) => (

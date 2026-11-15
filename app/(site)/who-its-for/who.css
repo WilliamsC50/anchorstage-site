@@ -530,17 +530,28 @@
 .who-stage .mu-spot,
 .who-stage .mu-amp-glow,
 .who-stage .mu-pilot-glow,
-.who-stage .mu-case-closed {
+.who-stage .mu-cable-live {
   opacity: 0;
 }
 
 .who-stage .is-live .mu-spot,
-.who-stage .is-live .mu-case-closed {
+.who-stage .is-live .mu-cable-live {
   opacity: 1;
 }
 
-/* The guitar tech closes the accessory case and looks up at the guitarist. */
-.who-stage .is-live .mu-case-open {
+/* The guitar tech's cable: held unplugged by the knee on standby (the arm,
+   drawn in the plugged-in pose, rotated down about the shoulder), plugged
+   into the amp's input jack when live. */
+.who-stage .mu-tech-arm {
+  transform-origin: 619px 704px;
+  transform: rotate(63deg);
+}
+
+.who-stage .is-live .mu-tech-arm {
+  transform: none;
+}
+
+.who-stage .is-live .mu-cable-standby {
   opacity: 0;
 }
 
@@ -1047,9 +1058,11 @@
     animation: pr-talk 2.6s ease-in-out infinite;
   }
 
-  /* Musicians: the rig comes live in a short sequence (pedal LEDs, the amp
-     warming, the spot, then the tech closing the case and looking up). The
-     guitarist nods slightly while listening; the picking hand moves. */
+  /* Musicians: the tech reaches over and plugs the cable into the amp
+     (about half a second); only then does the rig come live (pedal LEDs,
+     the amp warming, the spot). Stopping unplugs first and the rig goes
+     straight back to standby. The guitarist nods slightly while listening;
+     the picking hand moves. */
   .who-stage .mu-spot {
     transition: opacity 600ms ease 150ms;
   }
@@ -1069,19 +1082,29 @@
       fill 200ms ease;
   }
 
-  .who-stage .mu-case-open,
-  .who-stage .mu-case-closed {
-    transition: opacity 280ms ease;
+  .who-stage .mu-tech-arm {
+    transition: transform 520ms cubic-bezier(0.3, 0.7, 0.2, 1);
+  }
+
+  .who-stage .mu-cable-live,
+  .who-stage .mu-cable-standby {
+    transition: opacity 180ms ease 170ms;
   }
 
   .who-stage .mu-tech-head {
     transition: transform 420ms ease;
   }
 
-  .who-stage .is-live .mu-case-open,
-  .who-stage .is-live .mu-case-closed,
-  .who-stage .is-live .mu-tech-head {
-    transition-delay: 750ms;
+  /* Connection first: the rig lights only once the plug is in the jack. */
+  .who-stage .is-live .mu-spot,
+  .who-stage .is-live .mu-amp-glow,
+  .who-stage .is-live .mu-pilot-glow,
+  .who-stage .is-live .mu-pilot,
+  .who-stage .is-live .mu-led,
+  .who-stage .is-live .mu-led-b,
+  .who-stage .is-live .mu-tune-screen,
+  .who-stage .is-live .mu-pack-led {
+    transition-delay: 620ms;
   }
 
   .who-stage .mu-head {

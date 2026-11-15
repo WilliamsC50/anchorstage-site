@@ -7,7 +7,7 @@ import { GuitarAmp, GuitarTech, Pedalboard, TouringLighting, VocalMic, WedgeAndS
 
 /**
  * Who It's For: the Musicians & Touring Acts scene (DESIGN-15A.8; polished
- * in DESIGN-15A.9).
+ * in DESIGN-15A.9 to 15A.11).
  *
  * Same permanent stage, seen from the stage itself at soundcheck: black
  * decking with spike tape, a miked combo amp, the vocal mic, a guitar tech
@@ -15,19 +15,22 @@ import { GuitarAmp, GuitarTech, Pedalboard, TouringLighting, VocalMic, WedgeAndS
  * playing through soundcheck with in-ear monitors in, pedalboard at his
  * feet.
  *
- * Layers: character (lighting and decking, the tech and spares, the amp,
+ * Layers: character (lighting and decking, the amp, the tech and spares,
  * the mic stand, the guitarist) and foreground (pedalboard, wedge, set
  * list), matching the other scenes' structure.
  *
  * ONE INTERACTIVE ELEMENT: the pedalboard. It is a real control (role
- * button, aria-pressed; Enter or Space, click, or tap) that takes the rig
- * live for soundcheck or back to standby (repeatable). Live: the amp's
- * pilot light and tubes glow, the tuner pedal and two pedal LEDs light,
- * the in-ear pack shows green, a warm spot comes up on the guitarist, and
- * the guitar tech closes the accessory case and looks up at him (no hand
- * signal; DESIGN-15A.10). Visual demonstration only: no sound plays,
- * nothing is saved or sent; the accessible name says so, and a polite live
- * region announces the change.
+ * button, aria-pressed; Enter or Space, click, or tap) that starts or stops
+ * soundcheck (repeatable). Starting: the guitar tech, kneeling beside the
+ * amp with the pedalboard's unplugged output cable, reaches over and plugs
+ * it into the amp's input jack; once it is in, the rig comes live: the
+ * amp's pilot light and tubes glow, the tuner pedal and two pedal LEDs
+ * light, the in-ear pack shows green, and a warm spot comes up on the
+ * guitarist (DESIGN-15A.11). Stopping: the tech unplugs the cable and
+ * everything returns to standby. Under reduced motion the two states switch
+ * instantly. Visual demonstration only: no sound plays, nothing is saved or
+ * sent; the accessible name says so, and a polite live region announces
+ * the change.
  *
  * Styling and motion: app/(site)/who-its-for/who.css (.mu-*), off under
  * reduced motion.
@@ -49,8 +52,8 @@ export default function MusicianScene() {
     setLive(next);
     setAnnouncement(
       next
-        ? "Soundcheck: the amp comes off standby, the pedals light up, and the stage light comes up on the guitarist. No sound plays. Illustration only."
-        : "Amp back on standby and the stage light down. Illustration only.",
+        ? "Soundcheck: the guitar tech plugs the cable into the amp, then the amp comes off standby, the pedals light up, and the stage light comes up on the guitarist. No sound plays. Illustration only."
+        : "The guitar tech unplugs the cable: the amp is back on standby and the stage light is down. Illustration only.",
     );
   };
   const onKeyDown = (event: KeyboardEvent<SVGGElement>) => {
@@ -75,8 +78,9 @@ export default function MusicianScene() {
       >
         <g className={state}>
           <TouringLighting />
-          <GuitarTech />
+          {/* The amp first: the tech's arm and plug pass in front of it. */}
           <GuitarAmp />
+          <GuitarTech />
           <VocalMic />
           {/* Slightly upstage of the other protagonists (feet at art y 822)
               so the pedalboard in front of him sits on the deck. */}
@@ -94,7 +98,7 @@ export default function MusicianScene() {
             role="button"
             tabIndex={0}
             aria-pressed={live}
-            aria-label={`Pedalboard at the guitarist's feet: ${live ? "rig live for soundcheck" : "amp on standby"}. Demonstration only: no sound plays and nothing is saved.`}
+            aria-label={`Pedalboard at the guitarist's feet: ${live ? "cable plugged into the amp, rig live for soundcheck" : "cable unplugged, amp on standby"}. Starts or stops soundcheck: the guitar tech plugs in or unplugs the amp. Demonstration only: no sound plays and nothing is saved.`}
             className="fc-ctl mu-ctl"
             onClick={toggle}
             onKeyDown={onKeyDown}
