@@ -86,21 +86,6 @@
   color: rgba(255, 255, 255, 0.82);
 }
 
-.about-story .as-byline {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-  margin-top: 2rem;
-  padding-left: 1rem;
-  border-left: 2px solid #ff7a1a;
-}
-
-.about-story .as-byline-name {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: #fff;
-}
-
 /* The story: the problem on the left, the work around the work on the
    right (stacked on narrow screens). */
 .about-story .as-body {
@@ -200,12 +185,14 @@
 }
 
 /* Desktop: the photograph fills the right of a near full-height stage, the
-   copy sits over the dark it fades into. */
+   copy sits over the dark it fades into, vertically centred on the stage
+   (a little above true centre, along the photograph's horizon) like the
+   other heroes (DESIGN-16A.4; it was anchored to the bottom). */
 @media (min-width: 1024px) {
   .about-story .as-hero {
     position: relative;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     height: clamp(600px, calc(100svh - 65px), 880px);
     overflow: hidden;
   }
@@ -231,7 +218,7 @@
   .about-story .as-hero-copy {
     width: 100%;
     margin-top: 0;
-    padding-bottom: clamp(3.5rem, 8svh, 6rem);
+    padding-bottom: clamp(2rem, 6svh, 4.5rem);
   }
 
   .about-story .as-title,
