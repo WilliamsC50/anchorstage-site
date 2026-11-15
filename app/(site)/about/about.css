@@ -1,0 +1,482 @@
+/* About styles (DESIGN-16A.2). Loaded only by app/(site)/about/page.tsx;
+   every rule is scoped to .about-story (scene 1) or .about-founder (scene 2).
+   Motion: the hero photograph settles in once on load, and the portrait
+   comes from black and white into colour as it scrolls into view. Both are
+   off under prefers-reduced-motion; the colour change also needs
+   scroll-driven animation support and otherwise shows full colour. */
+
+/* ── Scene 1: the work behind the show ───────────────────────────────── */
+
+.about-story {
+  position: relative;
+  background: linear-gradient(180deg, #020712 0%, #030a17 70%, #061226 100%);
+  color: #fff;
+}
+
+.about-story .as-wrap {
+  position: relative;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Phones and tablets: the photograph is a band above the copy, cropped on
+   the founder; its lower edge fades into the dark the copy sits on. */
+.about-story .as-photo {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  max-height: 72svh;
+  overflow: hidden;
+}
+
+.about-story .as-img {
+  object-fit: cover;
+  object-position: 57% 30%;
+}
+
+.about-story .as-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(2, 7, 18, 0.25) 0%, transparent 22%, transparent 52%, rgba(2, 7, 18, 0.85) 86%, #020712 100%);
+}
+
+.about-story .as-hero-copy {
+  margin-top: -4.5rem;
+  padding-bottom: 3.5rem;
+}
+
+.about-story .as-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ff9550;
+}
+
+.about-story .as-rule {
+  width: 2rem;
+  height: 1px;
+  background: #ff7a1a;
+}
+
+.about-story .as-title {
+  max-width: 13ch;
+  font-size: clamp(2.5rem, 7.5vw, 4.75rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.about-story .as-lead {
+  max-width: 34rem;
+  margin-top: 1.5rem;
+  font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.about-story .as-byline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  margin-top: 2rem;
+  padding-left: 1rem;
+  border-left: 2px solid #ff7a1a;
+}
+
+.about-story .as-byline-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.about-story .as-byline-role {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+/* The story: the problem on the left, the work around the work on the
+   right (stacked on narrow screens). */
+.about-story .as-body {
+  display: grid;
+  gap: 3rem;
+  padding-top: 2.5rem;
+  padding-bottom: 5rem;
+}
+
+.about-story .as-kicker,
+.about-founder .af-kicker {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #a8dcff;
+}
+
+.about-story .as-kicker span,
+.about-founder .af-kicker span {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #ff9550;
+}
+
+.about-story .as-h2 {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.about-story .as-narrative p:not(.as-kicker) {
+  max-width: 36rem;
+  margin-top: 1.25rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.about-story .as-work {
+  align-self: start;
+  padding: 1.75rem 1.5rem 1.5rem;
+  border: 1px solid rgba(127, 211, 244, 0.16);
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(255, 122, 26, 0.08) 0%, transparent 70%),
+    rgba(8, 24, 43, 0.6);
+}
+
+.about-story .as-work-title {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.about-story .as-work-list {
+  margin-top: 1.25rem;
+}
+
+.about-story .as-work-list li {
+  position: relative;
+  padding: 0.6875rem 0 0.6875rem 1.5rem;
+  border-top: 1px solid rgba(127, 211, 244, 0.12);
+  font-size: 0.9875rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.about-story .as-work-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.25rem;
+  width: 0.75rem;
+  height: 2px;
+  background: #ff7a1a;
+}
+
+.about-story .as-work-close {
+  margin-top: 1.25rem;
+  padding-top: 1.125rem;
+  border-top: 1px solid rgba(127, 211, 244, 0.12);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+@media (min-width: 640px) {
+  .about-story .as-photo {
+    aspect-ratio: 16 / 10;
+    max-height: 64svh;
+  }
+
+  .about-story .as-img {
+    object-position: 55% 32%;
+  }
+}
+
+/* Desktop: the photograph fills the right of a near full-height stage, the
+   copy sits over the dark it fades into. */
+@media (min-width: 1024px) {
+  .about-story .as-hero {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    height: clamp(600px, calc(100svh - 65px), 880px);
+    overflow: hidden;
+  }
+
+  .about-story .as-photo {
+    position: absolute;
+    inset: 0 0 0 26%;
+    width: auto;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  .about-story .as-img {
+    object-position: 46% 34%;
+  }
+
+  .about-story .as-photo::after {
+    background:
+      linear-gradient(90deg, #020712 0%, rgba(2, 7, 18, 0.82) 14%, rgba(2, 7, 18, 0.35) 34%, transparent 52%),
+      linear-gradient(180deg, rgba(2, 7, 18, 0.35) 0%, transparent 18%, transparent 62%, rgba(2, 7, 18, 0.8) 90%, #020712 100%);
+  }
+
+  .about-story .as-hero-copy {
+    width: 100%;
+    margin-top: 0;
+    padding-bottom: clamp(3.5rem, 8svh, 6rem);
+  }
+
+  .about-story .as-title,
+  .about-story .as-lead {
+    text-shadow: 0 2px 24px rgba(2, 7, 18, 0.7);
+  }
+
+  .about-story .as-body {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 4.5rem;
+    padding-top: 4.5rem;
+    padding-bottom: 6.5rem;
+  }
+
+  .about-story .as-work {
+    margin-top: 2.25rem;
+    padding: 2rem 2rem 1.75rem;
+  }
+}
+
+/* ── Scene 2: the person and the purpose ─────────────────────────────── */
+
+.about-founder {
+  position: relative;
+  /* Starts exactly where scene 1 ends (#061226), so there is no seam. */
+  background:
+    linear-gradient(180deg, #061226 0, rgba(6, 18, 38, 0) 220px),
+    radial-gradient(ellipse 60% 40% at 18% 12%, rgba(127, 184, 230, 0.08) 0%, transparent 70%),
+    linear-gradient(180deg, #061226 0%, #0a2137 38%, #0f2f4f 100%);
+  color: #fff;
+}
+
+.about-founder .af-wrap {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem 5.5rem;
+  display: grid;
+  gap: 2.75rem;
+}
+
+.about-founder .af-figure {
+  margin: 0;
+}
+
+.about-founder .af-portrait {
+  position: relative;
+  width: 100%;
+  max-width: 24rem;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(127, 211, 244, 0.18),
+    0 30px 60px -28px rgba(0, 0, 0, 0.7);
+}
+
+.about-founder .af-img {
+  object-fit: cover;
+  object-position: 50% 38%;
+}
+
+.about-founder .af-name {
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  color: #fff;
+}
+
+.about-founder .af-role {
+  margin-top: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ff9550;
+}
+
+.about-founder .af-intro {
+  max-width: 36rem;
+  margin-top: 1.5rem;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.84);
+}
+
+.about-founder .af-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #a8dcff;
+}
+
+.about-founder .af-mission {
+  margin-top: 2.75rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid #ff7a1a;
+}
+
+.about-founder .af-mission-text {
+  max-width: 34rem;
+  margin-top: 0.75rem;
+  font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.about-founder .af-mission-note {
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.about-founder .af-principles {
+  margin-top: 2.75rem;
+}
+
+.about-founder .af-principle-list {
+  margin-top: 0.75rem;
+}
+
+.about-founder .af-principle-list li {
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr);
+  gap: 0.25rem;
+  padding: 1rem 0;
+  border-top: 1px solid rgba(127, 211, 244, 0.14);
+}
+
+.about-founder .af-principle-list li:last-child {
+  border-bottom: 1px solid rgba(127, 211, 244, 0.14);
+}
+
+.about-founder .af-num {
+  padding-top: 0.2rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ff9550;
+}
+
+.about-founder .af-principle-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.about-founder .af-principle-body {
+  max-width: 36rem;
+  margin-top: 0.3rem;
+  font-size: 0.975rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+.about-founder .af-direction {
+  margin-top: 2.75rem;
+}
+
+.about-founder .af-direction p {
+  max-width: 36rem;
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+@media (min-width: 640px) {
+  .about-founder .af-portrait {
+    max-width: 24rem;
+  }
+}
+
+/* Desktop: portrait left, kept in view while the column beside it is read. */
+@media (min-width: 1024px) {
+  .about-founder .af-wrap {
+    grid-template-columns: minmax(0, 26rem) minmax(0, 1fr);
+    gap: 5rem;
+    padding-top: 6rem;
+    padding-bottom: 7rem;
+  }
+
+  .about-founder .af-photo-col {
+    position: relative;
+  }
+
+  .about-founder .af-figure {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .about-founder .af-portrait {
+    max-width: none;
+  }
+}
+
+/* ── Motion (only when the visitor has not asked for less) ───────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+  .about-story .as-img {
+    animation: as-settle 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  /* Black and white into colour as the portrait scrolls into view. */
+  @supports (animation-timeline: view()) {
+    .about-founder .af-portrait {
+      animation: af-color linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 45%;
+    }
+  }
+}
+
+@keyframes as-settle {
+  from {
+    transform: scale(1.045);
+    opacity: 0.6;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes af-color {
+  from {
+    filter: grayscale(1) brightness(0.9);
+  }
+  to {
+    filter: grayscale(0) brightness(1);
+  }
+}
