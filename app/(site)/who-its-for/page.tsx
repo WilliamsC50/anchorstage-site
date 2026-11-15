@@ -1,93 +1,79 @@
 import type { Metadata } from "next";
 import ClosingCta from "@/components/ClosingCta";
-import HeroMedia from "@/components/HeroMedia";
-import PageHeader from "@/components/PageHeader";
-import PersonaIcon from "@/components/PersonaIcon";
 import Section from "@/components/Section";
-import { whoItsForHero } from "@/lib/images";
+import WhoShowcase, { type ShowcaseRole } from "@/components/who/WhoShowcase";
 import { buildMetadata } from "@/lib/metadata";
 import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
+import "./who.css";
+
+/*
+ * Who It's For (DESIGN-15A.2: cinematic visual proof of concept, local only).
+ *
+ * The interactive showcase replaces the photo hero (whose montage carried
+ * invented names printed into the image) and the six persona cards. One
+ * scene is finished (Freelancers & Technicians); the other five show an empty
+ * stage and their existing approved description, marked "Scene in
+ * development". "What everyone shares" and the shared closing are unchanged.
+ *
+ * Persona descriptions are read from lib/personas.ts and not modified (the
+ * homepage also uses them).
+ *
+ * LAUNCH-DEPENDENT copy: see components/who/WhoShowcase.tsx.
+ */
 
 export const metadata: Metadata = buildMetadata({
   title: "Who It's For",
   description:
-    "ASO is built for freelancers, production companies, venues, event organizers, musicians, and rental providers. See the operational problem it solves for each of them.",
+    "ASO is built for freelancers and technicians, production companies, venues, event organizers, musicians, and rental providers.",
 });
+
+const who = (slug: string) => PERSONAS.find((p) => p.slug === slug)?.whoTheyAre ?? "";
+
+const ROLES: ShowcaseRole[] = [
+  {
+    slug: "freelancers",
+    name: "Freelancers & Technicians",
+    setting: "FOH mixing position",
+    ready: true,
+    headline: "You run the show. And everything behind it.",
+    recognition:
+      "You're the technician, the scheduler, the salesperson, and the one chasing down the details. Your operation deserves more than scattered messages and spreadsheets.",
+    value:
+      "Build your professional presence, organize your jobs and rates, and develop relationships with the companies that need your skills.",
+  },
+  { slug: "production-companies", name: "Production Companies", setting: "an active stage build", ready: false, summary: who("production-companies") },
+  { slug: "venues", name: "Venues", setting: "a theatrical or live-music venue", ready: false, summary: who("venues") },
+  { slug: "event-organizers", name: "Event Organizers & Producers", setting: "an event coordination environment", ready: false, summary: who("event-organizers") },
+  { slug: "musicians", name: "Musicians & Touring Acts", setting: "a performance and touring stage", ready: false, summary: who("musicians") },
+  { slug: "rental-providers", name: "Rental Warehouses & Providers", setting: "an equipment warehouse and loading area", ready: false, summary: who("rental-providers") },
+];
 
 export default function WhoItsForPage() {
   return (
     <main className="bg-white">
-      <PageHeader
-        eyebrow="Who It's For"
-        title="Built for the people who make live events happen"
-        lead="Everyone on ASO operates through their own organization, whether that is one person or a company with a full crew. Here is what that looks like depending on the work you do."
-        media={
-          // Same treatment as the Home hero: a photographic montage covering
-          // the band, flush-right, blended into the navy by the shared fade.
-          // The montage is a uniform grid with no single subject, so the crop
-          // is centred.
-          <HeroMedia
-            className="absolute inset-0 z-[1] lg:left-auto lg:w-[56%] xl:w-[62%] 2xl:w-[66%]"
-            fadeLeft
-            image={whoItsForHero}
-            objectPosition="50% 50%"
-            sizes="(min-width: 1536px) 66vw, (min-width: 1280px) 62vw, (min-width: 1024px) 56vw, 100vw"
-          />
-        }
-      />
-
-      <Section background="bg" plot>
-        {/* Right column sits low so the pairs read as placed panels */}
-        <div className="grid gap-5 lg:grid-cols-2">
-          {PERSONAS.map((persona, i) => (
-            <article
-              key={persona.slug}
-              className={`group aso-panel aso-panel-lift relative overflow-hidden rounded-xl border border-aso-blue/12 bg-white p-7 md:p-8 ${
-                i % 2 === 1 ? "lg:translate-y-10" : ""
-              }`}
-            >
-              {/* Credential-tag edge */}
-              <span
-                aria-hidden="true"
-                className="absolute left-0 top-0 h-full w-0.5 bg-aso-blue/20 transition-colors group-hover:bg-aso-orange"
-              />
-
-              <div className="flex items-center gap-3 mb-2">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-aso-bg text-aso-blue transition-colors group-hover:text-aso-orange">
-                  <PersonaIcon slug={persona.slug} className="h-5 w-5" />
-                </span>
-                <h2 className="text-xl font-bold text-aso-navy tracking-tight">
-                  {persona.name}
-                </h2>
-              </div>
-
-              <p className="font-mono text-[11px] leading-relaxed text-gray-400 mb-5">
-                {persona.examples}
-              </p>
-
-              <p className="text-gray-600 leading-relaxed mb-6">{persona.whoTheyAre}</p>
-
-              <div className="mb-6">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400 mb-2">
-                  The problem
-                </p>
-                <p className="text-gray-500 leading-relaxed">{persona.problem}</p>
-              </div>
-
-              <div className="border-l-2 border-aso-orange pl-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-aso-orange-ink mb-2">
-                  How ASO helps
-                </p>
-                <p className="text-gray-600 leading-relaxed">{persona.support}</p>
-              </div>
-            </article>
-          ))}
+      <section className="who-showcase relative overflow-hidden" aria-labelledby="who-title">
+        <div aria-hidden="true" className="absolute inset-0 pointer-events-none aso-plot-grid" />
+        <div aria-hidden="true" className="who-glow" />
+        <div className="who-inner relative max-w-6xl mx-auto px-6">
+          <div className="who-head">
+            <div className="flex items-center gap-3 mb-5">
+              <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
+              <p className="who-eyebrow text-xs font-semibold uppercase tracking-[0.18em]">Who It&apos;s For</p>
+            </div>
+            <h1 id="who-title" className="who-title">
+              Built for the people who make live events happen
+            </h1>
+            <p className="who-lead">
+              Everyone on ASO operates through their own organization, whether that is one person or a company with a
+              full crew. Choose your role.
+            </p>
+          </div>
+          <WhoShowcase roles={ROLES} />
         </div>
-        <div aria-hidden="true" className="hidden lg:block h-10" />
-      </Section>
+      </section>
 
-      {/* WHAT EVERYONE SHARES — navy narrative bridge into the CTA */}
+      {/* WHAT EVERYONE SHARES (unchanged) */}
       <Section background="navy" plot>
         <div className="max-w-3xl">
           <span aria-hidden="true" className="block h-px w-8 bg-aso-orange mb-6" />
@@ -108,7 +94,7 @@ export default function WhoItsForPage() {
         </div>
       </Section>
 
-      {/* CTA */}
+      {/* CTA (shared, unchanged) */}
       <ClosingCta
         heading="Join free"
         body="Create your organization and start running your work through it. Membership is free, and you can begin on your own today."
