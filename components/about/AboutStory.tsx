@@ -56,12 +56,11 @@ export default function AboutStory() {
             Built from the work behind the show.
           </h1>
           <p className="as-lead">
-            AnchorStage Ops grew out of more than 10 years of hands-on live event production. Every part of it begins
-            with the way professionals actually work.
+            AnchorStage Ops grew out of more than 10 years of hands-on live event production. What started as a need for
+            better tools became a vision for a better way to work.
           </p>
           <p className="as-byline">
             <span className="as-byline-name">Cody Williams</span>
-            <span className="as-byline-role">Founder &amp; Live Event Operator</span>
           </p>
         </div>
       </div>

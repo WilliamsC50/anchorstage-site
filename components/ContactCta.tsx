@@ -16,8 +16,12 @@ const TRIGGER_CLASSES =
  * Centring and the scroll lock are in app/globals.css (.contact-dialog).
  * On close (button, backdrop, or Escape) focus returns to the trigger.
  * Client component because showModal()/close() are DOM calls.
+ *
+ * `triggerClassName` replaces the trigger's default light-surface secondary
+ * styling where a page needs a different button (the About contact section
+ * uses its lit orange primary). The dialog itself is the same everywhere.
  */
-export default function ContactCta() {
+export default function ContactCta({ triggerClassName }: { triggerClassName?: string } = {}) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -26,7 +30,7 @@ export default function ContactCta() {
 
   return (
     <>
-      <button ref={triggerRef} type="button" onClick={open} className={TRIGGER_CLASSES}>
+      <button ref={triggerRef} type="button" onClick={open} className={triggerClassName ?? TRIGGER_CLASSES}>
         Contact Us
       </button>
 
