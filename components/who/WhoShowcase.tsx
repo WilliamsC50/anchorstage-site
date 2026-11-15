@@ -1,26 +1,31 @@
 "use client";
 
 import { useRef, useState, type KeyboardEvent } from "react";
-import { SceneBackground, SceneCharacter, SceneEmpty, SceneForeground, SceneMidstage } from "./FreelancerScene";
+import { StageBackground, StageEmptyMark, STAGE_VB } from "./ConcertStage";
+import FohForeground from "./FohForeground";
+import TechnicianFigure from "./TechnicianFigure";
 
 /**
- * Who It's For: interactive cinematic showcase (DESIGN-15A.2, proof of
- * concept). A front-facing stage diorama per profession, a role selector, and
- * a copy panel.
+ * Who It's For: full-viewport cinematic stage (DESIGN-15A.3, proof of
+ * concept). One concert stage, six professional perspectives.
  *
- * Interaction follows the homepage's Scene 5 selector (components/home/
- * CastSelect.tsx), adapted here without changing it: WAI-ARIA tabs, selection
- * follows focus, arrow keys, Home, and End; every role's text is rendered in
- * the same grid cell so selecting never reflows the page; nothing cycles on
- * its own.
+ * Layers, front to back:
+ *   overlays    page title, the selected profession's copy, and the
+ *               profession selector (HTML over the stage on wide screens;
+ *               stacked around it on narrower ones)
+ *   light       CSS scrims and key light (.wv-light)
+ *   foreground  profession-specific equipment (Freelancer: the FOH console,
+ *               with one interactive fader; road cases, radio, tools)
+ *   character   the selected professional
+ *   background  the permanent concert stage, never remounted
+ * Character and foreground remount per profession and enter with staggered
+ * timing; the background stays put. Reduced motion: instant, no idle motion.
  *
- * Only Freelancers & Technicians has a finished scene. The other five roles
- * show an empty lit stage and their existing, approved one-line description,
- * marked "Scene in development", so nothing unfinished reads as complete.
- *
- * Transitions: the stage remounts per role; its layers (background,
- * midstage, character, foreground, light) enter with staggered timing, the
- * basis for future coordinated scene changes. Reduced motion: instant.
+ * Selector: WAI-ARIA tabs adapted from the homepage cast select (selection
+ * follows focus; arrow keys, Home, End), without changing it. Nothing cycles
+ * on its own. Only Freelancers & Technicians has a finished scene; the other
+ * five show an empty lit FOH mark and their existing approved description,
+ * marked "Scene in development".
  *
  * Copy for the finished scene is a founder draft (DESIGN-15A.2).
  * LAUNCH-DEPENDENT: "Build your professional presence" (public profiles) and
@@ -29,12 +34,11 @@ import { SceneBackground, SceneCharacter, SceneEmpty, SceneForeground, SceneMids
  * rates" is partly supported: events plus per-event quote line items and
  * payout terms; there is no standing personal rate card.
  *
- * Styling: app/(site)/who-its-for/who.css under .who-showcase.
+ * Styling: app/(site)/who-its-for/who.css (.who-stage, .wv-*).
  */
 
 export interface ShowcaseRole {
   slug: string;
-  /** Selector label. */
   name: string;
   /** Future scene setting, e.g. "FOH mixing position". */
   setting: string;
@@ -74,27 +78,24 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
 
   const active = roles[selected];
 
+  // DOM order is the keyboard order: title, profession tabs, the selected
+  // profession's copy (ending in the console hint), then the stage and its
+  // fader. CSS places them visually (who.css).
   return (
-    <div className="ws">
-      {/* The stage diorama: remounts per role so its layers enter in sequence. */}
-      <div className="ws-stage-frame">
-        <div key={active.slug} className={`ws-stage ${active.ready ? "is-ready" : "is-empty"}`} aria-hidden="true">
-          {active.ready ? (
-            <>
-              <SceneBackground />
-              <SceneMidstage />
-              <SceneCharacter />
-              <SceneForeground />
-            </>
-          ) : (
-            <SceneEmpty />
-          )}
-          <div className="ws-light" />
+    <section className="who-stage" aria-labelledby="who-title">
+      {/* Title. */}
+      <div className="wv-head">
+        <div className="flex items-center gap-3 mb-4">
+          <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
+          <p className="wv-eyebrow text-xs font-semibold uppercase tracking-[0.18em]">Who It&apos;s For</p>
         </div>
+        <h1 id="who-title" className="wv-title">
+          Built for the people who make live events happen
+        </h1>
       </div>
 
-      {/* Role selector. */}
-      <div role="tablist" aria-label="Who it's for" aria-orientation="horizontal" className="ws-roster" onKeyDown={onKeyDown}>
+      {/* Profession selector. */}
+      <div role="tablist" aria-label="Choose a profession" aria-orientation="vertical" className="wv-roster" onKeyDown={onKeyDown}>
         {roles.map((role, i) => (
           <button
             key={role.slug}
@@ -103,44 +104,47 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
             }}
             type="button"
             role="tab"
-            id={`ws-tab-${role.slug}`}
+            id={`wv-tab-${role.slug}`}
             aria-selected={i === selected}
-            aria-controls="ws-panel"
+            aria-controls="wv-panel"
             tabIndex={i === selected ? 0 : -1}
-            className="ws-tab"
+            className="wv-tab"
             onClick={() => select(i)}
           >
-            <span aria-hidden="true" className="ws-tab-num">
+            <span aria-hidden="true" className="wv-tab-num">
               {pad(i + 1)}
             </span>
-            <span className="ws-tab-name">{role.name}</span>
-            <span className="ws-tab-status">{role.ready ? "Scene ready" : "In development"}</span>
+            <span className="wv-tab-name">{role.name}</span>
+            <span className="wv-tab-status">{role.ready ? "Scene ready" : "In development"}</span>
           </button>
         ))}
       </div>
 
-      {/* Copy panel: every role rendered in one cell; only the active one shows. */}
-      <div role="tabpanel" id="ws-panel" aria-labelledby={`ws-tab-${active.slug}`} tabIndex={0} className="ws-panel">
+      {/* The selected profession's copy. */}
+      <div role="tabpanel" id="wv-panel" aria-labelledby={`wv-tab-${active.slug}`} tabIndex={0} className="wv-panel">
         {roles.map((role, i) => (
-          <div key={role.slug} className={`ws-panel-body ${i === selected ? "is-active" : ""}`} aria-hidden={i !== selected}>
-            <p className="ws-kicker">
-              <span aria-hidden="true">{pad(i + 1)} / {pad(roles.length)}</span>
+          <div key={role.slug} className={`wv-panel-body ${i === selected ? "is-active" : ""}`} aria-hidden={i !== selected}>
+            <p className="wv-kicker">
+              <span aria-hidden="true">
+                {pad(i + 1)} / {pad(roles.length)}
+              </span>
               {role.name}
             </p>
             {role.ready ? (
               <>
-                <h3 className="ws-headline">{role.headline}</h3>
-                <p className="ws-recognition">{role.recognition}</p>
-                <p className="ws-value">
-                  <span className="ws-value-label">With AnchorStage Ops</span>
+                <h2 className="wv-headline">{role.headline}</h2>
+                <p className="wv-recognition">{role.recognition}</p>
+                <p className="wv-value">
+                  <span className="wv-value-label">With AnchorStage Ops</span>
                   {role.value}
                 </p>
+                <p className="wv-hint">Try the VOX fader on the console.</p>
               </>
             ) : (
               <>
-                <p className="ws-summary">{role.summary}</p>
-                <p className="ws-dev">
-                  <span className="ws-dev-dot" aria-hidden="true" />
+                <p className="wv-summary">{role.summary}</p>
+                <p className="wv-dev">
+                  <span className="wv-dev-dot" aria-hidden="true" />
                   Scene in development: {role.setting}
                 </p>
               </>
@@ -148,6 +152,24 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
           </div>
         ))}
       </div>
-    </div>
+
+      {/* The stage: permanent background, then the profession's layers. */}
+      <div className="wv-viewport">
+        <StageBackground />
+        <div key={active.slug} className="wv-scene">
+          {active.ready ? (
+            <>
+              <svg viewBox={STAGE_VB} preserveAspectRatio="xMidYMax slice" className="wv-layer wv-layer-char" aria-hidden="true" focusable="false">
+                <TechnicianFigure x={420} y={141.4} scale={1.3} />
+              </svg>
+              <FohForeground />
+            </>
+          ) : (
+            <StageEmptyMark />
+          )}
+        </div>
+        <div aria-hidden="true" className="wv-light" />
+      </div>
+    </section>
   );
 }

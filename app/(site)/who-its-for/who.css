@@ -1,37 +1,77 @@
-/* Who It's For styles (DESIGN-15A.2, proof of concept). Loaded only by
-   app/(site)/who-its-for/page.tsx; every rule is scoped to .who-showcase.
-   Motion: layer entrances on role change, a slow breath, one occasional
-   fader gesture, and slow beam shimmer. All of it is off under
-   prefers-reduced-motion. */
+/* Who It's For styles (DESIGN-15A.3, full-viewport proof of concept).
+   Loaded only by app/(site)/who-its-for/page.tsx; every rule is scoped to
+   .who-stage. Motion: beam sweeps, haze drift, LED-wall glow, equipment
+   indicators, the technician's breath and glance, and profession entrances.
+   All of it stops under prefers-reduced-motion. */
 
-.who-showcase {
-  background: #071528;
+.who-stage {
+  --wv-gutter: max(1.5rem, calc((100% - 80rem) / 2));
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #020712;
 }
 
-.who-showcase .who-glow {
+/* ── The stage viewport ─────────────────────────────────────────────────── */
+
+.who-stage .wv-viewport {
+  position: relative;
+  order: 2;
+  height: clamp(360px, 60svh, 620px);
+  overflow: hidden;
+  background: #020712;
+}
+
+.who-stage .wv-scene {
+  position: absolute;
+  inset: 0;
+}
+
+.who-stage .wv-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Character and background artwork is decorative; only the console's
+   control takes pointer input. */
+.who-stage .wv-layer-bg,
+.who-stage .wv-layer-char {
+  pointer-events: none;
+}
+
+.who-stage .wv-layer-fg {
+  pointer-events: none;
+}
+
+/* Key light on the professional, haze, and a soft fade at the bottom. */
+.who-stage .wv-light {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 760px 520px at 70% 40%, rgba(78, 168, 209, 0.16) 0%, transparent 70%),
-    linear-gradient(180deg, rgba(15, 47, 79, 0.45), transparent 55%);
+    radial-gradient(ellipse 26% 46% at 66% 58%, rgba(255, 212, 168, 0.1) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(2, 7, 18, 0.55) 0%, transparent 18%, transparent 80%, rgba(2, 7, 18, 0.5) 100%);
 }
 
-.who-showcase .who-inner {
-  padding-top: 3.5rem;
-  padding-bottom: 4.5rem;
+/* ── Title and copy ─────────────────────────────────────────────────────── */
+
+/* Narrow screens stack title, stage, selector, then copy (the flex order
+   below); the DOM order, which is the keyboard order, is title, selector,
+   copy, stage. */
+.who-stage .wv-head {
+  order: 1;
+  padding: 2.75rem var(--wv-gutter) 1.5rem;
 }
 
-.who-showcase .who-head {
-  max-width: 46rem;
-}
-
-.who-showcase .who-eyebrow {
+.who-stage .wv-eyebrow {
   color: #ff9550;
 }
 
-.who-showcase .who-title {
-  font-size: 2.25rem;
+.who-stage .wv-title {
+  max-width: 34rem;
+  font-size: 2.125rem;
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -0.025em;
@@ -39,170 +79,27 @@
   text-wrap: balance;
 }
 
-.who-showcase .who-lead {
-  max-width: 38rem;
-  margin-top: 1rem;
-  font-size: 1.0625rem;
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.82);
-}
-
-/* ── Showcase layout ────────────────────────────────────────────────────── */
-
-.who-showcase .ws {
+.who-stage .wv-panel {
+  order: 4;
   display: grid;
-  grid-template-areas: "stage" "roster" "panel";
-  gap: 1.25rem;
-  margin-top: 2rem;
-}
-
-/* The stage frame: a miniature proscenium. Fixed aspect, so nothing shifts. */
-.who-showcase .ws-stage-frame {
-  grid-area: stage;
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 1.2;
-  border: 1px solid rgba(127, 211, 244, 0.25);
-  border-radius: 18px;
-  background: #040a15;
-  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(255, 255, 255, 0.03) inset;
-}
-
-.who-showcase .ws-stage-frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04), inset 0 30px 40px -24px rgba(4, 10, 21, 0.9);
-}
-
-.who-showcase .ws-stage {
-  position: absolute;
-  inset: 0;
-}
-
-.who-showcase .ws-layer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* Lighting and atmosphere over the scene. */
-.who-showcase .ws-light {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 30% 48% at 54% 50%, rgba(255, 212, 168, 0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 18% 12%, rgba(127, 211, 244, 0.1) 0%, transparent 70%),
-    radial-gradient(ellipse 85% 75% at 50% 55%, transparent 55%, rgba(4, 10, 21, 0.55) 100%),
-    linear-gradient(180deg, rgba(4, 10, 21, 0.7) 0%, transparent 16%);
-}
-
-/* SVG groups animate in the scene's own coordinate space. */
-.who-showcase .ws-breathe,
-.who-showcase .ws-head,
-.who-showcase .ws-fader {
-  transform-box: view-box;
-}
-
-.who-showcase .ws-breathe {
-  transform-origin: 500px 398px;
-}
-
-.who-showcase .ws-head {
-  transform-origin: 500px 232px;
-}
-
-/* ── Role selector ──────────────────────────────────────────────────────── */
-
-.who-showcase .ws-roster {
-  grid-area: roster;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem;
-}
-
-.who-showcase .ws-tab {
-  display: grid;
-  gap: 0.125rem;
-  padding: 0.625rem 0.75rem;
-  border: 1px solid rgba(127, 211, 244, 0.24);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.03);
-  text-align: left;
-  color: #fff;
-  cursor: pointer;
-  transition: border-color 160ms ease, background 160ms ease;
-}
-
-.who-showcase .ws-tab:hover {
-  border-color: rgba(127, 211, 244, 0.5);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.who-showcase .ws-tab[aria-selected="true"] {
-  border-color: rgba(255, 122, 26, 0.8);
-  background: rgba(255, 122, 26, 0.12);
-  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.12);
-}
-
-.who-showcase .ws-tab:focus-visible {
-  outline: 2px solid #7fd3f4;
-  outline-offset: 2px;
-}
-
-.who-showcase .ws-tab-num {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  color: #ff9550;
-}
-
-.who-showcase .ws-tab-name {
-  font-size: 0.875rem;
-  font-weight: 600;
-  line-height: 1.3;
-}
-
-.who-showcase .ws-tab-status {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-/* ── Copy panel ─────────────────────────────────────────────────────────── */
-
-.who-showcase .ws-panel {
-  grid-area: panel;
-  display: grid;
+  margin: 0 var(--wv-gutter) 3.5rem;
   padding: 1.25rem 1.375rem 1.5rem;
   border: 1px solid rgba(127, 211, 244, 0.22);
   border-radius: 16px;
-  background: rgba(8, 24, 43, 0.75);
+  background: rgba(6, 18, 34, 0.92);
 }
 
-.who-showcase .ws-panel:focus-visible {
+.who-stage .wv-panel:focus-visible {
   outline: 2px solid #7fd3f4;
   outline-offset: 3px;
 }
 
-.who-showcase .ws-panel-body {
-  grid-area: 1 / 1;
-  visibility: hidden;
-  opacity: 0;
+/* Only the selected profession's copy is shown; the panel fits it. */
+.who-stage .wv-panel-body:not(.is-active) {
+  display: none;
 }
 
-.who-showcase .ws-panel-body.is-active {
-  visibility: visible;
-  opacity: 1;
-}
-
-.who-showcase .ws-kicker {
+.who-stage .wv-kicker {
   display: flex;
   flex-wrap: wrap;
   gap: 0.25rem 0.625rem;
@@ -213,13 +110,13 @@
   color: #ff9550;
 }
 
-.who-showcase .ws-kicker span {
+.who-stage .wv-kicker span {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   color: rgba(255, 255, 255, 0.72);
 }
 
-.who-showcase .ws-headline {
-  margin-top: 0.75rem;
+.who-stage .wv-headline {
+  margin-top: 0.625rem;
   font-size: 1.625rem;
   font-weight: 700;
   line-height: 1.15;
@@ -228,24 +125,24 @@
   text-wrap: balance;
 }
 
-.who-showcase .ws-recognition,
-.who-showcase .ws-summary {
-  margin-top: 0.875rem;
+.who-stage .wv-recognition,
+.who-stage .wv-summary {
+  margin-top: 0.75rem;
   font-size: 1rem;
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.84);
 }
 
-.who-showcase .ws-value {
-  margin-top: 1rem;
+.who-stage .wv-value {
+  margin-top: 0.875rem;
   padding-left: 0.875rem;
   border-left: 2px solid #ff7a1a;
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.55;
   color: #fff;
 }
 
-.who-showcase .ws-value-label {
+.who-stage .wv-value-label {
   display: block;
   margin-bottom: 0.25rem;
   font-size: 0.6875rem;
@@ -255,17 +152,36 @@
   color: #a8dcff;
 }
 
-.who-showcase .ws-dev {
+.who-stage .wv-hint {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 0.875rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #a8dcff;
+}
+
+.who-stage .wv-hint::before {
+  content: "";
+  flex: none;
+  width: 0.625rem;
+  height: 0.375rem;
+  border-radius: 2px;
+  background: #ff7a1a;
+}
+
+.who-stage .wv-dev {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.875rem;
   font-size: 0.875rem;
   font-weight: 500;
   color: #a8dcff;
 }
 
-.who-showcase .ws-dev-dot {
+.who-stage .wv-dev-dot {
   flex: none;
   width: 0.5rem;
   height: 0.5rem;
@@ -273,115 +189,325 @@
   border-radius: 999px;
 }
 
-/* ── Breakpoints ────────────────────────────────────────────────────────── */
+/* ── Profession selector ────────────────────────────────────────────────── */
 
-@media (min-width: 640px) {
-  .who-showcase .ws-roster {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+.who-stage .wv-roster {
+  order: 3;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  padding: 1.25rem var(--wv-gutter) 1rem;
+}
+
+.who-stage .wv-tab {
+  display: grid;
+  gap: 0.0625rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(127, 211, 244, 0.26);
+  border-radius: 10px;
+  background: rgba(6, 18, 34, 0.85);
+  text-align: left;
+  color: #fff;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.who-stage .wv-tab:hover {
+  border-color: rgba(127, 211, 244, 0.55);
+  background: rgba(12, 32, 56, 0.92);
+}
+
+.who-stage .wv-tab[aria-selected="true"] {
+  border-color: rgba(255, 122, 26, 0.85);
+  background: rgba(58, 28, 12, 0.92);
+  box-shadow: 0 0 0 3px rgba(255, 122, 26, 0.14);
+}
+
+.who-stage .wv-tab:focus-visible {
+  outline: 2px solid #7fd3f4;
+  outline-offset: 2px;
+}
+
+.who-stage .wv-tab-num {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #ff9550;
+}
+
+.who-stage .wv-tab-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.who-stage .wv-tab-status {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.74);
+}
+
+/* ── The console's interactive fader ────────────────────────────────────── */
+
+.who-stage .fc-ctl {
+  pointer-events: auto;
+  cursor: pointer;
+  outline: none;
+}
+
+.who-stage .fc-hit {
+  fill: transparent;
+}
+
+.who-stage .fc-ring {
+  fill: rgba(127, 211, 244, 0.06);
+  stroke: #7fd3f4;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  opacity: 0;
+}
+
+.who-stage .fc-ctl:hover .fc-ring {
+  opacity: 0.55;
+}
+
+.who-stage .fc-ctl:focus-visible .fc-ring {
+  opacity: 1;
+}
+
+.who-stage .fc-cap {
+  transform: translate(0, 0);
+}
+
+.who-stage .fc-ctl.is-up .fc-cap {
+  transform: translate(var(--fc-shift));
+}
+
+.who-stage .fc-vox-meter {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scaleY(0.22);
+}
+
+.who-stage .fc-vox-meter.is-up {
+  transform: scaleY(0.86);
+}
+
+.who-stage .fc-meter {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+/* ── The technician's idle groups ───────────────────────────────────────── */
+
+.who-stage .ws-breathe,
+.who-stage .ws-head,
+.who-stage .ws-hand {
+  transform-box: fill-box;
+}
+
+.who-stage .ws-breathe {
+  transform-origin: 50% 100%;
+}
+
+.who-stage .ws-head {
+  transform-origin: 50% 100%;
+}
+
+/* ── Phone framing ──────────────────────────────────────────────────────── */
+
+/* Phones get their own shot rather than a shrunken wide one: the stage is
+   framed on the console and the professional (art x 380-1210, y 90-900),
+   so neither is cropped. The layers keep the art's 16:9 shape and are
+   offset inside a viewport of the window's shape. */
+@media (max-width: 767.98px) {
+  .who-stage .wv-viewport {
+    height: auto;
+    aspect-ratio: 830 / 810;
   }
 
-  .who-showcase .ws-stage-frame {
-    aspect-ratio: 1.45;
+  .who-stage .wv-layer {
+    inset: auto auto 0 -45.783%;
+    width: 192.771%;
+    height: 111.111%;
+  }
+
+  .who-stage .wv-light {
+    background:
+      radial-gradient(ellipse 30% 46% at 82% 58%, rgba(255, 212, 168, 0.1) 0%, transparent 70%),
+      linear-gradient(180deg, rgba(2, 7, 18, 0.6) 0%, transparent 16%, transparent 84%, rgba(2, 7, 18, 0.45) 100%);
+  }
+}
+
+/* ── Wider layouts ──────────────────────────────────────────────────────── */
+
+@media (min-width: 640px) {
+  .who-stage .wv-roster {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 768px) {
-  .who-showcase .who-title {
-    font-size: 3rem;
+  .who-stage .wv-title {
+    font-size: 2.75rem;
   }
 
-  .who-showcase .who-lead {
-    font-size: 1.125rem;
+  .who-stage .wv-viewport {
+    height: clamp(420px, 62svh, 680px);
   }
 
-  .who-showcase .ws-headline {
+  .who-stage .wv-headline {
     font-size: 1.875rem;
   }
 }
 
-@media (min-width: 1024px) {
-  .who-showcase .who-inner {
-    padding-top: 4rem;
-    padding-bottom: 5rem;
+/* Full viewport from 1200px: the stage fills the space under the site
+   navigation, and the copy and selector sit over it, clear of the
+   professional and the console. */
+@media (min-width: 1200px) {
+  .who-stage {
+    display: grid;
+    grid-template-columns: min(31rem, 34vw) minmax(0, 1fr) 15.5rem;
+    grid-template-rows: auto auto 1fr;
+    row-gap: 1.25rem;
+    align-items: start;
+    height: calc(100svh - 65px);
+    min-height: 680px;
+    padding: clamp(1.75rem, 5svh, 3.5rem) var(--wv-gutter) 0;
   }
 
-  .who-showcase .who-title {
-    font-size: 3.25rem;
+  .who-stage .wv-viewport {
+    position: absolute;
+    inset: 0;
+    height: auto;
   }
 
-  .who-showcase .ws {
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-    grid-template-areas:
-      "stage panel"
-      "roster roster";
-    align-items: center;
-    gap: 1.5rem 2rem;
-    margin-top: 2.5rem;
+  .who-stage .wv-head,
+  .who-stage .wv-panel,
+  .who-stage .wv-roster {
+    position: relative;
+    z-index: 2;
   }
 
-  .who-showcase .ws-stage-frame {
-    aspect-ratio: 1.6;
+  .who-stage .wv-light {
+    background:
+      linear-gradient(90deg, rgba(2, 7, 18, 0.94) 0%, rgba(2, 7, 18, 0.82) 26%, rgba(2, 7, 18, 0.35) 42%, transparent 56%),
+      linear-gradient(270deg, rgba(2, 7, 18, 0.7) 0%, rgba(2, 7, 18, 0.35) 14%, transparent 24%),
+      radial-gradient(ellipse 22% 44% at 70% 58%, rgba(255, 212, 168, 0.1) 0%, transparent 70%),
+      linear-gradient(180deg, rgba(2, 7, 18, 0.55) 0%, transparent 16%);
   }
 
-  .who-showcase .ws-roster {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+  .who-stage .wv-head {
+    grid-column: 1;
+    grid-row: 1;
+    padding: 0;
+  }
+
+  .who-stage .wv-title {
+    font-size: clamp(2.125rem, 2.6vw, 2.75rem);
+  }
+
+  .who-stage .wv-panel {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 0;
+    padding: 1.125rem 1.25rem 1.25rem;
+    background: rgba(4, 12, 24, 0.72);
+    backdrop-filter: blur(6px);
+  }
+
+  .who-stage .wv-headline {
+    font-size: clamp(1.5rem, 1.8vw, 1.875rem);
+  }
+
+  .who-stage .wv-recognition,
+  .who-stage .wv-summary,
+  .who-stage .wv-value {
+    font-size: 0.9375rem;
+  }
+
+  .who-stage .wv-roster {
+    grid-column: 3;
+    grid-row: 1 / -1;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0;
   }
 }
 
 /* ── Motion (only when the visitor has not asked for less) ──────────────── */
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Layers enter in sequence when the stage changes role. */
-  .who-showcase .ws-stage .ws-layer-bg {
-    animation: ws-in-bg 700ms ease both;
+  /* Profession layers enter in sequence; the background never re-enters. */
+  .who-stage .wv-scene .wv-layer-char {
+    animation: wv-in-up 750ms 60ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    --wv-rise: 22px;
   }
 
-  .who-showcase .ws-stage .ws-layer-mid {
-    --ws-rise: 10px;
-    animation: ws-in-up 700ms 80ms ease both;
+  .who-stage .wv-scene .wv-layer-fg {
+    animation: wv-in-up 700ms 160ms ease both;
+    --wv-rise: 30px;
   }
 
-  .who-showcase .ws-stage .ws-layer-char {
-    --ws-rise: 18px;
-    animation: ws-in-up 750ms 160ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  .who-stage .wv-panel-body.is-active {
+    animation: wv-fade 300ms ease both;
   }
 
-  .who-showcase .ws-stage .ws-layer-fg {
-    --ws-rise: 26px;
-    animation: ws-in-up 700ms 240ms ease both;
+  /* Ambient: beams sweep, haze drifts, the LED wall breathes, indicators. */
+  .who-stage .cs-beam {
+    transform-box: fill-box;
+    transform-origin: 50% 0;
+    animation: cs-sweep 12s ease-in-out infinite alternate;
   }
 
-  .who-showcase .ws-stage .ws-light {
-    animation: ws-in-fade 900ms 300ms ease both;
+  .who-stage .cs-haze {
+    animation: cs-drift 22s ease-in-out infinite alternate;
   }
 
-  /* Idle: a slow breath, beam shimmer, and an occasional fader move with a
-     glance at the desk. */
-  .who-showcase .ws-breathe {
+  .who-stage .cs-led-image {
+    animation: cs-led 9s ease-in-out infinite alternate;
+  }
+
+  .who-stage .cs-phone,
+  .who-stage .fc-blink {
+    animation: cs-blink 3.4s ease-in-out infinite;
+  }
+
+  .who-stage .fc-meter {
+    animation: fc-meter 1.6s ease-in-out infinite alternate;
+  }
+
+  .who-stage .fc-cap {
+    transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .who-stage .fc-vox-meter {
+    transition: transform 450ms ease;
+  }
+
+  .who-stage .fc-vox-meter.is-up {
+    animation: fc-vox 0.9s 450ms ease-in-out infinite alternate;
+  }
+
+  /* The technician: a slow breath and an occasional glance at the desk. */
+  .who-stage .ws-breathe {
     animation: ws-breathe 4.8s ease-in-out infinite alternate;
   }
 
-  .who-showcase .ws-head {
-    animation: ws-glance 9s ease-in-out 1.5s infinite;
+  .who-stage .ws-head {
+    animation: ws-glance 10s ease-in-out 2s infinite;
   }
 
-  .who-showcase .ws-fader {
-    animation: ws-fader 9s ease-in-out 1.5s infinite;
-  }
-
-  .who-showcase .ws-beam {
-    animation: ws-beam 6s ease-in-out infinite alternate;
-  }
-
-  .who-showcase .ws-panel-body {
-    transition: opacity 250ms ease;
+  .who-stage .ws-hand {
+    animation: ws-settle 10s ease-in-out 2s infinite;
   }
 }
 
-@keyframes ws-in-bg {
+@keyframes wv-in-up {
   from {
     opacity: 0;
-    transform: scale(1.03);
+    transform: translateY(var(--wv-rise, 16px));
   }
   to {
     opacity: 1;
@@ -389,23 +515,69 @@
   }
 }
 
-@keyframes ws-in-up {
+@keyframes wv-fade {
   from {
     opacity: 0;
-    transform: translateY(var(--ws-rise, 12px));
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
-@keyframes ws-in-fade {
+@keyframes cs-sweep {
   from {
-    opacity: 0;
+    transform: rotate(-7deg);
+  }
+  to {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes cs-drift {
+  from {
+    transform: translateX(-40px);
+  }
+  to {
+    transform: translateX(40px);
+  }
+}
+
+@keyframes cs-led {
+  from {
+    opacity: 0.7;
+    transform: translateX(-12px);
   }
   to {
     opacity: 1;
+    transform: translateX(12px);
+  }
+}
+
+@keyframes cs-blink {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes fc-meter {
+  from {
+    transform: scaleY(0.7);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes fc-vox {
+  from {
+    transform: scaleY(0.72);
+  }
+  to {
+    transform: scaleY(0.92);
   }
 }
 
@@ -430,7 +602,7 @@
   }
 }
 
-@keyframes ws-fader {
+@keyframes ws-settle {
   0%,
   76%,
   100% {
@@ -438,15 +610,6 @@
   }
   84%,
   94% {
-    transform: translate(1.5px, -6px);
-  }
-}
-
-@keyframes ws-beam {
-  from {
-    opacity: 0.6;
-  }
-  to {
-    opacity: 1;
+    transform: translate(1px, -2px);
   }
 }

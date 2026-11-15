@@ -8,9 +8,9 @@ import { PERSONAS } from "@/lib/personas";
 import "./who.css";
 
 /*
- * Who It's For (DESIGN-15A.2: cinematic visual proof of concept, local only).
+ * Who It's For (DESIGN-15A.2/15A.3: cinematic visual proof of concept, local only).
  *
- * The interactive showcase replaces the photo hero (whose montage carried
+ * The full-viewport interactive stage (DESIGN-15A.3) replaces the photo hero (whose montage carried
  * invented names printed into the image) and the six persona cards. One
  * scene is finished (Freelancers & Technicians); the other five show an empty
  * stage and their existing approved description, marked "Scene in
@@ -52,26 +52,7 @@ const ROLES: ShowcaseRole[] = [
 export default function WhoItsForPage() {
   return (
     <main className="bg-white">
-      <section className="who-showcase relative overflow-hidden" aria-labelledby="who-title">
-        <div aria-hidden="true" className="absolute inset-0 pointer-events-none aso-plot-grid" />
-        <div aria-hidden="true" className="who-glow" />
-        <div className="who-inner relative max-w-6xl mx-auto px-6">
-          <div className="who-head">
-            <div className="flex items-center gap-3 mb-5">
-              <span aria-hidden="true" className="h-px w-8 bg-aso-orange" />
-              <p className="who-eyebrow text-xs font-semibold uppercase tracking-[0.18em]">Who It&apos;s For</p>
-            </div>
-            <h1 id="who-title" className="who-title">
-              Built for the people who make live events happen
-            </h1>
-            <p className="who-lead">
-              Everyone on ASO operates through their own organization, whether that is one person or a company with a
-              full crew. Choose your role.
-            </p>
-          </div>
-          <WhoShowcase roles={ROLES} />
-        </div>
-      </section>
+      <WhoShowcase roles={ROLES} />
 
       {/* WHAT EVERYONE SHARES (unchanged) */}
       <Section background="navy" plot>
