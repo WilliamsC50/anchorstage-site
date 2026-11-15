@@ -2,21 +2,25 @@ import Button from "@/components/Button";
 import { INTAKE_LOGIN_URL, INTAKE_REGISTER_URL } from "@/lib/constants";
 
 /**
- * Platform: the closing call to action (DESIGN-13H.2).
+ * Platform: the closing call to action (DESIGN-13H.2, 13H.3).
  *
  * The page's last beat, on white between the navy Organizations section and
- * the navy footer: a large centred headline, one sentence, the orange
- * "Create Your Organization" button, and a quiet line with the free-to-start
- * reassurance and the log-in link. Below it, a stage edge: a horizontal line
- * lit orange at its centre, with soft light rising from it behind the
- * content. Static: no animation.
+ * the navy footer: a large centred headline, one sentence, the primary
+ * "Create Your Organization — Free" button beside the secondary "Explore the
+ * Network", and a quiet log-in line. Below it, a stage edge: a horizontal
+ * line lit orange at its centre, with soft light rising from it.
+ *
+ * Buttons match the homepage's (app/(site)/home.css, scoped to .aso-home and
+ * loaded only there, so the treatment is reproduced here): the primary is the
+ * lit orange with navy text and a sheen on hover; the secondary keeps the
+ * homepage's edge-lit border and orange-edge hover, on a light fill for this
+ * white surface.
  *
  * Platform only. The shared components/ClosingCta.tsx still closes the About,
  * Network, and Who It's For pages and is unchanged.
  *
- * Destinations: registration and log-in on the intake app, from
- * lib/constants (the same URLs as the navigation's Join Free and Log In).
- * Registration gives every new account its own organization.
+ * Destinations: registration and log-in on the intake app (lib/constants,
+ * the same URLs as the navigation's Join Free and Log In), and /network.
  *
  * Styling: app/(site)/platform/platform.css under .platform-cta.
  */
@@ -36,22 +40,19 @@ export default function PlatformClosingCta() {
         </p>
 
         <div className="pc-actions">
-          <Button href={INTAKE_REGISTER_URL} variant="primary">
-            Create Your Organization
+          <Button href={INTAKE_REGISTER_URL} variant="primary" className="pc-cta">
+            Create Your Organization — Free
+          </Button>
+          <Button href="/network" variant="secondary" className="pc-ghost">
+            Explore the Network
           </Button>
         </div>
 
         <p className="pc-meta">
-          <span>Free to get started</span>
-          <span aria-hidden="true" className="pc-dot">
-            ·
-          </span>
-          <span>
-            Already have an account?{" "}
-            <a href={INTAKE_LOGIN_URL} className="pc-login">
-              Log in
-            </a>
-          </span>
+          Already have an account?{" "}
+          <a href={INTAKE_LOGIN_URL} className="pc-login">
+            Log in
+          </a>
         </p>
       </div>
     </section>

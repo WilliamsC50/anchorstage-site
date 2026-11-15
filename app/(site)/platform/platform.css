@@ -2541,9 +2541,12 @@
   color: #4b5563;
 }
 
+/* Actions: stacked on phones, side by side from 640px. */
 .platform-cta .pc-actions {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
   margin-top: 2.25rem;
 }
 
@@ -2552,24 +2555,71 @@
   max-width: 22rem;
 }
 
+/* Primary: the homepage's lit orange (home.css .home-cta), reproduced here
+   because home.css loads only on the homepage. Navy text: white on this
+   orange is 2.6:1; navy is 5.3:1 at the darkest stop. */
+.platform-cta .pc-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: #071425;
+  font-weight: 600;
+  background: linear-gradient(205deg, #ffb574 0%, #ff8e35 24%, #ff7a1a 52%, #e8640c 100%);
+  box-shadow:
+    inset -1px 1px 0 rgba(255, 230, 205, 0.85),
+    inset 0 -2px 0 rgba(140, 45, 0, 0.35),
+    0 0 0 1px rgba(255, 150, 70, 0.45),
+    0 14px 32px -12px rgba(255, 122, 26, 0.85),
+    0 0 46px -14px rgba(255, 122, 26, 0.6);
+}
+
+.platform-cta .pc-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 650ms ease;
+}
+
+.platform-cta .pc-cta:hover {
+  box-shadow:
+    inset -1px 1px 0 rgba(255, 236, 215, 0.95),
+    inset 0 -2px 0 rgba(140, 45, 0, 0.35),
+    0 0 0 1px rgba(255, 160, 85, 0.6),
+    0 18px 38px -12px rgba(255, 122, 26, 0.95),
+    0 0 64px -12px rgba(255, 122, 26, 0.75);
+}
+
+.platform-cta .pc-cta:hover::after {
+  transform: translateX(120%);
+}
+
+/* Secondary: the homepage's edge-lit border (home.css .home-ghost) and its
+   orange edge on hover, on a light fill for this white surface. */
+.platform-cta .pc-ghost {
+  color: var(--aso-navy);
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(220deg, rgba(78, 168, 209, 0.75), rgba(127, 211, 244, 0.35) 45%, rgba(15, 47, 79, 0.18)) border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 18px -12px rgba(15, 47, 79, 0.35);
+  transition: box-shadow 200ms ease, background 200ms ease;
+}
+
+.platform-cta .pc-ghost:hover {
+  background:
+    linear-gradient(#f7fbff, #f7fbff) padding-box,
+    linear-gradient(220deg, #ff7a1a, rgba(255, 122, 26, 0.35) 50%, rgba(78, 168, 209, 0.35)) border-box;
+  box-shadow: 0 0 30px -10px rgba(78, 168, 209, 0.6);
+}
+
 .platform-cta .pc-meta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.25rem 0.625rem;
-  margin-top: 1.25rem;
+  margin-top: 1.375rem;
   font-size: 0.875rem;
   line-height: 1.5;
   color: #4b5563;
-}
-
-/* Phones: the two parts of the quiet line sit on their own lines. */
-.platform-cta .pc-dot {
-  display: none;
-}
-
-.platform-cta .pc-meta > span:first-child {
-  flex-basis: 100%;
 }
 
 .platform-cta .pc-login {
@@ -2592,16 +2642,25 @@
 }
 
 @media (min-width: 640px) {
+  .platform-cta .pc-actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+
   .platform-cta .pc-actions a {
     width: auto;
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .platform-cta .pc-ghost {
+    transition: none;
   }
 
-  .platform-cta .pc-dot {
-    display: inline;
-  }
-
-  .platform-cta .pc-meta > span:first-child {
-    flex-basis: auto;
+  .platform-cta .pc-cta::after {
+    display: none;
   }
 }
 
