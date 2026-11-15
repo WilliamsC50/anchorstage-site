@@ -1,7 +1,7 @@
 /* Who It's For styles (DESIGN-15A.3, refined in DESIGN-15A.4; full-viewport
    proof of concept). Loaded only by app/(site)/who-its-for/page.tsx; every
-   rule is scoped to .who-stage (the showcase) or .who-bridge (the short
-   bridge after it, DESIGN-15B.2). Motion: beam sweeps, haze drift, LED-wall
+   rule is scoped to .who-stage (the showcase) or .who-bridge (the dark
+   pre-footer after it, DESIGN-15B.2 and 15B.3). Motion: beam sweeps, haze drift, LED-wall
    glow, equipment indicators, the technician's breath and glance, the master
    meters, card lifts, and profession entrances. All of it stops under
    prefers-reduced-motion. */
@@ -1595,17 +1595,19 @@
   }
 }
 
-/* ── The bridge after the showcase (DESIGN-15B.2) ─────────────────────── */
+/* ── The pre-footer after the showcase (DESIGN-15B.2, 15B.3) ──────────── */
 
 /* Continues the stage's dark: it starts at the showcase's own background,
-   lifts a little toward navy under a faint wash of stage light, and ends on
-   a lit stage edge where the page turns to the closing section. Static:
-   nothing here moves. */
+   lifts toward navy under a faint wash of stage light, and below the
+   actions a lit stage edge (as on the Platform pre-footer, adapted to dark)
+   with the background deepening to the footer's navy, so the page runs
+   straight into the footer. Static except the primary's hover sheen. */
 .who-bridge {
+  --wb-edge-y: 3.25rem;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, #020712 0%, #061226 58%, #0a1a31 100%);
-  padding: clamp(3.75rem, 9vw, 6.5rem) 1.5rem clamp(4.25rem, 10vw, 7.25rem);
+  background: linear-gradient(180deg, #020712 0%, #061226 46%, #0b2038 78%, #0f2f4f 100%);
+  padding: clamp(3.75rem, 9vw, 6.5rem) 1.5rem calc(var(--wb-edge-y) + clamp(3rem, 6vw, 4.25rem));
   text-align: center;
 }
 
@@ -1616,19 +1618,27 @@
   background:
     linear-gradient(180deg, #020712 0, rgba(2, 7, 18, 0) 110px),
     radial-gradient(ellipse 820px 400px at 50% -12%, rgba(127, 184, 230, 0.13) 0%, rgba(78, 168, 209, 0.05) 42%, transparent 72%),
-    radial-gradient(ellipse 38% 46% at 50% 108%, rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0.05) 40%, transparent 72%);
+    radial-gradient(ellipse 34rem 15rem at 50% calc(100% - var(--wb-edge-y)), rgba(255, 122, 26, 0.16) 0%, rgba(255, 122, 26, 0.05) 45%, transparent 72%),
+    radial-gradient(ellipse 60rem 22rem at 50% calc(100% - var(--wb-edge-y)), rgba(78, 168, 209, 0.12) 0%, rgba(78, 168, 209, 0.04) 45%, transparent 75%);
 }
 
-/* The stage edge: a hairline, orange at its centre, fading to the sides. */
+/* The stage edge: orange at its centre, cool blue toward the sides. */
 .who-bridge .wb-edge {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 50%;
+  bottom: var(--wb-edge-y);
+  width: min(60rem, 88%);
   height: 2px;
+  transform: translateX(-50%);
   pointer-events: none;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 122, 26, 0.22) 22%, #ff7a1a 50%, rgba(255, 122, 26, 0.22) 78%, transparent 100%);
-  box-shadow: 0 -6px 22px rgba(255, 122, 26, 0.28);
+  background: linear-gradient(90deg, transparent 0%, rgba(78, 168, 209, 0.25) 14%, rgba(78, 168, 209, 0.6) 36%, #ff7a1a 50%, rgba(78, 168, 209, 0.6) 64%, rgba(78, 168, 209, 0.25) 86%, transparent 100%);
+  box-shadow: 0 0 18px 1px rgba(255, 122, 26, 0.32);
+}
+
+@media (min-width: 768px) {
+  .who-bridge {
+    --wb-edge-y: 4rem;
+  }
 }
 
 .who-bridge .wb-inner {
@@ -1671,4 +1681,130 @@
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.78);
   text-wrap: pretty;
+}
+
+/* Actions (DESIGN-15B.3): stacked on phones, side by side from 640px. */
+.who-bridge .wb-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  margin-top: 2.25rem;
+}
+
+.who-bridge .wb-actions a {
+  width: 100%;
+  max-width: 22rem;
+}
+
+/* Primary: the Platform pre-footer's lit orange (from the homepage's
+   .home-cta), reproduced because those styles load only on their pages.
+   Navy text: white on this orange is 2.6:1; navy is 5.3:1. */
+.who-bridge .wb-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  /* Same height as the bordered secondary beside it. */
+  border: 1px solid transparent;
+  color: #071425;
+  font-weight: 600;
+  background: linear-gradient(205deg, #ffb574 0%, #ff8e35 24%, #ff7a1a 52%, #e8640c 100%);
+  box-shadow:
+    inset -1px 1px 0 rgba(255, 230, 205, 0.85),
+    inset 0 -2px 0 rgba(140, 45, 0, 0.35),
+    0 0 0 1px rgba(255, 150, 70, 0.45),
+    0 14px 32px -12px rgba(255, 122, 26, 0.85),
+    0 0 46px -14px rgba(255, 122, 26, 0.6);
+}
+
+.who-bridge .wb-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 650ms ease;
+}
+
+.who-bridge .wb-cta:hover {
+  box-shadow:
+    inset -1px 1px 0 rgba(255, 236, 215, 0.95),
+    inset 0 -2px 0 rgba(140, 45, 0, 0.35),
+    0 0 0 1px rgba(255, 160, 85, 0.6),
+    0 18px 38px -12px rgba(255, 122, 26, 0.95),
+    0 0 64px -12px rgba(255, 122, 26, 0.75);
+}
+
+.who-bridge .wb-cta:hover::after {
+  transform: translateX(120%);
+}
+
+/* Secondary: the edge-lit border (Platform's .pc-ghost, the homepage's
+   .home-ghost) on a dark fill for this surface; orange edge on hover. */
+.who-bridge .wb-ghost {
+  color: #fff;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(8, 24, 43, 0.72), rgba(8, 24, 43, 0.72)) padding-box,
+    linear-gradient(220deg, rgba(127, 211, 244, 0.75), rgba(127, 211, 244, 0.22) 45%, rgba(127, 211, 244, 0.14)) border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: box-shadow 200ms ease, background 200ms ease;
+}
+
+.who-bridge .wb-ghost:hover {
+  background:
+    linear-gradient(rgba(16, 44, 76, 0.88), rgba(16, 44, 76, 0.88)) padding-box,
+    linear-gradient(220deg, #ff7a1a, rgba(255, 122, 26, 0.32) 50%, rgba(127, 211, 244, 0.22)) border-box;
+  box-shadow: 0 0 30px -10px rgba(78, 168, 209, 0.6);
+}
+
+/* Returning users: a quiet line under the actions. */
+.who-bridge .wb-meta {
+  margin-top: 1.375rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.who-bridge .wb-login {
+  font-weight: 600;
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: rgba(127, 211, 244, 0.5);
+  text-underline-offset: 3px;
+}
+
+.who-bridge .wb-login:hover {
+  text-decoration-color: #ff7a1a;
+}
+
+.who-bridge .wb-login:focus-visible,
+.who-bridge .wb-actions a:focus-visible {
+  outline: 2px solid #7fd3f4;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (min-width: 640px) {
+  .who-bridge .wb-actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .who-bridge .wb-actions a {
+    width: auto;
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .who-bridge .wb-ghost {
+    transition: none;
+  }
+
+  .who-bridge .wb-cta::after {
+    display: none;
+  }
 }

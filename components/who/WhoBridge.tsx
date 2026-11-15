@@ -1,22 +1,35 @@
+import Button from "@/components/Button";
+import { INTAKE_LOGIN_URL, INTAKE_REGISTER_URL } from "@/lib/constants";
+
 /**
- * Who It's For: the bridge after the six profession scenes (DESIGN-15B.2).
+ * Who It's For: the page's one pre-footer (DESIGN-15B.2; consolidated with
+ * the call to action in DESIGN-15B.3, which removed the separate white "Join
+ * free" section).
  *
- * A short conclusion that brings the six stories together and leads to the
- * closing call to action. It replaces "What everyone shares". It continues
- * the showcase's dark stage atmosphere: a faint wash of stage light from
- * above, the headline centred, one sentence, and a lit stage edge along the
- * bottom (an orange line brightest at its centre, with soft light rising
- * from it) where the page turns to the closing section.
+ * After the six profession scenes: the approved headline and sentence, then
+ * the actions, as one composition on the showcase's dark stage atmosphere. A
+ * faint wash of stage light from above; below the actions a lit stage edge
+ * (orange at its centre, cool blue toward the sides, light rising from it),
+ * and the background deepening to the footer's navy so the page runs
+ * straight into the footer.
  *
- * Deliberately simple: no illustration, no controls, no feature list, no
- * motion. The headline's sentences wrap as units, so lines break between
- * sentences.
+ * Actions follow the Platform pre-footer (components/platform/
+ * PlatformClosingCta.tsx): the lit orange primary with navy text, the
+ * edge-lit secondary (here on dark, as on the homepage), and a quiet log-in
+ * line. Destinations are the shared ones: registration and log-in on the
+ * intake app (lib/constants, as the navigation's Join Free and Log In) and
+ * /platform. Platform's and the homepage's styles load only on those pages,
+ * so the treatment is reproduced under .who-bridge (Network did the same).
  *
- * Copy is founder approved (DESIGN-15B.2). It makes no feature claim beyond
- * the organizing role the page already establishes: jobs (events), people
- * (crew roster, crew calls), gear (inventory), and business operations
- * (quotes, invoices, recorded payments, marketing links) are all verified
- * live; see the notes beside the role data in app/(site)/who-its-for/page.tsx.
+ * No illustration, no controls beyond the links, no motion except the
+ * primary's hover sheen (off under reduced motion). The headline's sentences
+ * wrap as units.
+ *
+ * Copy is founder approved. It makes no feature claim beyond the organizing
+ * role the page already establishes: jobs (events), people (crew roster,
+ * crew calls), gear (inventory), and business operations (quotes, invoices,
+ * recorded payments, marketing links) are all verified live; see the notes
+ * beside the role data in app/(site)/who-its-for/page.tsx.
  *
  * Styling: app/(site)/who-its-for/who.css under .who-bridge.
  */
@@ -33,7 +46,23 @@ export default function WhoBridge() {
         </h2>
         <p className="wb-body">
           Whatever your role in live events, AnchorStage Ops brings your jobs, people, gear, and business operations
-          together—so you can spend less time managing the details and more time doing the work.
+          together so you can spend less time managing the details and more time doing the work.
+        </p>
+
+        <div className="wb-actions">
+          <Button href={INTAKE_REGISTER_URL} variant="primary" className="wb-cta">
+            Create Your Organization
+          </Button>
+          <Button href="/platform" variant="outline" className="wb-ghost">
+            Explore the Platform
+          </Button>
+        </div>
+
+        <p className="wb-meta">
+          Already have an account?{" "}
+          <a href={INTAKE_LOGIN_URL} className="wb-login">
+            Log in
+          </a>
         </p>
       </div>
     </section>

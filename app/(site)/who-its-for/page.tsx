@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import ClosingCta from "@/components/ClosingCta";
 import WhoBridge from "@/components/who/WhoBridge";
 import WhoShowcase, { type ShowcaseRole } from "@/components/who/WhoShowcase";
 import { buildMetadata } from "@/lib/metadata";
-import { AUTH_NAV } from "@/lib/nav";
 import { PERSONAS } from "@/lib/personas";
 import "./who.css";
 
@@ -12,9 +10,11 @@ import "./who.css";
  *
  * The full-viewport interactive stage (DESIGN-15A.3) replaces the photo hero (whose montage carried
  * invented names printed into the image) and the six persona cards. All six
- * scenes are built (the Rental scene in DESIGN-15A.12). A short bridge
- * (components/who/WhoBridge.tsx, DESIGN-15B.2) replaces "What everyone
- * shares"; the shared closing is unchanged until DESIGN-15B.3.
+ * scenes are built (the Rental scene in DESIGN-15A.12). One dark pre-footer
+ * (components/who/WhoBridge.tsx) follows them: the "One hat. Many hats."
+ * headline with the call to action (DESIGN-15B.2 replaced "What everyone
+ * shares"; DESIGN-15B.3 folded in the CTA and removed the white "Join free"
+ * section, so the shared ClosingCta is no longer used here).
  *
  * Persona descriptions are read from lib/personas.ts and not modified (the
  * homepage also uses them).
@@ -299,17 +299,9 @@ export default function WhoItsForPage() {
     <main className="bg-white">
       <WhoShowcase roles={ROLES} />
 
-      {/* BRIDGE: brings the six stories together (DESIGN-15B.2; replaces
-          "What everyone shares"). */}
+      {/* PRE-FOOTER: brings the six stories together and closes the page
+          with the call to action (DESIGN-15B.2, consolidated in 15B.3). */}
       <WhoBridge />
-
-      {/* CTA (shared, unchanged; redesigned separately in DESIGN-15B.3) */}
-      <ClosingCta
-        heading="Join free"
-        body="Create your organization and start running your work through it. Membership is free, and you can begin on your own today."
-        primary={{ label: AUTH_NAV.join.label, href: AUTH_NAV.join.href }}
-        secondary={{ label: "See how it works", href: "/platform" }}
-      />
     </main>
   );
 }
