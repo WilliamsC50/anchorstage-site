@@ -11,19 +11,22 @@ const TRIGGER_CLASSES =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-aso-blue/50 focus-visible:ring-offset-2";
 
 /**
- * "Contact Us" secondary action for the About closing CTA. A native <dialog>
+ * "Contact Us" action with the contact details in a dialog. A native <dialog>
  * gives modal focus trapping, Escape-to-close, and a backdrop with no library.
+ * Centring and the scroll lock are in app/globals.css (.contact-dialog).
+ * On close (button, backdrop, or Escape) focus returns to the trigger.
  * Client component because showModal()/close() are DOM calls.
  */
 export default function ContactCta() {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   const open = () => dialogRef.current?.showModal();
   const close = () => dialogRef.current?.close();
 
   return (
     <>
-      <button type="button" onClick={open} className={TRIGGER_CLASSES}>
+      <button ref={triggerRef} type="button" onClick={open} className={TRIGGER_CLASSES}>
         Contact Us
       </button>
 
@@ -31,6 +34,7 @@ export default function ContactCta() {
         ref={dialogRef}
         aria-labelledby="contact-dialog-heading"
         className="contact-dialog w-[calc(100%-2rem)] max-w-md rounded-xl border border-aso-blue/15 bg-white p-0 text-left shadow-2xl"
+        onClose={() => triggerRef.current?.focus()}
         // Clicking the backdrop (the dialog element itself, outside its content) closes it.
         onClick={(e) => {
           if (e.target === dialogRef.current) close();

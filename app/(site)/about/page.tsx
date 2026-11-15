@@ -1,25 +1,22 @@
 import type { Metadata } from "next";
+import AboutContact from "@/components/about/AboutContact";
 import AboutFounder from "@/components/about/AboutFounder";
 import AboutStory from "@/components/about/AboutStory";
-import ClosingCta from "@/components/ClosingCta";
-import ContactCta from "@/components/ContactCta";
 import { buildMetadata } from "@/lib/metadata";
-import { AUTH_NAV } from "@/lib/nav";
 import "./about.css";
 
 /*
- * About (DESIGN-16A.2: photographic storytelling, local only).
+ * About (DESIGN-16A.2 and 16A.3: photographic storytelling, local only).
  *
- * Two scenes replace the old page header and its seven alternating sections:
+ * Three scenes:
  *   1. The work behind the show (components/about/AboutStory.tsx): the
  *      black-and-white working photograph, the problem, and the work around
  *      the work that became ASO.
  *   2. The person and the purpose (components/about/AboutFounder.tsx): the
- *      colour portrait, the founder's introduction, mission, philosophy, and
- *      direction.
- * Scene 3, a contact section, comes in DESIGN-16A.3. Until then the existing
- * shared closing (ClosingCta with the Contact Us dialog) stays unchanged, so
- * the page keeps a working contact route.
+ *      colour portrait, the founder, what drives ASO, and where it is going.
+ *   3. Let's talk (components/about/AboutContact.tsx): the contact details,
+ *      shown directly; the footer's Contact Us links here (#contact). About
+ *      does not end with a registration action.
  *
  * Content is the approved About story, consolidated. Founder confirmed: more
  * than 10 years of hands-on live event production. Removed as repetitive or
@@ -40,14 +37,7 @@ export default function AboutPage() {
     <main className="bg-white">
       <AboutStory />
       <AboutFounder />
-
-      {/* CONTACT (shared, unchanged until DESIGN-16A.3) */}
-      <ClosingCta
-        heading="Join free"
-        body="Create your organization and see whether it fits the way you already work."
-        primary={{ label: AUTH_NAV.join.label, href: AUTH_NAV.join.href }}
-        secondary={<ContactCta />}
-      />
+      <AboutContact />
     </main>
   );
 }

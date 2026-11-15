@@ -69,7 +69,7 @@ export default function AboutStory() {
       <div className="as-wrap as-body">
         <div className="as-narrative">
           <p className="as-kicker">
-            <span aria-hidden="true">01</span> The story
+            The story
           </p>
           <h2 className="as-h2">The problem was time, not talent.</h2>
           <p>
@@ -77,9 +77,10 @@ export default function AboutStory() {
             for venues, festivals, and private events.
           </p>
           <p>
-            The professionals making the biggest decisions on an event were also the ones buried in phone calls,
-            paperwork, document requests, graphics, and coordination. Talented people were turning down work. Not
-            because they lacked the experience, but because they had run out of time to take it on.
+            The professionals making the biggest decisions on an event were often the same people buried in phone
+            calls, paperwork, document requests, graphics, and coordination. Talented people were constantly drowning
+            in administrative work, making it harder to take on more without sacrificing the quality of what they
+            already did.
           </p>
         </div>
 

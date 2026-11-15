@@ -47,6 +47,11 @@ export default function Footer() {
             >
               {AUTH_NAV.login.label}
             </a>
+            {/* The contact section on About (DESIGN-16A.3): a plain link, so
+                it works from every page without script. */}
+            <Link href="/about#contact" className="text-aso-blue-light opacity-70 hover:opacity-100 transition">
+              Contact Us
+            </Link>
           </div>
         </div>
       </div>

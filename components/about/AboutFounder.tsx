@@ -2,13 +2,13 @@ import Image from "next/image";
 import { founderHeadshot } from "@/lib/images";
 
 /**
- * About, scene 2: the person and the purpose (DESIGN-16A.2).
+ * About, scene 2: the person and the purpose (DESIGN-16A.2; simplified in
+ * DESIGN-16A.3 to three beats beside the portrait: the founder, what drives
+ * ASO, and where it is going).
  *
- * Replaces the old Philosophy, Mission, "Where it is going", Founder, and
- * closing-statement sections. An editorial layout: the colour portrait at
- * 4:5 beside the founder's introduction, the mission, the three principles,
- * and the direction. On desktop the portrait stays in view (sticky) while the
- * column beside it is read; on phones it leads the scene.
+ * An editorial layout: the colour portrait at 4:5 beside the copy. On
+ * desktop the portrait stays in view (sticky) while the column beside it is
+ * read; on phones it leads the scene.
  *
  * The signature transition: scene 1's photograph is black and white; this
  * portrait arrives in black and white too and comes into full colour as it
@@ -27,18 +27,9 @@ import { founderHeadshot } from "@/lib/images";
  */
 
 const PRINCIPLES = [
-  {
-    title: "Multiply professionals",
-    body: "Give experienced people more room for the decisions only they can make, with less of the administration around them.",
-  },
-  {
-    title: "One source of truth",
-    body: "Critical event information should be there when it is needed, whether someone is building marketing graphics, checking a schedule, sharing a stage plot, or requesting more equipment.",
-  },
-  {
-    title: "Built alongside the industry",
-    body: "Features start as real operational problems before they become part of the platform.",
-  },
+  { title: "Multiply professionals.", body: "Give experienced people more room for the decisions only they can make." },
+  { title: "One source of truth.", body: "Critical event information should be there when and where it is needed." },
+  { title: "Built alongside the industry.", body: "Features start as real operational problems before they become part of the platform." },
 ];
 
 export default function AboutFounder() {
@@ -60,9 +51,7 @@ export default function AboutFounder() {
         </div>
 
         <div className="af-copy">
-          <p className="af-kicker">
-            <span aria-hidden="true">02</span> The person and the purpose
-          </p>
+          <p className="af-kicker">The person and the purpose</p>
           <h2 id="af-name" className="af-name">
             Cody Williams
           </h2>
@@ -72,42 +61,27 @@ export default function AboutFounder() {
             production work, so what gets built reflects how the job actually runs.
           </p>
 
-          <div className="af-mission">
-            <h3 className="af-label">Mission</h3>
+          <div className="af-beat">
+            <h3 className="af-label">What drives ASO</h3>
             <p className="af-mission-text">
               Help live event professionals spend less time managing information and more time producing exceptional
               events.
             </p>
-            <p className="af-mission-note">Everything on the platform is measured against that.</p>
-          </div>
-
-          <div className="af-principles">
-            <h3 className="af-label">Philosophy</h3>
-            <ol className="af-principle-list">
-              {PRINCIPLES.map((p, i) => (
+            <ul className="af-principle-list">
+              {PRINCIPLES.map((p) => (
                 <li key={p.title}>
-                  <span aria-hidden="true" className="af-num">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h4 className="af-principle-title">{p.title}</h4>
-                    <p className="af-principle-body">{p.body}</p>
-                  </div>
+                  <strong>{p.title}</strong> {p.body}
                 </li>
               ))}
-            </ol>
+            </ul>
           </div>
 
-          <div className="af-direction">
-            <h3 className="af-label">Where it is going</h3>
-            <p>
-              The near-term work is depth: making the operations an organization runs every week faster and more
-              reliable than the tools it replaces.
-            </p>
-            <p>
-              Longer term, ASO is being built so organizations and professionals can find the right industry
-              relationships through the network itself. That part is still in development, and the platform will keep
-              developing alongside the professionals who use it.
+          <div className="af-beat">
+            <h3 className="af-label">Where we&apos;re going</h3>
+            <p className="af-direction-text">
+              Today the focus is depth: making the operations an organization runs every week faster and more reliable
+              than the tools it replaces. Longer term, ASO is being built so organizations and professionals can find
+              the right industry relationships through the network itself. That part is still in development.
             </p>
           </div>
         </div>

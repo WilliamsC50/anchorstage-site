@@ -1,5 +1,6 @@
-/* About styles (DESIGN-16A.2). Loaded only by app/(site)/about/page.tsx;
-   every rule is scoped to .about-story (scene 1) or .about-founder (scene 2).
+/* About styles (DESIGN-16A.2, 16A.3). Loaded only by app/(site)/about/page.tsx;
+   every rule is scoped to .about-story (scene 1), .about-founder (scene 2),
+   or .about-contact (scene 3).
    Motion: the hero photograph settles in once on load, and the portrait
    comes from black and white into colour as it scrolls into view. Both are
    off under prefers-reduced-motion; the colour change also needs
@@ -117,20 +118,12 @@
 .about-story .as-kicker,
 .about-founder .af-kicker {
   display: flex;
-  align-items: baseline;
-  gap: 0.75rem;
   margin-bottom: 1rem;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #a8dcff;
-}
-
-.about-story .as-kicker span,
-.about-founder .af-kicker span {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  color: #ff9550;
 }
 
 .about-story .as-h2 {
@@ -338,15 +331,19 @@
   color: #a8dcff;
 }
 
-.about-founder .af-mission {
+/* Two beats after the introduction, each a label and a short text, with
+   space rather than rules between them (DESIGN-16A.3). */
+.about-founder .af-beat {
   margin-top: 2.75rem;
-  padding-left: 1.25rem;
-  border-left: 2px solid #ff7a1a;
 }
 
+/* What drives ASO: the mission set large on an orange accent line, the
+   three principles as short supporting statements beneath it. */
 .about-founder .af-mission-text {
   max-width: 34rem;
-  margin-top: 0.75rem;
+  margin-top: 0.875rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid #ff7a1a;
   font-size: clamp(1.375rem, 2.4vw, 1.875rem);
   font-weight: 600;
   line-height: 1.3;
@@ -355,61 +352,27 @@
   text-wrap: balance;
 }
 
-.about-founder .af-mission-note {
-  margin-top: 0.75rem;
-  font-size: 0.9375rem;
-  color: rgba(255, 255, 255, 0.66);
-}
-
-.about-founder .af-principles {
-  margin-top: 2.75rem;
-}
-
 .about-founder .af-principle-list {
-  margin-top: 0.75rem;
+  max-width: 36rem;
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 0.75rem;
 }
 
 .about-founder .af-principle-list li {
-  display: grid;
-  grid-template-columns: 2.25rem minmax(0, 1fr);
-  gap: 0.25rem;
-  padding: 1rem 0;
-  border-top: 1px solid rgba(127, 211, 244, 0.14);
-}
-
-.about-founder .af-principle-list li:last-child {
-  border-bottom: 1px solid rgba(127, 211, 244, 0.14);
-}
-
-.about-founder .af-num {
-  padding-top: 0.2rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #ff9550;
-}
-
-.about-founder .af-principle-title {
-  font-size: 1.0625rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.about-founder .af-principle-body {
-  max-width: 36rem;
-  margin-top: 0.3rem;
-  font-size: 0.975rem;
+  font-size: 1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.74);
 }
 
-.about-founder .af-direction {
-  margin-top: 2.75rem;
+.about-founder .af-principle-list strong {
+  font-weight: 700;
+  color: #fff;
 }
 
-.about-founder .af-direction p {
+.about-founder .af-direction-text {
   max-width: 36rem;
-  margin-top: 0.75rem;
+  margin-top: 0.875rem;
   font-size: 1rem;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.78);
@@ -441,6 +404,267 @@
 
   .about-founder .af-portrait {
     max-width: none;
+  }
+}
+
+/* ── Scene 3: let's talk (DESIGN-16A.3) ──────────────────────────────── */
+
+/* The white pre-footer treatment of Platform, Network, and Who It's For
+   (platform.css .platform-cta), reproduced because those styles load only on
+   their pages: white surface, navy headline, grey body, the lit orange
+   primary, the white edge-lit secondary, the stage edge and the light rising
+   from it, straight into the footer. */
+.about-contact {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+  /* The footer link lands here below the sticky navigation. */
+  scroll-margin-top: 65px;
+}
+
+.about-contact .ac-inner {
+  position: relative;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 5.5rem 1.5rem 7.5rem;
+  text-align: center;
+}
+
+.about-contact .ac-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 34rem 18rem at 50% calc(100% - 3.5rem), rgba(255, 122, 26, 0.1) 0%, rgba(255, 122, 26, 0.03) 45%, transparent 72%),
+    radial-gradient(ellipse 60rem 26rem at 50% calc(100% - 3.5rem), rgba(78, 168, 209, 0.12) 0%, rgba(78, 168, 209, 0.04) 45%, transparent 75%);
+}
+
+.about-contact .ac-edge {
+  position: absolute;
+  left: 50%;
+  bottom: 3.5rem;
+  width: min(60rem, 88%);
+  height: 2px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, rgba(15, 47, 79, 0.22) 14%, rgba(78, 168, 209, 0.65) 36%, #ff7a1a 50%, rgba(78, 168, 209, 0.65) 64%, rgba(15, 47, 79, 0.22) 86%, transparent 100%);
+  box-shadow: 0 0 18px 1px rgba(255, 122, 26, 0.3);
+}
+
+.about-contact .ac-edge::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 8%;
+  right: 8%;
+  height: 2rem;
+  background: linear-gradient(to bottom, rgba(15, 47, 79, 0.045), transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+}
+
+.about-contact .ac-rule {
+  display: block;
+  width: 2rem;
+  height: 1px;
+  margin: 0 auto 1.75rem;
+  background: #ff7a1a;
+}
+
+.about-contact .ac-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--aso-navy);
+  text-shadow: 0 1px 0 #fff, 0 12px 28px rgba(15, 47, 79, 0.06);
+}
+
+.about-contact .ac-body {
+  max-width: 36rem;
+  margin: 1.25rem auto 0;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #4b5563;
+  text-wrap: pretty;
+}
+
+/* A signature for the first-person copy. */
+.about-contact .ac-signature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  margin-top: 1.25rem;
+}
+
+.about-contact .ac-sig-name {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--aso-navy);
+}
+
+.about-contact .ac-sig-role {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c2571a;
+}
+
+/* Actions: stacked on phones, side by side from 640px. */
+.about-contact .ac-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  margin-top: 2.25rem;
+}
+
+.about-contact .ac-primary,
+.about-contact .ac-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  width: 100%;
+  max-width: 22rem;
+  padding: 0.875rem 1.75rem;
+  border: 1px solid transparent;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/* Primary: the lit orange with navy text. */
+.about-contact .ac-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  color: #071425;
+  background: linear-gradient(205deg, #ffb574 0%, #ff8e35 24%, #ff7a1a 52%, #e8640c 100%);
+  box-shadow:
+    inset -1px 1px 0 rgba(255, 230, 205, 0.85),
+    inset 0 -2px 0 rgba(140, 45, 0, 0.35),
+    0 0 0 1px rgba(255, 150, 70, 0.45),
+    0 14px 32px -12px rgba(255, 122, 26, 0.85),
+    0 0 46px -14px rgba(255, 122, 26, 0.6);
+  transition: box-shadow 200ms ease;
+}
+
+.about-contact .ac-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 650ms ease;
+}
+
+.about-contact .ac-primary:hover {
+  box-shadow:
+    inset -1px 1px 0 rgba(255, 236, 215, 0.95),
+    inset 0 -2px 0 rgba(140, 45, 0, 0.35),
+    0 0 0 1px rgba(255, 160, 85, 0.6),
+    0 18px 38px -12px rgba(255, 122, 26, 0.95),
+    0 0 64px -12px rgba(255, 122, 26, 0.75);
+}
+
+.about-contact .ac-primary:hover::after {
+  transform: translateX(120%);
+}
+
+/* Secondary: the edge-lit border on a white fill; orange edge on hover. */
+.about-contact .ac-secondary {
+  color: var(--aso-navy);
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(220deg, rgba(78, 168, 209, 0.75), rgba(127, 211, 244, 0.35) 45%, rgba(15, 47, 79, 0.18)) border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 18px -12px rgba(15, 47, 79, 0.35);
+  transition: box-shadow 200ms ease, background 200ms ease;
+}
+
+.about-contact .ac-secondary:hover {
+  background:
+    linear-gradient(#f7fbff, #f7fbff) padding-box,
+    linear-gradient(220deg, #ff7a1a, rgba(255, 122, 26, 0.35) 50%, rgba(78, 168, 209, 0.35)) border-box;
+  box-shadow: 0 0 30px -10px rgba(78, 168, 209, 0.6);
+}
+
+.about-contact .ac-icon {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.about-contact .ac-icon-sm {
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.about-contact .ac-primary:focus-visible,
+.about-contact .ac-secondary:focus-visible {
+  outline: 2px solid var(--aso-blue);
+  outline-offset: 3px;
+}
+
+@media (min-width: 640px) {
+  .about-contact .ac-actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .about-contact .ac-primary,
+  .about-contact .ac-secondary {
+    width: auto;
+    max-width: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .about-contact .ac-inner {
+    padding-top: 7rem;
+    padding-bottom: 9rem;
+  }
+
+  .about-contact .ac-title {
+    font-size: 3.5rem;
+  }
+
+  .about-contact .ac-body {
+    font-size: 1.1875rem;
+  }
+
+  .about-contact .ac-edge {
+    bottom: 4.5rem;
+  }
+
+  .about-contact .ac-light {
+    background:
+      radial-gradient(ellipse 34rem 18rem at 50% calc(100% - 4.5rem), rgba(255, 122, 26, 0.1) 0%, rgba(255, 122, 26, 0.03) 45%, transparent 72%),
+      radial-gradient(ellipse 60rem 26rem at 50% calc(100% - 4.5rem), rgba(78, 168, 209, 0.12) 0%, rgba(78, 168, 209, 0.04) 45%, transparent 75%);
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-contact .ac-title {
+    font-size: 4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-contact .ac-primary,
+  .about-contact .ac-secondary {
+    transition: none;
+  }
+
+  .about-contact .ac-primary::after {
+    display: none;
   }
 }
 
