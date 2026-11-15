@@ -376,6 +376,53 @@
   transform-origin: 50% 100%;
 }
 
+/* ── Production scene: the lead's checklist tablet ──────────────────────── */
+
+/* The last item's check, filled when the visitor completes it. */
+.who-stage .pc-check {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transform: scale(0);
+}
+
+.who-stage .pc-ctl.is-done .pc-check {
+  transform: scale(1);
+}
+
+/* Progress bar: two of three items, then three of three. */
+.who-stage .pc-progress {
+  transform-box: fill-box;
+  transform-origin: 0 50%;
+  transform: scaleX(0.667);
+}
+
+.who-stage .pc-ctl.is-done .pc-progress {
+  transform: scaleX(1);
+}
+
+/* Idle groups in the production scene. */
+.who-stage .pl-head,
+.who-stage .pl-eyes,
+.who-stage .pc-plug,
+.who-stage .pc-pen {
+  transform-box: fill-box;
+}
+
+.who-stage .pl-head {
+  transform-origin: 50% 100%;
+}
+
+.who-stage .pc-plug,
+.who-stage .pc-pen {
+  transform-origin: 0 0;
+}
+
+/* The outgoing profession during a switch (motion only; see below). */
+.who-stage .wv-scene.is-leaving {
+  display: none;
+  pointer-events: none;
+}
+
 /* ── The technician's idle groups ───────────────────────────────────────── */
 
 .who-stage .ws-breathe,
@@ -445,7 +492,7 @@
   .who-stage {
     --wv-gutter: max(2.5rem, calc((100% - 110rem) / 2));
     --wv-copy-w: min(28rem, 28.5vw);
-    --wv-skills-w: 11.5rem;
+    --wv-skills-w: 13rem;
     --wv-lift: clamp(64px, calc(100px + (1600px - 100vw) * 0.1), 110px);
     --wv-shift: clamp(0px, calc(max(2.5rem, (100vw - 110rem) / 2) + min(28rem, 28.5vw) + 16px - 24.625vw), 150px);
     display: grid;
@@ -607,7 +654,7 @@
 
 @media (min-width: 1440px) {
   .who-stage {
-    --wv-skills-w: 14.5rem;
+    --wv-skills-w: 17rem;
   }
 
   .who-stage .wv-skills-group ul {
@@ -679,6 +726,47 @@
     animation: fc-master-high 0.9s 450ms ease-in-out infinite alternate;
   }
 
+  /* Switching professions: the outgoing people and equipment fade and
+     sink while the next ones rise in; the stage itself never moves. */
+  .who-stage .wv-scene.is-leaving {
+    display: block;
+  }
+
+  .who-stage .wv-scene.is-leaving .wv-layer-char,
+  .who-stage .wv-scene.is-leaving .wv-layer-fg {
+    animation: wv-out 380ms ease both;
+  }
+
+  /* Production: the checklist responds; the lead reads, glances up at the
+     crew, and returns to the schedule; the crew keep working. */
+  .who-stage .pc-check {
+    transition: transform 320ms cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+
+  .who-stage .pc-progress {
+    transition: transform 420ms ease;
+  }
+
+  .who-stage .pc-ctl.is-done .pc-glow {
+    animation: pc-glow 700ms ease-out;
+  }
+
+  .who-stage .pl-head {
+    animation: pl-glance 9s ease-in-out 1.5s infinite;
+  }
+
+  .who-stage .pl-eyes {
+    animation: pl-look 9s ease-in-out 1.5s infinite;
+  }
+
+  .who-stage .pc-plug {
+    animation: pc-plug 2.8s ease-in-out infinite alternate;
+  }
+
+  .who-stage .pc-pen {
+    animation: pc-tick 3.6s ease-in-out infinite;
+  }
+
   /* The technician: a slow breath and an occasional glance at the desk. */
   .who-stage .ws-breathe {
     animation: ws-breathe 4.8s ease-in-out infinite alternate;
@@ -701,6 +789,79 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes wv-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes pc-glow {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.28;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Reading the tablet, then a look up toward the stage crew, then back. */
+@keyframes pl-glance {
+  0%,
+  52%,
+  90%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+  60%,
+  80% {
+    transform: rotate(-5deg) translateY(-2px);
+  }
+}
+
+@keyframes pl-look {
+  0%,
+  52%,
+  90%,
+  100% {
+    transform: translate(0, 0);
+  }
+  60%,
+  80% {
+    transform: translate(-1px, -2.2px);
+  }
+}
+
+@keyframes pc-plug {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes pc-tick {
+  0%,
+  60%,
+  100% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(-4deg);
+  }
+  80% {
+    transform: rotate(1deg);
   }
 }
 

@@ -8,13 +8,14 @@ import { PERSONAS } from "@/lib/personas";
 import "./who.css";
 
 /*
- * Who It's For (DESIGN-15A.2 to 15A.4: cinematic visual proof of concept, local only).
+ * Who It's For (DESIGN-15A.2 to 15A.5: cinematic visual proof of concept, local only).
  *
  * The full-viewport interactive stage (DESIGN-15A.3) replaces the photo hero (whose montage carried
- * invented names printed into the image) and the six persona cards. One
- * scene is finished (Freelancers & Technicians); the other five show an empty
- * stage and their existing approved description, marked "Scene in
- * development". "What everyone shares" and the shared closing are unchanged.
+ * invented names printed into the image) and the six persona cards. Two
+ * scenes are finished (Freelancers & Technicians, Production Companies); the
+ * other four show an empty stage and their existing approved description,
+ * marked "Scene in development". "What everyone shares" and the shared
+ * closing are unchanged.
  *
  * Persona descriptions are read from lib/personas.ts and not modified (the
  * homepage also uses them).
@@ -57,14 +58,51 @@ const ROLES: ShowcaseRole[] = [
       "You work with different production companies, crews, and venues. Keep your gigs and the organizations you work with in one place, so you can focus on doing great work and finding your next opportunity.",
     value:
       "Answer crew calls from a link, see your events from every organization you belong to, and build the professional connections that bring you back for the next show.",
-    specialties: [
-      { group: "Audio", items: ["A1", "A2", "RF Tech"] },
-      { group: "Video", items: ["V1", "Camera Operator", "LED Tech"] },
-      { group: "Lighting", items: ["L1", "L2", "Lighting Tech"] },
-      { group: "General", items: ["Stagehand", "Rigger", "Utility"] },
-    ],
+    aside: {
+      title: "Common specialties",
+      groups: [
+        { group: "Audio", items: ["A1", "A2", "RF Tech"] },
+        { group: "Video", items: ["V1", "Camera Operator", "LED Tech"] },
+        { group: "Lighting", items: ["L1", "L2", "Lighting Tech"] },
+        { group: "General", items: ["Stagehand", "Rigger", "Utility"] },
+      ],
+    },
   },
-  { slug: "production-companies", name: "Production Companies", tagline: "Delivering several events at once", setting: "an active stage build", ready: false, summary: who("production-companies") },
+  /*
+   * Production Company copy (DESIGN-15A.5, founder direction). The "With
+   * AnchorStage Ops" line only names things verified live in
+   * anchorstage-intake (read-only; docs/operations and the Platform page
+   * notes): crew roles filled from a private roster or a crew call answered
+   * from a link; gear and packages assigned from the organization's own
+   * inventory; event timing (call, load-in, doors, show end, strike);
+   * Production Brief and Pack List from the event. Not claimed: inventory
+   * integrations, automatic scheduling, self-service collaboration between
+   * organizations (today an ASO admin sets that up).
+   * The side panel lists responsibilities production companies manage, as
+   * examples; it is titled as such and makes no feature claims.
+   */
+  {
+    slug: "production-companies",
+    name: "Production Companies",
+    tagline: "Delivering several events at once",
+    setting: "an active stage build",
+    ready: true,
+    headline: "Your crew. Your gear. Your shows. One operation.",
+    recognition:
+      "Every production means coordinating people, equipment, schedules, and last-minute changes. Keep the moving pieces organized so your team can spend less time chasing information and more time delivering the show.",
+    value:
+      "Fill crew roles from your roster or a crew call, assign gear from your own inventory, set call and load-in times, and pull the production brief and pack list from the same event.",
+    aside: {
+      title: "Production responsibilities",
+      groups: [
+        { group: "People", items: ["Crew assignments", "Department leads", "Call times"] },
+        { group: "Equipment", items: ["Gear preparation", "Load lists", "Equipment coordination"] },
+        { group: "Planning", items: ["Production schedules", "Show requirements", "Revisions"] },
+        { group: "Execution", items: ["Load-in", "Show operations", "Strike"] },
+      ],
+    },
+    summary: who("production-companies"),
+  },
   { slug: "venues", name: "Venues", tagline: "Running a room and its calendar", setting: "a theatrical or live-music venue", ready: false, summary: who("venues") },
   { slug: "event-organizers", name: "Event Organizers & Producers", tagline: "Owning and coordinating events", setting: "an event coordination environment", ready: false, summary: who("event-organizers") },
   { slug: "musicians", name: "Musicians & Touring Acts", tagline: "Running the shows they organize", setting: "a performance and touring stage", ready: false, summary: who("musicians") },

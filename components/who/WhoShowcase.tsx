@@ -1,33 +1,60 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type ComponentType, type KeyboardEvent } from "react";
 import { StageBackground, StageEmptyMark, STAGE_VB } from "./ConcertStage";
 import FohForeground from "./FohForeground";
+import ProductionScene from "./ProductionScene";
 import TechnicianFigure from "./TechnicianFigure";
+
+/** The Freelancers & Technicians scene: the technician and the FOH set. */
+function FreelancerScene() {
+  return (
+    <>
+      <svg viewBox={STAGE_VB} preserveAspectRatio="xMidYMax slice" className="wv-layer wv-layer-char" aria-hidden="true" focusable="false">
+        <TechnicianFigure x={420} y={141.4} scale={1.3} />
+      </svg>
+      <FohForeground />
+    </>
+  );
+}
+
+/** Finished scenes by profession slug; anything else shows the empty mark. */
+const SCENES: Record<string, ComponentType> = {
+  freelancers: FreelancerScene,
+  "production-companies": ProductionScene,
+};
+
+/** How long the outgoing scene stays for its exit (matches who.css). */
+const EXIT_MS = 420;
 
 /**
  * Who It's For: full-viewport cinematic stage (DESIGN-15A.3, refined in
- * DESIGN-15A.4; proof of concept). One concert stage, six professional
- * perspectives.
+ * DESIGN-15A.4; Production Companies added in DESIGN-15A.5; proof of
+ * concept). One concert stage, six professional perspectives.
  *
  * Layers, front to back:
- *   overlays    page title, the selected profession's copy, its specialties
- *               (Freelancers & Technicians only), and the profession cards
- *               along the bottom edge of the stage (HTML over the stage on
- *               wide screens; stacked around it on narrower ones)
+ *   overlays    page title, the selected profession's copy, its side panel
+ *               (finished scenes only: specialties, responsibilities), and
+ *               the profession cards along the bottom edge of the stage
+ *               (HTML over the stage on wide screens; stacked around it on
+ *               narrower ones)
  *   light       CSS scrims and key light (.wv-light)
- *   foreground  profession-specific equipment (Freelancer: the FOH console,
- *               with one interactive MASTER fader; a flight case, radio, tools)
- *   character   the selected professional
+ *   foreground  profession-specific equipment (Freelancer: the FOH console
+ *               with its MASTER fader, a flight case; Production: a rolling
+ *               rack and a cable coil)
+ *   character   the selected professional(s) (Production: the lead with
+ *               the checklist tablet, and two crew members on the stage)
  *   background  the permanent concert stage, never remounted
- * Character and foreground remount per profession and enter with staggered
- * timing; the background stays put. Reduced motion: instant, no idle motion.
+ * Character and foreground remount per profession: the outgoing scene fades
+ * and sinks while the next enters with staggered timing; the background
+ * stays put. Reduced motion: instant, no idle motion.
  *
  * Selector: WAI-ARIA tabs adapted from the homepage cast select (selection
  * follows focus; arrow keys, Home, End), without changing it. Nothing cycles
- * on its own. Only Freelancers & Technicians has a finished scene; the other
- * five show an empty lit FOH mark and their existing approved description,
- * marked "In development" / "Scene in development".
+ * on its own. Freelancers & Technicians and Production Companies have
+ * finished scenes (SCENES below); the other four show an empty lit FOH mark
+ * and their existing approved description, marked "In development" /
+ * "Scene in development".
  *
  * LAUNCH-DEPENDENT copy lives with the role data in
  * app/(site)/who-its-for/page.tsx.
@@ -51,8 +78,8 @@ export interface ShowcaseRole {
   headline?: string;
   recognition?: string;
   value?: string;
-  /** Example specialties, shown beside a finished scene only. */
-  specialties?: SpecialtyGroup[];
+  /** Side panel beside a finished scene (e.g. specialties, responsibilities). */
+  aside?: { title: string; groups: SpecialtyGroup[] };
   /** For roles still in development: their existing approved description. */
   summary?: string;
 }
@@ -61,12 +88,33 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
   const [selected, setSelected] = useState(0);
+  // The outgoing profession, kept briefly so its layers can fade out while
+  // the next ones come in (the stage background never changes).
+  const [leaving, setLeaving] = useState<number | null>(null);
+  const exitTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  useEffect(
+    () => () => {
+      if (exitTimer.current) clearTimeout(exitTimer.current);
+    },
+    [],
+  );
 
   const select = (i: number, focus = false) => {
     const next = (i + roles.length) % roles.length;
+    if (next !== selected) {
+      setLeaving(selected);
+      if (exitTimer.current) clearTimeout(exitTimer.current);
+      exitTimer.current = setTimeout(() => setLeaving(null), EXIT_MS);
+    }
     setSelected(next);
     if (focus) tabs.current[next]?.focus();
+  };
+
+  const renderScene = (role: ShowcaseRole) => {
+    const Scene = role.ready ? SCENES[role.slug] : undefined;
+    return Scene ? <Scene /> : <StageEmptyMark />;
   };
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -84,10 +132,11 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
   };
 
   const active = roles[selected];
-  const specialties = active.ready ? active.specialties : undefined;
+  const aside = active.ready ? active.aside : undefined;
+  const outgoing = leaving !== null && leaving !== selected ? roles[leaving] : null;
 
   // DOM order is the keyboard order: title, profession cards, the selected
-  // profession's copy and specialties, then the stage and its fader. CSS
+  // profession's copy and side panel, then the stage and its one control. CSS
   // places them visually (who.css).
   return (
     <section className="who-stage" aria-labelledby="who-title">
@@ -161,14 +210,14 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
         ))}
       </div>
 
-      {/* Example specialties for the finished scene (not interactive). */}
-      {specialties && (
+      {/* Side panel for a finished scene (not interactive). */}
+      {aside && (
         <aside key={active.slug} className="wv-skills" aria-labelledby="wv-skills-title">
           <p id="wv-skills-title" className="wv-skills-title">
-            Common specialties
+            {aside.title}
           </p>
           <dl className="wv-skills-list">
-            {specialties.map((g) => (
+            {aside.groups.map((g) => (
               <div key={g.group} className="wv-skills-group">
                 <dt>{g.group}</dt>
                 <dd>
@@ -187,17 +236,13 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
       {/* The stage: permanent background, then the profession's layers. */}
       <div className="wv-viewport">
         <StageBackground />
+        {outgoing && (
+          <div key={`out-${outgoing.slug}`} className="wv-scene is-leaving" aria-hidden="true" inert>
+            {renderScene(outgoing)}
+          </div>
+        )}
         <div key={active.slug} className="wv-scene">
-          {active.ready ? (
-            <>
-              <svg viewBox={STAGE_VB} preserveAspectRatio="xMidYMax slice" className="wv-layer wv-layer-char" aria-hidden="true" focusable="false">
-                <TechnicianFigure x={420} y={141.4} scale={1.3} />
-              </svg>
-              <FohForeground />
-            </>
-          ) : (
-            <StageEmptyMark />
-          )}
+          {renderScene(active)}
         </div>
         <div aria-hidden="true" className="wv-light" />
       </div>
