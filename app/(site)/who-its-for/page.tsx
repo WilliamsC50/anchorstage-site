@@ -8,15 +8,12 @@ import { PERSONAS } from "@/lib/personas";
 import "./who.css";
 
 /*
- * Who It's For (DESIGN-15A.2 to 15A.8: cinematic visual proof of concept, local only).
+ * Who It's For (DESIGN-15A.2 to 15A.12: cinematic visual proof of concept, local only).
  *
  * The full-viewport interactive stage (DESIGN-15A.3) replaces the photo hero (whose montage carried
- * invented names printed into the image) and the six persona cards. Five
- * scenes are finished (Freelancers & Technicians, Production Companies,
- * Venues, Event Organizers & Producers, Musicians & Touring Acts); Rental
- * Warehouses & Providers shows an empty stage and its existing approved description,
- * marked "Scene in development". "What everyone shares" and the shared
- * closing are unchanged.
+ * invented names printed into the image) and the six persona cards. All six
+ * scenes are built (the Rental scene in DESIGN-15A.12, for review). "What
+ * everyone shares" and the shared closing are unchanged.
  *
  * Persona descriptions are read from lib/personas.ts and not modified (the
  * homepage also uses them).
@@ -197,6 +194,22 @@ const ROLES: ShowcaseRole[] = [
    * (call, load-in, doors, show end, strike); the event's technical notes;
    * requests arriving through the organization's own request page; numbered
    * quotes and invoices drafted from the event.
+   * DESIGN-15A.12 business line, each part verified live (read-only): show
+   * details and technical notes on the event; crew reached through crew
+   * calls and revocable crew-sheet links; quotes and invoices numbered and
+   * issued under the organization's own name and logo (issued documents
+   * carry org_name and org_logo_url); the Marketing Workstation's campaign
+   * tracking links count clicks and attribute the requests that follow
+   * (CampaignResponses, CampaignTrackingLinksSection); payments recorded
+   * against each show in the event's Financials.
+   * Tips, NOT claimed: a Phase 1 tip checkout exists (app/pay, Stripe
+   * Checkout, recorded as a TIP allocation on the event), but it charges
+   * through ASO's own Stripe account rather than the act's (no connected
+   * accounts), and docs/operations/financial-operations marks it
+   * UNCERTAIN; a Signage screen can show a tip link the organization
+   * enters (an outside link). Neither is accepting tips through ASO, so the
+   * copy does not mention tips. "Sales tracking" is not claimed either
+   * (there is no ticketing); the line says payments.
    * Not claimed (not live): public artist discovery, tour booking or routing,
    * ticketing integrations, music distribution, automatic technical-rider
    * generation, self-service collaboration with independent organizations
@@ -222,7 +235,7 @@ const ROLES: ShowcaseRole[] = [
     recognition:
       "Every show brings a different venue, promoter, and production team. Keep your dates and stage needs straight so you can focus on the performance and the people you work with again.",
     value:
-      "Keep each show's venue, load-in and show times, and technical notes in one record, take requests through your own request page, and send numbered quotes and invoices from the same show.",
+      "Keep each show's details and technical notes in one place, share them with your crew by link, send branded, numbered quotes and invoices, see which promotions bring in requests, and track payments for each show.",
     aside: {
       title: "Touring responsibilities",
       groups: [
@@ -234,7 +247,50 @@ const ROLES: ShowcaseRole[] = [
     },
     summary: who("musicians"),
   },
-  { slug: "rental-providers", name: "Rental Warehouses & Providers", tagline: "Inventory that supplies partners", setting: "an equipment warehouse and loading area", ready: false, summary: who("rental-providers") },
+  /*
+   * Rental Warehouses & Providers copy (DESIGN-15A.12; scene: a rental prep
+   * technician checking out an order on the stage at load-in). The "With
+   * AnchorStage Ops" line only names things verified live in
+   * anchorstage-intake (read-only; the Inventory Workstation, the event's
+   * gear page, the Pack List PDF, quote drafting, and the Platform page
+   * notes): gear items with quantities owned and gear packages in one
+   * inventory; gear and packages assigned to each event; "Inventory Short"
+   * when overlapping events promise more than is owned (a visibility
+   * warning, not a reservation system); the Pack List from the event; quote
+   * drafts that take their lines from the event's packages.
+   * Not claimed (not live): barcode or asset-tag scanning (there is no
+   * scanning, barcode, serial-number, or per-unit asset tracking; gear status
+   * is only active or retired), check-out and check-in, condition or
+   * maintenance tracking, live inventory sync, integrations with rental
+   * management platforms, and self-service gear requests between independent
+   * organizations (gear requests run inside a collaboration an ASO admin sets
+   * up). THE SCANNER IN THE SCENE IS ILLUSTRATION ONLY; its accessible name
+   * says it is not connected to any inventory.
+   * The side panel lists responsibilities rental providers manage, as
+   * examples; it is titled as such and makes no feature claims.
+   */
+  {
+    slug: "rental-providers",
+    name: "Rental Warehouses & Providers",
+    tagline: "Inventory that supplies partners",
+    setting: "an order checked out at load-in",
+    ready: true,
+    headline: "Every case accounted for. Every show ready.",
+    recognition:
+      "Your gear is out on several jobs at once, and every order has to be pulled, prepped, and checked before load-in. Keep equipment, people, and job details organized so the right gear goes out on time.",
+    value:
+      "Keep your gear and packages in one inventory, assign them to each job, see when overlapping jobs need more than you own, and pull the pack list and quote from the same event.",
+    aside: {
+      title: "Rental responsibilities",
+      groups: [
+        { group: "Inventory", items: ["Equipment counts", "Packages & kits", "Maintenance"] },
+        { group: "Preparation", items: ["Pulling orders", "Testing & inspection", "Pack lists"] },
+        { group: "Logistics", items: ["Delivery & pickup", "Load-in support", "Returns"] },
+        { group: "Business", items: ["Quotes & invoices", "Client accounts", "Loss & damage"] },
+      ],
+    },
+    summary: who("rental-providers"),
+  },
 ];
 
 export default function WhoItsForPage() {

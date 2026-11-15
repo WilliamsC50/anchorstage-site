@@ -599,6 +599,59 @@
   transform-origin: 20% 80%;
 }
 
+/* ── Rental scene: scanning a case's asset tag ─────────────────────────── */
+
+/* Awaiting inspection: tag HOLD (amber), lid shut, latches closed. Scanned:
+   tag READY (green), latches open, lid up, the fixture showing. The scan
+   line and confirmation ring only ever appear as motion (see below). */
+.who-stage .rn-laser,
+.who-stage .rn-window,
+.who-stage .rn-confirm,
+.who-stage .rn-status-ok,
+.who-stage .rn-case-open {
+  opacity: 0;
+}
+
+.who-stage .is-scanned .rn-status-ok,
+.who-stage .is-scanned .rn-case-open {
+  opacity: 1;
+}
+
+.who-stage .is-scanned .rn-status-hold,
+.who-stage .is-scanned .rn-case-closed {
+  opacity: 0;
+}
+
+/* The scanning arm rests slightly lowered; it comes up to aim. */
+.who-stage .rn-arm,
+.who-stage .rn-head,
+.who-stage .rn-lid-open,
+.who-stage .rn-fixture,
+.who-stage .rn-confirm {
+  transform-box: fill-box;
+}
+
+.who-stage .rn-arm {
+  transform-origin: 85% 0%;
+  transform: rotate(-8deg);
+}
+
+.who-stage .is-scanned .rn-arm {
+  transform: none;
+}
+
+.who-stage .rn-head {
+  transform-origin: 50% 100%;
+}
+
+.who-stage .rn-lid-open {
+  transform-origin: 50% 100%;
+}
+
+.who-stage .rn-confirm {
+  transform-origin: 50% 50%;
+}
+
 /* The outgoing profession during a switch (motion only; see below). */
 .who-stage .wv-scene.is-leaving {
   display: none;
@@ -1115,6 +1168,64 @@
     animation: mu-strum 1.8s ease-in-out infinite;
   }
 
+  /* Rental: one scan, in order. The arm comes up to aim, the scan line
+     flashes on the tag, the tag turns green with a confirmation ring, then
+     the latches flip and the lid swings up on the fixture. Resetting closes
+     it straight away. The technician glances between case and pick list. */
+  .who-stage .rn-arm {
+    transition: transform 280ms ease;
+  }
+
+  .who-stage .is-scanned .rn-laser,
+  .who-stage .is-scanned .rn-window {
+    animation: rn-scan 520ms ease 260ms both;
+  }
+
+  .who-stage .rn-status-hold,
+  .who-stage .rn-status-ok,
+  .who-stage .rn-case-open,
+  .who-stage .rn-case-closed {
+    transition: opacity 220ms ease;
+  }
+
+  .who-stage .is-scanned .rn-status-hold,
+  .who-stage .is-scanned .rn-status-ok {
+    transition-delay: 640ms;
+  }
+
+  .who-stage .is-scanned .rn-confirm {
+    animation: rn-confirm 650ms ease-out 640ms forwards;
+  }
+
+  .who-stage .is-scanned .rn-case-open,
+  .who-stage .is-scanned .rn-case-closed {
+    transition-delay: 820ms;
+  }
+
+  .who-stage .rn-lid-open {
+    transform: scaleY(0.15);
+    transition: transform 420ms cubic-bezier(0.3, 0.7, 0.2, 1);
+  }
+
+  .who-stage .is-scanned .rn-lid-open {
+    transform: none;
+    transition-delay: 820ms;
+  }
+
+  .who-stage .rn-fixture {
+    transform: translateY(6px);
+    transition: transform 420ms ease;
+  }
+
+  .who-stage .is-scanned .rn-fixture {
+    transform: none;
+    transition-delay: 900ms;
+  }
+
+  .who-stage .rn-head {
+    animation: rn-check 8s ease-in-out 1.5s infinite;
+  }
+
   /* The technician: a slow breath and an occasional glance at the desk. */
   .who-stage .ws-breathe {
     animation: ws-breathe 4.8s ease-in-out infinite alternate;
@@ -1237,6 +1348,45 @@
   56%,
   78% {
     transform: translate(-1.4px, -1.3px);
+  }
+}
+
+/* Rental: the scan line flashes once; the confirmation ring spreads once. */
+@keyframes rn-scan {
+  0% {
+    opacity: 0;
+  }
+  15%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes rn-confirm {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+/* Checking the case, then a glance at the pick list, then back. */
+@keyframes rn-check {
+  0%,
+  50%,
+  86%,
+  100% {
+    transform: rotate(0deg);
+  }
+  60%,
+  76% {
+    transform: rotate(4deg);
   }
 }
 

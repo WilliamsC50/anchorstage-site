@@ -5,6 +5,7 @@ import { StageBackground, StageEmptyMark, STAGE_VB } from "./ConcertStage";
 import FohForeground from "./FohForeground";
 import MusicianScene from "./MusicianScene";
 import OrganizerScene from "./OrganizerScene";
+import RentalScene from "./RentalScene";
 import ProductionScene from "./ProductionScene";
 import TechnicianFigure from "./TechnicianFigure";
 import VenueScene from "./VenueScene";
@@ -28,6 +29,7 @@ const SCENES: Record<string, ComponentType> = {
   venues: VenueScene,
   "event-organizers": OrganizerScene,
   musicians: MusicianScene,
+  "rental-providers": RentalScene,
 };
 
 /** How long the outgoing scene stays for its exit (matches who.css). */
@@ -37,8 +39,9 @@ const EXIT_MS = 420;
  * Who It's For: full-viewport cinematic stage (DESIGN-15A.3, refined in
  * DESIGN-15A.4; Production Companies added in DESIGN-15A.5, Venues in
  * DESIGN-15A.6, Event Organizers & Producers in DESIGN-15A.7, Musicians &
- * Touring Acts in DESIGN-15A.8; proof of concept). One concert stage, six
- * professional perspectives.
+ * Touring Acts in DESIGN-15A.8, Rental Warehouses & Providers in
+ * DESIGN-15A.12; proof of concept). One concert stage, six professional
+ * perspectives.
  *
  * Layers, front to back:
  *   overlays    page title, the selected profession's copy, its side panel
@@ -51,7 +54,8 @@ const EXIT_MS = 420;
  *               with its MASTER fader, a flight case; Production: a rolling
  *               rack and a cable coil; Venues: a welcome sign; Organizers:
  *               a freestanding wayfinding sign; Musicians: the pedalboard
- *               (its one control), a monitor wedge, the set list)
+ *               (its one control), a monitor wedge, the set list; Rental:
+ *               the truck-pack stack, a cable trunk, wireless receivers)
  *   character   the selected professional(s) (Production: the lead with
  *               the checklist tablet, and two crew members on the stage;
  *               Venues: the banquet director with the event-prep status
@@ -59,7 +63,9 @@ const EXIT_MS = 420;
  *               serves dinner; Organizers: the producer on the radio, guest
  *               registration, and guests at the rope line; Musicians: the
  *               guitarist at soundcheck, the amp, the vocal mic, and the
- *               guitar tech with the spare guitars)
+ *               guitar tech with the spare guitars; Rental: the prep
+ *               technician with the asset scanner, LED panels, moving heads,
+ *               and the case being inspected)
  *   background  the permanent concert stage, never remounted
  * Character and foreground remount per profession: the outgoing scene fades
  * and sinks while the next enters with staggered timing; the background
@@ -67,12 +73,9 @@ const EXIT_MS = 420;
  *
  * Selector: WAI-ARIA tabs adapted from the homepage cast select (selection
  * follows focus; arrow keys, Home, End), without changing it. Nothing cycles
- * on its own. Freelancers & Technicians, Production Companies, Venues,
- * Event Organizers & Producers, and Musicians & Touring Acts have finished
- * scenes (SCENES below); Rental Warehouses & Providers shows an empty lit
- * FOH mark
- * and their existing approved description, marked "In development" /
- * "Scene in development".
+ * on its own. All six professions have scenes (SCENES below). A role marked
+ * not ready would show an empty lit FOH mark and its existing approved
+ * description, marked "In development" / "Scene in development".
  *
  * LAUNCH-DEPENDENT copy lives with the role data in
  * app/(site)/who-its-for/page.tsx.
