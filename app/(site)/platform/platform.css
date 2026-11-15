@@ -2476,3 +2476,162 @@
     margin-top: 0.75rem;
   }
 }
+
+/* ── Platform: closing call to action ("Your operation starts here.") ───────
+   components/platform/PlatformClosingCta.tsx. Platform only; the shared
+   ClosingCta on other pages is unchanged. White, centred, with a stage edge
+   below the content: a horizontal line lit orange at its centre and soft
+   light rising from it. No animation. Every rule sits under .platform-cta. */
+
+.platform-cta .pc-inner {
+  padding-top: 5.5rem;
+  padding-bottom: 7.5rem;
+  text-align: center;
+}
+
+/* Light rising from the stage edge, warm at the centre, cool at the sides. */
+.platform-cta .pc-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 34rem 18rem at 50% calc(100% - 3.5rem), rgba(255, 122, 26, 0.1) 0%, rgba(255, 122, 26, 0.03) 45%, transparent 72%),
+    radial-gradient(ellipse 60rem 26rem at 50% calc(100% - 3.5rem), rgba(78, 168, 209, 0.12) 0%, rgba(78, 168, 209, 0.04) 45%, transparent 75%);
+}
+
+/* The stage edge, with a faint front face falling away beneath it. */
+.platform-cta .pc-edge {
+  position: absolute;
+  left: 50%;
+  bottom: 3.5rem;
+  width: min(60rem, 88%);
+  height: 2px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, rgba(15, 47, 79, 0.22) 14%, rgba(78, 168, 209, 0.65) 36%, #ff7a1a 50%, rgba(78, 168, 209, 0.65) 64%, rgba(15, 47, 79, 0.22) 86%, transparent 100%);
+  box-shadow: 0 0 18px 1px rgba(255, 122, 26, 0.3);
+}
+
+.platform-cta .pc-edge::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 8%;
+  right: 8%;
+  height: 2rem;
+  background: linear-gradient(to bottom, rgba(15, 47, 79, 0.045), transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
+}
+
+.platform-cta .pc-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--aso-navy);
+  text-shadow: 0 1px 0 #fff, 0 12px 28px rgba(15, 47, 79, 0.06);
+}
+
+.platform-cta .pc-body {
+  max-width: 40rem;
+  margin: 1.25rem auto 0;
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  color: #4b5563;
+}
+
+.platform-cta .pc-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.25rem;
+}
+
+.platform-cta .pc-actions a {
+  width: 100%;
+  max-width: 22rem;
+}
+
+.platform-cta .pc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 0.625rem;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #4b5563;
+}
+
+/* Phones: the two parts of the quiet line sit on their own lines. */
+.platform-cta .pc-dot {
+  display: none;
+}
+
+.platform-cta .pc-meta > span:first-child {
+  flex-basis: 100%;
+}
+
+.platform-cta .pc-login {
+  font-weight: 600;
+  color: var(--aso-navy);
+  text-decoration: underline;
+  text-decoration-color: rgba(15, 47, 79, 0.35);
+  text-underline-offset: 3px;
+}
+
+.platform-cta .pc-login:hover {
+  text-decoration-color: var(--aso-orange);
+}
+
+.platform-cta .pc-login:focus-visible,
+.platform-cta .pc-actions a:focus-visible {
+  outline: 2px solid var(--aso-blue);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (min-width: 640px) {
+  .platform-cta .pc-actions a {
+    width: auto;
+  }
+
+  .platform-cta .pc-dot {
+    display: inline;
+  }
+
+  .platform-cta .pc-meta > span:first-child {
+    flex-basis: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .platform-cta .pc-inner {
+    padding-top: 7rem;
+    padding-bottom: 9rem;
+  }
+
+  .platform-cta .pc-title {
+    font-size: 3.5rem;
+  }
+
+  .platform-cta .pc-body {
+    font-size: 1.1875rem;
+  }
+
+  .platform-cta .pc-edge {
+    bottom: 4.5rem;
+  }
+
+  .platform-cta .pc-light {
+    background:
+      radial-gradient(ellipse 34rem 18rem at 50% calc(100% - 4.5rem), rgba(255, 122, 26, 0.1) 0%, rgba(255, 122, 26, 0.03) 45%, transparent 72%),
+      radial-gradient(ellipse 60rem 26rem at 50% calc(100% - 4.5rem), rgba(78, 168, 209, 0.12) 0%, rgba(78, 168, 209, 0.04) 45%, transparent 75%);
+  }
+}
+
+@media (min-width: 1024px) {
+  .platform-cta .pc-title {
+    font-size: 4rem;
+  }
+}

@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import ClosingCta from "@/components/ClosingCta";
+import PlatformClosingCta from "@/components/platform/PlatformClosingCta";
 import PlatformHero from "@/components/platform/PlatformHero";
 import PlatformLifecycle from "@/components/platform/PlatformLifecycle";
 import PlatformOrganizations from "@/components/platform/PlatformOrganizations";
 import PlatformRecord from "@/components/platform/PlatformRecord";
 import PlatformTools from "@/components/platform/PlatformTools";
-import { INTAKE_REGISTER_URL } from "@/lib/constants";
 import { buildMetadata } from "@/lib/metadata";
 import "./platform.css";
 
@@ -32,13 +31,8 @@ export default function PlatformPage() {
       {/* ORGANIZATIONS: built around your organization, leading into the call to action */}
       <PlatformOrganizations />
 
-      {/* CTA */}
-      <ClosingCta
-        heading="Set up your organization"
-        body="Creating an account is free. Start with your own events and records, and add collaboration when the work calls for it."
-        primary={{ label: "Create Your Organization", href: INTAKE_REGISTER_URL }}
-        secondary={{ label: "Explore the Network", href: "/network" }}
-      />
+      {/* CLOSING CALL TO ACTION: Platform only (the shared ClosingCta closes other pages) */}
+      <PlatformClosingCta />
     </main>
   );
 }
