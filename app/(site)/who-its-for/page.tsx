@@ -8,12 +8,12 @@ import { PERSONAS } from "@/lib/personas";
 import "./who.css";
 
 /*
- * Who It's For (DESIGN-15A.2 to 15A.6: cinematic visual proof of concept, local only).
+ * Who It's For (DESIGN-15A.2 to 15A.7: cinematic visual proof of concept, local only).
  *
  * The full-viewport interactive stage (DESIGN-15A.3) replaces the photo hero (whose montage carried
- * invented names printed into the image) and the six persona cards. Three
+ * invented names printed into the image) and the six persona cards. Four
  * scenes are finished (Freelancers & Technicians, Production Companies,
- * Venues); the other three show an empty stage and their existing approved description,
+ * Venues, Event Organizers & Producers); the other two show an empty stage and their existing approved description,
  * marked "Scene in development". "What everyone shares" and the shared
  * closing are unchanged.
  *
@@ -144,7 +144,48 @@ const ROLES: ShowcaseRole[] = [
     },
     summary: who("venues"),
   },
-  { slug: "event-organizers", name: "Event Organizers & Producers", tagline: "Owning and coordinating events", setting: "an event coordination environment", ready: false, summary: who("event-organizers") },
+  /*
+   * Event Organizers & Producers copy (DESIGN-15A.7; scene: an event
+   * producer calling doors at guest check-in). The "With AnchorStage Ops"
+   * line only names things verified live in anchorstage-intake (read-only;
+   * docs/operations event-lifecycle, event-readiness, crew-operations, the
+   * Production Brief page and PDF): each event is one record linked to its
+   * client and venue; event timing (call, load-in, doors, show end, strike);
+   * crew from the organization's roster or a crew call answered from a link;
+   * the readiness check (eight checks, a badge, blockers); the Production
+   * Brief (venue, timing, load-in, parking, on-site contact) handed to
+   * partners as a page or PDF.
+   * LAUNCH-DEPENDENT, not claimed: giving independent partner organizations
+   * their own access to the event record (today an event's owner can add
+   * only organizations it already manages; an ASO admin sets up anything
+   * wider; see the Network page notes), attendee registration or ticketing,
+   * guest check-in, run-of-show cueing, and attendee messaging. The scene's
+   * check-in desk and run-of-show screen are illustration, not features.
+   * The side panel lists responsibilities organizers manage, as examples;
+   * it is titled as such and makes no feature claims.
+   */
+  {
+    slug: "event-organizers",
+    name: "Event Organizers & Producers",
+    tagline: "Owning and coordinating events",
+    setting: "guest check-in before doors",
+    ready: true,
+    headline: "Your event. Your partners. Your operation.",
+    recognition:
+      "Clients, venues, vendors, production teams, and guests all depend on the same event, and the details keep changing. Keep everyone on the latest plan so the day comes together.",
+    value:
+      "Keep each event's client, venue, and times from load-in to doors in one record, staff it from your roster or a crew call, see what still needs attention, and give every partner the same brief.",
+    aside: {
+      title: "Organizer responsibilities",
+      groups: [
+        { group: "Planning", items: ["Run of show", "Event timeline", "Changing requirements"] },
+        { group: "Stakeholders", items: ["Clients", "Venues & vendors", "Production partners"] },
+        { group: "Guest Experience", items: ["Registration", "Wayfinding", "Attendee updates"] },
+        { group: "Event Execution", items: ["Doors & cues", "Staff briefings", "Day-of changes"] },
+      ],
+    },
+    summary: who("event-organizers"),
+  },
   { slug: "musicians", name: "Musicians & Touring Acts", tagline: "Running the shows they organize", setting: "a performance and touring stage", ready: false, summary: who("musicians") },
   { slug: "rental-providers", name: "Rental Warehouses & Providers", tagline: "Inventory that supplies partners", setting: "an equipment warehouse and loading area", ready: false, summary: who("rental-providers") },
 ];

@@ -1,5 +1,8 @@
+import type { CSSProperties } from "react";
+
 /**
- * Who It's For: the Venue scene's ballroom set (DESIGN-15A.6). Decorative;
+ * Who It's For: the Venue scene's ballroom set (DESIGN-15A.6; dinner service
+ * added in DESIGN-15A.7). Decorative;
  * drawn in the stage's 1600 x 900 space, in front of the permanent stage.
  *
  * VenueLighting  the same room set for a corporate event: a patterned hotel
@@ -10,8 +13,11 @@
  *                round with floor-length linens, banquet chairs, place
  *                settings, and a low centrepiece with a candle. A banquet
  *                server stands behind it in a white shirt, black vest, bow
- *                tie, and bistro apron, a tray of glasses on one hand,
- *                setting the last glass with the other.
+ *                tie, and bistro apron, covered dinner plates on a tray in
+ *                one hand, setting the last glass with the other. When the
+ *                visitor serves dinner (VenueScene), the server dips to
+ *                serve, the covers leave the tray, and a plated meal
+ *                replaces each napkin, table by table.
  * WelcomeSign    a chrome pedestal sign holder with a printed welcome sign
  *                (generic text; no invented event or venue names).
  *
@@ -96,7 +102,24 @@ function ChairBack({ x, floor, s }: { x: number; floor: number; s: number }) {
 /** A banquet round with floor-length linen, place settings, a centrepiece,
  *  and chairs behind it. Local origin: the front of the skirt on the floor;
  *  drawn at the near table's size and scaled for the far ones. */
-function RoundTable({ x, floor, s, id }: { x: number; floor: number; s: number; id: string }) {
+function Meal({ px, py, steam }: { px: number; py: number; steam: boolean }) {
+  return (
+    <>
+      <path d={`M${px - 6} ${py + 0.6} q4 -2.6 9.5 -0.8`} stroke="#8a3b1f" strokeWidth="1.2" fill="none" opacity="0.75" strokeLinecap="round" />
+      <ellipse cx={px + 2} cy={py - 0.3} rx="2.2" ry="1.2" fill="#ecd394" />
+      <ellipse cx={px - 1.6} cy={py - 1.6} rx="4.2" ry="2.4" fill="#8a5232" />
+      <ellipse cx={px - 1.9} cy={py - 2.7} rx="2.6" ry="0.9" fill="#b8794c" />
+      <circle cx={px + 3.8} cy={py - 1.5} r="1.8" fill="#4c8a3a" />
+      <circle cx={px + 5.6} cy={py - 0.4} r="1.5" fill="#3d7a2f" />
+      <circle cx={px - 4.8} cy={py - 0.7} r="1.2" fill="#ff9a3c" />
+      {steam && (
+        <path className="vn-steam" d={`M${px - 1} ${py - 5} q-2.5 -4 0 -8 q2.5 -4 0 -8 M${px + 3} ${py - 5} q2 -3.5 0 -7`} stroke="#eef5fb" strokeWidth="0.9" fill="none" strokeLinecap="round" />
+      )}
+    </>
+  );
+}
+
+function RoundTable({ x, floor, s, id, d = 0 }: { x: number; floor: number; s: number; id: string; d?: number }) {
   const plates: [number, number][] = [
     [-80, -137],
     [0, -127],
@@ -131,11 +154,15 @@ function RoundTable({ x, floor, s, id }: { x: number; floor: number; s: number; 
       {/* Table top. */}
       <ellipse cx="0" cy="-138" rx="118" ry="20" fill="#e6ebf0" />
       <ellipse cx="0" cy="-138" rx="118" ry="20" fill="none" stroke="#b7c2ce" strokeWidth="1.2" />
-      {/* Place settings: plate, folded napkin, glass. */}
-      {plates.map(([px, py]) => (
-        <g key={`${px}-${py}`}>
+      {/* Place settings: plate, folded napkin (replaced by the plated meal
+          once dinner is served), glass. */}
+      {plates.map(([px, py], i) => (
+        <g key={`${px}-${py}`} style={{ "--vn-d": `${d + i * 70}ms` } as CSSProperties}>
           <ellipse cx={px} cy={py} rx="11" ry="3.4" fill="#fbfcfd" stroke="#c3ccd6" strokeWidth="0.6" />
-          <path d={`M${px - 4.5} ${py - 0.8} L${px} ${py - 7} L${px + 4.5} ${py - 0.8} Z`} fill="#24466c" />
+          <path className="vn-napkin" d={`M${px - 4.5} ${py - 0.8} L${px} ${py - 7} L${px + 4.5} ${py - 0.8} Z`} fill="#24466c" />
+          <g className="vn-meal">
+            <Meal px={px} py={py} steam={id === "near"} />
+          </g>
           <path
             d={`M${px + 11} ${py - 11} q1.8 5 3.6 0 M${px + 12.8} ${py - 6.5} v5 M${px + 11} ${py - 1.4} h3.6`}
             stroke="#e9f2f9"
@@ -198,14 +225,29 @@ function ServerBody() {
         <path d="M626.5 503 Q630.5 504.5 634 502.5" stroke="#5e3426" strokeWidth="1" fill="none" strokeLinecap="round" />
         <path d="M642.5 484 Q643 496 637 501" stroke="#ffcf9e" strokeWidth="0.9" fill="none" opacity="0.5" />
       </g>
-      {/* Tray arm: a tray of glasses carried at shoulder height. */}
+      {/* Tray arm: covered dinner plates carried at shoulder height (they
+          leave the tray when dinner is served). */}
       <path d="M614 520 L598 550 L590 530" stroke="#dfe5ec" strokeWidth="8" fill="none" strokeLinecap="round" strokeLinejoin="round" />
       <circle cx="589" cy="527" r="3.6" fill="#a36f4d" />
       <ellipse cx="585" cy="522" rx="25" ry="4.2" fill="#9aa5b1" />
       <ellipse cx="585" cy="521" rx="23" ry="3" fill="#d2d9e1" />
-      {[571, 583, 595].map((gx) => (
-        <path key={gx} d={`M${gx - 3} 505 q3 9 6 0 M${gx} 511 v8 M${gx - 3} 519.5 h6`} stroke="#eef5fb" strokeWidth="1.1" fill="none" opacity="0.9" />
-      ))}
+      <g className="vn-cloches">
+        <defs>
+          <linearGradient id="vn-dome" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#7b8693" />
+            <stop offset="0.4" stopColor="#dfe5ec" />
+            <stop offset="1" stopColor="#8f9aa6" />
+          </linearGradient>
+        </defs>
+        {[574, 597].map((cx) => (
+          <g key={cx}>
+            <ellipse cx={cx} cy="519.5" rx="10.5" ry="1.8" fill="#f4f7fa" />
+            <path d={`M${cx - 9} 519.5 Q${cx - 9} 505 ${cx} 505 Q${cx + 9} 505 ${cx + 9} 519.5 Z`} fill="url(#vn-dome)" />
+            <path d={`M${cx - 5} 515 Q${cx - 5} 509 ${cx - 1} 508`} stroke="#fff" strokeWidth="1" fill="none" opacity="0.6" strokeLinecap="round" />
+            <circle cx={cx} cy="503.6" r="1.8" fill="#c9d2dc" />
+          </g>
+        ))}
+      </g>
     </g>
   );
 }
@@ -221,20 +263,26 @@ function ServerPlacingArm() {
   );
 }
 
-export function BanquetRoom() {
+/**
+ * `served`: dinner is on the tables (the cloches leave the tray, a plated
+ * meal replaces each napkin, table by table). `acted` counts the visitor's
+ * activations; each one replays the server's serving dip (remounted by key).
+ */
+export function BanquetRoom({ served, acted }: { served: boolean; acted: number }) {
+  const act = acted ? "is-acting" : "";
   return (
-    <g>
+    <g className={served ? "is-served" : ""}>
       {/* Far rounds across the room. */}
       {[
-        [330, "a"],
-        [858, "b"],
-        [1180, "c"],
-      ].map(([x, id]) => (
+        [330, "a", 520],
+        [858, "b", 360],
+        [1180, "c", 680],
+      ].map(([x, id, d]) => (
         <g key={id}>
           <ChairFront x={Number(x) - 54} floor={664} s={0.58} />
           <ChairFront x={Number(x)} floor={662} s={0.58} />
           <ChairFront x={Number(x) + 54} floor={664} s={0.58} />
-          <RoundTable x={Number(x)} floor={676} s={0.6} id={String(id)} />
+          <RoundTable x={Number(x)} floor={676} s={0.6} id={String(id)} d={Number(d)} />
         </g>
       ))}
 
@@ -242,9 +290,13 @@ export function BanquetRoom() {
           server's placing arm and the chairs in front. */}
       <ChairFront x={548} floor={772} s={0.96} />
       <ChairFront x={734} floor={772} s={0.96} />
-      <ServerBody />
-      <RoundTable x={640} floor={790} s={1} id="near" />
-      <ServerPlacingArm />
+      <g key={`body-${acted}`} className={`vn-server ${act}`}>
+        <ServerBody />
+      </g>
+      <RoundTable x={640} floor={790} s={1} id="near" d={200} />
+      <g key={`arm-${acted}`} className={`vn-server ${act}`}>
+        <ServerPlacingArm />
+      </g>
       <ChairBack x={572} floor={814} s={1} />
       <ChairBack x={712} floor={814} s={1} />
     </g>

@@ -17,8 +17,8 @@ import type { ReactNode } from "react";
  *
  * Drawn in its own 960 x 600 space like the other figures (feet at y = 562)
  * and placed with a transform. The tablet is passed in as `tablet` (local
- * coordinates, about x 420-490, y 310-402) so the scene can make it
- * interactive; it is drawn between the holding sleeve and the hand.
+ * coordinates, about x 420-490, y 310-402) so the scene can drive its
+ * status display; it is drawn between the holding sleeve and the hand.
  *
  * PROOF OF CONCEPT ARTWORK: hand-authored SVG.
  */
