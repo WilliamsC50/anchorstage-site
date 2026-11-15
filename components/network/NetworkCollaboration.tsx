@@ -97,7 +97,6 @@ export default function NetworkCollaboration() {
           </div>
 
           <Org name="Northstar Production" mono="N" tone="slate" />
-          <figcaption className="nc-tag">Illustrative example</figcaption>
         </figure>
 
         <p className="nc-note">

@@ -53,7 +53,6 @@ export default function NetworkDiscovery() {
             <p id="nd-directory-label" className="nd-directory-title">
               Published profiles
             </p>
-            <span className="nd-tag">Illustrative example</span>
           </div>
           <ul className="nd-grid">
             {PROFILES.map((p, i) => (

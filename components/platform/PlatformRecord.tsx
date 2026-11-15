@@ -150,7 +150,6 @@ export default function PlatformRecord() {
                 <span className="sr-only">, </span>
                 Setup
               </p>
-              <span className="pr-tag">Illustrative example</span>
             </div>
             <p className="pr-change-key">Load-in</p>
             <p className="pr-change-times">

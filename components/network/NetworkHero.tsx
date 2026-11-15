@@ -134,7 +134,6 @@ export default function NetworkHero() {
               </span>
             </p>
           </div>
-          <figcaption className="nh-tag">Illustrative example</figcaption>
         </figure>
       </div>
     </section>

@@ -57,7 +57,6 @@ export default function NetworkRelationships() {
               <span className="nr-org-name">Northstar Production</span>
             </div>
           </div>
-          <figcaption className="nr-tag">Illustrative example</figcaption>
         </figure>
       </div>
     </section>

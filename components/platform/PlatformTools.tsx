@@ -218,7 +218,6 @@ export default function PlatformTools() {
                 <WorkstationIcon slug="event" className="h-4 w-4" />
                 Event Workstation
               </span>
-              <span className="pt-ws-tag">Illustrative example</span>
             </div>
             <div className="pt-ws-body">
               <ul className="pt-ws-nav" aria-label="Event Workstation sections">
