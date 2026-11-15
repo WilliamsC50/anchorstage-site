@@ -5,6 +5,7 @@ import { StageBackground, StageEmptyMark, STAGE_VB } from "./ConcertStage";
 import FohForeground from "./FohForeground";
 import ProductionScene from "./ProductionScene";
 import TechnicianFigure from "./TechnicianFigure";
+import VenueScene from "./VenueScene";
 
 /** The Freelancers & Technicians scene: the technician and the FOH set. */
 function FreelancerScene() {
@@ -22,6 +23,7 @@ function FreelancerScene() {
 const SCENES: Record<string, ComponentType> = {
   freelancers: FreelancerScene,
   "production-companies": ProductionScene,
+  venues: VenueScene,
 };
 
 /** How long the outgoing scene stays for its exit (matches who.css). */
@@ -29,8 +31,9 @@ const EXIT_MS = 420;
 
 /**
  * Who It's For: full-viewport cinematic stage (DESIGN-15A.3, refined in
- * DESIGN-15A.4; Production Companies added in DESIGN-15A.5; proof of
- * concept). One concert stage, six professional perspectives.
+ * DESIGN-15A.4; Production Companies added in DESIGN-15A.5, Venues in
+ * DESIGN-15A.6; proof of concept). One concert stage, six professional
+ * perspectives.
  *
  * Layers, front to back:
  *   overlays    page title, the selected profession's copy, its side panel
@@ -41,9 +44,11 @@ const EXIT_MS = 420;
  *   light       CSS scrims and key light (.wv-light)
  *   foreground  profession-specific equipment (Freelancer: the FOH console
  *               with its MASTER fader, a flight case; Production: a rolling
- *               rack and a cable coil)
+ *               rack and a cable coil; Venues: a welcome sign)
  *   character   the selected professional(s) (Production: the lead with
- *               the checklist tablet, and two crew members on the stage)
+ *               the checklist tablet, and two crew members on the stage;
+ *               Venues: the banquet director with the event-prep tablet,
+ *               the ballroom setup on a hotel carpet, and a server)
  *   background  the permanent concert stage, never remounted
  * Character and foreground remount per profession: the outgoing scene fades
  * and sinks while the next enters with staggered timing; the background
@@ -51,8 +56,8 @@ const EXIT_MS = 420;
  *
  * Selector: WAI-ARIA tabs adapted from the homepage cast select (selection
  * follows focus; arrow keys, Home, End), without changing it. Nothing cycles
- * on its own. Freelancers & Technicians and Production Companies have
- * finished scenes (SCENES below); the other four show an empty lit FOH mark
+ * on its own. Freelancers & Technicians, Production Companies, and Venues
+ * have finished scenes (SCENES below); the other three show an empty lit FOH mark
  * and their existing approved description, marked "In development" /
  * "Scene in development".
  *

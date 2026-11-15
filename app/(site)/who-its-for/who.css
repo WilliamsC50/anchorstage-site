@@ -417,6 +417,36 @@
   transform-origin: 0 0;
 }
 
+/* ── Venue scene: the director's event-prep tablet ──────────────────────── */
+
+/* The final walkthrough's check, filled when the visitor completes it. */
+.who-stage .vn-check {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transform: scale(0);
+}
+
+.who-stage .vn-ctl.is-done .vn-check {
+  transform: scale(1);
+}
+
+/* Idle groups in the venue scene. */
+.who-stage .vd-head,
+.who-stage .vd-eyes,
+.who-stage .vn-place,
+.who-stage .vn-flame {
+  transform-box: fill-box;
+}
+
+.who-stage .vd-head,
+.who-stage .vn-flame {
+  transform-origin: 50% 100%;
+}
+
+.who-stage .vn-place {
+  transform-origin: 0 0;
+}
+
 /* The outgoing profession during a switch (motion only; see below). */
 .who-stage .wv-scene.is-leaving {
   display: none;
@@ -767,6 +797,33 @@
     animation: pc-tick 3.6s ease-in-out infinite;
   }
 
+  /* Venues: the prep item responds; the director reads, looks out over the
+     room setup, and returns to the tablet; the server sets a glass; the
+     centrepiece candles flicker. */
+  .who-stage .vn-check {
+    transition: transform 320ms cubic-bezier(0.3, 1.5, 0.5, 1);
+  }
+
+  .who-stage .vn-ctl.is-done .vn-glow {
+    animation: pc-glow 700ms ease-out;
+  }
+
+  .who-stage .vd-head {
+    animation: vd-survey 11s ease-in-out 2s infinite;
+  }
+
+  .who-stage .vd-eyes {
+    animation: vd-survey-eyes 11s ease-in-out 2s infinite;
+  }
+
+  .who-stage .vn-place {
+    animation: vn-place 4.4s ease-in-out infinite;
+  }
+
+  .who-stage .vn-flame {
+    animation: vn-flicker 1.8s ease-in-out infinite alternate;
+  }
+
   /* The technician: a slow breath and an occasional glance at the desk. */
   .who-stage .ws-breathe {
     animation: ws-breathe 4.8s ease-in-out infinite alternate;
@@ -862,6 +919,57 @@
   }
   80% {
     transform: rotate(1deg);
+  }
+}
+
+/* Reading the tablet, then a look out across the tables, then back. */
+@keyframes vd-survey {
+  0%,
+  46%,
+  88%,
+  100% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  56%,
+  78% {
+    transform: rotate(-5deg) translate(-1px, -1.5px);
+  }
+}
+
+@keyframes vd-survey-eyes {
+  0%,
+  46%,
+  88%,
+  100% {
+    transform: translate(0, 0);
+  }
+  56%,
+  78% {
+    transform: translate(-1.4px, -1.3px);
+  }
+}
+
+/* Setting the glass down, then lifting the hand away. */
+@keyframes vn-place {
+  0%,
+  50%,
+  100% {
+    transform: rotate(0deg);
+  }
+  64%,
+  80% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes vn-flicker {
+  from {
+    opacity: 0.75;
+    transform: scaleY(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1.08);
   }
 }
 

@@ -8,12 +8,12 @@ import { PERSONAS } from "@/lib/personas";
 import "./who.css";
 
 /*
- * Who It's For (DESIGN-15A.2 to 15A.5: cinematic visual proof of concept, local only).
+ * Who It's For (DESIGN-15A.2 to 15A.6: cinematic visual proof of concept, local only).
  *
  * The full-viewport interactive stage (DESIGN-15A.3) replaces the photo hero (whose montage carried
- * invented names printed into the image) and the six persona cards. Two
- * scenes are finished (Freelancers & Technicians, Production Companies); the
- * other four show an empty stage and their existing approved description,
+ * invented names printed into the image) and the six persona cards. Three
+ * scenes are finished (Freelancers & Technicians, Production Companies,
+ * Venues); the other three show an empty stage and their existing approved description,
  * marked "Scene in development". "What everyone shares" and the shared
  * closing are unchanged.
  *
@@ -87,7 +87,7 @@ const ROLES: ShowcaseRole[] = [
     tagline: "Delivering several events at once",
     setting: "an active stage build",
     ready: true,
-    headline: "Your crew. Your gear. Your shows. One operation.",
+    headline: "Your crew. Your gear. Your operation.",
     recognition:
       "Every production means coordinating people, equipment, schedules, and last-minute changes. Keep the moving pieces organized so your team can spend less time chasing information and more time delivering the show.",
     value:
@@ -103,7 +103,47 @@ const ROLES: ShowcaseRole[] = [
     },
     summary: who("production-companies"),
   },
-  { slug: "venues", name: "Venues", tagline: "Running a room and its calendar", setting: "a theatrical or live-music venue", ready: false, summary: who("venues") },
+  /*
+   * Venue copy (DESIGN-15A.6, founder direction; scene: a hotel banquet
+   * director preparing a ballroom for a corporate event). The "With
+   * AnchorStage Ops" line only names things verified live in
+   * anchorstage-intake (read-only; docs/operations event-lifecycle,
+   * build-your-first-event, the event checklist, and the Production Brief
+   * page and PDF): each event is one record linked to its client and venue;
+   * venue records carry site access, parking, and load-in notes into the
+   * event; event timing (call, load-in, doors, show end, strike); staff
+   * assigned from the organization's own roster; the event's checklist; the
+   * Production Brief lists the venue, timing, load-in location, parking, and
+   * the on-site contact, and can be handed to an outside production team.
+   * Not claimed: room booking or reservations, hotel property-management
+   * integrations, automatic banquet event orders, self-service collaboration
+   * between organizations (today an ASO admin sets that up), event-driven
+   * signage, venue-wide resource scheduling.
+   * The side panel lists responsibilities venues manage, as examples; it is
+   * titled as such and makes no feature claims.
+   */
+  {
+    slug: "venues",
+    name: "Venues",
+    tagline: "Running a room and its calendar",
+    setting: "a hotel ballroom",
+    ready: true,
+    headline: "Your space. Your events. Your operation.",
+    recognition:
+      "Every event brings different clients, production teams, schedules, and room requirements. Keep the details organized so your staff can prepare the space, coordinate with partners, and deliver a consistent experience.",
+    value:
+      "Keep each event's client, venue notes, and schedule in one record, staff it from your own roster, work through its checklist, and hand outside production teams one brief with load-in, parking, and on-site contact details.",
+    aside: {
+      title: "Venue responsibilities",
+      groups: [
+        { group: "Bookings", items: ["Event calendar", "Room requirements", "Client coordination"] },
+        { group: "Facilities", items: ["Room readiness", "House equipment", "Maintenance"] },
+        { group: "Event Services", items: ["Banquet setup", "Staff coordination", "Guest experience"] },
+        { group: "Partners", items: ["Outside production", "Vendor access", "Load-in coordination"] },
+      ],
+    },
+    summary: who("venues"),
+  },
   { slug: "event-organizers", name: "Event Organizers & Producers", tagline: "Owning and coordinating events", setting: "an event coordination environment", ready: false, summary: who("event-organizers") },
   { slug: "musicians", name: "Musicians & Touring Acts", tagline: "Running the shows they organize", setting: "a performance and touring stage", ready: false, summary: who("musicians") },
   { slug: "rental-providers", name: "Rental Warehouses & Providers", tagline: "Inventory that supplies partners", setting: "an equipment warehouse and loading area", ready: false, summary: who("rental-providers") },
