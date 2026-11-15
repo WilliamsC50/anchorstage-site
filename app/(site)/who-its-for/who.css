@@ -131,6 +131,13 @@
   text-wrap: balance;
 }
 
+/* Each sentence of a headline wraps as a unit (balanced within itself), so
+   lines break between sentences, not mid-phrase (DESIGN-15A.10). */
+.who-stage .wv-headline-part {
+  display: inline-block;
+  text-wrap: balance;
+}
+
 .who-stage .wv-recognition,
 .who-stage .wv-summary {
   margin-top: 0.75rem;
@@ -523,17 +530,27 @@
 .who-stage .mu-spot,
 .who-stage .mu-amp-glow,
 .who-stage .mu-pilot-glow,
-.who-stage .mu-ack-up {
+.who-stage .mu-case-closed {
   opacity: 0;
 }
 
 .who-stage .is-live .mu-spot,
-.who-stage .is-live .mu-ack-up {
+.who-stage .is-live .mu-case-closed {
   opacity: 1;
 }
 
-.who-stage .is-live .mu-ack-down {
+/* The guitar tech closes the accessory case and looks up at the guitarist. */
+.who-stage .is-live .mu-case-open {
   opacity: 0;
+}
+
+.who-stage .mu-tech-head {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.who-stage .is-live .mu-tech-head {
+  transform: rotate(7deg) translate(1px, -1px);
 }
 
 .who-stage .is-live .mu-amp-glow {
@@ -554,7 +571,6 @@
 }
 
 .who-stage .is-live .mu-tune-screen,
-.who-stage .is-live .mu-tuner,
 .who-stage .is-live .mu-pack-led {
   fill: #3ddc84;
 }
@@ -807,6 +823,24 @@
   }
 }
 
+/* Shorter desktop windows: a slightly tighter copy panel, so the longest
+   profession copy still leaves the cards fully on screen (DESIGN-15A.10). */
+@media (min-width: 1200px) and (max-height: 820px) {
+  .who-stage .wv-panel {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .who-stage .wv-recognition,
+  .who-stage .wv-summary {
+    line-height: 1.5;
+  }
+
+  .who-stage .wv-value {
+    line-height: 1.48;
+  }
+}
+
 @media (min-width: 1440px) {
   .who-stage {
     --wv-skills-w: 17rem;
@@ -1014,8 +1048,8 @@
   }
 
   /* Musicians: the rig comes live in a short sequence (pedal LEDs, the amp
-     warming, the spot, then the tech's raised open hand). The guitarist
-     nods slightly while listening; the picking hand moves. */
+     warming, the spot, then the tech closing the case and looking up). The
+     guitarist nods slightly while listening; the picking hand moves. */
   .who-stage .mu-spot {
     transition: opacity 600ms ease 150ms;
   }
@@ -1029,20 +1063,24 @@
   .who-stage .mu-led,
   .who-stage .mu-led-b,
   .who-stage .mu-tune-screen,
-  .who-stage .mu-tuner,
   .who-stage .mu-pack-led {
     transition:
       opacity 200ms ease,
       fill 200ms ease;
   }
 
-  .who-stage .mu-ack-up,
-  .who-stage .mu-ack-down {
-    transition: opacity 260ms ease;
+  .who-stage .mu-case-open,
+  .who-stage .mu-case-closed {
+    transition: opacity 280ms ease;
   }
 
-  .who-stage .is-live .mu-ack-up,
-  .who-stage .is-live .mu-ack-down {
+  .who-stage .mu-tech-head {
+    transition: transform 420ms ease;
+  }
+
+  .who-stage .is-live .mu-case-open,
+  .who-stage .is-live .mu-case-closed,
+  .who-stage .is-live .mu-tech-head {
     transition-delay: 750ms;
   }
 

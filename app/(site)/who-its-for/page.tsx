@@ -129,7 +129,7 @@ const ROLES: ShowcaseRole[] = [
     tagline: "Running a room and its calendar",
     setting: "a hotel ballroom",
     ready: true,
-    headline: "Your space. Your events. Your operation.",
+    headline: "Every event is different. Your standards aren't.",
     recognition:
       "Every event brings different clients, production teams, schedules, and room requirements. Keep the details organized so your staff can prepare the space, coordinate with partners, and deliver a consistent experience.",
     value:
@@ -171,7 +171,7 @@ const ROLES: ShowcaseRole[] = [
     tagline: "Owning and coordinating events",
     setting: "guest check-in before doors",
     ready: true,
-    headline: "Your event. Your partners. Your operation.",
+    headline: "A hundred moving parts. One unforgettable event.",
     recognition:
       "Clients, venues, vendors, production teams, and guests all depend on the same event, and the details keep changing. Keep everyone on the latest plan so the day comes together.",
     value:
@@ -205,6 +205,10 @@ const ROLES: ShowcaseRole[] = [
    * the recognition copy is the musician's own goal, not a feature (standing
    * connections between organizations are launch-dependent; see the Network
    * page notes).
+   * Headline (DESIGN-15A.10, founder-approved wording): "We'll help with
+   * everything around it" is help, not a claim that ASO runs the show or
+   * any of it automatically; the With AnchorStage Ops line says exactly
+   * what that help is today.
    * The side panel lists responsibilities touring acts manage, as examples;
    * it is titled as such and makes no feature claims.
    */
@@ -214,7 +218,7 @@ const ROLES: ShowcaseRole[] = [
     tagline: "Running the shows they organize",
     setting: "soundcheck on the stage",
     ready: true,
-    headline: "Your music. Your shows. Your operation.",
+    headline: "Make the show happen. We'll help with everything around it.",
     recognition:
       "Every show brings a different venue, promoter, and production team. Keep your dates and stage needs straight so you can focus on the performance and the people you work with again.",
     value:

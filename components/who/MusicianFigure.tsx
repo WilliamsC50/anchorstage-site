@@ -16,13 +16,14 @@
  * and stopbar, four top-hat knobs, a raised pickguard, the selector switch,
  * a bound rosewood board with frets on a real fret scale and trapezoid
  * inlays, six strings from the stopbar to the tuners, an open-book headstock
- * with keystone tuners, and a clip-on tuner. Slung at the hip, neck angled
+ * with tulip tuner buttons (redrawn to proportion in DESIGN-15A.10; the
+ * clip-on tuner and its light were removed). Slung at the hip, neck angled
  * up; the fretting hand holds a chord around the fifth fret, the picking
  * hand rests over the bridge pickup.
  *
  * Idle: a slow breath, a small nod while listening, the picking hand moving
  * (CSS, off under reduced motion). When the rig is live (MusicianScene adds
- * .is-live above), the in-ear pack's light and the clip-on tuner turn green.
+ * .is-live above), the in-ear pack's light turns green.
  *
  * Drawn in its own 960 x 600 space like the other figures (feet at y = 562)
  * and placed with a transform. Decorative.
@@ -30,102 +31,138 @@
  * PROOF OF CONCEPT ARTWORK: hand-authored SVG.
  */
 
-// Guitar frame: x along the strings (tail -48 to headstock tip 166), y
-// across (bass side negative). Nut at x 133, bridge saddles at x -10.5.
+// Guitar frame (DESIGN-15A.10): x along the strings, y across (bass side
+// negative). 5.46 units to the inch, from a 24.75" scale single-cut: body
+// 17.25" (x -48 to 46), lower bout 13", neck joining at the 16th fret, the
+// board running to the 22nd fret over the body, headstock about 6".
+const SADDLE = -10.5;
 const NUT = 133;
-const SCALE = NUT + 10.5;
+const SCALE = NUT - SADDLE;
 const fretX = (n: number) => NUT - SCALE * (1 - Math.pow(2, -n / 12));
-const FRETS = Array.from({ length: 19 }, (_, i) => fretX(i + 1));
-const INLAYS = [3, 5, 7, 9, 12, 15].map((n) => (fretX(n - 1) + fretX(n)) / 2);
-// String y at the bridge and at the nut, bass (low E) first.
-const STRINGS = [-3.6, -2.2, -0.75, 0.75, 2.2, 3.6].map((b) => ({ b, n: b * 0.86 }));
+const BOARD_END = fretX(22) - 1.5;
+// Fretboard half-width: about 2.25" at the body end, 1.69" at the nut.
+const halfW = (x: number) => 6.2 - ((x - BOARD_END) / (NUT - BOARD_END)) * 1.6;
+const FRETS = Array.from({ length: 22 }, (_, i) => fretX(i + 1));
+const INLAYS = [3, 5, 7, 9, 12, 15, 17].map((n) => (fretX(n - 1) + fretX(n)) / 2);
+// Strings: about 2" apart at the bridge, 1.36" at the nut (low E first).
+const STRINGS = [-5.2, -3.12, -1.04, 1.04, 3.12, 5.2].map((b) => ({ b, n: b * 0.7 }));
+// Tuner posts: low E, A, D on the bass side; high E, B, G on the treble side.
+const POSTS = [142, 149.5, 157];
+const postY = (i: number) => (i < 3 ? -(5.4 + i * 0.9) : 5.4 + (5 - i) * 0.9);
+const postX = (i: number) => POSTS[i < 3 ? i : 5 - i];
 
+/** A sunburst single-cut electric, drawn to proportion. Decorative. */
 function Guitar() {
   return (
     <g transform="translate(472 410) rotate(-24)">
       <defs>
-        <radialGradient id="mu-burst" cx="0.42" cy="0.55" r="0.62">
-          <stop offset="0" stopColor="#f3c06a" />
-          <stop offset="0.45" stopColor="#d4802e" />
-          <stop offset="0.8" stopColor="#7a2c12" />
+        <radialGradient id="mu-burst" cx="0.42" cy="0.56" r="0.62">
+          <stop offset="0" stopColor="#f6c773" />
+          <stop offset="0.42" stopColor="#d98a33" />
+          <stop offset="0.78" stopColor="#7c2d12" />
           <stop offset="1" stopColor="#2a0d07" />
         </radialGradient>
+        <linearGradient id="mu-chrome" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#eef2f6" />
+          <stop offset="0.5" stopColor="#9aa5b1" />
+          <stop offset="1" stopColor="#d7dee6" />
+        </linearGradient>
       </defs>
-      {/* Body: single cutaway on the treble side, binding, carved-top light. */}
+      {/* Body side (depth), then the carved, bound top. */}
       <path
-        d="M-48 0 C-48 -28 -31 -37 -13 -34 C-1 -32 6 -26 15 -27 C30 -29 42 -21 41 -9 L38 -5 L38 5 C30 7 23 11 21 16 C19 22 22 28 16 32 C6 39 -8 39 -20 37 C-39 34 -48 21 -48 0 Z"
+        d="M-48 0 C-48 -28 -31 -37 -13 -34 C-1 -32 6 -26 15 -27 C30 -29 44 -21 43 -9 L40 -6 L40 6 C31 8 24 11 22 16 C20 22 23 28 17 32 C7 39 -8 39 -20 37 C-39 34 -48 21 -48 0 Z"
+        fill="#3a1408"
+        transform="translate(1.4 2.6)"
+      />
+      <path
+        d="M-48 0 C-48 -28 -31 -37 -13 -34 C-1 -32 6 -26 15 -27 C30 -29 44 -21 43 -9 L40 -6 L40 6 C31 8 24 11 22 16 C20 22 23 28 17 32 C7 39 -8 39 -20 37 C-39 34 -48 21 -48 0 Z"
         fill="url(#mu-burst)"
         stroke="#efe2c8"
-        strokeWidth="1.3"
+        strokeWidth="1.4"
       />
-      <path d="M-40 -14 C-34 -28 -16 -31 -4 -26" stroke="#fff3dc" strokeWidth="2" fill="none" opacity="0.35" strokeLinecap="round" />
-      <path d="M-44 10 C-40 26 -24 33 -8 33" stroke="#1a0804" strokeWidth="2.4" fill="none" opacity="0.35" strokeLinecap="round" />
-      {/* Raised pickguard (treble side, by the neck pickup). */}
-      <path d="M8 7 Q18 5 28 9 Q31 17 24 24 Q12 27 6 19 Z" fill="#eadcc0" opacity="0.92" />
-      {/* Humbuckers with cream bezels and pole pieces. */}
-      {[19, -2].map((px) => (
-        <g key={px}>
-          <rect x={px - 1} y="-10" width="11" height="20" rx="1.6" fill="#efe2c8" />
-          <rect x={px} y="-9" width="9" height="18" rx="1.2" fill="#14100d" />
-          {[-6.2, -3.7, -1.2, 1.2, 3.7, 6.2].map((py) => (
-            <circle key={py} cx={px + 2.6} cy={py} r="0.75" fill="#aab4bf" />
+      {/* Carved-top light and shade. */}
+      <path d="M-41 -12 C-36 -27 -18 -31 -5 -27 C3 -24 8 -21 14 -22" stroke="#fff3dc" strokeWidth="2.2" fill="none" opacity="0.32" strokeLinecap="round" />
+      <path d="M-44 9 C-41 25 -25 33 -8 33 C3 33 12 30 15 26" stroke="#1a0804" strokeWidth="2.6" fill="none" opacity="0.32" strokeLinecap="round" />
+      {/* Raised pickguard on the treble side, from the neck pickup to the cutaway. */}
+      <path d="M8 7.5 L31 8 Q34 10.5 32 15.5 Q28 24 16 26 Q7 25.5 6 17 Z" fill="#e9dbbf" opacity="0.93" />
+      <path d="M8 7.5 L31 8" stroke="#bfae8c" strokeWidth="0.6" />
+      {/* Humbuckers in cream surrounds: bridge (x -2.4) and neck (x 22.5, just past the board). */}
+      {[-2.4, 22.5].map((cx) => (
+        <g key={cx}>
+          <rect x={cx - 5.4} y="-8.8" width="10.8" height="17.6" rx="1.6" fill="#efe2c8" />
+          <rect x={cx - 4.2} y="-7.6" width="8.4" height="15.2" rx="1.2" fill="#14100d" />
+          <path d={`M${cx} -7.6 v15.2`} stroke="#2c241d" strokeWidth="0.6" />
+          {STRINGS.map(({ b }) => (
+            <g key={b}>
+              <circle cx={cx - 2} cy={b * 1.15} r="0.62" fill="#aab4bf" />
+              <circle cx={cx + 2} cy={b * 1.15} r="0.62" fill="#7b8693" />
+            </g>
           ))}
         </g>
       ))}
-      {/* Tune-o-matic bridge and stopbar tailpiece. */}
-      <rect x="-12.2" y="-8.6" width="3.4" height="17.2" rx="1" fill="#c9d2dc" />
-      <path d="M-11.3 -6 v12" stroke="#7b8693" strokeWidth="0.5" />
-      <rect x="-22" y="-9.6" width="4.6" height="19.2" rx="2" fill="#aab4bf" />
-      <path d="M-21 -8.5 v17" stroke="#eef2f6" strokeWidth="0.7" opacity="0.7" />
-      {/* Top-hat knobs and the selector switch. */}
+      {/* Tune-o-matic bridge on its posts, stopbar tailpiece behind it. */}
+      <circle cx="-10.5" cy="-7.4" r="1.2" fill="#c9d2dc" />
+      <circle cx="-10.5" cy="7.4" r="1.2" fill="#c9d2dc" />
+      <rect x="-12" y="-6.6" width="3" height="13.2" rx="0.8" fill="url(#mu-chrome)" />
+      {STRINGS.map(({ b }) => (
+        <rect key={b} x="-11.3" y={b - 0.7} width="1.6" height="1.4" fill="#7b8693" />
+      ))}
+      <circle cx="-19" cy="-8.6" r="1.5" fill="#c9d2dc" />
+      <circle cx="-19" cy="8.6" r="1.5" fill="#c9d2dc" />
+      <rect x="-21.2" y="-7.2" width="4.4" height="14.4" rx="2" fill="url(#mu-chrome)" />
+      {/* Volume and tone knobs (gold top hats), selector switch, jack. */}
       {[
-        [-29, 14],
-        [-18, 18],
-        [-31, 25],
-        [-20, 29],
+        [-27, 13],
+        [-17, 17.5],
+        [-29.5, 24],
+        [-19.5, 28.5],
       ].map(([kx, ky]) => (
         <g key={`${kx}-${ky}`}>
-          <circle cx={kx} cy={ky} r="3.3" fill="#c79a3c" />
-          <circle cx={kx} cy={ky} r="2" fill="#e6c46a" />
+          <circle cx={kx} cy={ky} r="3.4" fill="#b8892f" />
+          <circle cx={kx} cy={ky} r="2.2" fill="#e6c46a" />
+          <circle cx={kx - 0.6} cy={ky - 0.7} r="0.7" fill="#fff3c8" opacity="0.8" />
         </g>
       ))}
-      <circle cx="22" cy="-21" r="2.2" fill="#efe2c8" />
-      <path d="M22 -21 l2.4 -4" stroke="#c9d2dc" strokeWidth="1" strokeLinecap="round" />
+      <circle cx="22" cy="-21" r="2.8" fill="#efe2c8" />
+      <circle cx="22" cy="-21" r="1.1" fill="#c9d2dc" />
+      <path d="M22 -21 l2.6 -4.2" stroke="#d7dee6" strokeWidth="1.1" strokeLinecap="round" />
+      <circle cx="-22" cy="36.4" r="1.6" fill="#c9d2dc" />
       <circle cx="-48" cy="0" r="1.6" fill="#c9d2dc" />
       <circle cx="40" cy="-17" r="1.5" fill="#c9d2dc" />
 
-      {/* Bound rosewood neck, frets on a real scale, trapezoid inlays. */}
-      <path d={`M37 -4.8 L${NUT} -4.2 L${NUT} 4.2 L37 4.8 Z`} fill="#2e1c12" />
-      <path d={`M37 -4.8 L${NUT} -4.2 M37 4.8 L${NUT} 4.2`} stroke="#efe2c8" strokeWidth="0.7" />
-      {FRETS.filter((fx) => fx > 38).map((fx) => (
-        <path key={fx} d={`M${fx} -4.4 v8.8`} stroke="#d7dee6" strokeWidth="0.55" />
+      {/* Neck and bound rosewood board, frets on the 24.75" scale, trapezoid inlays. */}
+      <path d={`M${BOARD_END} ${-halfW(BOARD_END)} L${NUT} ${-halfW(NUT)} L${NUT} ${halfW(NUT)} L${BOARD_END} ${halfW(BOARD_END)} Z`} fill="#2b1a10" />
+      <path d={`M${BOARD_END} ${-halfW(BOARD_END)} L${NUT} ${-halfW(NUT)} M${BOARD_END} ${halfW(BOARD_END)} L${NUT} ${halfW(NUT)}`} stroke="#efe2c8" strokeWidth="0.75" />
+      <path d={`M${BOARD_END + 30} ${-halfW(BOARD_END + 30) + 0.4} L${NUT} ${-halfW(NUT) + 0.4}`} stroke="#5a3a26" strokeWidth="0.8" opacity="0.6" />
+      {FRETS.map((fx) => (
+        <path key={fx} d={`M${fx} ${-halfW(fx) + 0.3} V${halfW(fx) - 0.3}`} stroke="#d7dee6" strokeWidth="0.6" />
       ))}
-      {INLAYS.map((ix) => (
-        <path key={ix} d={`M${ix - 1.8} -2.6 L${ix + 1.8} -3 L${ix + 1.8} 3 L${ix - 1.8} 2.6 Z`} fill="#efe6d2" opacity="0.9" />
-      ))}
-      <rect x={NUT - 0.6} y="-4.4" width="1.6" height="8.8" fill="#efe2c8" />
-      {/* Open-book headstock, truss-rod cover, keystone tuners. */}
-      <path d={`M${NUT + 1} -5 L158 -8.6 Q163 -9.2 164.5 -6 L166 -2 L164 0 L166 2 L164.5 6 Q163 9.2 158 8.6 L${NUT + 1} 5 Z`} fill="#15110e" />
-      <path d={`M${NUT + 3} -2 L${NUT + 9} -3.2 L${NUT + 9} 3.2 L${NUT + 3} 2 Z`} fill="#e9dcc2" />
-      {[143, 150.5, 158].map((tx, i) => (
-        <g key={tx}>
-          <circle cx={tx} cy={-5.2 + i * -0.5} r="0.9" fill="#c9d2dc" />
-          <circle cx={tx} cy={5.2 + i * 0.5} r="0.9" fill="#c9d2dc" />
-          <rect x={tx - 2} y={-13.5 - i * 0.5} width="4" height="4.2" rx="1.6" fill="#efe2c8" />
-          <rect x={tx - 2} y={9.3 + i * 0.5} width="4" height="4.2" rx="1.6" fill="#efe2c8" />
-          <path d={`M${tx} ${-9.4 - i * 0.5} v3 M${tx} ${9.4 + i * 0.5} v-3`} stroke="#aab4bf" strokeWidth="1" />
-        </g>
-      ))}
-      {/* Strings: stopbar, over the saddles, to the nut, then to the posts. */}
-      {STRINGS.map(({ b, n }, i) => {
-        const post = [143, 150.5, 158][i < 3 ? 2 - i : i - 3];
-        const py = i < 3 ? -5.2 - (2 - i) * 0.5 : 5.2 + (i - 3) * 0.5;
-        return <path key={b} d={`M-19.5 ${b * 1.05} L-10.5 ${b} L${NUT} ${n} L${post} ${py}`} stroke="#eef2f6" strokeWidth={i < 3 ? 0.55 : 0.38} fill="none" opacity="0.85" />;
+      {INLAYS.map((ix) => {
+        const h = halfW(ix) - 1.6;
+        return <path key={ix} d={`M${ix - 2} ${-h + 0.5} L${ix + 2} ${-h} L${ix + 2} ${h} L${ix - 2} ${h - 0.5} Z`} fill="#efe6d2" opacity="0.92" />;
       })}
-      {/* Clip-on tuner on the bass edge of the headstock: grey, green once live. */}
-      <path d="M150 -9 v-4" stroke="#2a2f37" strokeWidth="2" />
-      <rect x="144" y="-24" width="13" height="11" rx="2" fill="#0b0e13" />
-      <rect className="mu-tuner" x="146" y="-22" width="9" height="7" rx="1" fill="#2a313b" />
+      <rect x={NUT - 0.4} y={-halfW(NUT)} width="1.8" height={halfW(NUT) * 2} fill="#f3ead6" />
+      {/* Open-book headstock, bell truss-rod cover, tuner posts and tulip buttons. */}
+      <path d={`M${NUT + 1.4} -4.7 L157 -9.8 Q161.5 -10.4 163.4 -8 L166.8 -3 L164.6 0 L166.8 3 L163.4 8 Q161.5 10.4 157 9.8 L${NUT + 1.4} 4.7 Z`} fill="#15110e" />
+      <path d={`M${NUT + 1.4} -4.7 L157 -9.8`} stroke="#3a322c" strokeWidth="0.6" />
+      <path d={`M${NUT + 2.6} -2.2 Q${NUT + 6} -3.5 ${NUT + 9.5} -2.7 L${NUT + 9.5} 2.7 Q${NUT + 6} 3.5 ${NUT + 2.6} 2.2 Z`} fill="#ece2cc" />
+      {[0, 1, 2, 3, 4, 5].map((i) => {
+        const px = postX(i);
+        const py = postY(i);
+        const edge = i < 3 ? -(8.6 + POSTS.indexOf(px) * 0.55) : 8.6 + POSTS.indexOf(px) * 0.55;
+        const out = i < 3 ? -4.4 : 4.4;
+        return (
+          <g key={i}>
+            <path d={`M${px} ${edge} v${out * 0.5}`} stroke="#aab4bf" strokeWidth="1" />
+            <ellipse cx={px} cy={edge + out} rx="1.7" ry="2.4" fill="#efe6d2" />
+            <circle cx={px} cy={py} r="1.15" fill="#d7dee6" />
+          </g>
+        );
+      })}
+      {/* Strings: stopbar, over the saddles and the nut, to the posts. */}
+      {STRINGS.map(({ b, n }, i) => (
+        <path key={b} d={`M-19 ${b * 1.05} L${SADDLE} ${b} L${NUT} ${n} L${postX(i)} ${postY(i)}`} stroke="#eef2f6" strokeWidth={i < 3 ? 0.55 : 0.4} fill="none" opacity="0.88" />
+      ))}
     </g>
   );
 }
@@ -252,7 +289,7 @@ export default function MusicianFigure({ x, y, scale }: { x: number; y: number; 
         <Guitar />
 
         {/* Guitar cable from the output jack down to the pedalboard. */}
-        <path d="M462 452 Q450 482 456 512 Q463 548 484 566" stroke="#0b0d10" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+        <path d="M466 452 Q452 482 457 512 Q463 548 484 566" stroke="#0b0d10" strokeWidth="2.2" fill="none" strokeLinecap="round" />
 
         {/* Fretting arm: sleeve to the wrist, the hand holding a chord. */}
         <path d="M552 338 L572 332 L575 362 L558 368 Z" fill="url(#mu-jacket)" />
@@ -262,13 +299,13 @@ export default function MusicianFigure({ x, y, scale }: { x: number; y: number; 
         <path d="M551 376 l9 -3 M552 381 l9 -3" stroke="#9a6a54" strokeWidth="1" strokeLinecap="round" />
 
         {/* Picking arm over the body; the hand over the bridge pickup. */}
-        <path d="M431 334 L452 340 L462 392 L446 398 Z" fill="url(#mu-jacket)" />
-        <path d="M446 394 L462 388 L465 396 L449 402 Z" fill="#17191d" />
+        <path d="M431 334 L452 340 L472 390 L456 397 Z" fill="url(#mu-jacket)" />
+        <path d="M456 393 L472 387 L475 395 L459 401 Z" fill="#17191d" />
         <g className="mu-strum">
-          <path d="M449 400 Q444 412 452 419 Q462 424 470 416 Q474 406 466 399 Z" fill="url(#mu-skin)" />
-          <path d="M455 410 l9 -2 M456 415 l8 -2" stroke="#9a6a54" strokeWidth="1" strokeLinecap="round" />
-          <path d="M467 416 l4 3 l-4 2 z" fill="#efe2c8" />
-          <circle cx="463" cy="406" r="1.1" fill="#c9d2dc" />
+          <path d="M459 398 Q454 410 462 417 Q472 422 480 414 Q484 404 476 397 Z" fill="url(#mu-skin)" />
+          <path d="M465 408 l9 -2 M466 413 l8 -2" stroke="#9a6a54" strokeWidth="1" strokeLinecap="round" />
+          <path d="M477 414 l4 3 l-4 2 z" fill="#efe2c8" />
+          <circle cx="473" cy="404" r="1.1" fill="#c9d2dc" />
         </g>
       </g>
     </g>

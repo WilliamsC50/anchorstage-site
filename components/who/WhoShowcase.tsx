@@ -208,7 +208,16 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
             </p>
             {role.ready ? (
               <>
-                <h2 className="wv-headline">{role.headline}</h2>
+                {/* Each sentence wraps as a unit, so lines break between
+                    sentences rather than mid-phrase (DESIGN-15A.10). */}
+                <h2 className="wv-headline">
+                  {(role.headline ?? "").split(/(?<=[.!?])\s+/).map((sentence, k) => (
+                    <span key={k}>
+                      {k > 0 && " "}
+                      <span className="wv-headline-part">{sentence}</span>
+                    </span>
+                  ))}
+                </h2>
                 <p className="wv-recognition">{role.recognition}</p>
                 <p className="wv-value">
                   <span className="wv-value-label">With AnchorStage Ops</span>

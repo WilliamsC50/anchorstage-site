@@ -9,9 +9,9 @@
  *                  spot that comes up on the guitarist when the rig is live.
  * GuitarTech       stage left: a guitar stand with two spare guitars (a blue
  *                  offset electric and a dreadnought acoustic), the guitar
- *                  tech kneeling by an open accessory case with a string
- *                  winder; once the rig is live the tech raises an open hand
- *                  ("good to go").
+ *                  tech kneeling at an open accessory case, reaching in;
+ *                  once the rig is live the tech closes the case and looks
+ *                  up toward the guitarist (DESIGN-15A.10; no hand signal).
  * GuitarAmp        a combo amp with a mic on a short stand at its grille;
  *                  the pilot light and the tubes glow when it is live.
  * VocalMic         the vocal mic stand, beside the guitarist.
@@ -78,81 +78,130 @@ export function TouringLighting() {
   );
 }
 
-/** A blue offset electric, standing (spare). */
+/** A blue offset electric, standing (spare; DESIGN-15A.10 proportions:
+ *  25.5" scale with the nut at y 690 and saddles at y 768, neck joining at
+ *  the 17th fret, offset waist, longer bass horn). */
+const E_NUT = 690;
+const E_SCALE = 78;
+const eFret = (n: number) => E_NUT + E_SCALE * (1 - Math.pow(2, -n / 12));
+
 function SpareElectric() {
   return (
     <g>
-      {/* Rosewood board on a maple neck, frets, dots. */}
-      <rect x="437.6" y="690" width="4.8" height="48" fill="#d2a76a" />
-      <rect x="438.3" y="690" width="3.4" height="48" fill="#2e1c12" />
-      {[694, 699, 704, 708.5, 713, 717, 721, 725, 728.5, 732].map((fy) => (
-        <path key={fy} d={`M438.3 ${fy} h3.4`} stroke="#c9d2dc" strokeWidth="0.45" />
-      ))}
-      {[701.5, 710.8, 719, 730].map((dy) => (
-        <circle key={dy} cx="440" cy={dy} r="0.65" fill="#efe6d2" />
-      ))}
-      {/* Offset headstock with six tuners in a line. */}
-      <path d="M437.6 690 L437 670 Q437 664 442 664 Q447 665 446.5 670 Q444 676 443 682 L442.4 690 Z" fill="#3f6f9e" />
-      {[668, 671.5, 675, 678.5, 682, 685.5].map((ty) => (
-        <ellipse key={ty} cx="434.8" cy={ty} rx="1.6" ry="1.1" fill="#c9d2dc" />
-      ))}
-      {/* Offset body, guard, two soapbars, bridge, vibrato, knobs. */}
+      <defs>
+        <linearGradient id="mu-lpb" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#2c5680" />
+          <stop offset="0.5" stopColor="#4a7fb2" />
+          <stop offset="1" stopColor="#2f5f8c" />
+        </linearGradient>
+      </defs>
+      {/* Offset body: longer bass horn, offset waist. */}
       <path
-        d="M424 742 Q428 733 438 736 Q446 739 452 733 Q461 730 462 742 Q463 750 457 756 Q464 764 461 774 Q456 785 440 784 Q423 784 420 773 Q418 763 424 756 Q419 750 424 742 Z"
-        fill="#3f6f9e"
+        d="M437 741 Q433 729 425 731 C418 733 417 745 421 750 C425 755 418 762 418.5 770 C419 782 430 786.5 441 786 C455 785.5 463.5 777 462.5 768 C461.5 760 455 758 457 752 C459 746.5 460.5 739 455.5 736.5 Q450 734.5 443 741 Z"
+        fill="url(#mu-lpb)"
         stroke="#9fc0de"
         strokeWidth="0.7"
       />
-      <path d="M426 742 Q432 737 438 739" stroke="#cfe2f2" strokeWidth="1.4" fill="none" opacity="0.5" strokeLinecap="round" />
-      <path d="M427 748 Q440 742 453 747 L456 768 Q448 776 434 774 Q426 770 427 760 Z" fill="#efe9df" opacity="0.92" />
-      <rect x="433" y="749" width="14" height="4.2" rx="1.6" fill="#e8e0cc" stroke="#bdb39c" strokeWidth="0.4" />
-      <rect x="433" y="758" width="14" height="4.2" rx="1.6" fill="#e8e0cc" stroke="#bdb39c" strokeWidth="0.4" />
-      <rect x="434.5" y="767" width="11" height="1.8" rx="0.6" fill="#c9d2dc" />
-      <rect x="435.5" y="772" width="9" height="3.4" rx="1" fill="#aab4bf" />
-      <path d="M445 773 Q452 770 455 764" stroke="#c9d2dc" strokeWidth="0.8" fill="none" />
-      <circle cx="452.5" cy="773" r="1.6" fill="#d7dee6" />
-      <circle cx="456" cy="767.5" r="1.6" fill="#d7dee6" />
-      <path d="M438.8 690 V772 M440 690 V772 M441.2 690 V772" stroke="#eef2f6" strokeWidth="0.3" opacity="0.7" />
+      <path d="M423 738 Q425 733 429 733" stroke="#d5e6f4" strokeWidth="1.3" fill="none" opacity="0.6" strokeLinecap="round" />
+      {/* Tortoise guard, two soapbar pickups, floating bridge, vibrato. */}
+      <path d="M427 743 Q432 738 436.5 742 L443.5 742 Q449 737 455 739.5 Q457 746 454.5 752 Q452.5 760 456 768 Q452 777.5 441 777.5 Q430 777.5 427 769 Q424.5 760 427 751 Z" fill="#4a2412" />
+      <path d="M431 750 l2 1 M447 765 l2 -1 M436 771 l1.5 1 M450 746 l1.5 1" stroke="#8a4a22" strokeWidth="1.2" opacity="0.7" />
+      <rect x="432" y="746.5" width="16" height="4.8" rx="2" fill="#ece4d0" />
+      <rect x="432" y="756.5" width="16" height="4.8" rx="2" fill="#ece4d0" />
+      <rect x="434.6" y="767.2" width="10.8" height="1.8" rx="0.6" fill="#d7dee6" />
+      <rect x="435" y="771.6" width="10" height="4" rx="1.2" fill="#aab4bf" />
+      <path d="M445 773.6 Q452 772 456 766" stroke="#d7dee6" strokeWidth="0.9" fill="none" strokeLinecap="round" />
+      <circle cx="454.4" cy="773.6" r="1.7" fill="#e8edf3" />
+      <circle cx="451.8" cy="779.2" r="1.7" fill="#e8edf3" />
+      <rect x="424.2" y="741" width="3" height="4" rx="0.8" fill="#e8edf3" />
+      {/* Maple neck, rosewood board, frets closing up toward the body, dots. */}
+      <rect x="437.4" y={E_NUT} width="5.2" height="56" fill="#d2a76a" />
+      <rect x="438.1" y={E_NUT} width="3.8" height="56" fill="#2e1c12" />
+      {Array.from({ length: 21 }, (_, i) => eFret(i + 1)).map((fy) => (
+        <path key={fy} d={`M438.1 ${fy} h3.8`} stroke="#c9d2dc" strokeWidth="0.45" />
+      ))}
+      {[3, 5, 7, 9, 15, 17].map((n) => (
+        <circle key={n} cx="440" cy={(eFret(n - 1) + eFret(n)) / 2} r="0.65" fill="#efe6d2" />
+      ))}
+      {[438.9, 441.1].map((dx) => (
+        <circle key={dx} cx={dx} cy={(eFret(11) + eFret(12)) / 2} r="0.6" fill="#efe6d2" />
+      ))}
+      <rect x="437.4" y={E_NUT - 0.8} width="5.2" height="1.4" fill="#efe6d2" />
+      {/* Offset headstock: six tuners in a line on the bass side. */}
+      <path d="M437.4 689.2 L436.6 668 Q436.8 662.5 441.6 662 Q447.6 662 447.4 667.5 Q446.8 673 444.2 678 Q442.8 682 442.6 689.2 Z" fill="#3f6f9e" />
+      {[665.5, 669, 672.5, 676, 679.5, 683].map((ty) => (
+        <g key={ty}>
+          <circle cx="439" cy={ty} r="0.9" fill="#d7dee6" />
+          <path d={`M437 ${ty} h-1.4`} stroke="#aab4bf" strokeWidth="0.8" />
+          <ellipse cx="434.4" cy={ty} rx="1.8" ry="1.2" fill="#c9d2dc" />
+        </g>
+      ))}
+      {/* Strings from the vibrato over the bridge to the nut. */}
+      {[438.6, 439.4, 440.2, 441, 441.8].map((sx) => (
+        <path key={sx} d={`M${sx} 772 V${E_NUT}`} stroke="#eef2f6" strokeWidth="0.3" opacity="0.75" />
+      ))}
     </g>
   );
 }
 
-/** A dreadnought acoustic, standing (spare). */
+/** A dreadnought acoustic, standing (spare; DESIGN-15A.10 proportions:
+ *  25.4" scale with the nut at y 682 and the saddle at y 764, 14 frets
+ *  clear of the body, square shoulders, a shallow waist, the bridge in the
+ *  lower bout). */
+const A_NUT = 682;
+const A_SCALE = 82;
+const aFret = (n: number) => A_NUT + A_SCALE * (1 - Math.pow(2, -n / 12));
+
 function SpareAcoustic() {
   return (
     <g>
-      <rect x="490" y="690" width="4.4" height="40" fill="#2e1c12" />
-      {[694, 698.5, 703, 707, 711, 714.5, 718, 721.5, 724.5, 727.5].map((fy) => (
-        <path key={fy} d={`M490 ${fy} h4.4`} stroke="#c9d2dc" strokeWidth="0.45" />
-      ))}
-      {[700.8, 709, 716.2, 723].map((dy) => (
-        <circle key={dy} cx="492.2" cy={dy} r="0.65" fill="#efe6d2" />
-      ))}
-      {/* Headstock with three tuners a side. */}
-      <path d="M489.6 690 L488.6 671 Q492.2 667 495.8 671 L494.8 690 Z" fill="#2a1a10" />
-      {[674, 679, 684].map((ty) => (
-        <g key={ty}>
-          <ellipse cx="486.4" cy={ty} rx="1.7" ry="1.1" fill="#c9d2dc" />
-          <ellipse cx="498" cy={ty} rx="1.7" ry="1.1" fill="#c9d2dc" />
-        </g>
-      ))}
-      {/* Dreadnought body: square shoulders, wide lower bout, binding. */}
+      <defs>
+        <linearGradient id="mu-spruce" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#c9984f" />
+          <stop offset="0.5" stopColor="#e6c58c" />
+          <stop offset="1" stopColor="#c99a58" />
+        </linearGradient>
+      </defs>
+      {/* Dreadnought body: square shoulders, shallow waist, binding. */}
       <path
-        d="M479 734 Q478 727 492.2 727 Q506.4 727 505.4 734 Q506 745 502 751 Q513 758 514 769 Q514 785 492.2 785 Q470.4 785 470.4 769 Q471.4 758 482.4 751 Q478.4 745 479 734 Z"
-        fill="#d9b37a"
-        stroke="#3a2418"
+        d="M480 728 Q492.2 725.5 504.4 728 Q509 730 509 738 Q509 746 507 751 Q514 757 515 768 Q515 785.5 492.2 785.5 Q469.4 785.5 469.4 768 Q470.4 757 477.4 751 Q475.4 746 475.4 738 Q475.4 730 480 728 Z"
+        fill="url(#mu-spruce)"
+        stroke="#f3ead6"
         strokeWidth="0.9"
       />
-      <path d="M481 736 Q482 731 490 730" stroke="#f3dcae" strokeWidth="1.4" fill="none" opacity="0.6" strokeLinecap="round" />
-      <path d="M472 770 Q474 782 488 784" stroke="#9a7240" strokeWidth="2" fill="none" opacity="0.5" />
-      <circle cx="492.2" cy="745" r="6.8" fill="none" stroke="#8a6a3e" strokeWidth="1" />
-      <circle cx="492.2" cy="745" r="5.2" fill="#1c120b" />
-      <path d="M497.5 748 Q504 750 503 758 Q498.5 760 495.5 753 Z" fill="#4a2a18" />
-      <rect x="485.2" y="769" width="14" height="3.4" rx="1.2" fill="#2a1a10" />
-      {[487.5, 489.8, 492.1, 494.4, 496.7].map((bx) => (
-        <circle key={bx} cx={bx} cy="770.7" r="0.5" fill="#efe2c8" />
+      <path d="M471 771 Q473 783 487 785" stroke="#8a6230" strokeWidth="2" fill="none" opacity="0.45" />
+      {/* Rosette, soundhole, teardrop guard, bridge with saddle and pins. */}
+      <circle cx="492.2" cy="740" r="7.4" fill="none" stroke="#7a5428" strokeWidth="1.1" />
+      <circle cx="492.2" cy="740" r="5.9" fill="#1c120b" />
+      <path d="M498 742.5 Q505.4 744 506 752 Q503.4 757.4 498.6 753.4 Q496.6 748 498 742.5 Z" fill="#3a1e0e" />
+      <rect x="484" y="762.4" width="16.4" height="4.2" rx="1.6" fill="#2a1a10" />
+      <path d="M486.4 763.4 h11.6" stroke="#f3ead6" strokeWidth="0.8" />
+      {[487, 489, 491.2, 493.2, 495.4, 497.4].map((px) => (
+        <circle key={px} cx={px} cy="765.4" r="0.5" fill="#efe2c8" />
       ))}
-      <path d="M491 690 V770 M492.2 690 V770 M493.4 690 V770" stroke="#eef2f6" strokeWidth="0.3" opacity="0.7" />
+      {/* Neck and board, 14 frets to the body, dots. */}
+      <rect x="489.8" y={A_NUT} width="4.8" height="52" fill="#2e1c12" />
+      {Array.from({ length: 19 }, (_, i) => aFret(i + 1)).map((fy) => (
+        <path key={fy} d={`M489.8 ${fy} h4.8`} stroke="#c9d2dc" strokeWidth="0.45" />
+      ))}
+      {[3, 5, 7, 9, 12, 15].map((n) => (
+        <circle key={n} cx="492.2" cy={(aFret(n - 1) + aFret(n)) / 2} r="0.65" fill="#efe6d2" />
+      ))}
+      <rect x="489.8" y={A_NUT - 0.8} width="4.8" height="1.4" fill="#efe6d2" />
+      {/* Headstock: three tuners a side. */}
+      <path d={`M489.6 ${A_NUT - 0.6} L487.4 666 Q492.2 661.6 497 666 L494.8 ${A_NUT - 0.6} Z`} fill="#2a1a10" />
+      {[668.5, 673, 677.5].map((ty) => (
+        <g key={ty}>
+          <circle cx="490.2" cy={ty} r="0.9" fill="#d7dee6" />
+          <circle cx="494.2" cy={ty} r="0.9" fill="#d7dee6" />
+          <ellipse cx="485.6" cy={ty} rx="1.8" ry="1.2" fill="#c9d2dc" />
+          <ellipse cx="498.8" cy={ty} rx="1.8" ry="1.2" fill="#c9d2dc" />
+        </g>
+      ))}
+      {/* Strings from the bridge pins over the soundhole to the nut. */}
+      {[490.6, 491.3, 492, 492.7, 493.4, 494.1].map((sx) => (
+        <path key={sx} d={`M${sx} 764 V${A_NUT}`} stroke="#eef2f6" strokeWidth="0.3" opacity="0.75" />
+      ))}
     </g>
   );
 }
@@ -168,15 +217,27 @@ export function GuitarTech() {
       <SpareElectric />
       <SpareAcoustic />
 
-      {/* Open accessory case: foam, string packs, a winder. */}
-      <path d="M596 758 L644 758 L648 744 L600 744 Z" fill="#20252c" />
+      {/* Accessory case: open with string packs and a winder (standby), or
+          closed once the rig is live. */}
+      <g className="mu-case-open">
+        <path d="M596 758 L644 758 L648 744 L600 744 Z" fill="#20252c" />
+        <path d="M598 756 L642 756 L645 747 L601 747 Z" fill="#2a2f37" />
+      </g>
       <rect x="594" y="770" width="54" height="22" rx="3" fill="#15181d" />
       <rect x="598" y="764" width="46" height="9" fill="#2a2f37" />
-      {[602, 612, 622].map((sx, i) => (
-        <rect key={sx} x={sx} y="762" width="8" height="6" rx="1" fill={["#ff7a1a", "#4ea8d1", "#e8edf3"][i]} />
-      ))}
-      <path d="M632 764 l8 -4" stroke="#c9d2dc" strokeWidth="2" strokeLinecap="round" />
-
+      <g className="mu-case-open">
+        {[602, 612, 622].map((sx, i) => (
+          <rect key={sx} x={sx} y="762" width="8" height="6" rx="1" fill={["#ff7a1a", "#4ea8d1", "#e8edf3"][i]} />
+        ))}
+        <path d="M632 764 l8 -4" stroke="#c9d2dc" strokeWidth="2" strokeLinecap="round" />
+      </g>
+      <g className="mu-case-closed">
+        <path d="M592 760 L650 760 Q652 760 652 762.5 L652 772 L590 772 L590 762.5 Q590 760 592 760 Z" fill="#23282f" />
+        <path d="M592 760.6 h58" stroke="#4a525d" strokeWidth="0.9" />
+        <rect x="598" y="768" width="5" height="5" rx="1" fill="#8a96a3" />
+        <rect x="639" y="768" width="5" height="5" rx="1" fill="#8a96a3" />
+        <path d="M613 760 q8 -6 16 0" stroke="#3a3f47" strokeWidth="2.2" fill="none" />
+      </g>
       {/* The tech, kneeling: one knee up, one down; black tee and work pants. */}
       <g strokeLinecap="round" strokeLinejoin="round" fill="none">
         <path d="M572 742 L578 786" stroke="#1f232a" strokeWidth="11" />
@@ -190,27 +251,20 @@ export function GuitarTech() {
       {/* Resting arm on the raised knee. */}
       <path d="M553 704 L545 730 L550 752" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
       <circle cx="550" cy="754" r="3.4" fill="#c99a7a" />
-      {/* Head: short dark bob, turned toward the guitarist. */}
+      {/* Head: short dark bob, turned toward the guitarist; looks up at him
+          once the rig is live. */}
       <rect x="564" y="686" width="8" height="10" fill="#b8866a" />
-      <ellipse cx="568" cy="679" rx="10" ry="12" fill="#c99a7a" />
-      <path d="M557 684 Q554 664 568 663 Q583 664 580 684 L578 686 Q578 672 569 671 Q561 672 559 686 Z" fill="#1a1410" />
-      <circle cx="571" cy="680" r="1.1" fill="#1a110c" />
-      <circle cx="577" cy="680" r="1.1" fill="#1a110c" />
-      <path d="M570 687 Q573.5 689 577 687" stroke="#6b3a2a" strokeWidth="1" fill="none" strokeLinecap="round" />
-      {/* Working arm: a string winder in hand; once live, a raised open
-          hand toward the guitarist ("good to go"). */}
-      <g className="mu-ack-down">
-        <path d="M583 704 L594 728 L590 752" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="590" cy="754" r="3.4" fill="#c99a7a" />
-        <path d="M592 756 l7 3" stroke="#c9d2dc" strokeWidth="1.8" strokeLinecap="round" />
+      <g className="mu-tech-head">
+        <ellipse cx="568" cy="679" rx="10" ry="12" fill="#c99a7a" />
+        <path d="M557 684 Q554 664 568 663 Q583 664 580 684 L578 686 Q578 672 569 671 Q561 672 559 686 Z" fill="#1a1410" />
+        <circle cx="571" cy="680" r="1.1" fill="#1a110c" />
+        <circle cx="577" cy="680" r="1.1" fill="#1a110c" />
+        <path d="M570 687 Q573.5 689 577 687" stroke="#6b3a2a" strokeWidth="1" fill="none" strokeLinecap="round" />
       </g>
-      <g className="mu-ack-up">
-        <path d="M583 704 L602 716 L607 694" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        {/* Open palm facing out: four fingers together, thumb out. */}
-        <path d="M601.5 693 L601 681 Q601 677.5 603.6 677.5 L611.4 677.5 Q614 677.5 614 681 L613.5 693 Q613 697 607.5 697 Q602 697 601.5 693 Z" fill="#c99a7a" />
-        <path d="M604.6 678 V685 M607.6 677.6 V685 M610.6 678 V685" stroke="#8e6248" strokeWidth="0.7" />
-        <path d="M601.6 688 Q597 685 596.4 681.4 Q596.4 679.6 598.4 680.2 Q600.6 682.6 602 685" fill="#c99a7a" stroke="#8e6248" strokeWidth="0.5" />
-      </g>
+      {/* Working arm: reaching into the case; once the rig is live the lid
+          is closed under the same hand. */}
+      <path d="M583 704 L598 724 L608 756" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="609" cy="758.5" r="3.6" fill="#c99a7a" />
     </g>
   );
 }

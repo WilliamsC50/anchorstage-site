@@ -22,11 +22,12 @@ import { GuitarAmp, GuitarTech, Pedalboard, TouringLighting, VocalMic, WedgeAndS
  * ONE INTERACTIVE ELEMENT: the pedalboard. It is a real control (role
  * button, aria-pressed; Enter or Space, click, or tap) that takes the rig
  * live for soundcheck or back to standby (repeatable). Live: the amp's
- * pilot light and tubes glow, the tuner and two pedal LEDs light, the
- * clip-on tuner and in-ear pack show green, a warm spot comes up on the
- * guitarist, and the guitar tech raises an open hand ("good to go"). Visual demonstration
- * only: no sound plays, nothing is saved or sent; the accessible name says
- * so, and a polite live region announces the change.
+ * pilot light and tubes glow, the tuner pedal and two pedal LEDs light,
+ * the in-ear pack shows green, a warm spot comes up on the guitarist, and
+ * the guitar tech closes the accessory case and looks up at him (no hand
+ * signal; DESIGN-15A.10). Visual demonstration only: no sound plays,
+ * nothing is saved or sent; the accessible name says so, and a polite live
+ * region announces the change.
  *
  * Styling and motion: app/(site)/who-its-for/who.css (.mu-*), off under
  * reduced motion.
