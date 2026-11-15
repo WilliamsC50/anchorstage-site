@@ -1,25 +1,25 @@
-import Image from "next/image";
 import ContactCta from "@/components/ContactCta";
-import { founderHeadshot } from "@/lib/images";
+import { FACEBOOK_URL } from "@/lib/constants";
 
 /**
- * About, scene 3: let's talk (DESIGN-16A.3). The page's closing, replacing
- * the shared "Join free" section: About ends with a conversation, not a
- * registration pitch, so there is no Join Free or Create Your Organization
- * action here.
+ * About, scene 3: let's talk (DESIGN-16A.3; polished in DESIGN-16A.4). The
+ * page's closing, replacing the shared "Join free" section: About ends with
+ * a conversation, not a registration pitch, so there is no Join Free or
+ * Create Your Organization action here.
  *
- * The section invites contact; the shared Contact Us popup
- * (components/ContactCta.tsx) holds the actual contact options (the company
- * email with its mailto link, the contact name, the Facebook page). The
- * button here opens that popup; it is not a mailto link. It is styled as the
- * lit orange primary of the pre-footers.
+ * Two actions:
+ *   Contact Us  the lit orange primary; opens the shared Contact Us popup
+ *               (components/ContactCta.tsx), which holds the contact
+ *               details: the company email with its mailto link, the
+ *               contact name, and the Facebook page. Not a mailto link.
+ *   Facebook    the white edge-lit secondary; the verified AnchorStage Ops
+ *               Facebook page (lib/constants FACEBOOK_URL, the same link the
+ *               popup uses), in a new tab.
  *
  * Visual treatment: the white pre-footer used by Platform, Network, and Who
- * It's For (stage edge, rising light), reproduced in about.css under
- * .about-contact because those styles load only on their pages, made more
- * personal with a signature: a small crop of the founder's portrait (the
- * original file, not modified) and his name under the first-person copy.
- * The full title is not repeated here; it appears once, in scene 2.
+ * It's For (stage edge, rising light, primary and secondary buttons),
+ * reproduced in about.css under .about-contact because those styles load
+ * only on their pages.
  *
  * id="contact" is the stable target of the footer's Contact Us link.
  */
@@ -39,15 +39,15 @@ export default function AboutContact() {
           hear it.
         </p>
 
-        <div className="ac-signature">
-          <span className="ac-avatar">
-            <Image src={founderHeadshot.src} alt="" fill sizes="64px" className="ac-avatar-img" />
-          </span>
-          <span className="ac-sig-name">Cody Williams</span>
-        </div>
-
         <div className="ac-actions">
           <ContactCta triggerClassName="ac-primary" />
+          <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" className="ac-secondary">
+            Facebook
+            <svg viewBox="0 0 24 24" aria-hidden="true" className="ac-ext">
+              <path d="M7 17L17 7M8 7h9v9" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="sr-only"> (AnchorStage Ops on Facebook, opens in a new tab)</span>
+          </a>
         </div>
       </div>
     </section>
