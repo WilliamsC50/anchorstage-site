@@ -39,7 +39,7 @@ const Org = ({ name, mono, tone }: { name: string; mono: string; tone: string })
         <span style={{ width: "62%" }} />
         <span style={{ width: "70%" }} />
       </span>
-      <p className="nc-private-note">Stays with {name === "Your Organization" ? "your organization" : "Northstar"}</p>
+      <p className="nc-private-note">Visible only to {name === "Your Organization" ? "Your Organization" : "Northstar"}</p>
     </div>
   </div>
 );
@@ -64,7 +64,7 @@ export default function NetworkCollaboration() {
         <figure
           className="nc-stage"
           role="img"
-          aria-label="Illustration: Your Organization invites Northstar Production to Event A. Northstar accepts. Only Event A's details and messages are shared; each organization's own records stay private."
+          aria-label="Illustration: Your Organization invites Northstar Production to Event A, and Northstar accepts. By default only Event A's details and messages are shared; any additional event access is granted by the inviting organization. Each organization's own records stay private to it."
         >
           <Org name="Your Organization" mono="Y" tone="orange" />
 
@@ -82,13 +82,14 @@ export default function NetworkCollaboration() {
                 </li>
                 <li className="is-done">
                   <span aria-hidden="true" className="nc-step-dot" />
-                  Accepted by Northstar
+                  Invitation accepted
                 </li>
               </ol>
               <p className="nc-shared">
-                <span className="nc-shared-label">Shared for this event</span>
+                <span className="nc-shared-label">Default shared access</span>
                 <span className="nc-shared-items">Event details · Messages</span>
               </p>
+              <p className="nc-grant">Additional event access is granted by the inviting organization.</p>
             </div>
             <span aria-hidden="true" className="nc-arrow nc-arrow-out">
               Accepts

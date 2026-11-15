@@ -172,7 +172,7 @@
 
 .network-hero .nh-title-accent {
   display: block;
-  color: #ffb27a;
+  color: var(--aso-orange);
 }
 
 .network-hero .nh-lead {
@@ -183,94 +183,147 @@
   color: rgba(255, 255, 255, 0.82);
 }
 
-/* The staged composition: three cards at different depths. */
+/* The stage: a fanned stack of organization identity cards. Your
+   Organization in front; two organizations it works with behind, each with a
+   small relationship badge. Phones: a vertical stagger with light overlap. */
 .network-hero .nh-stage {
   position: relative;
   width: 100%;
-  max-width: 34rem;
-  margin: 0 auto;
-  aspect-ratio: 0.92;
+  max-width: 26rem;
+  height: 22rem;
+  margin: 0 auto 1.5rem;
 }
 
-.network-hero .nh-lines {
+.network-hero .nh-spot {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.network-hero .nh-lines-wide {
-  display: none;
-}
-
-.network-hero .nh-line-base {
-  stroke: rgba(127, 211, 244, 0.35);
-  stroke-width: 2;
-  vector-effect: non-scaling-stroke;
-}
-
-.network-hero .nh-line-flow {
-  stroke: rgba(168, 220, 255, 0.95);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-dasharray: 4 14;
-  vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 0 3px rgba(127, 211, 244, 0.8));
-  animation: nh-flow 3.2s linear infinite;
-}
-
-.network-hero .nh-line-flow-late {
-  animation-delay: -1.6s;
-}
-
-@keyframes nh-flow {
-  to {
-    stroke-dashoffset: -36;
-  }
+  inset: -10% -6%;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 50%, rgba(78, 168, 209, 0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 42% 28% at 50% 82%, rgba(255, 122, 26, 0.14) 0%, transparent 72%);
 }
 
 .network-hero .nh-card {
   position: absolute;
+  padding: 0.875rem 1rem 1rem;
+  border: 1px solid #d9e5f0;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--aso-navy);
 }
 
-/* Phones: a vertical stagger. */
-.network-hero .nh-card-a {
+.network-hero .nh-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.network-hero .nh-card-id {
+  min-width: 0;
+}
+
+.network-hero .nh-card-name {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.network-hero .nh-card-role {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #4b5563;
+}
+
+.network-hero .nh-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  margin-top: 0.625rem;
+  padding: 0.125rem 0.5rem;
+  border: 1px solid #b9e2c9;
+  border-radius: 999px;
+  background: #e9f7ef;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #17663a;
+}
+
+/* The two organizations behind: slightly cooler, angled, drifting gently. */
+.network-hero .nh-card-back {
+  width: 66%;
+  background: #f6f9fc;
+  box-shadow: 0 24px 48px -26px rgba(0, 0, 0, 0.8);
+  animation: nh-drift 7s ease-in-out infinite alternate;
+}
+
+.network-hero .nh-card-left {
   top: 0;
   left: 0;
-  width: 64%;
-  transform: scale(0.94);
-  transform-origin: top left;
+  transform: rotate(-4deg);
 }
 
-.network-hero .nh-card-b {
-  top: 30%;
+.network-hero .nh-card-right {
+  top: 6.25rem;
   right: 0;
-  width: 60%;
-  transform: scale(0.92);
-  transform-origin: top right;
+  transform: rotate(3deg);
+  animation-delay: -3.5s;
 }
 
-.network-hero .nh-card-you {
-  bottom: 6%;
-  left: 6%;
-  width: 72%;
-  border-color: rgba(255, 150, 70, 0.7);
+@keyframes nh-drift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -6px;
+  }
+}
+
+/* Your Organization, in front and lit. */
+.network-hero .nh-card-front {
+  bottom: 0;
+  left: 50%;
+  z-index: 1;
+  width: 84%;
+  transform: translateX(-50%);
+  border-color: rgba(255, 150, 70, 0.75);
   box-shadow:
     0 0 0 4px rgba(255, 122, 26, 0.12),
-    0 30px 60px -28px rgba(0, 0, 0, 0.75),
-    0 0 50px -20px rgba(255, 122, 26, 0.45);
+    0 30px 60px -28px rgba(0, 0, 0, 0.8),
+    0 0 54px -20px rgba(255, 122, 26, 0.5);
 }
 
-.network-hero .nh-card-a,
-.network-hero .nh-card-b {
-  box-shadow: 0 26px 50px -30px rgba(0, 0, 0, 0.8);
+.network-hero .nh-conns {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+  padding-top: 0.625rem;
+  border-top: 1px solid #e6eef6;
+}
+
+.network-hero .nh-conns-label {
+  margin-right: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #475467;
+}
+
+.network-hero .nh-mini {
+  display: grid;
+  place-items: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 6px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #fff;
 }
 
 .network-hero .nh-tag {
   position: absolute;
   right: 0;
-  bottom: -0.25rem;
+  bottom: -1.75rem;
   color: rgba(255, 255, 255, 0.72);
 }
 
@@ -555,6 +608,18 @@
   color: var(--aso-navy);
 }
 
+/* Who controls anything beyond the default. */
+.network-collab .nc-grant {
+  margin-top: 0.625rem;
+  padding: 0.5rem 0.625rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #34495f;
+}
+
 .network-collab .nc-tag {
   position: absolute;
   right: 0;
@@ -574,11 +639,17 @@
 
 /* ── Relationships ──────────────────────────────────────────────────────── */
 
+/* A compact standalone scene on light blue-gray, between the navy
+   collaboration section and the white closing. */
+.network-rel {
+  background: #edf2f7;
+}
+
 .network-rel .nr-inner {
   display: grid;
-  gap: 2.5rem;
-  padding-top: 4rem;
-  padding-bottom: 4.5rem;
+  gap: 2rem;
+  padding-top: 3.5rem;
+  padding-bottom: 3.75rem;
 }
 
 .network-rel .nr-lead {
@@ -598,30 +669,28 @@
 
 .network-rel .nr-stage {
   position: relative;
-  min-height: 15rem;
   margin: 0;
-  padding: 1rem 0 1.75rem;
+  padding-top: 3.5rem;
 }
 
-/* The completed event, receding. */
+/* The completed event, set back behind the two organizations. */
 .network-rel .nr-event {
   position: absolute;
   top: 0;
   left: 50%;
-  width: 70%;
-  max-width: 20rem;
-  padding: 0.875rem 1rem 1.25rem;
-  border: 1px solid #e1e8ef;
-  border-radius: 14px;
-  background: #f7fafc;
-  transform: translateX(-50%) scale(0.86);
+  width: 64%;
+  max-width: 18rem;
+  padding: 0.75rem 1rem 2.75rem;
+  border: 1px solid #d3dde7;
+  border-radius: 12px;
+  background: #f8fafc;
+  transform: translateX(-50%) scale(0.94);
   transform-origin: top center;
-  opacity: 0.55;
-  filter: blur(0.4px);
+  box-shadow: 0 10px 24px -20px rgba(15, 47, 79, 0.4);
 }
 
 .network-rel .nr-event-name {
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 700;
   color: #34495f;
 }
@@ -630,7 +699,7 @@
   display: inline-block;
   margin-top: 0.25rem;
   padding: 0 0.5rem;
-  border: 1px solid #c9d5e0;
+  border: 1px solid #c3cfdb;
   border-radius: 999px;
   font-size: 0.6875rem;
   font-weight: 700;
@@ -638,19 +707,6 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #4b5563;
-}
-
-.network-rel .nr-event-bars {
-  display: grid;
-  gap: 0.375rem;
-  margin-top: 0.75rem;
-}
-
-.network-rel .nr-event-bars span {
-  display: block;
-  height: 5px;
-  border-radius: 3px;
-  background: #dbe3eb;
 }
 
 /* The two organizations, still connected, in front. */
@@ -661,7 +717,6 @@
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 0.5rem;
-  margin-top: 6.5rem;
 }
 
 .network-rel .nr-org {
@@ -669,10 +724,10 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.625rem 0.75rem;
-  border: 1px solid #d6e3ef;
+  border: 1px solid #d3dfea;
   border-radius: 12px;
   background: #fff;
-  box-shadow: 0 20px 40px -26px rgba(15, 47, 79, 0.5);
+  box-shadow: 0 18px 36px -24px rgba(15, 47, 79, 0.5);
 }
 
 .network-rel .nr-org-name {
@@ -682,62 +737,42 @@
   color: var(--aso-navy);
 }
 
+/* One restrained indicator of the continuing relationship. */
 .network-rel .nr-link {
-  position: relative;
-  width: 4.5rem;
-  height: 2px;
-  background: linear-gradient(90deg, #4ea8d1, #ff7a1a, #4ea8d1);
-  box-shadow: 0 0 10px rgba(78, 168, 209, 0.5);
-}
-
-.network-rel .nr-pulse {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 0.5rem;
-  height: 0.5rem;
-  margin-top: -0.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1875rem 0.5rem;
+  border: 1px solid #f2b483;
   border-radius: 999px;
   background: #fff;
-  box-shadow: 0 0 0 2px #ff7a1a, 0 0 12px 2px rgba(255, 122, 26, 0.7);
-  animation: nr-pulse 3.6s ease-in-out infinite;
-}
-
-@keyframes nr-pulse {
-  0% {
-    left: 0;
-    opacity: 0;
-  }
-  15% {
-    opacity: 1;
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    left: calc(100% - 0.5rem);
-    opacity: 0;
-  }
-}
-
-.network-rel .nr-link-label {
-  position: absolute;
-  top: 0.625rem;
-  left: 50%;
-  transform: translateX(-50%);
+  box-shadow: 0 0 0 4px rgba(255, 122, 26, 0.08);
   font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  white-space: nowrap;
   color: #a64510;
 }
 
 .network-rel .nr-tag {
-  position: absolute;
-  right: 0;
-  bottom: 0;
+  display: block;
+  margin-top: 0.875rem;
+  text-align: right;
   color: #475467;
+}
+
+/* Phones: the two organizations stack, with the indicator between them. */
+@media (max-width: 639px) {
+  .network-rel .nr-pair {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: 0.5rem;
+  }
+
+  .network-rel .nr-org {
+    width: 100%;
+    max-width: 17rem;
+  }
 }
 
 /* ── Closing call to action (follows the approved Platform closing) ─────── */
@@ -883,37 +918,28 @@
 /* ── Breakpoints ────────────────────────────────────────────────────────── */
 
 @media (min-width: 640px) {
-  /* The hero stage takes its wide arrangement from here (still below the
-     copy until 1024px). */
+  /* The hero stack fans out from here (still below the copy until 1024px). */
   .network-hero .nh-stage {
-    max-width: 40rem;
-    aspect-ratio: 1.35;
+    max-width: 34rem;
+    height: 19rem;
   }
 
-  .network-hero .nh-lines-wide {
-    display: block;
+  .network-hero .nh-card-back {
+    width: 47%;
   }
 
-  .network-hero .nh-lines-narrow {
-    display: none;
+  .network-hero .nh-card-left {
+    top: 0.5rem;
+    transform: rotate(-5deg);
   }
 
-  .network-hero .nh-card-a {
-    top: 4%;
-    left: 0;
-    width: 44%;
+  .network-hero .nh-card-right {
+    top: 1.75rem;
+    transform: rotate(4deg);
   }
 
-  .network-hero .nh-card-b {
-    top: 0;
-    right: 0;
-    width: 42%;
-  }
-
-  .network-hero .nh-card-you {
-    bottom: 8%;
-    left: 26%;
-    width: 50%;
+  .network-hero .nh-card-front {
+    width: 62%;
   }
 
   .network-discovery .nd-grid {
@@ -933,10 +959,6 @@
   .network-cta .ncta-actions a {
     width: auto;
     max-width: none;
-  }
-
-  .network-rel .nr-link {
-    width: 7rem;
   }
 
   .network-rel .nr-org-name {
@@ -1039,7 +1061,8 @@
 
   .network-hero .nh-stage {
     max-width: none;
-    aspect-ratio: 1.22;
+    height: 21rem;
+    margin-bottom: 0;
   }
 
   .network-discovery .nd-directory {
@@ -1071,13 +1094,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .network-hero .nh-line-flow,
-  .network-rel .nr-pulse {
+  .network-hero .nh-card-back {
     animation: none;
-  }
-
-  .network-rel .nr-pulse {
-    left: calc(50% - 0.25rem);
   }
 
   .network-cta .ncta-secondary {

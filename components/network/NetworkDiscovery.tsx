@@ -5,7 +5,8 @@ import OrgCard from "./OrgCard";
  *
  * A directory-like panel of illustrative published profiles: monogram,
  * category, general region, a few services, and a "Published profile" line.
- * Unnamed examples show a placeholder bar for the name. No search box,
+ * Names are founder-supplied fictional examples (DESIGN-14A.3), not real
+ * businesses or customers. No search box,
  * filters, or buttons: nothing here pretends to be a working control.
  *
  * LAUNCH-DEPENDENT (DESIGN-14A.2): public organization profiles and
@@ -17,11 +18,11 @@ import OrgCard from "./OrgCard";
 
 const PROFILES = [
   { name: "Northstar Production", category: "Production company", region: "Pacific Northwest", services: ["Staging", "Lighting"], tone: "slate" as const },
-  { category: "Venue", region: "Great Lakes", services: ["Live music", "Private events"], tone: "blue" as const },
-  { category: "Audio company", region: "Gulf Coast", services: ["Live sound", "Backline"], tone: "navy" as const },
-  { category: "Rental house", region: "Southwest", services: ["Lighting", "Rigging"], tone: "slate" as const },
-  { category: "Event organizer", region: "Mid-Atlantic", services: ["Festivals", "Corporate"], tone: "orange" as const },
-  { category: "Freelance technician", region: "Mountain West", services: ["Stage management", "A2"], tone: "blue" as const },
+  { name: "Harborlight Venues", category: "Venue", region: "Great Lakes", services: ["Live music", "Private events"], tone: "blue" as const },
+  { name: "Signal Ridge Audio", category: "Audio company", region: "Gulf Coast", services: ["Live sound", "Backline"], tone: "navy" as const },
+  { name: "Summit Event Rentals", category: "Rental house", region: "Southwest", services: ["Lighting", "Rigging"], tone: "slate" as const },
+  { name: "Meridian Live Events", category: "Event organizer", region: "Mid-Atlantic", services: ["Festivals", "Corporate"], tone: "orange" as const },
+  { name: "Backline Collective", category: "Freelance production team", region: "Mountain West", services: ["Stage management", "A2"], tone: "blue" as const },
 ];
 
 export default function NetworkDiscovery() {

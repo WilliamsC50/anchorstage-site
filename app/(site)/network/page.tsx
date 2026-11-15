@@ -29,8 +29,10 @@ import "./network.css";
  * Verified today: per-event collaboration between organizations with access
  * the owner controls (default: event details and messages), and each
  * organization keeping its own records.
- * All visuals are illustrative; only the founder-approved example names
- * ("Your Organization", "Northstar Production", "Event A") appear.
+ * All visuals are illustrative. Example names are founder supplied and
+ * fictional, not real businesses or customers: Your Organization, Northstar
+ * Production, Harborlight Venues, Signal Ridge Audio, Summit Event Rentals,
+ * Meridian Live Events, Backline Collective, and Event A (DESIGN-14A.3).
  * ──────────────────────────────────────────────────────────────────────────
  *
  * Styling: ./network.css (loaded only on this page).
