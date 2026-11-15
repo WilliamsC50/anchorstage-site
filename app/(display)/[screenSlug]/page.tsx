@@ -6,18 +6,38 @@ type Props = {
   params: Promise<{ screenSlug: string }>;
 };
 
+// Signage slugs are normalized by the app on creation to lowercase letters,
+// digits, and hyphens. Anything else cannot name a screen, so it 404s here
+// without a database round trip (stray marketing URLs, probes like /.env).
+const SCREEN_SLUG_PATTERN = /^[a-z0-9-]+$/;
+
 export default async function GenericDisplayPage({ params }: Props) {
   const { screenSlug } = await params;
 
+  if (!SCREEN_SLUG_PATTERN.test(screenSlug)) {
+    notFound();
+  }
+
+  // Without server credentials no screen can be loaded. Treat it as not
+  // found rather than letting the client constructor throw a 500.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    notFound();
+  }
+
   const db = supabaseServer();
 
-  const { data: rawScreen } = await db
+  const { data: rawScreen, error: screenError } = await db
     .from("signage_screen")
     .select("screen_slug, screen_type, is_active, display_name, website_url, tip_url, background_image_url, attribution_text, default_notice, default_subnotice, logo_url, accent_color, secondary_color")
     .eq("screen_slug", screenSlug)
-    .single();
+    .maybeSingle();
 
-  if (!rawScreen || !(rawScreen as any).is_active) {
+  // Lookup failures are logged server-side only; visitors see the 404.
+  if (screenError) {
+    console.error("signage_screen lookup failed", screenError.code);
+  }
+
+  if (!rawScreen || !(rawScreen as { is_active: boolean }).is_active) {
     notFound();
   }
 

@@ -171,7 +171,6 @@ export default function SignupDisplay({
   // signups arrive ordered by sort_order from the query.
   const nowPlaying = signups.find((s) => s.status === "ON_STAGE") ?? null;
   const upNext = signups.filter((s) => s.status === "QUEUED");
-  const completed = signups.filter((s) => s.status === "DONE");
 
   // Slot numbers for Up Next: if someone is on stage they hold slot 1.
   const upNextStartSlot = nowPlaying ? 2 : 1;

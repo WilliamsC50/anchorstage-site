@@ -26,7 +26,7 @@ ui/
 backgrounds/     Full-bleed section backgrounds
 textures/        Tileable or repeating surface art
 og/              Purpose-cut social share images (1200x630)
-legacy/          Retained but unused. Never referenced by a live page.
+legacy/          Emptied in DESIGN-17A.2. Kept only as a placeholder.
 ```
 
 Brand marks stay in `public/logos` and are not part of this structure.
@@ -74,13 +74,17 @@ hero is a change to that one component.
 
 ## Legacy asset policy
 
-`legacy/` holds every image from before the library was organized. Nothing in
-it is referenced by a live page.
+`legacy/` held every image from before the library was organized. None of it
+was referenced by a live page, but everything under `public/` is served at a
+public URL, and many of those photos carried GPS location metadata. DESIGN-17A.2
+removed them. The originals remain in git history (before commit DESIGN-17A.2)
+if any ever needs to be recovered, reviewed, and re-added.
 
-- **Nothing is ever deleted.** Assets move to `legacy/`, they do not disappear.
-- **Nothing in `legacy/` may be used on a live page** without first being
+- **Do not park unreviewed files under `public/`.** Anything there is publicly
+  downloadable, referenced or not.
+- **Strip location metadata** from photographs before committing them.
+- **Nothing retired may return to a live page** without first being
   reviewed, renamed, and moved into the correct folder.
-- Original filenames are preserved in `legacy/` so provenance stays traceable.
 
 Legacy content is unreviewed, so it is kept out of `content/` deliberately.
 A file sitting in `content/production/` reads as approved for use; a file in
@@ -90,8 +94,14 @@ A file sitting in `content/production/` reads as approved for use; a file in
 
 Imagery showing the CFAV stage or CFAV branding must not appear anywhere on
 the ASO marketing site. ASO is not a production company, and that content
-works against the positioning. Those assets stay in `legacy/` and in
-`public/logos`, and no live page may reference them.
+works against the positioning. No marketing page may reference them.
+
+The CFAV and Copper Rocket files in `public/logos` stay. Venue signage loads
+backgrounds and logos by relative URL from database configuration (the
+Copper Rocket screen uses `/logos/CROM_BG.png` and `/logos/aso-logo-white.png`,
+and the app asks operators for `/logos/...` paths), so a file with no code
+reference can still be in live use. Confirm against production signage data
+before removing anything from `public/logos`.
 
 ## Preferred formats
 
@@ -126,8 +136,6 @@ the browser is not handed a desktop-scale file on a phone.
 - No purpose-cut Open Graph asset exists. Share cards currently use the home
   hero, whose 16:9 ratio crops close enough to 1.91:1 to hold up. A dedicated
   `og/og-default.png` at 1200x630 should replace it.
-- `legacy/hero-live-performance.jpg` is not a JPEG. Its header is an MP4
-  `ftyp` box, so it is a mislabelled video file and cannot be rendered.
 - `public/Icons` and `public/Videos` hold production-service assets from the
   previous site. They are unreferenced and were left in place rather than
   folded into this structure, since they are not site imagery.
