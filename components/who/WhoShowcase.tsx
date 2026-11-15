@@ -6,16 +6,18 @@ import FohForeground from "./FohForeground";
 import TechnicianFigure from "./TechnicianFigure";
 
 /**
- * Who It's For: full-viewport cinematic stage (DESIGN-15A.3, proof of
- * concept). One concert stage, six professional perspectives.
+ * Who It's For: full-viewport cinematic stage (DESIGN-15A.3, refined in
+ * DESIGN-15A.4; proof of concept). One concert stage, six professional
+ * perspectives.
  *
  * Layers, front to back:
- *   overlays    page title, the selected profession's copy, and the
- *               profession selector (HTML over the stage on wide screens;
- *               stacked around it on narrower ones)
+ *   overlays    page title, the selected profession's copy, its specialties
+ *               (Freelancers & Technicians only), and the profession cards
+ *               along the bottom edge of the stage (HTML over the stage on
+ *               wide screens; stacked around it on narrower ones)
  *   light       CSS scrims and key light (.wv-light)
  *   foreground  profession-specific equipment (Freelancer: the FOH console,
- *               with one interactive fader; road cases, radio, tools)
+ *               with one interactive MASTER fader; a flight case, radio, tools)
  *   character   the selected professional
  *   background  the permanent concert stage, never remounted
  * Character and foreground remount per profession and enter with staggered
@@ -25,27 +27,32 @@ import TechnicianFigure from "./TechnicianFigure";
  * follows focus; arrow keys, Home, End), without changing it. Nothing cycles
  * on its own. Only Freelancers & Technicians has a finished scene; the other
  * five show an empty lit FOH mark and their existing approved description,
- * marked "Scene in development".
+ * marked "In development" / "Scene in development".
  *
- * Copy for the finished scene is a founder draft (DESIGN-15A.2).
- * LAUNCH-DEPENDENT: "Build your professional presence" (public profiles) and
- * "develop relationships with the companies that need your skills" (Network
- * connections) are not live in the application. "Organize your jobs and
- * rates" is partly supported: events plus per-event quote line items and
- * payout terms; there is no standing personal rate card.
+ * LAUNCH-DEPENDENT copy lives with the role data in
+ * app/(site)/who-its-for/page.tsx.
  *
  * Styling: app/(site)/who-its-for/who.css (.who-stage, .wv-*).
  */
 
+export interface SpecialtyGroup {
+  group: string;
+  items: string[];
+}
+
 export interface ShowcaseRole {
   slug: string;
   name: string;
+  /** One short line for the profession card. */
+  tagline: string;
   /** Future scene setting, e.g. "FOH mixing position". */
   setting: string;
   ready: boolean;
   headline?: string;
   recognition?: string;
   value?: string;
+  /** Example specialties, shown beside a finished scene only. */
+  specialties?: SpecialtyGroup[];
   /** For roles still in development: their existing approved description. */
   summary?: string;
 }
@@ -77,10 +84,11 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
   };
 
   const active = roles[selected];
+  const specialties = active.ready ? active.specialties : undefined;
 
-  // DOM order is the keyboard order: title, profession tabs, the selected
-  // profession's copy (ending in the console hint), then the stage and its
-  // fader. CSS places them visually (who.css).
+  // DOM order is the keyboard order: title, profession cards, the selected
+  // profession's copy and specialties, then the stage and its fader. CSS
+  // places them visually (who.css).
   return (
     <section className="who-stage" aria-labelledby="who-title">
       {/* Title. */}
@@ -94,8 +102,8 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
         </h1>
       </div>
 
-      {/* Profession selector. */}
-      <div role="tablist" aria-label="Choose a profession" aria-orientation="vertical" className="wv-roster" onKeyDown={onKeyDown}>
+      {/* Profession cards. */}
+      <div role="tablist" aria-label="Choose a profession" aria-orientation="horizontal" className="wv-roster" onKeyDown={onKeyDown}>
         {roles.map((role, i) => (
           <button
             key={role.slug}
@@ -108,13 +116,14 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
             aria-selected={i === selected}
             aria-controls="wv-panel"
             tabIndex={i === selected ? 0 : -1}
-            className="wv-tab"
+            className={`wv-tab ${role.ready ? "is-ready" : ""}`}
             onClick={() => select(i)}
           >
             <span aria-hidden="true" className="wv-tab-num">
               {pad(i + 1)}
             </span>
             <span className="wv-tab-name">{role.name}</span>
+            <span className="wv-tab-desc">{role.tagline}</span>
             <span className="wv-tab-status">{role.ready ? "Scene ready" : "In development"}</span>
           </button>
         ))}
@@ -138,7 +147,6 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
                   <span className="wv-value-label">With AnchorStage Ops</span>
                   {role.value}
                 </p>
-                <p className="wv-hint">Try the VOX fader on the console.</p>
               </>
             ) : (
               <>
@@ -152,6 +160,29 @@ export default function WhoShowcase({ roles }: { roles: ShowcaseRole[] }) {
           </div>
         ))}
       </div>
+
+      {/* Example specialties for the finished scene (not interactive). */}
+      {specialties && (
+        <aside key={active.slug} className="wv-skills" aria-labelledby="wv-skills-title">
+          <p id="wv-skills-title" className="wv-skills-title">
+            Common specialties
+          </p>
+          <dl className="wv-skills-list">
+            {specialties.map((g) => (
+              <div key={g.group} className="wv-skills-group">
+                <dt>{g.group}</dt>
+                <dd>
+                  <ul>
+                    {g.items.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+      )}
 
       {/* The stage: permanent background, then the profession's layers. */}
       <div className="wv-viewport">

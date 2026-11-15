@@ -8,7 +8,7 @@ import { PERSONAS } from "@/lib/personas";
 import "./who.css";
 
 /*
- * Who It's For (DESIGN-15A.2/15A.3: cinematic visual proof of concept, local only).
+ * Who It's For (DESIGN-15A.2 to 15A.4: cinematic visual proof of concept, local only).
  *
  * The full-viewport interactive stage (DESIGN-15A.3) replaces the photo hero (whose montage carried
  * invented names printed into the image) and the six persona cards. One
@@ -19,7 +19,7 @@ import "./who.css";
  * Persona descriptions are read from lib/personas.ts and not modified (the
  * homepage also uses them).
  *
- * LAUNCH-DEPENDENT copy: see components/who/WhoShowcase.tsx.
+ * LAUNCH-DEPENDENT copy: see the note above ROLES below.
  */
 
 export const metadata: Metadata = buildMetadata({
@@ -30,23 +30,45 @@ export const metadata: Metadata = buildMetadata({
 
 const who = (slug: string) => PERSONAS.find((p) => p.slug === slug)?.whoTheyAre ?? "";
 
+/*
+ * Freelancer copy (DESIGN-15A.4, founder direction refined). Checked against
+ * anchorstage-intake (read-only):
+ *   Live today: a person can belong to several organizations independently;
+ *   the events list spans the organizations they belong to (where that
+ *   organization gives them event access); crew calls can be answered from a
+ *   link without an account.
+ *   LAUNCH-DEPENDENT: "More gigs", "finding your next opportunity", and
+ *   "connections that bring you back" depend on public profiles, discovery,
+ *   and standing Network connections (not live; see the Network page notes).
+ *   They are written as the value ASO is built toward, not as features. No
+ *   availability or rate-card claims.
+ * Card taglines are page-specific and condensed from lib/personas.ts; shared
+ * persona data is not changed.
+ */
 const ROLES: ShowcaseRole[] = [
   {
     slug: "freelancers",
     name: "Freelancers & Technicians",
+    tagline: "Audio, video, lighting, and crew",
     setting: "FOH mixing position",
     ready: true,
-    headline: "You run the show. And everything behind it.",
+    headline: "More gigs. Less chasing details.",
     recognition:
-      "You're the technician, the scheduler, the salesperson, and the one chasing down the details. Your operation deserves more than scattered messages and spreadsheets.",
+      "You work with different production companies, crews, and venues. Keep your gigs and the organizations you work with in one place, so you can focus on doing great work and finding your next opportunity.",
     value:
-      "Build your professional presence, organize your jobs and rates, and develop relationships with the companies that need your skills.",
+      "Answer crew calls from a link, see your events from every organization you belong to, and build the professional connections that bring you back for the next show.",
+    specialties: [
+      { group: "Audio", items: ["A1", "A2", "RF Tech"] },
+      { group: "Video", items: ["V1", "Camera Operator", "LED Tech"] },
+      { group: "Lighting", items: ["L1", "L2", "Lighting Tech"] },
+      { group: "General", items: ["Stagehand", "Rigger", "Utility"] },
+    ],
   },
-  { slug: "production-companies", name: "Production Companies", setting: "an active stage build", ready: false, summary: who("production-companies") },
-  { slug: "venues", name: "Venues", setting: "a theatrical or live-music venue", ready: false, summary: who("venues") },
-  { slug: "event-organizers", name: "Event Organizers & Producers", setting: "an event coordination environment", ready: false, summary: who("event-organizers") },
-  { slug: "musicians", name: "Musicians & Touring Acts", setting: "a performance and touring stage", ready: false, summary: who("musicians") },
-  { slug: "rental-providers", name: "Rental Warehouses & Providers", setting: "an equipment warehouse and loading area", ready: false, summary: who("rental-providers") },
+  { slug: "production-companies", name: "Production Companies", tagline: "Delivering several events at once", setting: "an active stage build", ready: false, summary: who("production-companies") },
+  { slug: "venues", name: "Venues", tagline: "Running a room and its calendar", setting: "a theatrical or live-music venue", ready: false, summary: who("venues") },
+  { slug: "event-organizers", name: "Event Organizers & Producers", tagline: "Owning and coordinating events", setting: "an event coordination environment", ready: false, summary: who("event-organizers") },
+  { slug: "musicians", name: "Musicians & Touring Acts", tagline: "Running the shows they organize", setting: "a performance and touring stage", ready: false, summary: who("musicians") },
+  { slug: "rental-providers", name: "Rental Warehouses & Providers", tagline: "Inventory that supplies partners", setting: "an equipment warehouse and loading area", ready: false, summary: who("rental-providers") },
 ];
 
 export default function WhoItsForPage() {
