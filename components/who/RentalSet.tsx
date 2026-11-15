@@ -6,17 +6,20 @@
  * The same stage at load-in, from the rental provider's side: an order is
  * being checked out on the deck before it goes up. Organized production
  * chaos: real touring flight cases (laminate panels, aluminium extrusions,
- * ball corners, butterfly latches, casters, tape labels; generic department
- * labels only, no invented company names).
+ * ball corners, butterfly latches, casters, tape labels; department labels
+ * only, without numbers, and no invented company names; the inspected case
+ * keeps its asset number #0417).
  *
  * RentalLighting   house dimmed further for load-in; a concrete-grey floor
  *                  over the crowd area with cool work-light pools.
- * TruckPack        two closed cases stacked for the truck (AUDIO, VIDEO).
+ * AudioCase,       two closed cases (AUDIO, VIDEO) placed apart on the floor
+ * VideoCase        (DESIGN-15A.13; they were stacked).
  * LedCart          LED video panels standing on a cart, pixel face forward.
  * MovingHeads      two moving-head fixtures unpacked on their case.
  * InspectionCase   the case being checked, full size beside the technician
  *                  (about 24" x 30" at her scale): a moving-head case with
- *                  an asset tag on its front. Awaiting
+ *                  its two latches symmetric about the centre line and the
+ *                  asset tag centred between them (DESIGN-15A.13). Awaiting
  *                  inspection: lid shut, latches closed, the tag's status
  *                  band amber (HOLD). Inspected (.is-scanned above): the tag
  *                  turns green (READY) with a brief confirmation ring, the
@@ -27,8 +30,9 @@
  *                  with the handheld mics in an open case on top.
  *
  * Depth: the inspected case and the cable trunk stand at the technician's
- * depth, at full size; the truck pack, LED cart, moving heads, and wireless
- * rack form a midground cluster further back (RentalScene places them).
+ * depth, at full size; the audio and video cases, LED cart, moving heads,
+ * and wireless rack are spread across the floor around them, nearer or
+ * further back (RentalScene places them).
  *
  * Placement: the floor pieces sit at or above art y 842 (the deck's front
  * edge), clear of the raised profession cards at every desktop size; the
@@ -114,13 +118,22 @@ function RoadCase({ x, y, w, h, top = 9, label, tone = "#1d232b", casters = true
   );
 }
 
-/** Two closed cases stacked for the truck. */
-export function TruckPack() {
+/** A closed audio case on its casters (base centre at x 428, floor 834). */
+export function AudioCase() {
   return (
     <g>
-      <ellipse cx="428" cy="838" rx="70" ry="5" fill="#000" opacity="0.5" />
-      <RoadCase x={374} y={744} w={108} h={78} label="AUDIO 12" />
-      <RoadCase x={380} y={682} w={98} h={60} label="VIDEO 03" tone="#222a34" casters={false} />
+      <ellipse cx="428" cy="838" rx="64" ry="5" fill="#000" opacity="0.5" />
+      <RoadCase x={374} y={744} w={108} h={78} label="AUDIO" />
+    </g>
+  );
+}
+
+/** A closed video case on its casters (base centre at x 429, floor 772). */
+export function VideoCase() {
+  return (
+    <g>
+      <ellipse cx="429" cy="776" rx="58" ry="4.5" fill="#000" opacity="0.5" />
+      <RoadCase x={380} y={682} w={98} h={78} label="VIDEO" tone="#222a34" />
     </g>
   );
 }
@@ -151,7 +164,7 @@ export function LedCart() {
       <rect x="538" y="696" width="22" height="5" rx="2" fill="#6c7682" />
       <rect x="520" y="812" width="56" height="10" rx="1" fill="#ece7da" />
       <text x="548" y="819.6" textAnchor="middle" fontSize="6.6" fontWeight="800" fill="#1a2533" fontFamily={SANS}>
-        VIDEO 02
+        VIDEO
       </text>
     </g>
   );
@@ -191,7 +204,7 @@ export function MovingHeads() {
         </radialGradient>
       </defs>
       <ellipse cx="676" cy="838" rx="72" ry="5" fill="#000" opacity="0.5" />
-      <RoadCase x={614} y={770} w={124} h={54} top={8} label="LIGHTING 07" />
+      <RoadCase x={614} y={770} w={124} h={54} top={8} label="LIGHTING" />
       <MovingHead cx={648} floor={765} />
       <MovingHead cx={706} floor={765} />
     </g>
@@ -259,13 +272,13 @@ export function InspectionCase() {
       ].map(([cx, cy]) => (
         <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="5" fill="#c9d2dc" />
       ))}
-      <rect x="739" y="782" width="66" height="18" rx="1.5" fill="#ece7da" />
-      <text x="772" y="794.6" textAnchor="middle" fontSize="10" fontWeight="800" fill="#1a2533" fontFamily={SANS}>
-        LIGHTING 08
+      <rect x="772" y="782" width="56" height="18" rx="1.5" fill="#ece7da" />
+      <text x="800" y="794.6" textAnchor="middle" fontSize="10" fontWeight="800" fill="#1a2533" fontFamily={SANS}>
+        LIGHTING
       </text>
       {/* Recessed side-style handle on the front. */}
-      <rect x="744" y="742" width="54" height="14" rx="7" fill="#11151a" />
-      <rect x="750" y="747" width="42" height="4" rx="2" fill="#6c7682" />
+      <rect x="773" y="742" width="54" height="14" rx="7" fill="#11151a" />
+      <rect x="779" y="747" width="42" height="4" rx="2" fill="#6c7682" />
 
       {/* Closed: lid on (top face with its handle and lip), latches shut. */}
       <g className="rn-case-closed">
@@ -275,7 +288,7 @@ export function InspectionCase() {
         <rect x="782" y="634" width="42" height="3" rx="1.5" fill="#6c7682" />
         <rect x="715" y="656" width="170" height="12" fill="#232a33" />
         <rect x="715" y="667" width="170" height="3" fill="#7b8693" />
-        {[748, 800].map((lx) => (
+        {[745, 855].map((lx) => (
           <g key={lx}>
             <rect x={lx - 8} y="660" width="16" height="13" rx="2" fill="#aab4bf" />
             <circle cx={lx} cy="666.5" r="3" fill="#5d6773" />
@@ -284,7 +297,7 @@ export function InspectionCase() {
       </g>
       {/* Open latches: flipped down off their keepers. */}
       <g className="rn-case-open">
-        {[748, 800].map((lx) => (
+        {[745, 855].map((lx) => (
           <g key={lx}>
             <rect x={lx - 8} y="662" width="16" height="6" rx="2" fill="#aab4bf" />
             <rect x={lx - 5} y="668" width="10" height="11" rx="2" fill="#8f9aa6" />
@@ -294,28 +307,28 @@ export function InspectionCase() {
 
       {/* Asset tag: status band (HOLD amber, READY green), barcode, number. */}
       <g>
-        <rect x="822" y="680" width="54" height="50" rx="2" fill="#f4f2ec" />
+        <rect x="773" y="680" width="54" height="50" rx="2" fill="#f4f2ec" />
         <g className="rn-status-hold">
-          <rect x="822" y="680" width="54" height="15" rx="2" fill="#f59e0b" />
-          <text x="849" y="691.6" textAnchor="middle" fontSize="10" fontWeight="800" fill="#3a2006" fontFamily={SANS} letterSpacing="0.5">
+          <rect x="773" y="680" width="54" height="15" rx="2" fill="#f59e0b" />
+          <text x="800" y="691.6" textAnchor="middle" fontSize="10" fontWeight="800" fill="#3a2006" fontFamily={SANS} letterSpacing="0.5">
             HOLD
           </text>
         </g>
         <g className="rn-status-ok">
-          <rect x="822" y="680" width="54" height="15" rx="2" fill="#22a35a" />
-          <text x="849" y="691.6" textAnchor="middle" fontSize="10" fontWeight="800" fill="#fff" fontFamily={SANS} letterSpacing="0.5">
+          <rect x="773" y="680" width="54" height="15" rx="2" fill="#22a35a" />
+          <text x="800" y="691.6" textAnchor="middle" fontSize="10" fontWeight="800" fill="#fff" fontFamily={SANS} letterSpacing="0.5">
             READY
           </text>
         </g>
         <path
-          d={[0, 2, 3.4, 6.2, 7.4, 10.2, 12.6, 13.8, 16.4, 19.4, 20.6, 23.2, 26, 27.8, 30.6, 31.8, 34.6, 37, 38.4, 41.2].map((dx) => `M${828 + dx} 699 v19`).join(" ")}
+          d={[0, 2, 3.4, 6.2, 7.4, 10.2, 12.6, 13.8, 16.4, 19.4, 20.6, 23.2, 26, 27.8, 30.6, 31.8, 34.6, 37, 38.4, 41.2].map((dx) => `M${779 + dx} 699 v19`).join(" ")}
           stroke="#1a2533"
           strokeWidth="1.2"
         />
-        <text x="849" y="727" textAnchor="middle" fontSize="7" fontWeight="700" fill="#1a2533" fontFamily={SANS} letterSpacing="0.4">
+        <text x="800" y="727" textAnchor="middle" fontSize="7" fontWeight="700" fill="#1a2533" fontFamily={SANS} letterSpacing="0.4">
           #0417
         </text>
-        <circle className="rn-confirm" cx="849" cy="705" r="30" fill="none" stroke="#3ddc84" strokeWidth="3" />
+        <circle className="rn-confirm" cx="800" cy="705" r="30" fill="none" stroke="#3ddc84" strokeWidth="3" />
       </g>
     </g>
   );
@@ -380,7 +393,7 @@ export function WirelessRack() {
       ))}
       <rect x="1264" y="811" width="36" height="9" rx="1" fill="#ece7da" />
       <text x="1282" y="817.8" textAnchor="middle" fontSize="5.8" fontWeight="800" fill="#1a2533" fontFamily={SANS}>
-        RF 05
+        RF
       </text>
       {/* Open mic case on top: two handhelds in their foam. */}
       <path d="M1220 708 L1308 708 L1312 684 L1224 684 Z" fill="#0b0e13" />

@@ -149,7 +149,7 @@ export default function RentalTechFigure({ x, y, scale }: { x: number; y: number
           <path d="M436 342 L455 345 L444 396 L429 391 Z" fill="url(#rn-skin)" />
           <path d="M440 282 Q437 308 437 330" stroke="#7fb8e6" strokeWidth="1.3" fill="none" opacity="0.5" />
           {/* Pistol-grip asset scanner, its window toward the case's tag. */}
-          <g transform="translate(436 398) rotate(138)">
+          <g transform="translate(436 398) rotate(152)">
             <rect x="-3" y="1" width="10" height="18" rx="3" fill="#1b1f25" />
             <rect x="-6" y="-7" width="32" height="13" rx="4.5" fill="#2c323b" />
             <rect x="2" y="-7" width="13" height="2.6" rx="1" fill="#ff9a3c" />

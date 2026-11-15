@@ -55,7 +55,7 @@ const EXIT_MS = 420;
  *               rack and a cable coil; Venues: a welcome sign; Organizers:
  *               a freestanding wayfinding sign; Musicians: the pedalboard
  *               (its one control), a monitor wedge, the set list; Rental:
- *               the truck-pack stack, a cable trunk, wireless receivers)
+ *               a cable trunk)
  *   character   the selected professional(s) (Production: the lead with
  *               the checklist tablet, and two crew members on the stage;
  *               Venues: the banquet director with the event-prep status
