@@ -1,23 +1,31 @@
 /**
- * Who It's For: the Musicians & Touring Acts scene's set (DESIGN-15A.8).
- * Decorative; drawn in the stage's 1600 x 900 space, in front of the
- * permanent stage.
+ * Who It's For: the Musicians & Touring Acts scene's set (DESIGN-15A.8;
+ * polished in DESIGN-15A.9). Decorative; drawn in the stage's 1600 x 900
+ * space, in front of the permanent stage.
  *
  * TouringLighting  the same room at soundcheck, seen from the stage: black
  *                  stage decking with spike tape (where the crowd stands in
  *                  other scenes), the show rig dimmed slightly, and a warm
  *                  spot that comes up on the guitarist when the rig is live.
- * GuitarTech       stage left: a guitar stand with two spare guitars, the
- *                  guitar tech kneeling by an open accessory case (strings,
- *                  a winder); gives a thumbs-up once the rig is live.
+ * GuitarTech       stage left: a guitar stand with two spare guitars (a blue
+ *                  offset electric and a dreadnought acoustic), the guitar
+ *                  tech kneeling by an open accessory case with a string
+ *                  winder; once the rig is live the tech raises an open hand
+ *                  ("good to go").
  * GuitarAmp        a combo amp with a mic on a short stand at its grille;
  *                  the pilot light and the tubes glow when it is live.
- * VocalMic         the vocal mic stand the guitarist stepped back from.
- * Pedalboard       at the guitarist's feet (foreground): tuner, overdrive,
- *                  delay, and boost pedals; the tuner and two pedal LEDs
- *                  light when the rig is live. Cable run to the amp.
- * Wedge, Setlist   a monitor wedge labelled on gaffer tape, and the set
- *                  list taped to the deck (generic; no song titles).
+ * VocalMic         the vocal mic stand, beside the guitarist.
+ * Pedalboard       right in front of the guitarist's feet (foreground):
+ *                  tuner, overdrive, delay, and boost pedals; the tuner and
+ *                  two pedal LEDs light when the rig is live. Cable run to
+ *                  the amp.
+ * WedgeAndSetlist  a monitor wedge labelled on gaffer tape, and the set list
+ *                  taped to the deck beside it (generic; no song titles).
+ *
+ * Placement (DESIGN-15A.9): everything on the floor sits on the stage deck,
+ * above art y 836 (the deck's front edge). At 1920 x 1080 the raised
+ * selected profession card reaches art y ~874, and lower on smaller
+ * desktops, so the pedalboard and set list stay fully clear of the cards.
  *
  * State: MusicianScene puts .is-live on parent groups; the changes are CSS
  * (who.css, .mu-*), instant under reduced motion.
@@ -54,8 +62,8 @@ export function TouringLighting() {
       <path d="M-160 626 H1760 M-160 660 H1760 M-160 700 H1760 M-160 746 H1760 M-160 798 H1760" stroke="#2a3240" strokeWidth="1" opacity="0.4" />
       {[
         [700, 812, "#ff7a1a"],
-        [772, 868, "#4ea8d1"],
-        [1086, 832, "#ff7a1a"],
+        [744, 826, "#4ea8d1"],
+        [1086, 776, "#ff7a1a"],
         [612, 798, "#4ea8d1"],
       ].map(([x, y, c]) => (
         <path key={`${x}-${y}`} d={`M${Number(x) - 5} ${y} h10 M${x} ${Number(y) - 3} v6`} stroke={String(c)} strokeWidth="2.4" opacity="0.8" />
@@ -63,9 +71,88 @@ export function TouringLighting() {
       <ellipse cx="560" cy="790" rx="200" ry="50" fill="url(#mu-work)" />
       {/* The spot on the guitarist (up when the rig is live). */}
       <g className="mu-spot">
-        <polygon points="928,120 1004,120 1150,880 780,880" fill="url(#mu-spot-g)" />
-        <ellipse cx="962" cy="872" rx="190" ry="22" fill="url(#mu-pool)" />
+        <polygon points="922,110 998,110 1140,834 780,834" fill="url(#mu-spot-g)" />
+        <ellipse cx="960" cy="826" rx="180" ry="20" fill="url(#mu-pool)" />
       </g>
+    </g>
+  );
+}
+
+/** A blue offset electric, standing (spare). */
+function SpareElectric() {
+  return (
+    <g>
+      {/* Rosewood board on a maple neck, frets, dots. */}
+      <rect x="437.6" y="690" width="4.8" height="48" fill="#d2a76a" />
+      <rect x="438.3" y="690" width="3.4" height="48" fill="#2e1c12" />
+      {[694, 699, 704, 708.5, 713, 717, 721, 725, 728.5, 732].map((fy) => (
+        <path key={fy} d={`M438.3 ${fy} h3.4`} stroke="#c9d2dc" strokeWidth="0.45" />
+      ))}
+      {[701.5, 710.8, 719, 730].map((dy) => (
+        <circle key={dy} cx="440" cy={dy} r="0.65" fill="#efe6d2" />
+      ))}
+      {/* Offset headstock with six tuners in a line. */}
+      <path d="M437.6 690 L437 670 Q437 664 442 664 Q447 665 446.5 670 Q444 676 443 682 L442.4 690 Z" fill="#3f6f9e" />
+      {[668, 671.5, 675, 678.5, 682, 685.5].map((ty) => (
+        <ellipse key={ty} cx="434.8" cy={ty} rx="1.6" ry="1.1" fill="#c9d2dc" />
+      ))}
+      {/* Offset body, guard, two soapbars, bridge, vibrato, knobs. */}
+      <path
+        d="M424 742 Q428 733 438 736 Q446 739 452 733 Q461 730 462 742 Q463 750 457 756 Q464 764 461 774 Q456 785 440 784 Q423 784 420 773 Q418 763 424 756 Q419 750 424 742 Z"
+        fill="#3f6f9e"
+        stroke="#9fc0de"
+        strokeWidth="0.7"
+      />
+      <path d="M426 742 Q432 737 438 739" stroke="#cfe2f2" strokeWidth="1.4" fill="none" opacity="0.5" strokeLinecap="round" />
+      <path d="M427 748 Q440 742 453 747 L456 768 Q448 776 434 774 Q426 770 427 760 Z" fill="#efe9df" opacity="0.92" />
+      <rect x="433" y="749" width="14" height="4.2" rx="1.6" fill="#e8e0cc" stroke="#bdb39c" strokeWidth="0.4" />
+      <rect x="433" y="758" width="14" height="4.2" rx="1.6" fill="#e8e0cc" stroke="#bdb39c" strokeWidth="0.4" />
+      <rect x="434.5" y="767" width="11" height="1.8" rx="0.6" fill="#c9d2dc" />
+      <rect x="435.5" y="772" width="9" height="3.4" rx="1" fill="#aab4bf" />
+      <path d="M445 773 Q452 770 455 764" stroke="#c9d2dc" strokeWidth="0.8" fill="none" />
+      <circle cx="452.5" cy="773" r="1.6" fill="#d7dee6" />
+      <circle cx="456" cy="767.5" r="1.6" fill="#d7dee6" />
+      <path d="M438.8 690 V772 M440 690 V772 M441.2 690 V772" stroke="#eef2f6" strokeWidth="0.3" opacity="0.7" />
+    </g>
+  );
+}
+
+/** A dreadnought acoustic, standing (spare). */
+function SpareAcoustic() {
+  return (
+    <g>
+      <rect x="490" y="690" width="4.4" height="40" fill="#2e1c12" />
+      {[694, 698.5, 703, 707, 711, 714.5, 718, 721.5, 724.5, 727.5].map((fy) => (
+        <path key={fy} d={`M490 ${fy} h4.4`} stroke="#c9d2dc" strokeWidth="0.45" />
+      ))}
+      {[700.8, 709, 716.2, 723].map((dy) => (
+        <circle key={dy} cx="492.2" cy={dy} r="0.65" fill="#efe6d2" />
+      ))}
+      {/* Headstock with three tuners a side. */}
+      <path d="M489.6 690 L488.6 671 Q492.2 667 495.8 671 L494.8 690 Z" fill="#2a1a10" />
+      {[674, 679, 684].map((ty) => (
+        <g key={ty}>
+          <ellipse cx="486.4" cy={ty} rx="1.7" ry="1.1" fill="#c9d2dc" />
+          <ellipse cx="498" cy={ty} rx="1.7" ry="1.1" fill="#c9d2dc" />
+        </g>
+      ))}
+      {/* Dreadnought body: square shoulders, wide lower bout, binding. */}
+      <path
+        d="M479 734 Q478 727 492.2 727 Q506.4 727 505.4 734 Q506 745 502 751 Q513 758 514 769 Q514 785 492.2 785 Q470.4 785 470.4 769 Q471.4 758 482.4 751 Q478.4 745 479 734 Z"
+        fill="#d9b37a"
+        stroke="#3a2418"
+        strokeWidth="0.9"
+      />
+      <path d="M481 736 Q482 731 490 730" stroke="#f3dcae" strokeWidth="1.4" fill="none" opacity="0.6" strokeLinecap="round" />
+      <path d="M472 770 Q474 782 488 784" stroke="#9a7240" strokeWidth="2" fill="none" opacity="0.5" />
+      <circle cx="492.2" cy="745" r="6.8" fill="none" stroke="#8a6a3e" strokeWidth="1" />
+      <circle cx="492.2" cy="745" r="5.2" fill="#1c120b" />
+      <path d="M497.5 748 Q504 750 503 758 Q498.5 760 495.5 753 Z" fill="#4a2a18" />
+      <rect x="485.2" y="769" width="14" height="3.4" rx="1.2" fill="#2a1a10" />
+      {[487.5, 489.8, 492.1, 494.4, 496.7].map((bx) => (
+        <circle key={bx} cx={bx} cy="770.7" r="0.5" fill="#efe2c8" />
+      ))}
+      <path d="M491 690 V770 M492.2 690 V770 M493.4 690 V770" stroke="#eef2f6" strokeWidth="0.3" opacity="0.7" />
     </g>
   );
 }
@@ -75,20 +162,11 @@ export function GuitarTech() {
   return (
     <g>
       <ellipse cx="520" cy="790" rx="150" ry="6" fill="#000" opacity="0.45" />
-      {/* Stand: base and neck rest. */}
-      <path d="M414 782 h104 M424 782 L430 700 M508 782 L502 700 M420 696 h92" stroke="#2a2f37" strokeWidth="3.4" fill="none" strokeLinecap="round" />
-      {/* Spare 1: a blue offset electric. */}
-      <rect x="437.5" y="652" width="5" height="96" fill="#6b4a2e" />
-      <path d="M436 640 L444 640 L446 654 L434 654 Z" fill="#2f5f8c" />
-      <path d="M422 760 Q420 740 432 738 Q440 742 448 736 Q462 738 460 758 Q462 780 440 782 Q420 782 422 760 Z" fill="#3f6f9e" stroke="#e8edf3" strokeWidth="0.8" />
-      <rect x="432" y="752" width="16" height="10" rx="2" fill="#e8edf3" opacity="0.85" />
-      {/* Spare 2: a natural acoustic. */}
-      <rect x="485.5" y="650" width="5" height="92" fill="#6b4a2e" />
-      <path d="M484 636 L492 636 L494 652 L482 652 Z" fill="#3a2418" />
-      <ellipse cx="488" cy="748" rx="16" ry="13" fill="#d9b37a" />
-      <ellipse cx="488" cy="768" rx="21" ry="15" fill="#d9b37a" stroke="#8a6a3e" strokeWidth="0.8" />
-      <circle cx="488" cy="752" r="5" fill="#2a1a10" />
-      <rect x="480" y="772" width="16" height="3" rx="1" fill="#3a2418" />
+      {/* Stand: base, uprights, and the neck yoke. */}
+      <path d="M414 784 h104 M424 784 L430 704 M508 784 L502 704 M420 702 h92" stroke="#2a2f37" strokeWidth="3.4" fill="none" strokeLinecap="round" />
+      <path d="M436 700 q4 4 8 0 M488 700 q4 4 8 0" stroke="#3a3f47" strokeWidth="2" fill="none" />
+      <SpareElectric />
+      <SpareAcoustic />
 
       {/* Open accessory case: foam, string packs, a winder. */}
       <path d="M596 758 L644 758 L648 744 L600 744 Z" fill="#20252c" />
@@ -119,16 +197,19 @@ export function GuitarTech() {
       <circle cx="571" cy="680" r="1.1" fill="#1a110c" />
       <circle cx="577" cy="680" r="1.1" fill="#1a110c" />
       <path d="M570 687 Q573.5 689 577 687" stroke="#6b3a2a" strokeWidth="1" fill="none" strokeLinecap="round" />
-      {/* Working arm: a string winder in hand, or a thumbs-up when live. */}
-      <g className="mu-thumb-down">
+      {/* Working arm: a string winder in hand; once live, a raised open
+          hand toward the guitarist ("good to go"). */}
+      <g className="mu-ack-down">
         <path d="M583 704 L594 728 L590 752" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         <circle cx="590" cy="754" r="3.4" fill="#c99a7a" />
         <path d="M592 756 l7 3" stroke="#c9d2dc" strokeWidth="1.8" strokeLinecap="round" />
       </g>
-      <g className="mu-thumb-up">
-        <path d="M583 704 L600 716 L604 694" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        <rect x="600" y="684" width="8" height="9" rx="2.5" fill="#c99a7a" />
-        <rect x="602.5" y="677" width="3" height="8" rx="1.5" fill="#c99a7a" />
+      <g className="mu-ack-up">
+        <path d="M583 704 L602 716 L607 694" stroke="#1b1e24" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Open palm facing out: four fingers together, thumb out. */}
+        <path d="M601.5 693 L601 681 Q601 677.5 603.6 677.5 L611.4 677.5 Q614 677.5 614 681 L613.5 693 Q613 697 607.5 697 Q602 697 601.5 693 Z" fill="#c99a7a" />
+        <path d="M604.6 678 V685 M607.6 677.6 V685 M610.6 678 V685" stroke="#8e6248" strokeWidth="0.7" />
+        <path d="M601.6 688 Q597 685 596.4 681.4 Q596.4 679.6 598.4 680.2 Q600.6 682.6 602 685" fill="#c99a7a" stroke="#8e6248" strokeWidth="0.5" />
       </g>
     </g>
   );
@@ -179,17 +260,17 @@ export function GuitarAmp() {
   );
 }
 
-/** The vocal mic stand, the guitarist stepped back from it to tune. */
+/** The vocal mic stand, beside the guitarist. */
 export function VocalMic() {
   return (
     <g>
-      <ellipse cx="790" cy="870" rx="30" ry="4" fill="#000" opacity="0.45" />
-      <path d="M790 846 L766 868 M790 846 L814 868 M790 846 L792 872" stroke="#2a2f37" strokeWidth="3.2" strokeLinecap="round" />
-      <rect x="788.5" y="540" width="3" height="308" fill="#3a3f47" />
-      <path d="M789.5 540 V846" stroke="#8a96a3" strokeWidth="0.8" opacity="0.6" />
-      <rect x="786" y="640" width="8" height="10" rx="1.5" fill="#2a2f37" />
-      <path d="M790 542 L834 508" stroke="#3a3f47" strokeWidth="3" strokeLinecap="round" />
-      <g transform="translate(834 508) rotate(-38)">
+      <ellipse cx="770" cy="824" rx="30" ry="4" fill="#000" opacity="0.45" />
+      <path d="M770 802 L746 822 M770 802 L794 822 M770 802 L772 826" stroke="#2a2f37" strokeWidth="3.2" strokeLinecap="round" />
+      <rect x="768.5" y="520" width="3" height="284" fill="#3a3f47" />
+      <path d="M769.5 520 V802" stroke="#8a96a3" strokeWidth="0.8" opacity="0.6" />
+      <rect x="766" y="630" width="8" height="10" rx="1.5" fill="#2a2f37" />
+      <path d="M770 522 L816 488" stroke="#3a3f47" strokeWidth="3" strokeLinecap="round" />
+      <g transform="translate(816 488) rotate(-38)">
         <rect x="0" y="-3" width="20" height="6" rx="2" fill="#1a1d22" />
         <circle cx="25" cy="0" r="6" fill="#9aa5b1" />
         <path d="M21 -3 L29 3 M21 3 L29 -3" stroke="#5d6773" strokeWidth="0.7" />
@@ -198,64 +279,66 @@ export function VocalMic() {
   );
 }
 
-/** The pedalboard at the guitarist's feet (foreground). */
+/** The pedalboard right in front of the guitarist's feet (foreground). */
 export function Pedalboard() {
   const pedals: { x: number; c: string; kind: "tuner" | "drive" | "delay" | "boost" }[] = [
-    { x: 878, c: "#2a2f37", kind: "tuner" },
-    { x: 908, c: "#d0702a", kind: "drive" },
-    { x: 938, c: "#2f6f9e", kind: "delay" },
-    { x: 968, c: "#aab4bf", kind: "boost" },
+    { x: 890, c: "#2a2f37", kind: "tuner" },
+    { x: 922, c: "#d0702a", kind: "drive" },
+    { x: 954, c: "#2f6f9e", kind: "delay" },
+    { x: 986, c: "#aab4bf", kind: "boost" },
   ];
   return (
-    <g>
-      <ellipse cx="936" cy="896" rx="80" ry="5" fill="#000" opacity="0.55" />
+    <g className="mu-board">
+      <ellipse cx="950" cy="836" rx="84" ry="5" fill="#000" opacity="0.55" />
       {/* Cable run from the board to the amp. */}
-      <path d="M874 884 Q838 886 812 862 Q796 846 790 812" stroke="#0b0d10" strokeWidth="2.6" fill="none" strokeLinecap="round" />
-      <path d="M866 893 L1006 893 L998 868 L874 868 Z" fill="#1a1d22" />
-      <rect x="866" y="889" width="140" height="6" rx="1" fill="#0e1014" />
+      <path d="M884 826 Q850 830 826 816 Q806 806 798 798" stroke="#0b0d10" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+      <path d="M878 834 L1022 834 L1014 808 L886 808 Z" fill="#1a1d22" />
+      <rect x="878" y="830" width="144" height="6" rx="1" fill="#0e1014" />
       {pedals.map(({ x, c, kind }) => (
         <g key={kind}>
-          <rect x={x} y="866" width="24" height="21" rx="2.5" fill={c} />
+          <rect x={x} y="806" width="26" height="22" rx="2.5" fill={c} />
+          <path d={`M${x + 1} 807 h24`} stroke="#fff" strokeWidth="0.8" opacity="0.25" />
           {kind === "tuner" ? (
-            <rect className="mu-tune-screen" x={x + 4} y="869" width="16" height="6" rx="1" fill="#11161d" />
+            <rect className="mu-tune-screen" x={x + 4} y="809" width="18" height="6.5" rx="1" fill="#11161d" />
           ) : (
             <>
-              <circle cx={x + 7} cy="871" r="2" fill="#15110e" />
-              <circle cx={x + 17} cy="871" r="2" fill="#15110e" />
-              <circle className={kind === "drive" ? "mu-led" : kind === "delay" ? "mu-led-b" : undefined} cx={x + 12} cy="877" r="1.6" fill="#3a1410" />
+              <circle cx={x + 7.5} cy="811" r="2.1" fill="#15110e" />
+              <circle cx={x + 18.5} cy="811" r="2.1" fill="#15110e" />
+              <circle className={kind === "drive" ? "mu-led" : kind === "delay" ? "mu-led-b" : undefined} cx={x + 13} cy="817" r="1.7" fill="#3a1410" />
             </>
           )}
-          <circle cx={x + 12} cy="882.5" r="3.2" fill="#c9d2dc" stroke="#6c7682" strokeWidth="0.8" />
+          <circle cx={x + 13} cy="823" r="3.4" fill="#c9d2dc" stroke="#6c7682" strokeWidth="0.8" />
         </g>
       ))}
-      <path d="M902 870 q3 -4 6 0 M932 870 q3 -4 6 0 M962 870 q3 -4 6 0" stroke="#0b0d10" strokeWidth="1.6" fill="none" />
+      <path d="M916 810 q3 -4 6 0 M948 810 q3 -4 6 0 M980 810 q3 -4 6 0" stroke="#0b0d10" strokeWidth="1.6" fill="none" />
     </g>
   );
 }
 
 /** A monitor wedge (seen from behind, labelled on gaffer tape) and the set
- *  list taped to the deck. */
+ *  list taped to the deck beside it. */
 export function WedgeAndSetlist() {
   return (
-    <g>
-      <ellipse cx="1112" cy="892" rx="72" ry="5" fill="#000" opacity="0.55" />
-      <path d="M1046 890 L1176 890 L1170 846 L1064 832 Z" fill="#11151b" />
-      <path d="M1064 832 L1170 846" stroke="#3a6a94" strokeWidth="1.4" opacity="0.8" />
-      <rect x="1090" y="858" width="44" height="12" rx="1" fill="#e9e4d8" transform="rotate(4 1112 864)" />
-      <text x="1112" y="867" textAnchor="middle" fontSize="7.5" fontWeight="800" fill="#1a2533" fontFamily={SANS} transform="rotate(4 1112 864)">
+    <g transform="translate(-16 0)">
+      <ellipse cx="1110" cy="836" rx="72" ry="5" fill="#000" opacity="0.55" />
+      <path d="M1046 834 L1172 834 L1166 790 L1062 776 Z" fill="#11151b" />
+      <path d="M1062 776 L1166 790" stroke="#3a6a94" strokeWidth="1.4" opacity="0.8" />
+      <rect x="1088" y="802" width="44" height="12" rx="1" fill="#e9e4d8" transform="rotate(4 1110 808)" />
+      <text x="1110" y="811" textAnchor="middle" fontSize="7.5" fontWeight="800" fill="#1a2533" fontFamily={SANS} transform="rotate(4 1110 808)">
         MON 3
       </text>
-      <path d="M1176 884 Q1196 892 1230 888" stroke="#0b0d10" strokeWidth="2.6" fill="none" strokeLinecap="round" />
-      {/* Set list: header, numbered lines; no song titles. */}
-      <g transform="rotate(-6 1212 876)">
-        <rect x="1192" y="852" width="40" height="44" fill="#f2efe7" />
-        <rect x="1188" y="850" width="10" height="5" fill="#4ea8d1" opacity="0.85" />
-        <rect x="1226" y="850" width="10" height="5" fill="#4ea8d1" opacity="0.85" />
-        <text x="1196" y="862" fontSize="6.5" fontWeight="800" fill="#1a2533" fontFamily={SANS}>
+      <path d="M1172 828 Q1190 832 1216 830" stroke="#0b0d10" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+      {/* Set list taped to the deck: header, numbered lines; no song titles. */}
+      <g className="mu-setlist" transform="translate(-10 0) rotate(-5 1206 808)">
+        <ellipse cx="1206" cy="834" rx="26" ry="3" fill="#000" opacity="0.35" />
+        <rect x="1184" y="782" width="44" height="50" fill="#f2efe7" />
+        <rect x="1180" y="779" width="11" height="6" fill="#4ea8d1" opacity="0.9" />
+        <rect x="1221" y="779" width="11" height="6" fill="#4ea8d1" opacity="0.9" />
+        <text x="1189" y="794" fontSize="7.5" fontWeight="800" fill="#1a2533" letterSpacing="0.6" fontFamily={SANS}>
           SET
         </text>
-        {[868, 874, 880, 886, 892].map((ly, i) => (
-          <path key={ly} d={`M1196 ${ly} h3 M1202 ${ly} h${18 + ((i * 7) % 9)}`} stroke="#3a4452" strokeWidth="1.3" />
+        {[801, 808, 815, 822, 828].map((ly, i) => (
+          <path key={ly} d={`M1189 ${ly} h3.5 M1196 ${ly} h${20 + ((i * 7) % 10)}`} stroke="#3a4452" strokeWidth="1.4" />
         ))}
       </g>
     </g>

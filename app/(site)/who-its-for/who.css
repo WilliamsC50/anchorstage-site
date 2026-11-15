@@ -523,16 +523,16 @@
 .who-stage .mu-spot,
 .who-stage .mu-amp-glow,
 .who-stage .mu-pilot-glow,
-.who-stage .mu-thumb-up {
+.who-stage .mu-ack-up {
   opacity: 0;
 }
 
 .who-stage .is-live .mu-spot,
-.who-stage .is-live .mu-thumb-up {
+.who-stage .is-live .mu-ack-up {
   opacity: 1;
 }
 
-.who-stage .is-live .mu-thumb-down {
+.who-stage .is-live .mu-ack-down {
   opacity: 0;
 }
 
@@ -560,7 +560,7 @@
 }
 
 .who-stage .mu-head,
-.who-stage .mu-tune {
+.who-stage .mu-strum {
   transform-box: fill-box;
 }
 
@@ -568,7 +568,7 @@
   transform-origin: 50% 100%;
 }
 
-.who-stage .mu-tune {
+.who-stage .mu-strum {
   transform-origin: 20% 80%;
 }
 
@@ -1014,8 +1014,8 @@
   }
 
   /* Musicians: the rig comes live in a short sequence (pedal LEDs, the amp
-     warming, the spot, then the tech's thumbs-up). The guitarist tilts
-     while listening and turns the tuning peg. */
+     warming, the spot, then the tech's raised open hand). The guitarist
+     nods slightly while listening; the picking hand moves. */
   .who-stage .mu-spot {
     transition: opacity 600ms ease 150ms;
   }
@@ -1036,13 +1036,13 @@
       fill 200ms ease;
   }
 
-  .who-stage .mu-thumb-up,
-  .who-stage .mu-thumb-down {
+  .who-stage .mu-ack-up,
+  .who-stage .mu-ack-down {
     transition: opacity 260ms ease;
   }
 
-  .who-stage .is-live .mu-thumb-up,
-  .who-stage .is-live .mu-thumb-down {
+  .who-stage .is-live .mu-ack-up,
+  .who-stage .is-live .mu-ack-down {
     transition-delay: 750ms;
   }
 
@@ -1050,8 +1050,8 @@
     animation: mu-listen 7s ease-in-out infinite;
   }
 
-  .who-stage .mu-tune {
-    animation: mu-turn 2.8s ease-in-out infinite;
+  .who-stage .mu-strum {
+    animation: mu-strum 1.8s ease-in-out infinite;
   }
 
   /* The technician: a slow breath and an occasional glance at the desk. */
@@ -1191,13 +1191,14 @@
   }
 }
 
-@keyframes mu-turn {
+/* The picking hand moving over the strings, small and steady. */
+@keyframes mu-strum {
   0%,
   100% {
-    transform: rotate(0deg);
+    transform: translateY(0);
   }
   50% {
-    transform: rotate(-6deg);
+    transform: translateY(1.8px);
   }
 }
 
