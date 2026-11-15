@@ -7,19 +7,17 @@ import { INTAKE_LOGIN_URL, INTAKE_REGISTER_URL } from "@/lib/constants";
  * free" section).
  *
  * After the six profession scenes: the approved headline and sentence, then
- * the actions, as one composition on the showcase's dark stage atmosphere. A
- * faint wash of stage light from above; below the actions a lit stage edge
- * (orange at its centre, cool blue toward the sides, light rising from it),
- * and the background deepening to the footer's navy so the page runs
- * straight into the footer.
- *
- * Actions follow the Platform pre-footer (components/platform/
- * PlatformClosingCta.tsx): the lit orange primary with navy text, the
- * edge-lit secondary (here on dark, as on the homepage), and a quiet log-in
- * line. Destinations are the shared ones: registration and log-in on the
+ * the actions, as one composition. The treatment matches the Platform and
+ * Network pre-footers exactly (components/platform/PlatformClosingCta.tsx,
+ * components/network/NetworkClosingCta.tsx; corrected in DESIGN-15B.3, which
+ * first shipped a dark variant): a white surface, a navy headline, grey body
+ * and log-in line, the lit orange primary with navy text, the white
+ * edge-lit secondary, and below them a stage edge (orange at its centre,
+ * blue toward the sides) with soft light rising from it, before the navy
+ * footer. Destinations are the shared ones: registration and log-in on the
  * intake app (lib/constants, as the navigation's Join Free and Log In) and
- * /platform. Platform's and the homepage's styles load only on those pages,
- * so the treatment is reproduced under .who-bridge (Network did the same).
+ * /platform. Platform's styles load only on /platform, so the treatment is
+ * reproduced under .who-bridge, as Network does.
  *
  * No illustration, no controls beyond the links, no motion except the
  * primary's hover sheen (off under reduced motion). The headline's sentences
@@ -53,7 +51,7 @@ export default function WhoBridge() {
           <Button href={INTAKE_REGISTER_URL} variant="primary" className="wb-cta">
             Create Your Organization
           </Button>
-          <Button href="/platform" variant="outline" className="wb-ghost">
+          <Button href="/platform" variant="secondary" className="wb-ghost">
             Explore the Platform
           </Button>
         </div>
