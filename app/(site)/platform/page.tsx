@@ -10,6 +10,7 @@ import "./platform.css";
 
 export const metadata: Metadata = buildMetadata({
   title: "Platform",
+  path: "/platform",
   description:
     "How the ASO connected operations platform works. Organizations own the work, each event is one connected operating record, and purpose-built Workstations operate on the same information.",
 });

@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import PolicyPageLayout from "@/components/PolicyPageLayout";
 import { CONTACT_EMAIL } from "@/lib/constants";
+import { buildMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Terms of Service",
+  path: "/terms",
   description:
     "Terms of Service governing use of the AnchorStage Ops platform and professional network for the live event industry.",
-};
+});
 
 export default function TermsPage() {
   return (

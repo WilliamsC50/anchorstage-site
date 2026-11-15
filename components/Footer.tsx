@@ -1,5 +1,7 @@
 import Link from "next/link";
+import FreeBadge from "@/components/FreeBadge";
 import { PRIMARY_NAV, AUTH_NAV } from "@/lib/nav";
+import { REGISTER_LABEL, REGISTER_URL } from "@/lib/registration";
 
 export default function Footer() {
   return (
@@ -38,8 +40,9 @@ export default function Footer() {
             Get started
           </p>
           <div className="flex flex-col gap-3 text-sm">
-            <a href={AUTH_NAV.join.href} className="font-medium text-aso-orange transition hover:opacity-90">
-              {AUTH_NAV.join.label}
+            <a href={REGISTER_URL} className="font-medium text-aso-orange transition hover:opacity-90">
+              {REGISTER_LABEL}
+              <FreeBadge tone="dark" />
             </a>
             <a
               href={AUTH_NAV.login.href}

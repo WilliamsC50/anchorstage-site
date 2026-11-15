@@ -1,5 +1,7 @@
 import Button from "@/components/Button";
-import { INTAKE_LOGIN_URL, INTAKE_REGISTER_URL } from "@/lib/constants";
+import FreeBadge from "@/components/FreeBadge";
+import { INTAKE_LOGIN_URL } from "@/lib/constants";
+import { REGISTER_LABEL, REGISTER_URL } from "@/lib/registration";
 
 /**
  * Network: closing call to action. "Bring your network together."
@@ -29,8 +31,9 @@ export default function NetworkClosingCta() {
         </p>
 
         <div className="ncta-actions">
-          <Button href={INTAKE_REGISTER_URL} variant="primary" className="ncta-primary">
-            Create Your Organization — Free
+          <Button href={REGISTER_URL} variant="primary" className="ncta-primary">
+            {REGISTER_LABEL}
+            <FreeBadge />
           </Button>
           <Button href="/platform" variant="secondary" className="ncta-secondary">
             Explore the Platform

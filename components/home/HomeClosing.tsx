@@ -1,10 +1,13 @@
 import Button from "@/components/Button";
+import FreeBadge from "@/components/FreeBadge";
 import GatewayMonument from "./GatewayMonument";
 import HomeScene from "./HomeScene";
 
 interface CtaAction {
   label: string;
   href: string;
+  /** Registration actions carry the shared FREE badge (lib/registration.ts). */
+  freeBadge?: boolean;
 }
 
 interface HomeClosingProps {
@@ -38,6 +41,7 @@ export default function HomeClosing({ eyebrow, heading, body, primary }: HomeClo
         <p className="text-lg md:text-xl home-copy leading-relaxed mb-10 max-w-lg">{body}</p>
         <Button href={primary.href} variant="primary" className="home-cta">
           {primary.label}
+          {primary.freeBadge && <FreeBadge />}
         </Button>
       </div>
       <div aria-hidden="true" className="gw-room" />

@@ -28,6 +28,7 @@ import "./about.css";
 
 export const metadata: Metadata = buildMetadata({
   title: "About",
+  path: "/about",
   description:
     "Why AnchorStage Ops exists, who is building it, and where it is going. Built from more than 10 years of hands-on live event production.",
 });

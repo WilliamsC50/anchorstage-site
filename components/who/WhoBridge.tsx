@@ -1,5 +1,7 @@
 import Button from "@/components/Button";
-import { INTAKE_LOGIN_URL, INTAKE_REGISTER_URL } from "@/lib/constants";
+import FreeBadge from "@/components/FreeBadge";
+import { INTAKE_LOGIN_URL } from "@/lib/constants";
+import { REGISTER_LABEL, REGISTER_URL } from "@/lib/registration";
 
 /**
  * Who It's For: the page's one pre-footer (DESIGN-15B.2; consolidated with
@@ -15,7 +17,7 @@ import { INTAKE_LOGIN_URL, INTAKE_REGISTER_URL } from "@/lib/constants";
  * edge-lit secondary, and below them a stage edge (orange at its centre,
  * blue toward the sides) with soft light rising from it, before the navy
  * footer. Destinations are the shared ones: registration and log-in on the
- * intake app (lib/constants, as the navigation's Join Free and Log In) and
+ * intake app (as the navigation's Create Org and Log In) and
  * /platform. Platform's styles load only on /platform, so the treatment is
  * reproduced under .who-bridge, as Network does.
  *
@@ -48,8 +50,9 @@ export default function WhoBridge() {
         </p>
 
         <div className="wb-actions">
-          <Button href={INTAKE_REGISTER_URL} variant="primary" className="wb-cta">
-            Create Your Organization
+          <Button href={REGISTER_URL} variant="primary" className="wb-cta">
+            {REGISTER_LABEL}
+            <FreeBadge />
           </Button>
           <Button href="/platform" variant="secondary" className="wb-ghost">
             Explore the Platform

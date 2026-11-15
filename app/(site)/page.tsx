@@ -13,12 +13,16 @@ import ProblemField from "@/components/home/ProblemField";
 import SceneLink from "@/components/home/SceneLink";
 import SceneStack from "@/components/home/SceneStack";
 import { SignalWave } from "@/components/home/SoundGeometry";
-import { AUTH_NAV } from "@/lib/nav";
+import FreeBadge from "@/components/FreeBadge";
 import { PERSONAS } from "@/lib/personas";
+import { REGISTER_LABEL, REGISTER_URL } from "@/lib/registration";
 // Homepage-only visual system; every rule is scoped under .aso-home.
 import "./home.css";
 
+// Title and social preview come from the root layout, which is written for
+// Home. Only the canonical URL is added here.
 export const metadata: Metadata = {
+  alternates: { canonical: "/" },
   title: "AnchorStage Ops | Connected Operations Platform for Live Events",
   description:
     "A professional network and connected operations platform built for the live event industry. Run your events, gear, documents, and financial records in one place, and work with the organizations you already work with. Join free.",
@@ -142,8 +146,9 @@ export default function Home() {
             </p>
 
             <div className="flex flex-wrap items-center gap-4">
-              <Button href={AUTH_NAV.join.href} className="home-cta">
-                {AUTH_NAV.join.label}
+              <Button href={REGISTER_URL} className="home-cta">
+                {REGISTER_LABEL}
+                <FreeBadge />
               </Button>
               <SceneLink
                 target="connected"
@@ -320,7 +325,7 @@ export default function Home() {
         eyebrow="AnchorStage Ops"
         heading="Bring it all together."
         body="Your people. Your tools. Your operation. One place to move forward."
-        primary={{ label: "Join AnchorStage Ops", href: AUTH_NAV.join.href }}
+        primary={{ label: REGISTER_LABEL, href: REGISTER_URL, freeBadge: true }}
       />
     </main>
   );

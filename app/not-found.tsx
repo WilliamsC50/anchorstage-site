@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import SkipLink, { MAIN_CONTENT_ID } from "@/components/SkipLink";
 
 // Site-wide 404. Renders for any unmatched URL and for notFound() calls,
 // including the signage catch-all when a slug names no active screen. It sits
@@ -28,8 +29,9 @@ export default function NotFound() {
           page in the browser, where the metadata title above is not applied.
           React hoists this into <head> so the tab title is right either way. */}
       <title>{PAGE_TITLE}</title>
+      <SkipLink />
       <Nav />
-      <main id="main" className="flex-1 relative bg-aso-bg overflow-hidden">
+      <main id={MAIN_CONTENT_ID} className="flex-1 relative bg-aso-bg overflow-hidden scroll-mt-[65px]">
         <div aria-hidden="true" className="aso-plot-grid-light absolute inset-0" />
         <section className="relative max-w-3xl mx-auto px-6 py-24 md:py-32 text-center">
           <p className="text-sm font-semibold tracking-[0.18em] uppercase text-aso-orange-ink">

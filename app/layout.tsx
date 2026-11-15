@@ -16,9 +16,9 @@ const geistMono = Geist_Mono({
 // TODO: Regenerate app/favicon.ico from aso-picture-logo.svg as multi-size ICO (16, 32, 48).
 export const metadata: Metadata = {
   metadataBase: new URL("https://anchorstageops.com"),
+  // The browser icon comes from the app/favicon.ico file convention, which
+  // Next links on its own; declaring it here as well printed it three times.
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
     apple: logoWordmarkPng,
   },
   title: "AnchorStage Ops | Connected Operations Platform for Live Events",

@@ -79,6 +79,37 @@ body {
     0 18px 40px -14px rgba(15, 47, 79, 0.22);
 }
 
+/* FREE badge on registration buttons (components/FreeBadge.tsx, switched by
+   SHOW_FREE_BADGE in lib/registration.ts). Sized in em so it scales with the
+   button's own text, with line-height 1 so it never makes a button taller. */
+.free-badge {
+  display: inline-block;
+  margin-left: 0.6em;
+  padding: 0.32em 0.5em 0.3em;
+  border-radius: 0.3rem;
+  font-size: max(10px, 0.66em);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-transform: uppercase;
+  vertical-align: middle;
+  position: relative;
+  top: -0.08em;
+}
+
+/* On orange: navy with white lettering (about 13:1). */
+.free-badge--orange {
+  background: var(--aso-navy);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* On navy (footer): orange with navy lettering (about 5.6:1). */
+.free-badge--dark {
+  background: var(--aso-orange);
+  color: #071425;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .aso-panel-lift,
   .aso-panel-lift:hover {

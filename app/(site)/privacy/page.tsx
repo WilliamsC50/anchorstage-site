@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import PolicyPageLayout from "@/components/PolicyPageLayout";
 import { CONTACT_EMAIL } from "@/lib/constants";
+import { buildMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Privacy Policy",
+  path: "/privacy",
   description:
     "How AnchorStage Ops collects, uses, and protects information on its operations platform and professional network for the live event industry.",
-};
+});
 
 export default function PrivacyPage() {
   return (

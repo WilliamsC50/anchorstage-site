@@ -40,6 +40,7 @@ import "./network.css";
 
 export const metadata: Metadata = buildMetadata({
   title: "Network",
+  path: "/network",
   description:
     "The ASO Network brings the organizations behind your events together: discover collaborators, work together on events without giving up control, and keep professional relationships beyond a single event.",
 });

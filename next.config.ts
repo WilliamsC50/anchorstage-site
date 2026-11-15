@@ -23,7 +23,8 @@ const nextConfig: NextConfig = {
       // so these have no canonical replacement in the five-page architecture.
       { source: "/services", destination: "/", permanent: true },
       { source: "/photos", destination: "/", permanent: true },
-      { source: "/contact", destination: "/", permanent: true },
+      // Contact lives on About (DESIGN-16A.3).
+      { source: "/contact", destination: "/about#contact", permanent: true },
       { source: "/insurance", destination: "/", permanent: true },
       { source: "/media-release", destination: "/", permanent: true },
 

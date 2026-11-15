@@ -1,12 +1,14 @@
 import Button from "@/components/Button";
-import { INTAKE_LOGIN_URL, INTAKE_REGISTER_URL } from "@/lib/constants";
+import FreeBadge from "@/components/FreeBadge";
+import { INTAKE_LOGIN_URL } from "@/lib/constants";
+import { REGISTER_LABEL, REGISTER_URL } from "@/lib/registration";
 
 /**
  * Platform: the closing call to action (DESIGN-13H.2, 13H.3).
  *
  * The page's last beat, on white between the navy Organizations section and
  * the navy footer: a large centred headline, one sentence, the primary
- * "Create Your Organization — Free" button beside the secondary "Explore the
+ * registration button (lib/registration.ts) beside the secondary "Explore the
  * Network", and a quiet log-in line. Below it, a stage edge: a horizontal
  * line lit orange at its centre, with soft light rising from it.
  *
@@ -19,8 +21,8 @@ import { INTAKE_LOGIN_URL, INTAKE_REGISTER_URL } from "@/lib/constants";
  * Platform only. The shared components/ClosingCta.tsx still closes the About,
  * Network, and Who It's For pages and is unchanged.
  *
- * Destinations: registration and log-in on the intake app (lib/constants,
- * the same URLs as the navigation's Join Free and Log In), and /network.
+ * Destinations: registration and log-in on the intake app (the same URLs as
+ * the navigation's Create Org and Log In), and /network.
  *
  * Styling: app/(site)/platform/platform.css under .platform-cta.
  */
@@ -40,8 +42,9 @@ export default function PlatformClosingCta() {
         </p>
 
         <div className="pc-actions">
-          <Button href={INTAKE_REGISTER_URL} variant="primary" className="pc-cta">
-            Create Your Organization — Free
+          <Button href={REGISTER_URL} variant="primary" className="pc-cta">
+            {REGISTER_LABEL}
+            <FreeBadge />
           </Button>
           <Button href="/network" variant="secondary" className="pc-ghost">
             Explore the Network

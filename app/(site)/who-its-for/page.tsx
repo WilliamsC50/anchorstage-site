@@ -24,8 +24,9 @@ import "./who.css";
 
 export const metadata: Metadata = buildMetadata({
   title: "Who It's For",
+  path: "/who-its-for",
   description:
-    "ASO is built for freelancers and technicians, production companies, venues, event organizers, musicians, and rental providers.",
+    "AnchorStage Ops (ASO) is built for freelancers and technicians, production companies, venues, event organizers, musicians, and rental providers.",
 });
 
 const who = (slug: string) => PERSONAS.find((p) => p.slug === slug)?.whoTheyAre ?? "";
