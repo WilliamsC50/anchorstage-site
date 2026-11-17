@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import MotionPause from "@/components/MotionPause";
 import NetworkClosingCta from "@/components/network/NetworkClosingCta";
 import NetworkCollaboration from "@/components/network/NetworkCollaboration";
 import NetworkDiscovery from "@/components/network/NetworkDiscovery";
@@ -48,6 +49,8 @@ export const metadata: Metadata = buildMetadata({
 export default function NetworkPage() {
   return (
     <main className="bg-white">
+      {/* The hero cards' drift pauses while it is out of view. */}
+      <MotionPause target=".network-hero" />
       <NetworkHero />
       <NetworkDiscovery />
       <NetworkCollaboration />
