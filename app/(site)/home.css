@@ -1490,6 +1490,20 @@
   opacity: 0;
 }
 
+/* A covered scene (SceneStack: the next one fills the frame) stops drawing
+   its decorative layers, the aria-hidden children of the scene itself
+   (ground, rings, seam, backdrop). Its content and veil are untouched, so
+   focus and tab order never change. */
+.aso-home.is-stacked .home-stack.is-covered > [aria-hidden="true"]:not(.home-stack-veil) {
+  visibility: hidden;
+}
+
+/* The static rings turn with scroll, not time: they cost nothing at rest and
+   must stay in step with the scroll, so they never hold (globals.css). */
+.aso-home .home-stack[data-motion="paused"] .home-scene-rings:not(.home-signal-rings) svg {
+  animation-play-state: running !important;
+}
+
 /* ── HUD panels ─────────────────────────────────────────────────────────── */
 
 /* Dark glass, edge-lit from the upper-right, with reticle corners. Pointer

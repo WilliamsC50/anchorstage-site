@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import MotionPause from "@/components/MotionPause";
 import WhoBridge from "@/components/who/WhoBridge";
 import WhoShowcase, { type ShowcaseRole } from "@/components/who/WhoShowcase";
 import { buildMetadata } from "@/lib/metadata";
@@ -298,6 +299,8 @@ const ROLES: ShowcaseRole[] = [
 export default function WhoItsForPage() {
   return (
     <main className="bg-white">
+      {/* The stage's ambient loops pause while it is out of view. */}
+      <MotionPause target=".who-stage" />
       <WhoShowcase roles={ROLES} />
 
       {/* PRE-FOOTER: brings the six stories together and closes the page

@@ -118,6 +118,16 @@ body {
   }
 }
 
+/* Decorative motion held while its section cannot be seen: out of view
+   (MotionPause) or a homepage scene that is covered or not yet entered
+   (SceneStack). Animations keep their current frame and resume from it. */
+[data-motion="paused"],
+[data-motion="paused"] *,
+[data-motion="paused"] *::before,
+[data-motion="paused"] *::after {
+  animation-play-state: paused !important;
+}
+
 /* Used by display pages to hide scrollbars while keeping scroll behavior */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import MotionPause from "@/components/MotionPause";
 import PlatformClosingCta from "@/components/platform/PlatformClosingCta";
 import PlatformHero from "@/components/platform/PlatformHero";
 import PlatformLifecycle from "@/components/platform/PlatformLifecycle";
@@ -18,6 +19,8 @@ export const metadata: Metadata = buildMetadata({
 export default function PlatformPage() {
   return (
     <main className="bg-white">
+      {/* The hero model's signal loops pause while it is out of view. */}
+      <MotionPause target=".platform-hero" />
       <PlatformHero />
 
       {/* EVENT LIFECYCLE — leads into the Connected Operating Record below */}

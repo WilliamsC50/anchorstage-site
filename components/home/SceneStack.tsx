@@ -32,6 +32,11 @@ import { useEffect } from "react";
  * Keyboard focus: if focus lands on something a later panel is covering,
  * the page scrolls to where that panel is uncovered.
  *
+ * Panels that cannot be seen (still below the viewport, or fully covered by
+ * the next one) get data-motion="paused" so their decorative animations hold;
+ * covered panels also get .is-covered, which stops their decorative layers
+ * drawing. Content is never hidden, so focus and tab order are unchanged.
+ *
  * Off under prefers-reduced-motion and without JS: the page then flows.
  * Renders nothing.
  */
@@ -70,6 +75,7 @@ interface Scene {
   w: number;
   stick: number; // sticky top, viewport px
   last: string;
+  motion: "" | "pending" | "covered";
 }
 
 export default function SceneStack() {
@@ -120,6 +126,19 @@ export default function SceneStack() {
         // A panel is pinned and filling the frame whenever the next one is
         // in view, so the next panel's progress is this one's exit.
         const cover = i < n - 1 ? progress[i + 1] : 0;
+
+        // Nothing of this panel shows while it is still below the viewport
+        // (pending) or once the next panel has reached the nav (covered: that
+        // panel fills the frame, and the receding stack behind it only ever
+        // shrinks within it). Its decorative motion then pauses, and when
+        // covered its decorative layers stop drawing (home.css).
+        const motion = i < n - 1 && tops[i + 1] <= NAV ? "covered" : top >= vh ? "pending" : "";
+        if (motion !== s.motion) {
+          s.motion = motion;
+          if (motion) s.el.dataset.motion = "paused";
+          else delete s.el.dataset.motion;
+          s.el.classList.toggle("is-covered", motion === "covered");
+        }
 
         let css = "";
         if (enter < 0.999 || cover > 0.001) {
@@ -198,6 +217,7 @@ export default function SceneStack() {
         w: 0,
         stick: 0,
         last: "",
+        motion: "",
       }));
       if (scenes.length < 2) return;
       main.classList.add("is-stacked");
@@ -224,6 +244,8 @@ export default function SceneStack() {
         s.el.style.transform = "";
         s.el.style.borderTopLeftRadius = s.el.style.borderTopRightRadius = "";
         if (s.veil) s.veil.style.opacity = "";
+        delete s.el.dataset.motion;
+        s.el.classList.remove("is-covered");
       }
       scenes = [];
     };
