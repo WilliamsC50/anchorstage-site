@@ -32,9 +32,10 @@ import { SignalWave } from "./SoundGeometry";
  * contours, far and mid light traces, the monument, base haze, near light
  * traces. The architecture and its traces share one box sized from the
  * monument, so the composition holds at every viewport. The monument is
- * static; the traces and contours move with transform and opacity only and
- * stop under reduced motion. Server-rendered, decorative, and never takes
- * the pointer.
+ * static; the traces and contours play a one-time intro (transform and
+ * opacity only) when the gateway is first entered, then hold still, and
+ * never move under reduced motion (home.css). Server-rendered, decorative,
+ * and never takes the pointer.
  */
 
 interface LogoPath {
