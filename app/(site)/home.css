@@ -1365,36 +1365,50 @@
   }
 }
 
-/* Motion: slow horizon contours (the seam drifts at 40 s) and the light
-   traces, each on its own period and phase. Transform and opacity only;
-   the monument never moves. */
+/* Motion: a one-time intro, not a loop. The first time the gateway comes
+   halfway into the frame (data-entered, from SceneStack), each light trace
+   makes a single pass along its rail at its own speed and start, and the
+   horizon contours drift and ease to a stop; after about 30 s the scene
+   holds still and draws no further frames. It never replays on scroll, and
+   the scene-wide pause (data-motion, globals.css) holds it mid-way if the
+   gateway leaves the frame. Without SceneStack (no JS) the gateway stays
+   still. Transform and opacity only; the monument never moves. */
 @media (prefers-reduced-motion: no-preference) {
-  .aso-home .gw-contours .gw-drift {
-    animation-duration: 96s;
-  }
-
+  /* Contours: still until entered, then a single eased drift that starts at
+     the old loop's speed (96 s and 140 s per half-width) and settles. */
+  .aso-home .gw-contours .gw-drift,
   .aso-home .gw-contours .gw-drift-slow {
-    animation-duration: 140s;
-    animation-direction: reverse;
+    animation: none;
   }
 
-  .aso-home .gw-run {
+  .aso-home .home-gateway[data-entered] .gw-contours .gw-drift {
+    animation: gw-settle 24s cubic-bezier(0.25, 0.5, 0.5, 1) both;
+  }
+
+  .aso-home .home-gateway[data-entered] .gw-contours .gw-drift-slow {
+    animation: gw-settle-back 24s cubic-bezier(0.25, 0.5, 0.5, 1) both;
+  }
+
+  /* Traces: one pass each, staggered, ending invisible (as they start). */
+  .aso-home .home-gateway[data-entered] .gw-run {
     will-change: transform, opacity;
-    animation: gw-run var(--dur) linear var(--at) infinite;
+    animation: gw-run var(--dur) linear var(--at) both;
   }
 
-  .aso-home .gw-trace-f1 { --dur: 22s; --at: -4s; --peak: 0.5; }
-  .aso-home .gw-trace-f2 { --dur: 29s; --at: -17s; --peak: 0.45; }
-  .aso-home .gw-trace-m1 { --dur: 16s; --at: -9s; --peak: 0.8; }
-  .aso-home .gw-trace-m2 { --dur: 21s; --at: -2s; --peak: 0.6; }
-  .aso-home .gw-trace-n1 { --dur: 13s; --at: -6s; --peak: 0.85; }
+  .aso-home .gw-trace-f1 { --dur: 22s; --at: 0.5s; --peak: 0.5; }
+  .aso-home .gw-trace-f2 { --dur: 29s; --at: 0s; --peak: 0.45; }
+  .aso-home .gw-trace-m1 { --dur: 16s; --at: 0s; --peak: 0.8; }
+  .aso-home .gw-trace-m2 { --dur: 21s; --at: 3s; --peak: 0.6; }
+  .aso-home .gw-trace-n1 { --dur: 13s; --at: 1s; --peak: 0.85; }
 
-  /* The warm trace: occasional, right to left, then a long rest. */
+  /* The warm trace: last, right to left, at its old pace. */
   .aso-home .gw-trace-n2 .gw-run {
-    --dur: 27s;
-    --at: -12s;
+    --dur: 11.3s;
+    --at: 6s;
     --peak: 0.8;
-    animation-name: gw-run-rest;
+  }
+
+  .aso-home .home-gateway[data-entered] .gw-trace-n2 .gw-run {
     animation-direction: reverse;
   }
 }
@@ -1406,11 +1420,16 @@
   100% { transform: translateX(100%); opacity: 0; }
 }
 
-@keyframes gw-run-rest {
-  0%, 58% { transform: translateX(-12%); opacity: 0; }
-  64% { opacity: var(--peak); }
-  94% { opacity: var(--peak); }
-  100% { transform: translateX(100%); opacity: 0; }
+/* Contour settle: the SVG is two periods wide, so -50% is the same picture
+   as 0 (the slow trace runs rightward from there). */
+@keyframes gw-settle {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-6.25%, 0, 0); }
+}
+
+@keyframes gw-settle-back {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(-45.7%, 0, 0); }
 }
 
 /* Forced colours: keep the copy and action; drop the painted environment. */
@@ -1447,12 +1466,29 @@
   }
 }
 
-/* SceneStack adds .is-stacked and sets each scene's sticky top, transform,
-   top-corner radius, and veil opacity per frame. */
+/* SceneStack adds .is-stacked, sets each scene's sticky top, and sets its
+   transform and veil opacity per frame. */
 .aso-home.is-stacked .home-stack {
   position: sticky;
   transform-origin: 0 0;
   will-change: transform;
+}
+
+/* An incoming panel's rounded leading edge, squared off once it reaches the
+   nav. SceneStack flips .is-entering only at either end of a transition: the
+   radius is a paint property, so easing it per frame would repaint the whole
+   panel on every frame. Square at rest, so pinned panels add no rounded
+   clip to composite. */
+.aso-home.is-stacked .home-stack.is-entering {
+  border-top-left-radius: 28px;
+  border-top-right-radius: 28px;
+}
+
+@media (max-width: 767px) {
+  .aso-home.is-stacked .home-stack.is-entering {
+    border-top-left-radius: 22px;
+    border-top-right-radius: 22px;
+  }
 }
 
 /* Incoming panels cast their shadow up onto the scene they cover. */

@@ -20,8 +20,9 @@ import { useEffect } from "react";
  * viewport to the nav, over a full-frame panel.
  *
  * One progress value p per transition (eased, 0 to 1) drives both panels:
- *   incoming  scales up from slightly small, pivoting on its top edge, and
- *             its top corners square off as it reaches the nav
+ *   incoming  scales up from slightly small, pivoting on its top edge, with
+ *             rounded top corners (.is-entering) that square off once it
+ *             reaches the nav
  *   outgoing  recedes, hinged at the frame's top edge (under the nav): it
  *             scales back, leans away, and darkens under its veil until the
  *             incoming panel has replaced it
@@ -37,6 +38,16 @@ import { useEffect } from "react";
  * covered panels also get .is-covered, which stops their decorative layers
  * drawing. Content is never hidden, so focus and tab order are unchanged.
  *
+ * Only transforms and the veil's opacity change per frame. Classes and data
+ * attributes change only when a panel's state does, never per frame: a
+ * per-frame paint property (such as an easing corner radius) would repaint
+ * and re-rasterise the whole panel on every frame of every transition.
+ *   .is-entering   while a panel travels toward the nav (rounded corners)
+ *   data-entered   set once, the first time a panel is at least halfway
+ *                  into the frame, and never removed: scenes start one-time
+ *                  intros from it (the gateway's light traces), so an intro
+ *                  never plays unseen below the fold or replays on scroll
+ *
  * Off under prefers-reduced-motion and without JS: the page then flows.
  * Renders nothing.
  */
@@ -49,8 +60,6 @@ const FOCUS_MAX_VEIL = 0.02;
 interface Depth {
   /** Incoming panel's scale deficit at the start of a transition. */
   inScale: number;
-  /** Incoming panel's top-corner radius at the start, px. */
-  radius: number;
   /** Outgoing panel's scale deficit once replaced. */
   outScale: number;
   /** Outgoing panel's lean-back once replaced, deg. */
@@ -60,9 +69,12 @@ interface Depth {
 }
 
 // One motion language at every size; small screens get proportionally less
-// scale so the side reveal stays a similar width in px.
-const DESKTOP: Depth = { inScale: 0.06, radius: 28, outScale: 0.08, outTilt: 6, veil: 0.85 };
-const MOBILE: Depth = { inScale: 0.06, radius: 22, outScale: 0.08, outTilt: 6, veil: 0.85 };
+// scale so the side reveal stays a similar width in px. The incoming panel's
+// corner radius is in home.css (.is-entering).
+const DESKTOP: Depth = { inScale: 0.06, outScale: 0.08, outTilt: 6, veil: 0.85 };
+const MOBILE: Depth = { inScale: 0.06, outScale: 0.08, outTilt: 6, veil: 0.85 };
+// Transition progress at which a panel counts as entered (data-entered).
+const ENTERED = 0.5;
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const ease = (t: number) => t * t * (3 - 2 * t);
@@ -76,6 +88,7 @@ interface Scene {
   stick: number; // sticky top, viewport px
   last: string;
   motion: "" | "pending" | "covered";
+  entering: boolean;
 }
 
 export default function SceneStack() {
@@ -140,6 +153,16 @@ export default function SceneStack() {
           s.el.classList.toggle("is-covered", motion === "covered");
         }
 
+        // Rounded top corners while travelling toward the nav, square once
+        // landed: a class flip at each end of the transition, not a radius
+        // eased per frame.
+        const entering = i > 0 && enter < 0.999;
+        if (entering !== s.entering) {
+          s.entering = entering;
+          s.el.classList.toggle("is-entering", entering);
+        }
+        if (!motion && enter >= ENTERED && !("entered" in s.el.dataset)) s.el.dataset.entered = "";
+
         let css = "";
         if (enter < 0.999 || cover > 0.001) {
           const cx = s.w / 2;
@@ -155,13 +178,11 @@ export default function SceneStack() {
             `scale(${sOut.toFixed(4)}) translateY(${(-hinge).toFixed(2)}px) ` +
             `scale(${sIn.toFixed(4)}) translateX(${-cx}px)`;
         }
-        const r = i === 0 ? 0 : Math.round(depth.radius * (1 - enter));
         const veil = (depth.veil * cover).toFixed(3);
-        const key = `${css}|${r}|${veil}`;
+        const key = `${css}|${veil}`;
         if (key === s.last) continue;
         s.last = key;
         s.el.style.transform = css;
-        s.el.style.borderTopLeftRadius = s.el.style.borderTopRightRadius = r ? `${r}px` : "";
         if (s.veil) s.veil.style.opacity = veil === "0.000" ? "" : veil;
       }
     };
@@ -218,6 +239,7 @@ export default function SceneStack() {
         stick: 0,
         last: "",
         motion: "",
+        entering: false,
       }));
       if (scenes.length < 2) return;
       main.classList.add("is-stacked");
@@ -242,10 +264,10 @@ export default function SceneStack() {
       for (const s of scenes) {
         s.el.style.top = "";
         s.el.style.transform = "";
-        s.el.style.borderTopLeftRadius = s.el.style.borderTopRightRadius = "";
         if (s.veil) s.veil.style.opacity = "";
         delete s.el.dataset.motion;
-        s.el.classList.remove("is-covered");
+        s.el.classList.remove("is-covered", "is-entering");
+        // data-entered stays: an intro that has played does not replay.
       }
       scenes = [];
     };
