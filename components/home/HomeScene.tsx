@@ -28,7 +28,8 @@ interface HomeSceneProps {
  *   rings    procedural dispersion rings in the upper-right corner;
  *            scroll-linked rotation, or (rings="signal") independently
  *            rotating ring layers with traveling pulses
- *   seam     a signal trace along the top edge, the panel's lit leading edge
+ *   seam     a signal trace along the top edge, the panel's lit leading edge;
+ *            drifts once and settles the first time the scene is entered
  *   veil     darkens the scene as the next one covers it
  *
  * All layers are decorative (aria-hidden). Without JS or with reduced motion
