@@ -45,8 +45,9 @@ import { useEffect } from "react";
  *   .is-entering   while a panel travels toward the nav (rounded corners)
  *   data-entered   set once, the first time a panel is at least halfway
  *                  into the frame, and never removed: scenes start one-time
- *                  intros from it (the gateway's light traces), so an intro
- *                  never plays unseen below the fold or replays on scroll
+ *                  intros from it (every scene's seam, the gateway's light
+ *                  traces), so an intro never plays unseen below the fold or
+ *                  replays on scroll
  *
  * Off under prefers-reduced-motion and without JS: the page then flows.
  * Renders nothing.
